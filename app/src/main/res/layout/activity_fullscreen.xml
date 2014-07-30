@@ -8,21 +8,14 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        android:textColor="#33b5e5"
-        android:textStyle="bold"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:text="@string/dummy_content" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
-    <FrameLayout android:layout_width="match_parent"
+    <RelativeLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@android:color/transparent"
+        android:focusable="true">
 
         <LinearLayout android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
@@ -31,16 +24,47 @@
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <Button android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+            tools:ignore="UselessParent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="1557dp">
 
         </LinearLayout>
-    </FrameLayout>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/today"
+            android:id="@+id/optToday"
+            android:checked="true"
+            android:layout_gravity="left|top"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp" />
+
+        <RadioButton
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tomorrow"
+            android:id="@+id/optTomorrow"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_below="@+id/optToday"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calculate"
+            android:id="@+id/button"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
 </FrameLayout>
