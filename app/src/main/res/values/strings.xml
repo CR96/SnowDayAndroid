@@ -41,16 +41,16 @@
     <string name="Carman">Carman-Ainsworth:</string>
     <string name="GB">Grand Blanc:</string>
     <string name="DayRun">Running calculation for </string>
-    <string name="NoClosings">Doesn't look like *any* schools are closed.</string>
+    <string name="NoClosings">Doesn\'t look like *any* schools are closed.</string>
     <string name="WJRTError">Unable to parse WJRT listings.</string>
     <string name="ErrorContact">If this error persists please contact the developer.</string>
     <string name="NoWeather">"No applicable weather warnings."</string>
     <string name="WeatherError">Unable to obtain weather.</string>
     <string name="NoConnection">Check Internet Connection</string>
-    <string name="SchoolOpen">The school's already open.</string>
+    <string name="SchoolOpen">The school\'s already open.</string>
     <string name="Open"> OPEN</string>
     <string name="Closed">" CLOSED</string>
-    <string name="GBDismissed">School's already out for today.</string>
+    <string name="GBDismissed">School\'s already out for today.</string>
     <string name="Dismissed">" Dismissed</string>
     <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>
     <string name="SaturdayToday">Today is Saturday.</string>
@@ -76,4 +76,12 @@
     <string name="IceStorm">Ice Storm Warning</string>
     <string name="WindChillWarn">Wind Chill Warning</string>
     <string name="BlizzardWarn">Blizzard Warning</string>
+    <string name="title_activity_snow_day">SnowDay</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_snow_day_result">SnowDayResult</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
 </resources>

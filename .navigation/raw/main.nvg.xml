@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.navigation.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.example.owner.snowday.snow_day_result">
+        <location        
+          id = "point0"        
+          x = "0"        
+          y = "0"/>
+      </key>
+      <value      
+        x = "2080"      
+        y = "960"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.example.owner.snowday.SnowDayResult">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "480"      
+        y = "2080"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.example.owner.snowday.SnowDay">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "480"      
+        y = "160"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.example.owner.snowday.snow_day">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "800"      
+        y = "960"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "snow_day_result">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "2080"      
+        y = "160"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "snow_day">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "2080"      
+        y = "160"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+  </locations>
+</navigationModel>
