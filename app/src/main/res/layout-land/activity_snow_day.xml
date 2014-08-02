@@ -56,9 +56,9 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:layout_toEndOf="@+id/optTomorrow"
-        android:layout_toStartOf="@+id/numberPicker"
-        android:layout_alignTop="@+id/numberPicker"
-        android:layout_toLeftOf="@+id/numberPicker" />
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/lstDays"
+        android:layout_alignEnd="@+id/lstDays" />
 
     <Button
         android:layout_width="wrap_content"
@@ -76,14 +76,15 @@
         android:clickable="true"
         android:onClick="@string/title_activity_snow_day_result" />
 
-    <NumberPicker
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/numberPicker"
-        android:orientation="vertical"
-        android:layout_toStartOf="@+id/numberPicker"
-        android:layout_toEndOf="@+id/numberPicker"
-        android:layout_alignTop="@+id/txtDay"
+        android:id="@+id/lstDays"
+        android:spinnerMode="dialog"
+        android:entries="@array/days_array"
+        android:layout_toEndOf="@+id/optTomorrow"
+        android:layout_below="@+id/txtPrev"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

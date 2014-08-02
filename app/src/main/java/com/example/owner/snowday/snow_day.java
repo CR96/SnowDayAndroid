@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 public class snow_day extends ActionBarActivity {
 
@@ -32,4 +33,5 @@ public class snow_day extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

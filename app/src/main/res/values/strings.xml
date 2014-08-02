@@ -76,12 +76,23 @@
     <string name="IceStorm">Ice Storm Warning</string>
     <string name="WindChillWarn">Wind Chill Warning</string>
     <string name="BlizzardWarn">Blizzard Warning</string>
-    <string name="title_activity_snow_day">SnowDay</string>
+    <string name="title_activity_snow_day">GBHS Snow Day Calculator</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_snow_day_result">SnowDayResult</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_activity_snow_day_result">GBHS Snow Day Calculator</string>
+    <string-array name="days_array">
+        <item>Select</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10 or more</item>
+    </string-array>
 
 </resources>
