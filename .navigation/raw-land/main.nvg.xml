@@ -6,7 +6,7 @@
     <entry>
       <key      
         class = "com.android.navigation.ActivityState"      
-        className = "com.example.owner.snowday.snow_day_result">
+        className = "com.GBSnowDay.SnowDay.snow_day_result">
         <location        
           id = "point0"        
           x = "0"        
@@ -20,7 +20,7 @@
     <entry>
       <key      
         class = "com.android.navigation.ActivityState"      
-        className = "com.example.owner.snowday.SnowDayResult">
+        className = "com.GBSnowDay.SnowDay.SnowDayResult">
         <location        
           idref = "point0"/>
       </key>
@@ -32,7 +32,7 @@
     <entry>
       <key      
         class = "com.android.navigation.ActivityState"      
-        className = "com.example.owner.snowday.SnowDay">
+        className = "com.GBSnowDay.SnowDay.SnowDay">
         <location        
           idref = "point0"/>
       </key>
@@ -56,7 +56,7 @@
     <entry>
       <key      
         class = "com.android.navigation.ActivityState"      
-        className = "com.example.owner.snowday.snow_day">
+        className = "com.GBSnowDay.SnowDay.snow_day">
         <location        
           idref = "point0"/>
       </key>

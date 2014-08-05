@@ -1,10 +1,12 @@
-package com.example.owner.snowday;
+package com.GBSnowDay.SnowDay;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import com.GBSnowDay.SnowDay.R;
+
 
 public class snow_day extends ActionBarActivity {
 

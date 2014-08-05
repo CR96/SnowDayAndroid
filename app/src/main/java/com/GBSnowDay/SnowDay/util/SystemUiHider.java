@@ -1,4 +1,4 @@
-package com.example.owner.snowday.util;
+package com.GBSnowDay.SnowDay.util;
 
 import android.app.Activity;
 import android.os.Build;
