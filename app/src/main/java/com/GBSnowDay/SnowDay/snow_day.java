@@ -1,10 +1,15 @@
 package com.GBSnowDay.SnowDay;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RadioButton;
+
 import com.GBSnowDay.SnowDay.R;
 
 
@@ -36,4 +41,8 @@ public class snow_day extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void calculate(View view) {
+        Intent i = new Intent(getApplicationContext(), snow_day_result.class);
+        startActivity(i);
+    }
 }
