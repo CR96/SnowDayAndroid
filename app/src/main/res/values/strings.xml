@@ -78,6 +78,7 @@
     <string name="WindChillWarn">Wind Chill Warning</string>
     <string name="BlizzardWarn">Blizzard Warning</string>
     <string name="title_activity_snow_day">GBCS Snow Day Calculator</string>
+    <string name="weather_image">NWS Radar Mosaic</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_snow_day_result">GBCS Snow Day Calculator</string>
