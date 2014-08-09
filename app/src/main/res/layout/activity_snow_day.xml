@@ -87,4 +87,16 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/txtInfo"
+        android:layout_below="@+id/lstDays"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btnCalculate"
+        android:layout_alignRight="@+id/lstDays"
+        android:layout_alignEnd="@+id/lstDays" />
+
 </RelativeLayout>

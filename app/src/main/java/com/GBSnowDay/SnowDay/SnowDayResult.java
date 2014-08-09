@@ -1,25 +1,12 @@
 package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.ImageView;
 
-import com.GBSnowDay.SnowDay.R;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-
-public class snow_day_result extends Activity{
+public class SnowDayResult extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

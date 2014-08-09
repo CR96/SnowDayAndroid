@@ -2,31 +2,32 @@ package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-import java.io.IOException;
 import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import com.GBSnowDay.SnowDay.R;
-
-public class snow_day extends Activity {
+public class SnowDay extends Activity {
     //Variable declaration
+    public SnowDay() {
+        RadioButton optToday = (RadioButton) findViewById(R.id.optToday);
+        TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
+        RadioButton optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
+        Spinner lstDays = (Spinner) findViewById(R.id.lstDays);
+    }
+
+    TextView txtInfo;
+    RadioButton optToday;
+    RadioButton optTomorrow;
+    Spinner lstDays;
+
     public String orgName;
     public String status;
     public String hazardName;
@@ -91,9 +92,12 @@ public class snow_day extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snow_day);
-
+        //Make sure the user doesn't try to run the program on the weekend or during school hours
+        checkWeekend();
+        checkTime();
 
     }
 
@@ -118,8 +122,41 @@ public class snow_day extends Activity {
     }
 
     public void calculate(View view) {
-        Intent i = new Intent(getApplicationContext(), snow_day_result.class);
+        Intent i = new Intent(getApplicationContext(), SnowDayResult.class);
         startActivity(i);
+    }
+
+    private void checkWeekend() {
+        //Friday is 6
+        //Saturday is 7
+        //Sunday is 1
+        if (weekday == 6) {
+            txtInfo.setText(this.getString(R.string.SaturdayTomorrow));
+            optTomorrow.setEnabled(false);
+        }else if (weekday == 7) {
+            txtInfo.setText(this.getString(R.string.SaturdayToday));
+            optToday.setEnabled(false);
+            optTomorrow.setEnabled(false);
+            lstDays.setEnabled(false);
+        }else if (weekday == 1) {
+            txtInfo.setText(this.getString(R.string.SundayToday));
+            optToday.setEnabled(false);
+        }
+    }
+
+    private void checkTime() {
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= 7 && calendar.get(Calendar.HOUR_OF_DAY)<14 && weekday!=7 && weekday!=1) {
+            optToday.setEnabled(false);
+            //txtGB.setText("Grand Blanc: OPEN");
+            txtInfo.setText(txtInfo.getText() + this.getString(R.string.SchoolOpen));
+            dayrun = 1;
+        }else if (calendar.get(Calendar.HOUR_OF_DAY) >=14 && weekday!=7 && weekday!=1) {
+            optToday.setEnabled(false);
+            //txtGB.setText("Grand Blanc: Dismissed");
+            //txtGB.setBackground(Color.YELLOW);
+            txtInfo.setText(txtInfo.getText() + this.getString(R.string.GBDismissed));
+            dayrun = 1;
+        }
     }
 
 
