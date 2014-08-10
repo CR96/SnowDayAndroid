@@ -61,6 +61,7 @@
     <string name="GBClosedToday">Grand Blanc is Closed Today!</string>
     <string name="GBClosedTomorrow">Grand Blanc is Closed Tomorrow!</string>
     <string name="SnowDay">Enjoy your Snow Day!</string>
+    <string name="NWS">National Weather Service</string>
     <string name="InEffect">in effect</string>
     <string name="HazardWeather">Hazardous Weather Outlook</string>
     <string name="SigWeather">Significant Weather Advisory</string>

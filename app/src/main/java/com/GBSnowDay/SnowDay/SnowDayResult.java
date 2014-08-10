@@ -14,8 +14,8 @@ public class SnowDayResult extends Activity{
         setContentView(R.layout.activity_snow_day_result);
         WebView webRadar = (WebView) findViewById(R.id.webRadar);
         webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
-        webRadar.getSettings().setLoadWithOverviewMode(true);
-        webRadar.getSettings().setUseWideViewPort(true);
+        //webRadar.getSettings().setLoadWithOverviewMode(true);
+        //webRadar.getSettings().setUseWideViewPort(true);
     }
 
     @Override

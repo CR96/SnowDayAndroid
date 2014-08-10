@@ -1,8 +1,10 @@
 package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,18 +17,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SnowDay extends Activity {
-    //Variable declaration
-    public SnowDay() {
-        RadioButton optToday = (RadioButton) findViewById(R.id.optToday);
-        TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
-        RadioButton optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
-        Spinner lstDays = (Spinner) findViewById(R.id.lstDays);
-    }
-
-    TextView txtInfo;
-    RadioButton optToday;
-    RadioButton optTomorrow;
-    Spinner lstDays;
 
     public String orgName;
     public String status;
@@ -95,10 +85,10 @@ public class SnowDay extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snow_day);
+
         //Make sure the user doesn't try to run the program on the weekend or during school hours
         checkWeekend();
         checkTime();
-
     }
 
 
@@ -108,6 +98,7 @@ public class SnowDay extends Activity {
         getMenuInflater().inflate(R.menu.snow_day, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -121,18 +112,29 @@ public class SnowDay extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     public void calculate(View view) {
         Intent i = new Intent(getApplicationContext(), SnowDayResult.class);
         startActivity(i);
+
     }
 
     private void checkWeekend() {
+
+        TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
+        RadioButton optToday = (RadioButton) findViewById(R.id.optToday);
+        RadioButton optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
+        Spinner lstDays = (Spinner) findViewById(R.id.lstDays);
+
         //Friday is 6
         //Saturday is 7
         //Sunday is 1
+
         if (weekday == 6) {
             txtInfo.setText(this.getString(R.string.SaturdayTomorrow));
             optTomorrow.setEnabled(false);
+            optToday.isSelected();
         }else if (weekday == 7) {
             txtInfo.setText(this.getString(R.string.SaturdayToday));
             optToday.setEnabled(false);
@@ -141,10 +143,15 @@ public class SnowDay extends Activity {
         }else if (weekday == 1) {
             txtInfo.setText(this.getString(R.string.SundayToday));
             optToday.setEnabled(false);
+            optTomorrow.isSelected();
         }
     }
 
     private void checkTime() {
+
+        RadioButton optToday = (RadioButton) findViewById(R.id.optToday);
+        TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
+
         if (calendar.get(Calendar.HOUR_OF_DAY) >= 7 && calendar.get(Calendar.HOUR_OF_DAY)<14 && weekday!=7 && weekday!=1) {
             optToday.setEnabled(false);
             //txtGB.setText("Grand Blanc: OPEN");
