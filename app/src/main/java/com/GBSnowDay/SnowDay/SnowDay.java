@@ -134,7 +134,7 @@ public class SnowDay extends Activity {
         if (weekday == 6) {
             txtInfo.setText(this.getString(R.string.SaturdayTomorrow));
             optTomorrow.setEnabled(false);
-            optToday.isSelected();
+            optToday.setChecked(true);
         }else if (weekday == 7) {
             txtInfo.setText(this.getString(R.string.SaturdayToday));
             optToday.setEnabled(false);
@@ -143,7 +143,7 @@ public class SnowDay extends Activity {
         }else if (weekday == 1) {
             txtInfo.setText(this.getString(R.string.SundayToday));
             optToday.setEnabled(false);
-            optTomorrow.isSelected();
+            optTomorrow.setChecked(true);
         }
     }
 

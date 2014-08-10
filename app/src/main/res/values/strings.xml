@@ -6,6 +6,7 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="day">Choose a Day</string>
+    <string name="dayinfo">Information</string>
     <string name="prev">How many snow days have occurred?</string>
     <string name="next">Next</string>
     <string name="calculate">Calculate!</string>
