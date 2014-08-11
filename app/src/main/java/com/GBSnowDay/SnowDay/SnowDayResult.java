@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.TabHost;
+import android.widget.TextView;
 
 public class SnowDayResult extends Activity{
 
@@ -12,11 +16,6 @@ public class SnowDayResult extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snow_day_result);
-        WebView webRadar = (WebView) findViewById(R.id.webRadar);
-        webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
-        webRadar.getSettings().setLoadWithOverviewMode(true);
-        webRadar.getSettings().setUseWideViewPort(true);
-
     }
 
     @Override
@@ -38,4 +37,22 @@ public class SnowDayResult extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
-}
+    public void radarToggle(View view) {
+        WebView webRadar = (WebView) findViewById(R.id.webRadar);
+        Button btnRadar = (Button) findViewById(R.id.btnRadar);
+        if (webRadar.getVisibility() == View.GONE) {
+            webRadar.setEnabled(true);
+            webRadar.setVisibility(View.VISIBLE);
+            webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
+            webRadar.getSettings().setLoadWithOverviewMode(true);
+            webRadar.getSettings().setUseWideViewPort(true);
+            btnRadar.setText(R.string.radarhide);
+        }else{
+            webRadar.setVisibility(View.GONE);
+            webRadar.setEnabled(false);
+            btnRadar.setText(R.string.radarshow);
+            }
+        }
+
+    }
+
