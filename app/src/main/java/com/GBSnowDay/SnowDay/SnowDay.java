@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -87,8 +88,8 @@ public class SnowDay extends Activity {
         setContentView(R.layout.activity_snow_day);
 
         //Make sure the user doesn't try to run the program on the weekend or during school hours
-        checkWeekend();
-        checkTime();
+        //checkWeekend();
+        //checkTime();
     }
 
 
@@ -115,6 +116,47 @@ public class SnowDay extends Activity {
 
 
     public void calculate(View view) {
+        /**
+         * This method will predict the possibility of a snow day for Grand Blanc Community Schools.
+         * Created by Corey Rowe, July 2014 - port of original Swing GUI.
+         * Factors:
+         * Predicted snowfall and time of arrival (not yet implemented)
+         * Predicted ice accumulation (not yet implemented)
+         * Predicted wind chill (below -20F?) (not yet implemented)
+         * Number of snow days accrued (more = smaller chance) (not yet implemented)
+         * Schools currently closed (data from WJRT) (not yet implemented)
+         * Schools in higher tiers (5 is highest) will increase the snow day chance.
+         * Obviously return 100% if GB is already closed.
+         */
+
+        //Date setup
+        RadioButton optToday = (RadioButton) findViewById(R.id.optToday);
+        RadioButton optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
+
+        if  (optToday.isChecked()) {
+            dayrun = 0;
+        }else if (optTomorrow.isChecked()) {
+            dayrun = 1;
+        }
+
+        date = calendar.getTime();
+        formatter = new SimpleDateFormat("MMM dd yyyy");
+        today = formatter.format(date);
+        calendar.add(Calendar.DATE, 1);
+        date = calendar.getTime();
+        formatter = new SimpleDateFormat("MMM dd yyyy");
+        tomorrow = formatter.format(date);
+
+        //Set calculation to today or tomorrow
+        TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
+
+        if (dayrun == 0) {
+            txtInfo.setText(txtInfo.getText() + "\n" + getString(R.string.DayRun) + " " + getString(R.string.today));
+        }else if (dayrun == 1) {
+            txtInfo.setText(txtInfo.getText() + "\n" + getString(R.string.DayRun) + " " + getString(R.string.tomorrow));
+        }
+
+        //Switch to SnowDayResult activity
         Intent i = new Intent(getApplicationContext(), SnowDayResult.class);
         startActivity(i);
 
