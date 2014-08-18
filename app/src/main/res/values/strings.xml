@@ -34,6 +34,7 @@
     <string name="LKFenton">Lake Fenton:</string>
     <string name="Linden">Linden:</string>
     <string name="Montrose">Montrose:</string>
+    <string name="Morris">Mount Morris:</string>
     <string name="SzCreek">Swartz Creek:</string>
     <string name="Atherton">Atherton:</string>
     <string name="Bendle">Bendle:</string>
@@ -44,6 +45,7 @@
     <string name="GB">Grand Blanc:</string>
     <string name="DayRun">Running calculation for </string>
     <string name="NoClosings">Doesn\'t look like *any* schools are closed.</string>
+    <string name="WJRTClosings">WJRT School Closings</string>
     <string name="WJRTError">Unable to parse WJRT listings.</string>
     <string name="ErrorContact">If this error persists please contact the developer.</string>
     <string name="NoWeather">"No applicable weather warnings."</string>
@@ -99,6 +101,34 @@
         <item>8</item>
         <item>9</item>
         <item>10 or more</item>
+    </string-array>
+    <string-array name="closings_array">
+        <item>@string/GB</item>
+        <item>@string/Carman</item>
+        <item>@string/Atherton</item>
+        <item>@string/Bendle</item>
+        <item>@string/Flint</item>
+        <item>@string/Goodrich</item>
+        <item>@string/Beecher</item>
+        <item>@string/Clio</item>
+        <item>@string/Davison</item>
+        <item>@string/Fenton</item>
+        <item>@string/Flushing</item>
+        <item>@string/Genesee</item>
+        <item>@string/Kearsley</item>
+        <item>@string/LKFenton</item>
+        <item>@string/Linden</item>
+        <item>@string/Montrose</item>
+        <item>@string/Morris</item>
+        <item>@string/SzCreek</item>
+        <item>@string/Durand</item>
+        <item>@string/Holly</item>
+        <item>@string/Lapeer</item>
+        <item>@string/Owosso</item>
+        <item>@string/GBAcademy</item>
+        <item>@string/GISD</item>
+        <item>@string/HolyFamily</item>
+        <item>@string/WPAcademy</item>
     </string-array>
 
 </resources>

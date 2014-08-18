@@ -78,17 +78,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calculate"
-        android:onClick="calculate"
         android:id="@+id/btnCalculate"
-        android:enabled="true"
+        android:enabled="false"
         android:background="#ff2aa9d4"
         android:textColor="@android:color/white"
         android:clickable="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/progCalculate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/txtInfo"
+        android:layout_alignEnd="@+id/txtInfo" />
 
     <TextView
         android:layout_width="match_parent"
@@ -103,12 +102,19 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/btnCalculate" />
 
-    <ScrollView
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_alignTop="@+id/txtInfo"
+        android:id="@+id/progCalculate"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:max="100"
+        android:progress="0"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btnCalculate"
+        android:layout_alignEnd="@+id/btnCalculate" />
 
 </RelativeLayout>

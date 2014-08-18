@@ -1,16 +1,16 @@
 package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.TabHost;
 import android.widget.TextView;
 
-public class SnowDayResult extends Activity{
+public class SnowDayResult extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +40,25 @@ public class SnowDayResult extends Activity{
     public void radarToggle(View view) {
         WebView webRadar = (WebView) findViewById(R.id.webRadar);
         Button btnRadar = (Button) findViewById(R.id.btnRadar);
+        TextView txtGB = (TextView) findViewById(R.id.txtGB);
         if (webRadar.getVisibility() == View.GONE) {
+            txtGB.setVisibility(View.GONE);
             webRadar.setEnabled(true);
             webRadar.setVisibility(View.VISIBLE);
             webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
             webRadar.getSettings().setLoadWithOverviewMode(true);
             webRadar.getSettings().setUseWideViewPort(true);
             btnRadar.setText(R.string.radarhide);
-        }else{
+        } else {
+            txtGB.setVisibility(View.VISIBLE);
             webRadar.setVisibility(View.GONE);
             webRadar.setEnabled(false);
             btnRadar.setText(R.string.radarshow);
-            }
         }
-
     }
+}
+
+
+
+
 
