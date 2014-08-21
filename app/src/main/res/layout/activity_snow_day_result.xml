@@ -36,9 +36,10 @@
         android:id="@+id/btnRadar"
         android:layout_toEndOf="@+id/webRadar"
         android:onClick="radarToggle"
+        android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/webRadar"
-        android:textColor="@android:color/white" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,7 +53,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +68,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,7 +83,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -94,7 +98,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,7 +113,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,7 +128,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -136,7 +143,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -150,7 +158,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -164,7 +173,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -178,7 +188,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -192,7 +203,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -206,7 +218,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -220,7 +233,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -234,7 +248,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -248,7 +263,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -262,7 +278,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -276,7 +293,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -290,7 +308,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -304,7 +323,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -318,7 +338,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -332,7 +353,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -346,7 +368,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -360,7 +383,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -374,7 +398,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -388,7 +413,8 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtWeather"
-        android:layout_toStartOf="@+id/txtWeather" />
+        android:layout_toStartOf="@+id/txtWeather"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -402,20 +428,25 @@
         android:visibility="visible"
         android:textColor="@android:color/white"
         android:layout_toLeftOf="@+id/txtPercent"
-        android:layout_toStartOf="@+id/txtPercent" />
+        android:layout_toStartOf="@+id/txtPercent"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/txtPercent"
-        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/picWJRT"
         android:layout_toEndOf="@+id/picWJRT"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/txtWPAcademy"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:text="Test"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textIsSelectable="false"
+        android:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -423,10 +454,21 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/txtWeather"
         android:layout_toEndOf="@+id/picWJRT"
-        android:layout_alignRight="@+id/txtPercent"
-        android:layout_alignEnd="@+id/txtPercent"
-        android:layout_above="@+id/txtPercent"
-        android:layout_below="@+id/picWJRT"
-        android:layout_toRightOf="@+id/picWJRT" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/txtFlint"
+        android:layout_alignBottom="@+id/txtHolyFamily" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/txtInfo"
+        android:layout_toEndOf="@+id/picWJRT"
+        android:layout_toRightOf="@+id/picWJRT"
+        android:layout_alignRight="@+id/txtWeather"
+        android:layout_alignEnd="@+id/txtWeather"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/txtGoodrich" />
 
 </RelativeLayout>

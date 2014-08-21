@@ -5,6 +5,10 @@
     <!-- Allows applications to open network sockets. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--This permission is temporary (used for scraper test documents). Will be removed before release. -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
