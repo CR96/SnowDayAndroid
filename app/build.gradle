@@ -5,12 +5,12 @@ repositories {
 }
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 20
     buildToolsVersion '20.0.0'
     defaultConfig {
         applicationId 'com.GBSnowDay.SnowDay'
         minSdkVersion 7
-        targetSdkVersion 20
+        targetSdkVersion 19
         versionCode 1
         versionName '1.0'
     }

@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -56,6 +59,9 @@ public class SnowDayResult extends Activity {
 
     WebView webRadar;
     Button btnRadar;
+    ProgressBar progCalculate;
+
+    TabHost tabHost;
 
     //Variable declaration
     public String orgName;
@@ -125,7 +131,27 @@ public class SnowDayResult extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snow_day_result);
 
+        //Create TabHost
+        tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.setup();
+
+        TabHost.TabSpec specs = tabHost.newTabSpec("tag1");
+        specs.setContent(R.id.tab1);
+        specs.setIndicator("Percent");
+        tabHost.addTab(specs);
+
+        specs = tabHost.newTabSpec("tag2");
+        specs.setContent(R.id.tab2);
+        specs.setIndicator("Closings");
+        tabHost.addTab(specs);
+
+        specs = tabHost.newTabSpec("tag3");
+        specs.setContent(R.id.tab3);
+        specs.setIndicator("Weather");
+        tabHost.addTab(specs);
+
         //Declare views
+        //picWJRT = (ImageView) findViewById(R.id.picWJRT);
         txtGB = (TextView) findViewById(R.id.txtGB);
         txtCarman = (TextView) findViewById(R.id.txtCarman);
         txtAtherton = (TextView) findViewById(R.id.txtAtherton);
@@ -158,6 +184,8 @@ public class SnowDayResult extends Activity {
         txtInfo = (TextView) findViewById(R.id.txtInfo);
         webRadar = (WebView) findViewById(R.id.webRadar);
         btnRadar = (Button) findViewById(R.id.btnRadar);
+        progCalculate = (ProgressBar) findViewById(R.id.progCalculate);
+
         Calculate();
 
 
@@ -184,79 +212,18 @@ public class SnowDayResult extends Activity {
 
     public void radarToggle(View view) {
         if (webRadar.getVisibility() == View.GONE) {
-            txtGB.setVisibility(View.GONE);
-            txtGBAcademy.setVisibility(View.GONE);
-            txtGISD.setVisibility(View.GONE);
-            txtHolyFamily.setVisibility(View.GONE);
-            txtWPAcademy.setVisibility(View.GONE);
-            txtDurand.setVisibility(View.GONE);
-            txtBeecher.setVisibility(View.GONE);
-            txtClio.setVisibility(View.GONE);
-            txtDavison.setVisibility(View.GONE);
-            txtFenton.setVisibility(View.GONE);
-            txtFlushing.setVisibility(View.GONE);
-            txtGenesee.setVisibility(View.GONE);
-            txtKearsley.setVisibility(View.GONE);
-            txtLKFenton.setVisibility(View.GONE);
-            txtLinden.setVisibility(View.GONE);
-            txtMontrose.setVisibility(View.GONE);
-            txtMorris.setVisibility(View.GONE);
-            txtSzCreek.setVisibility(View.GONE);
-            txtAtherton.setVisibility(View.GONE);
-            txtDurand.setVisibility(View.GONE);
-            txtHolly.setVisibility(View.GONE);
-            txtLapeer.setVisibility(View.GONE);
-            txtOwosso.setVisibility(View.GONE);
-            txtBendle.setVisibility(View.GONE);
-            txtFlint.setVisibility(View.GONE);
-            txtGoodrich.setVisibility(View.GONE);
-            txtCarman.setVisibility(View.GONE);
-            txtPercent.setVisibility(View.GONE);
-            txtWeather.setVisibility(View.GONE);
-            txtInfo.setVisibility(View.GONE);
-            
             webRadar.setEnabled(true);
             webRadar.setVisibility(View.VISIBLE);
             webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
             webRadar.getSettings().setLoadWithOverviewMode(true);
             webRadar.getSettings().setUseWideViewPort(true);
             btnRadar.setText(R.string.radarhide);
+            txtWeather.setVisibility(View.GONE);
         } else {
             webRadar.setVisibility(View.GONE);
             webRadar.setEnabled(false);
             btnRadar.setText(R.string.radarshow);
-
-            txtGB.setVisibility(View.VISIBLE);
-            txtGBAcademy.setVisibility(View.VISIBLE);
-            txtGISD.setVisibility(View.VISIBLE);
-            txtHolyFamily.setVisibility(View.VISIBLE);
-            txtWPAcademy.setVisibility(View.VISIBLE);
-            txtDurand.setVisibility(View.VISIBLE);
-            txtBeecher.setVisibility(View.VISIBLE);
-            txtClio.setVisibility(View.VISIBLE);
-            txtDavison.setVisibility(View.VISIBLE);
-            txtFenton.setVisibility(View.VISIBLE);
-            txtFlushing.setVisibility(View.VISIBLE);
-            txtGenesee.setVisibility(View.VISIBLE);
-            txtKearsley.setVisibility(View.VISIBLE);
-            txtLKFenton.setVisibility(View.VISIBLE);
-            txtLinden.setVisibility(View.VISIBLE);
-            txtMontrose.setVisibility(View.VISIBLE);
-            txtMorris.setVisibility(View.VISIBLE);
-            txtSzCreek.setVisibility(View.VISIBLE);
-            txtAtherton.setVisibility(View.VISIBLE);
-            txtDurand.setVisibility(View.VISIBLE);
-            txtHolly.setVisibility(View.VISIBLE);
-            txtLapeer.setVisibility(View.VISIBLE);
-            txtOwosso.setVisibility(View.VISIBLE);
-            txtBendle.setVisibility(View.VISIBLE);
-            txtFlint.setVisibility(View.VISIBLE);
-            txtGoodrich.setVisibility(View.VISIBLE);
-            txtCarman.setVisibility(View.VISIBLE);
-            txtPercent.setVisibility(View.VISIBLE);
             txtWeather.setVisibility(View.VISIBLE);
-            txtInfo.setVisibility(View.VISIBLE);
-
         }
     }
 
@@ -308,6 +275,8 @@ public class SnowDayResult extends Activity {
         WJRTActive = false;
         NWSActive = false;
 
+        btnRadar.setEnabled(false);
+        progCalculate.setVisibility(View.VISIBLE);
         //Reset variables
         schoolpercent = 0;
         weatherpercent = 0;
@@ -494,7 +463,7 @@ public class SnowDayResult extends Activity {
 
             System.out.println("Checking for null pointers...");
             if (orgName == null || status == null) {
-                System.out.println("orgName of status is null.");
+                System.out.println("orgName or status is null.");
                 schooltext = schools.text();
                 //This shows in place of the table (as plain text) if no schools or institutions are closed.
                 if (schooltext.contains("no active records")) {
@@ -1085,13 +1054,18 @@ public class SnowDayResult extends Activity {
                     if (!GB) {
                         System.out.println("GB is false.");
                         if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy") && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Offices") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Today") && dayrun == 0) {
-                            txtInfo.setText(txtInfo.getText() + "\nGrand Blanc is Closed Today! \nEnjoy your Snow Day!");
-                            txtGB.setText("Grand Blanc: CLOSED");
-                            txtGB.setBackgroundColor(Color.RED);
-                            percent = 100;
-                            txtPercent.setText(percent + "%");
+                            runOnUiThread(new Runnable() {
+                                  public void run() {
+                                      txtInfo.setText(txtInfo.getText() + "\nGrand Blanc is Closed Today! \nEnjoy your Snow Day!");
+                                      txtGB.setText("Grand Blanc: CLOSED");
+                                      txtGB.setBackgroundColor(Color.RED);
+                                      percent = 100;
+                                      txtPercent.setText(percent + "%");
+                                  }
+                            });
                             GB = true;
                             System.out.println("GB Found (today)!");
+                            break;
                         } else if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy") && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Offices") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Tomorrow") && dayrun == 1) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -1104,6 +1078,7 @@ public class SnowDayResult extends Activity {
                             });
                             GB = true;
                             System.out.println("GB Found (tomorrow)!");
+                            break;
                         } else {
                             System.out.println("Didn't find GB yet");
                             runOnUiThread(new Runnable() {
@@ -1418,38 +1393,75 @@ public class SnowDayResult extends Activity {
                 percent = 100;
             }
 
-            runOnUiThread(new Runnable() {
-                public void run() {
-
                     System.out.println("Enjoy this cool little animation.");
-                    txtPercent.setText("0%");
-                    txtPercent.setVisibility(View.VISIBLE);
+                    runOnUiThread(new Runnable() {
+                          public void run() {
+                              txtPercent.setText("0%");
+                              txtPercent.setVisibility(View.VISIBLE);
+                          }
+                    });
 
-                    //Animate txtPercent
-                    percentscroll = 0;
+                //Animate txtPercent
+                percentscroll=0;
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        progCalculate.setVisibility(View.GONE);
+                    }
+                });
 
-                    try {
-                        for (int i = 0; i < percent + 1; i++) {
-                            Thread.sleep(10);
-                            if (percentscroll >= 0 && percentscroll <= 20) {
-                                txtPercent.setTextColor(Color.RED);
-                            } else if (percentscroll > 20 && percentscroll <= 60) {
-                                txtPercent.setTextColor(Color.rgb(255, 165, 0));
-                            } else if (percentscroll > 60 && percentscroll <= 80) {
-                                txtPercent.setTextColor(Color.GREEN);
-                            } else if (percentscroll > 80) {
-                                txtPercent.setTextColor(Color.BLUE);
-                            }
-                            txtPercent.setText((percentscroll) + "%");
-                            percentscroll++;
+                try
+
+                {
+                    for (int i = 0; i < percent; i++) {
+                        Thread.sleep(10);
+                        if (percentscroll >= 0 && percentscroll <= 20) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    txtPercent.setTextColor(Color.RED);
+                                }
+                            });
+                        } else if (percentscroll > 20 && percentscroll <= 60) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    txtPercent.setTextColor(Color.rgb(255, 165, 0));
+                                }
+                            });
+                        } else if (percentscroll > 60 && percentscroll <= 80) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    txtPercent.setTextColor(Color.GREEN);
+                                }
+                            });
+                        } else if (percentscroll > 80) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    txtPercent.setTextColor(Color.BLUE);
+                                }
+                            });
                         }
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                txtPercent.setText((percentscroll) + "%");
+                            }
+                        });
+                        percentscroll++;
                     }
                 }
-            });
+
+                catch(
+                InterruptedException ex
+                )
+
+                {
+                    ex.printStackTrace();
+                }
+
+                return null;
+            }
+
+        protected void onPostExecute(Void Result) {
             System.out.println("Program Completed. We made it!");
-            return null;
+            btnRadar.setEnabled(true);
         }
     }
 }

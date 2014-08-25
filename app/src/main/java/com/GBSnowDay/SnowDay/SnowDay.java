@@ -65,7 +65,7 @@ public class SnowDay extends Activity {
 
 
         //Make sure the user doesn't try to run the program on the weekend or during school hours
-        checkWeekend();
+        //checkWeekend();
         checkTime();
 
         //Listen for button click
@@ -155,7 +155,7 @@ public class SnowDay extends Activity {
             System.out.println("Today is " + today);
         } else if (dayrun == 1) {
             txtInfo.setText(txtInfo.getText() + "\n" + getString(R.string.DayRun) + " " + getString(R.string.tomorrow));
-            System.out.println("Tomorow is " + tomorrow);
+            System.out.println("Tomorrow is " + tomorrow);
         }
 
         //Have the user input past snow days
