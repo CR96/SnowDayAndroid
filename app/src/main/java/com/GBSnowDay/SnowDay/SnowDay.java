@@ -2,10 +2,12 @@ package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -20,7 +22,6 @@ import java.util.Date;
 public class SnowDay extends Activity {
 
     //Declare all views
-    ProgressBar progCalculate;
     RadioButton optToday;
     RadioButton optTomorrow;
     TextView txtInfo;
@@ -56,7 +57,6 @@ public class SnowDay extends Activity {
         setContentView(R.layout.activity_snow_day);
 
         //Declare views
-        progCalculate = (ProgressBar) findViewById(R.id.progCalculate);
         optToday = (RadioButton) findViewById(R.id.optToday);
         optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
         txtInfo = (TextView) findViewById(R.id.txtInfo);
@@ -65,22 +65,46 @@ public class SnowDay extends Activity {
 
 
         //Make sure the user doesn't try to run the program on the weekend or during school hours
-        //checkWeekend();
+        checkWeekend();
         checkTime();
+        //Listen for optToday or optTomorrow changes
+        optToday.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                System.out.println("optToday checked");
+                btnCalculate.setEnabled(true);
+            }
+        });
+        optTomorrow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                System.out.println("optTomorrow checked");
+            }
+        });
+
+        //Listen for lstDays changes
+        lstDays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if (lstDays.getSelectedItemId() == 0) {
+                    btnCalculate.setEnabled(false);
+                }else{
+                    btnCalculate.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //Listen for button click
-        btnCalculate.setEnabled(true);
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 System.out.println("btnCalculate clicked");
-                progCalculate.setVisibility(View.VISIBLE);
-                try {
-                    Calculate();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                btnCalculate.setEnabled(false);
+                Calculate();
                 //Switch to SnowDayResult activity
                 //Pass value of 'days' to new activity
+
                 Intent result = new Intent(getApplicationContext(), SnowDayResult.class);
                 result.putExtra("dayrun", dayrun);
                 result.putExtra("days", days);
@@ -113,7 +137,7 @@ public class SnowDay extends Activity {
     }
 
 
-    public void Calculate() throws InterruptedException {
+    public void Calculate() {
         /**
          * This method will predict the possibility of a snow day for Grand Blanc Community Schools.
          * Created by Corey Rowe, July 2014 - port of original Swing GUI.
@@ -161,8 +185,6 @@ public class SnowDay extends Activity {
         //Have the user input past snow days
         days = lstDays.getSelectedItemPosition() - 1;
         System.out.println("User says " + days + " snow days have occurred.");
-
-
     }
 
     private void Reset() {

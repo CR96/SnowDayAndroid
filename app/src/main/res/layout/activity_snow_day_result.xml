@@ -51,7 +51,9 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/progCalculate"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        android:indeterminate="true" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -71,6 +73,19 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:layout_below="@+id/txtWPAcademy" />
+
+                    <ListView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lstClosings"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:entries="@array/closings_array"
+                        android:drawSelectorOnTop="false"
+                        android:focusable="false"
+                        android:fastScrollEnabled="true" />
 
                     <TextView
                         android:layout_width="wrap_content"

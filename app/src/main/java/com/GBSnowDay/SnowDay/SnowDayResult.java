@@ -276,7 +276,7 @@ public class SnowDayResult extends Activity {
         NWSActive = false;
 
         btnRadar.setEnabled(false);
-        progCalculate.setVisibility(View.VISIBLE);
+        progCalculate.setVisibility(View.GONE);
         //Reset variables
         schoolpercent = 0;
         weatherpercent = 0;
@@ -319,7 +319,6 @@ public class SnowDayResult extends Activity {
         GB = false;
 
         txtPercent.setText("");
-        nullWeather = true;
         txtGBAcademy.setText("");
         txtGBAcademy.setBackgroundColor(Color.BLACK);
         txtGISD.setText("");
@@ -1319,6 +1318,7 @@ public class SnowDayResult extends Activity {
     private class PercentCalculate extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... nothing) {
             System.out.println("Starting PercentCalculate");
+
             //Give the scrapers time to act before displaying the percent
 
             //Sleep for 1000 ms - if the while loop is run *too* soon a scraper might not have
@@ -1393,71 +1393,68 @@ public class SnowDayResult extends Activity {
                 percent = 100;
             }
 
-                    System.out.println("Enjoy this cool little animation.");
-                    runOnUiThread(new Runnable() {
-                          public void run() {
-                              txtPercent.setText("0%");
-                              txtPercent.setVisibility(View.VISIBLE);
-                          }
-                    });
+            percentscroll=0;
 
-                //Animate txtPercent
-                percentscroll=0;
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        progCalculate.setVisibility(View.GONE);
-                    }
-                });
+            System.out.println("Enjoy this cool little animation.");
+            runOnUiThread(new Runnable() {
+                  public void run() {
+                      txtPercent.setText("0%");
+                      txtPercent.setVisibility(View.VISIBLE);
+                      progCalculate.setVisibility(View.GONE);
+                  }
+            });
 
-                try
+            //Animate txtPercent
 
-                {
-                    for (int i = 0; i < percent; i++) {
-                        Thread.sleep(10);
-                        if (percentscroll >= 0 && percentscroll <= 20) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(Color.RED);
-                                }
-                            });
-                        } else if (percentscroll > 20 && percentscroll <= 60) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(Color.rgb(255, 165, 0));
-                                }
-                            });
-                        } else if (percentscroll > 60 && percentscroll <= 80) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(Color.GREEN);
-                                }
-                            });
-                        } else if (percentscroll > 80) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(Color.BLUE);
-                                }
-                            });
-                        }
+            try
+
+            {
+                for (int i = 0; i < percent; i++) {
+                    Thread.sleep(10);
+                    if (percentscroll >= 0 && percentscroll <= 20) {
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                txtPercent.setText((percentscroll) + "%");
+                                txtPercent.setTextColor(Color.RED);
                             }
                         });
-                        percentscroll++;
+                    } else if (percentscroll > 20 && percentscroll <= 60) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                txtPercent.setTextColor(Color.rgb(255, 165, 0));
+                            }
+                        });
+                    } else if (percentscroll > 60 && percentscroll <= 80) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                txtPercent.setTextColor(Color.GREEN);
+                            }
+                        });
+                    } else if (percentscroll > 80) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                txtPercent.setTextColor(Color.BLUE);
+                            }
+                        });
                     }
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            txtPercent.setText((percentscroll) + "%");
+                        }
+                    });
+                    percentscroll++;
                 }
-
-                catch(
-                InterruptedException ex
-                )
-
-                {
-                    ex.printStackTrace();
-                }
-
-                return null;
             }
+
+            catch(
+            InterruptedException ex
+            )
+
+            {
+                ex.printStackTrace();
+            }
+
+            return null;
+        }
 
         protected void onPostExecute(Void Result) {
             System.out.println("Program Completed. We made it!");
