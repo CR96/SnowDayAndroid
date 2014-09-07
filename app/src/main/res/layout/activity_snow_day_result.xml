@@ -8,10 +8,18 @@
     android:clickable="false"
     android:visibility="visible">
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progCalculate"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true" />
 
     <TabHost
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/tabHost"
         android:layout_alignParentLeft="true" >
 
@@ -23,7 +31,8 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></TabWidget>
+                android:layout_height="wrap_content">
+            </TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -45,14 +54,19 @@
                         android:textColor="@android:color/white"
                         android:textSize="72sp" />
 
-                    <ProgressBar
-                        style="?android:attr/progressBarStyleLarge"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/progCalculate"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:indeterminate="true" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/txtInfo"
+
+                        android:visibility="visible"
+                        android:layout_toRightOf="@+id/txtPercent"
+                        android:layout_toEndOf="@+id/txtPercent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentEnd="true" />
 
                 </RelativeLayout>
 
@@ -61,420 +75,387 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
-                    <TextView
+                    <ScrollView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/txtInfo"
-
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
+                        android:id="@+id/scrollClosings"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_below="@+id/txtWPAcademy" />
-
-                    <ListView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lstClosings"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:entries="@array/closings_array"
-                        android:drawSelectorOnTop="false"
-                        android:focusable="false"
-                        android:fastScrollEnabled="true" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/GB"
-                        android:id="@+id/txtGB"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:fillViewport="true" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Carman"
-                        android:id="@+id/txtCarman"
-                        android:layout_below="@+id/txtGB"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+                            
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/GB"
+                                android:id="@+id/txtGB"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Atherton"
-                        android:id="@+id/txtAtherton"
-                        android:layout_below="@+id/txtCarman"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Carman"
+                                android:id="@+id/txtCarman"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Bendle"
-                        android:id="@+id/txtBendle"
-                        android:layout_below="@+id/txtAtherton"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/tier4"
+                                android:id="@+id/txtTier4"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Flint"
-                        android:id="@+id/txtFlint"
-                        android:layout_below="@+id/txtBendle"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Goodrich"
-                        android:id="@+id/txtGoodrich"
-                        android:layout_below="@+id/txtFlint"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Atherton"
+                                android:id="@+id/txtAtherton"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Beecher"
-                        android:id="@+id/txtBeecher"
-                        android:layout_below="@+id/txtGoodrich"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Bendle"
+                                android:id="@+id/txtBendle"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Clio"
-                        android:id="@+id/txtClio"
-                        android:layout_below="@+id/txtBeecher"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Flint"
+                                android:id="@+id/txtFlint"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Davison"
-                        android:id="@+id/txtDavison"
-                        android:layout_below="@+id/txtClio"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Goodrich"
+                                android:id="@+id/txtGoodrich"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Fenton"
-                        android:id="@+id/txtFenton"
-                        android:layout_below="@+id/txtDavison"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/tier3"
+                                android:id="@+id/txtTier3"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Flushing"
-                        android:id="@+id/txtFlushing"
-                        android:layout_below="@+id/txtFenton"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Genesee"
-                        android:id="@+id/txtGenesee"
-                        android:layout_below="@+id/txtFlushing"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Beecher"
+                                android:id="@+id/txtBeecher"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Kearsley"
-                        android:id="@+id/txtKearsley"
-                        android:layout_below="@+id/txtGenesee"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Clio"
+                                android:id="@+id/txtClio"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/LKFenton"
-                        android:id="@+id/txtLKFenton"
-                        android:layout_below="@+id/txtKearsley"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Davison"
+                                android:id="@+id/txtDavison"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Linden"
-                        android:id="@+id/txtLinden"
-                        android:layout_below="@+id/txtLKFenton"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Fenton"
+                                android:id="@+id/txtFenton"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Montrose"
-                        android:id="@+id/txtMontrose"
-                        android:layout_below="@+id/txtLinden"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Flushing"
+                                android:id="@+id/txtFlushing"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Morris"
-                        android:id="@+id/txtMorris"
-                        android:layout_below="@+id/txtMontrose"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Genesee"
+                                android:id="@+id/txtGenesee"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/SzCreek"
-                        android:id="@+id/txtSzCreek"
-                        android:layout_below="@+id/txtMorris"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Kearsley"
+                                android:id="@+id/txtKearsley"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Durand"
-                        android:id="@+id/txtDurand"
-                        android:layout_below="@+id/txtSzCreek"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/LKFenton"
+                                android:id="@+id/txtLKFenton"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Holly"
-                        android:id="@+id/txtHolly"
-                        android:layout_below="@+id/txtDurand"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Linden"
+                                android:id="@+id/txtLinden"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Lapeer"
-                        android:id="@+id/txtLapeer"
-                        android:layout_below="@+id/txtHolly"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Montrose"
+                                android:id="@+id/txtMontrose"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/Owosso"
-                        android:id="@+id/txtOwosso"
-                        android:layout_below="@+id/txtLapeer"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Morris"
+                                android:id="@+id/txtMorris"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/GBAcademy"
-                        android:id="@+id/txtGBAcademy"
-                        android:layout_below="@+id/txtOwosso"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/SzCreek"
+                                android:id="@+id/txtSzCreek"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/GISD"
-                        android:id="@+id/txtGISD"
-                        android:layout_below="@+id/txtGBAcademy"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/tier2"
+                                android:id="@+id/txtTier2"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/HolyFamily"
-                        android:id="@+id/txtHolyFamily"
-                        android:layout_below="@+id/txtGISD"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/WPAcademy"
-                        android:id="@+id/txtWPAcademy"
-                        android:layout_below="@+id/txtHolyFamily"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:visibility="visible"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Durand"
+                                android:id="@+id/txtDurand"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Holly"
+                                android:id="@+id/txtHolly"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Lapeer"
+                                android:id="@+id/txtLapeer"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Owosso"
+                                android:id="@+id/txtOwosso"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/tier1"
+                                android:id="@+id/txtTier1"
+
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/GBAcademy"
+                                android:id="@+id/txtGBAcademy"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/GISD"
+                                android:id="@+id/txtGISD"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/HolyFamily"
+                                android:id="@+id/txtHolyFamily"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/WPAcademy"
+                                android:id="@+id/txtWPAcademy"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+                        </LinearLayout>
+                    </ScrollView>
 
                 </RelativeLayout>
 
@@ -493,23 +474,22 @@
                         style="?android:attr/buttonStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:text="@string/radarshow"
                         android:id="@+id/btnRadar"
                         android:onClick="radarToggle"
-                        android:textColor="@android:color/white"
-                        android:layout_alignParentBottom="true" />
+                        android:textColor="@android:color/white" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/txtWeather"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:id="@+id/txtWeather" />
                 </RelativeLayout>
 
 
             </FrameLayout>
+
         </LinearLayout>
     </TabHost>
 

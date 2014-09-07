@@ -11,6 +11,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -52,6 +53,12 @@ public class SnowDayResult extends Activity {
     TextView txtGISD;
     TextView txtHolyFamily;
     TextView txtWPAcademy;
+    
+    TextView txtTier1;
+    TextView txtTier2;
+    TextView txtTier3;
+    TextView txtTier4;
+    TextView txtTier5;
 
     TextView txtInfo;
     TextView txtPercent;
@@ -120,76 +127,76 @@ public class SnowDayResult extends Activity {
     public boolean WJRTActive;
     public boolean NWSActive;
 
-    public Thread wjrt;
-    public Thread nws;
-    public Thread p;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("Hello from activity_snow_day_result!");
-        System.out.println("Setting up views");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_snow_day_result);
+            System.out.println("Hello from activity_snow_day_result!");
+            System.out.println("Setting up views");
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_snow_day_result);
 
-        //Create TabHost
-        tabHost = (TabHost) findViewById(R.id.tabHost);
-        tabHost.setup();
+            //Create TabHost
+            tabHost = (TabHost) findViewById(R.id.tabHost);
+            tabHost.setup();
 
-        TabHost.TabSpec specs = tabHost.newTabSpec("tag1");
-        specs.setContent(R.id.tab1);
-        specs.setIndicator("Percent");
-        tabHost.addTab(specs);
+            TabHost.TabSpec specs = tabHost.newTabSpec("tag1");
+            specs.setContent(R.id.tab1);
+            specs.setIndicator("Percent");
+            tabHost.addTab(specs);
 
-        specs = tabHost.newTabSpec("tag2");
-        specs.setContent(R.id.tab2);
-        specs.setIndicator("Closings");
-        tabHost.addTab(specs);
+            specs = tabHost.newTabSpec("tag2");
+            specs.setContent(R.id.tab2);
+            specs.setIndicator("Closings");
+            tabHost.addTab(specs);
 
-        specs = tabHost.newTabSpec("tag3");
-        specs.setContent(R.id.tab3);
-        specs.setIndicator("Weather");
-        tabHost.addTab(specs);
+            specs = tabHost.newTabSpec("tag3");
+            specs.setContent(R.id.tab3);
+            specs.setIndicator("Weather");
+            tabHost.addTab(specs);
 
-        //Declare views
-        //picWJRT = (ImageView) findViewById(R.id.picWJRT);
-        txtGB = (TextView) findViewById(R.id.txtGB);
-        txtCarman = (TextView) findViewById(R.id.txtCarman);
-        txtAtherton = (TextView) findViewById(R.id.txtAtherton);
-        txtBendle = (TextView) findViewById(R.id.txtBendle);
-        txtFlint = (TextView) findViewById(R.id.txtFlint);
-        txtGoodrich = (TextView) findViewById(R.id.txtGoodrich);
-        txtBeecher = (TextView) findViewById(R.id.txtBeecher);
-        txtClio = (TextView) findViewById(R.id.txtClio);
-        txtDavison = (TextView) findViewById(R.id.txtDavison);
-        txtFenton = (TextView) findViewById(R.id.txtFenton);
-        txtFlushing = (TextView) findViewById(R.id.txtFlushing);
-        txtGenesee = (TextView) findViewById(R.id.txtGenesee);
-        txtKearsley = (TextView) findViewById(R.id.txtKearsley);
-        txtLKFenton = (TextView) findViewById(R.id.txtLKFenton);
-        txtLinden = (TextView) findViewById(R.id.txtLinden);
-        txtMontrose = (TextView) findViewById(R.id.txtMontrose);
-        txtMorris = (TextView) findViewById(R.id.txtMorris);
-        txtSzCreek = (TextView) findViewById(R.id.txtSzCreek);
-        txtDurand = (TextView) findViewById(R.id.txtDurand);
-        txtHolly = (TextView) findViewById(R.id.txtHolly);
-        txtLapeer = (TextView) findViewById(R.id.txtLapeer);
-        txtOwosso = (TextView) findViewById(R.id.txtOwosso);
-        txtGBAcademy = (TextView) findViewById(R.id.txtGBAcademy);
-        txtGISD = (TextView) findViewById(R.id.txtGISD);
-        txtHolyFamily = (TextView) findViewById(R.id.txtHolyFamily);
-        txtWPAcademy = (TextView) findViewById(R.id.txtWPAcademy);
+            //Declare views
+            //picWJRT = (ImageView) findViewById(R.id.picWJRT);
+            txtGB = (TextView) findViewById(R.id.txtGB);
+            txtCarman = (TextView) findViewById(R.id.txtCarman);
+            txtAtherton = (TextView) findViewById(R.id.txtAtherton);
+            txtBendle = (TextView) findViewById(R.id.txtBendle);
+            txtFlint = (TextView) findViewById(R.id.txtFlint);
+            txtGoodrich = (TextView) findViewById(R.id.txtGoodrich);
+            txtBeecher = (TextView) findViewById(R.id.txtBeecher);
+            txtClio = (TextView) findViewById(R.id.txtClio);
+            txtDavison = (TextView) findViewById(R.id.txtDavison);
+            txtFenton = (TextView) findViewById(R.id.txtFenton);
+            txtFlushing = (TextView) findViewById(R.id.txtFlushing);
+            txtGenesee = (TextView) findViewById(R.id.txtGenesee);
+            txtKearsley = (TextView) findViewById(R.id.txtKearsley);
+            txtLKFenton = (TextView) findViewById(R.id.txtLKFenton);
+            txtLinden = (TextView) findViewById(R.id.txtLinden);
+            txtMontrose = (TextView) findViewById(R.id.txtMontrose);
+            txtMorris = (TextView) findViewById(R.id.txtMorris);
+            txtSzCreek = (TextView) findViewById(R.id.txtSzCreek);
+            txtDurand = (TextView) findViewById(R.id.txtDurand);
+            txtHolly = (TextView) findViewById(R.id.txtHolly);
+            txtLapeer = (TextView) findViewById(R.id.txtLapeer);
+            txtOwosso = (TextView) findViewById(R.id.txtOwosso);
+            txtGBAcademy = (TextView) findViewById(R.id.txtGBAcademy);
+            txtGISD = (TextView) findViewById(R.id.txtGISD);
+            txtHolyFamily = (TextView) findViewById(R.id.txtHolyFamily);
+            txtWPAcademy = (TextView) findViewById(R.id.txtWPAcademy);
+        
+            txtTier1 = (TextView) findViewById(R.id.txtTier1);
+            txtTier2 = (TextView) findViewById(R.id.txtTier2);
+            txtTier3 = (TextView) findViewById(R.id.txtTier3);
+            txtTier4 = (TextView) findViewById(R.id.txtTier4);
 
-        txtPercent = (TextView) findViewById(R.id.txtPercent);
-        txtWeather = (TextView) findViewById(R.id.txtWeather);
-        txtInfo = (TextView) findViewById(R.id.txtInfo);
-        webRadar = (WebView) findViewById(R.id.webRadar);
-        btnRadar = (Button) findViewById(R.id.btnRadar);
-        progCalculate = (ProgressBar) findViewById(R.id.progCalculate);
+            txtPercent = (TextView) findViewById(R.id.txtPercent);
+            txtWeather = (TextView) findViewById(R.id.txtWeather);
+            txtInfo = (TextView) findViewById(R.id.txtInfo);
+            webRadar = (WebView) findViewById(R.id.webRadar);
+            btnRadar = (Button) findViewById(R.id.btnRadar);
+            progCalculate = (ProgressBar) findViewById(R.id.progCalculate);
+        
 
-        Calculate();
-
-
-    }
+            Calculate();
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -275,8 +282,9 @@ public class SnowDayResult extends Activity {
         WJRTActive = false;
         NWSActive = false;
 
-        btnRadar.setEnabled(false);
-        progCalculate.setVisibility(View.GONE);
+        txtInfo.setVisibility(View.GONE);
+        progCalculate.setVisibility(View.VISIBLE);
+
         //Reset variables
         schoolpercent = 0;
         weatherpercent = 0;
@@ -319,61 +327,93 @@ public class SnowDayResult extends Activity {
         GB = false;
 
         txtPercent.setText("");
-        txtGBAcademy.setText("");
+        txtGBAcademy.setText((R.string.GBAcademy));
         txtGBAcademy.setBackgroundColor(Color.BLACK);
-        txtGISD.setText("");
+        txtGBAcademy.setVisibility(View.GONE);
+        txtGISD.setText(R.string.GISD);
         txtGISD.setBackgroundColor(Color.BLACK);
-        txtHolyFamily.setText("");
+        txtGISD.setVisibility(View.GONE);
+        txtHolyFamily.setText(R.string.HolyFamily);
         txtHolyFamily.setBackgroundColor(Color.BLACK);
-        txtWPAcademy.setText("");
+        txtHolyFamily.setVisibility(View.GONE);
+        txtWPAcademy.setText(R.string.WPAcademy);
         txtWPAcademy.setBackgroundColor(Color.BLACK);
-        txtDurand.setText("");
-        txtDurand.setBackgroundColor(Color.BLACK);
-        txtBeecher.setText("");
+        txtWPAcademy.setVisibility(View.GONE);
+        txtBeecher.setText(R.string.Beecher);
         txtBeecher.setBackgroundColor(Color.BLACK);
-        txtClio.setText("");
+        txtBeecher.setVisibility(View.GONE);
+        txtClio.setText(R.string.Clio);
         txtClio.setBackgroundColor(Color.BLACK);
-        txtDavison.setText("");
+        txtClio.setVisibility(View.GONE);
+        txtDavison.setText(R.string.Davison);
         txtDavison.setBackgroundColor(Color.BLACK);
-        txtFenton.setText("");
+        txtDavison.setVisibility(View.GONE);
+        txtFenton.setText(R.string.Fenton);
         txtFenton.setBackgroundColor(Color.BLACK);
-        txtFlushing.setText("");
+        txtFenton.setVisibility(View.GONE);
+        txtFlushing.setText(R.string.Flushing);
         txtFlushing.setBackgroundColor(Color.BLACK);
-        txtGenesee.setText("");
+        txtFlushing.setVisibility(View.GONE);
+        txtGenesee.setText(R.string.Genesee);
         txtGenesee.setBackgroundColor(Color.BLACK);
-        txtKearsley.setText("");
+        txtGenesee.setVisibility(View.GONE);
+        txtKearsley.setText(R.string.Kearsley);
         txtKearsley.setBackgroundColor(Color.BLACK);
-        txtLKFenton.setText("");
+        txtKearsley.setVisibility(View.GONE);
+        txtLKFenton.setText(R.string.LKFenton);
         txtLKFenton.setBackgroundColor(Color.BLACK);
-        txtLinden.setText("");
+        txtLKFenton.setVisibility(View.GONE);
+        txtLinden.setText(R.string.Linden);
         txtLinden.setBackgroundColor(Color.BLACK);
-        txtMontrose.setText("");
+        txtLinden.setVisibility(View.GONE);
+        txtMontrose.setText(R.string.Montrose);
         txtMontrose.setBackgroundColor(Color.BLACK);
-        txtMorris.setText("");
+        txtMontrose.setVisibility(View.GONE);
+        txtMorris.setText(R.string.Morris);
         txtMorris.setBackgroundColor(Color.BLACK);
-        txtSzCreek.setText("");
+        txtMorris.setVisibility(View.GONE);
+        txtSzCreek.setText(R.string.SzCreek);
         txtSzCreek.setBackgroundColor(Color.BLACK);
-        txtAtherton.setText("");
+        txtSzCreek.setVisibility(View.GONE);
+        txtAtherton.setText(R.string.Atherton);
         txtAtherton.setBackgroundColor(Color.BLACK);
-        txtDurand.setText("");
-        txtDurand.setBackgroundColor(Color.BLACK);
-        txtHolly.setText("");
-        txtHolly.setBackgroundColor(Color.BLACK);
-        txtLapeer.setText("");
-        txtLapeer.setBackgroundColor(Color.BLACK);
-        txtOwosso.setText("");
-        txtOwosso.setBackgroundColor(Color.BLACK);
-        txtBendle.setText("");
+        txtAtherton.setVisibility(View.GONE);
+        txtBendle.setText(R.string.Bendle);
         txtBendle.setBackgroundColor(Color.BLACK);
-        txtFlint.setText("");
+        txtBendle.setVisibility(View.GONE);
+        txtFlint.setText(R.string.Flint);
         txtFlint.setBackgroundColor(Color.BLACK);
-        txtGoodrich.setText("");
+        txtFlint.setVisibility(View.GONE);
+        txtGoodrich.setText(R.string.Goodrich);
         txtGoodrich.setBackgroundColor(Color.BLACK);
-        txtCarman.setText("");
+        txtGoodrich.setVisibility(View.GONE);
+        txtDurand.setText(R.string.Durand);
+        txtDurand.setBackgroundColor(Color.BLACK);
+        txtDurand.setVisibility(View.GONE);
+        txtHolly.setText(R.string.Holly);
+        txtHolly.setBackgroundColor(Color.BLACK);
+        txtHolly.setVisibility(View.GONE);
+        txtLapeer.setText(R.string.Lapeer);
+        txtLapeer.setBackgroundColor(Color.BLACK);
+        txtLapeer.setVisibility(View.GONE);
+        txtOwosso.setText(R.string.Owosso);
+        txtOwosso.setBackgroundColor(Color.BLACK);
+        txtOwosso.setVisibility(View.GONE);
+        txtCarman.setText(R.string.Carman);
         txtCarman.setBackgroundColor(Color.BLACK);
-        txtGB.setText("");
+        txtCarman.setVisibility(View.GONE);
+        txtGB.setText(R.string.GB);
         txtGB.setBackgroundColor(Color.BLACK);
-
+        txtGB.setVisibility(View.GONE);
+        
+        txtTier1.setVisibility(View.GONE);
+        txtTier2.setVisibility(View.GONE);
+        txtTier3.setVisibility(View.GONE);
+        txtTier4.setVisibility(View.GONE);
+        
+        txtWeather.setVisibility(View.GONE);
+        btnRadar.setVisibility(View.GONE);
+        
     }
 
     private class WJRTScraper extends AsyncTask<Void, Void, Void> {
@@ -401,7 +441,7 @@ public class SnowDayResult extends Activity {
 
             //This is a second rigged archive from December 23rd - Swartz Creek and Kearsley were closed on the day for reference.
 
-            /*try {
+           /* try {
                 File input = new File("mnt/sdcard/ClosingsToday.htm");
                 schools = Jsoup.parse(input, "UTF-8", "");
             }catch (IOException e) {
@@ -422,12 +462,11 @@ public class SnowDayResult extends Activity {
                 e.printStackTrace();
             }*/
 
-            //Fourth html archive - every school except GB is closed (shouldn't trigger 100%)
+            //Fourth html archive - every school except GB, Durand, Owosso, and Holy Family is closed (shouldn't trigger 100%)
 
-         /*   try {
+           /* try {
                 File input = new File("mnt/sdcard/GBNotClosed.htm");
                 schools = Jsoup.parse(input, "UTF-8", "");
-                System.out.println(schools);
             } catch (IOException e) {
                 txtInfo.setText(getString(R.string.NoConnection));
                 e.printStackTrace();
@@ -527,7 +566,8 @@ public class SnowDayResult extends Activity {
                     if (!(GBAcademy)) {
                         if (orgNameLine[i].contains("Grand Blanc Academy") && statusLine[i].contains("Closed Today")) {
                             txtGBAcademy.setText("Grand Blanc Academy: CLOSED");
-                            txtGBAcademy.setBackgroundColor(Color.rgb(255, 215, 0));
+                            //lstClosings.
+                            txtGBAcademy.setBackgroundColor(Color.rgb(255, 165, 0));
                             System.out.println("Closures Detected Correctly");
                             tier1++;
                             GBAcademy = true;
@@ -538,7 +578,7 @@ public class SnowDayResult extends Activity {
                     if (!(GISD)) {
                         if (orgNameLine[i].contains("Genesee I.S.D.") && statusLine[i].contains("Closed Today")) {
                             txtGISD.setText("Genesee I.S.D.: CLOSED");
-                            txtGISD.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtGISD.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier1++;
                             GISD = true;
                         } else {
@@ -548,7 +588,7 @@ public class SnowDayResult extends Activity {
                     if (!(HolyFamily)) {
                         if (orgNameLine[i].contains("Holy Family") && statusLine[i].contains("Closed Today")) {
                             txtHolyFamily.setText("Holy Family: CLOSED");
-                            txtHolyFamily.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtHolyFamily.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier1++;
                             HolyFamily = true;
                         } else {
@@ -558,7 +598,7 @@ public class SnowDayResult extends Activity {
                     if (!(WPAcademy)) {
                         if (orgNameLine[i].contains("Woodland Park Academy") && statusLine[i].contains("Closed Today")) {
                             txtWPAcademy.setText("Woodland Park Academy: CLOSED");
-                            txtWPAcademy.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtWPAcademy.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier1++;
                             WPAcademy = true;
                         } else {
@@ -568,7 +608,7 @@ public class SnowDayResult extends Activity {
                     if (!(Durand)) {
                         if (orgNameLine[i].contains("Durand") && !orgNameLine[i].contains("Senior") && statusLine[i].contains("Closed Today")) {
                             txtDurand.setText("Durand: CLOSED");
-                            txtDurand.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtDurand.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Durand = true;
                         } else {
@@ -578,7 +618,7 @@ public class SnowDayResult extends Activity {
                     if (!(Holly)) {
                         if (orgNameLine[i].contains("Holly") && !orgNameLine[i].contains("Academy") && statusLine[i].contains("Closed Today")) {
                             txtHolly.setText("Holly: CLOSED");
-                            txtHolly.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtHolly.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Holly = true;
                         } else {
@@ -588,7 +628,7 @@ public class SnowDayResult extends Activity {
                     if (!(Lapeer)) {
                         if (orgNameLine[i].contains("Lapeer") && !orgNameLine[i].contains("Chatfield") && !orgNameLine[i].contains("Transit") && !orgNameLine[i].contains("CMH") && !orgNameLine[i].contains("Tech") && !orgNameLine[i].contains("Offices") && !orgNameLine[i].contains("Library") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Paul") && statusLine[i].contains("Closed Today")) {
                             txtLapeer.setText("Lapeer: CLOSED");
-                            txtLapeer.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtLapeer.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Lapeer = true;
                         } else {
@@ -598,7 +638,7 @@ public class SnowDayResult extends Activity {
                     if (!(Owosso)) {
                         if (orgNameLine[i].contains("Owosso") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Baker") && !orgNameLine[i].contains("Paul") && statusLine[i].contains("Closed Today")) {
                             txtOwosso.setText("Owosso: CLOSED");
-                            txtOwosso.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtOwosso.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Owosso = true;
                         } else {
@@ -608,7 +648,7 @@ public class SnowDayResult extends Activity {
                     if (!(Beecher)) {
                         if (orgNameLine[i].contains("Beecher") && statusLine[i].contains("Closed Today")) {
                             txtBeecher.setText("Beecher: CLOSED");
-                            txtBeecher.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtBeecher.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Beecher = true;
                         } else {
@@ -618,7 +658,7 @@ public class SnowDayResult extends Activity {
                     if (!(Clio)) {
                         if (orgNameLine[i].contains("Clio") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Cornerstone") && statusLine[i].contains("Closed Today")) {
                             txtClio.setText("Clio: CLOSED");
-                            txtClio.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtClio.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Clio = true;
                         } else {
@@ -628,7 +668,7 @@ public class SnowDayResult extends Activity {
                     if (!(Davison)) {
                         if (orgNameLine[i].contains("Davison") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Faith") && !orgNameLine[i].contains("Montessori") && statusLine[i].contains("Closed Today")) {
                             txtDavison.setText("Davison: CLOSED");
-                            txtDavison.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtDavison.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Davison = true;
                         } else {
@@ -638,7 +678,7 @@ public class SnowDayResult extends Activity {
                     if (!(Fenton)) {
                         if (orgNameLine[i].contains("Fenton") && !orgNameLine[i].contains("Lake") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Montessori") && statusLine[i].contains("Closed Today")) {
                             txtFenton.setText("Fenton: CLOSED");
-                            txtFenton.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtFenton.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Fenton = true;
                         } else {
@@ -648,7 +688,7 @@ public class SnowDayResult extends Activity {
                     if (!(Flushing)) {
                         if (orgNameLine[i].contains("Flushing") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Robert") && statusLine[i].contains("Closed Today")) {
                             txtFlushing.setText("Flushing: CLOSED");
-                            txtFlushing.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtFlushing.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Flushing = true;
                         } else {
@@ -658,7 +698,7 @@ public class SnowDayResult extends Activity {
                     if (!(Genesee)) {
                         if (orgNameLine[i].contains("Genesee") && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Christian") && !orgNameLine[i].contains("Mobile") && !orgNameLine[i].contains("Programs") && !orgNameLine[i].contains("Hlth") && !orgNameLine[i].contains("Sys") && !orgNameLine[i].contains("Stem") && !orgNameLine[i].contains("I.S.D.") && statusLine[i].contains("Closed Today")) {
                             txtGenesee.setText("Genesee: CLOSED");
-                            txtGenesee.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtGenesee.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Genesee = true;
                         } else {
@@ -668,7 +708,7 @@ public class SnowDayResult extends Activity {
                     if (!(Kearsley)) {
                         if (orgNameLine[i].contains("Kearsley") && statusLine[i].contains("Closed Today")) {
                             txtKearsley.setText("Kearsley: CLOSED");
-                            txtKearsley.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtKearsley.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Kearsley = true;
                         } else {
@@ -678,7 +718,7 @@ public class SnowDayResult extends Activity {
                     if (!(LKFenton)) {
                         if (orgNameLine[i].contains("Lake Fenton") && statusLine[i].contains("Closed Today")) {
                             txtLKFenton.setText("Lake Fenton: CLOSED");
-                            txtLKFenton.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtLKFenton.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             LKFenton = true;
                         } else {
@@ -688,7 +728,7 @@ public class SnowDayResult extends Activity {
                     if (!(Linden)) {
                         if (orgNameLine[i].contains("Linden") && !orgNameLine[i].contains("Charter") && statusLine[i].contains("Closed Today")) {
                             txtLinden.setText("Linden: CLOSED");
-                            txtLinden.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtLinden.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Linden = true;
                         } else {
@@ -698,7 +738,7 @@ public class SnowDayResult extends Activity {
                     if (!(Montrose)) {
                         if (orgNameLine[i].contains("Montrose") && !orgNameLine[i].contains("Senior") && statusLine[i].contains("Closed Today")) {
                             txtMontrose.setText("Montrose: CLOSED");
-                            txtMontrose.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtMontrose.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Montrose = true;
                         } else {
@@ -708,7 +748,7 @@ public class SnowDayResult extends Activity {
                     if (!(Morris)) {
                         if (orgNameLine[i].contains("Mt. Morris") && !orgNameLine[i].contains("Administration") && !orgNameLine[i].contains("Twp") && !orgNameLine[i].contains("Mary") && statusLine[i].contains("Closed Today")) {
                             txtMorris.setText("Mount Morris: CLOSED");
-                            txtMorris.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtMorris.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Morris = true;
                         } else {
@@ -718,7 +758,7 @@ public class SnowDayResult extends Activity {
                     if (!(SzCreek)) {
                         if (orgNameLine[i].contains("Swartz Creek") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Montessori") && statusLine[i].contains("Closed Today")) {
                             txtSzCreek.setText("Swartz Creek: CLOSED");
-                            txtSzCreek.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtSzCreek.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             SzCreek = true;
                         } else {
@@ -728,7 +768,7 @@ public class SnowDayResult extends Activity {
                     if (!(Atherton)) {
                         if (orgNameLine[i].contains("Atherton") && statusLine[i].contains("Closed Today")) {
                             txtAtherton.setText("Atherton: CLOSED");
-                            txtAtherton.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtAtherton.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Atherton = true;
                         } else {
@@ -738,7 +778,7 @@ public class SnowDayResult extends Activity {
                     if (!(Bendle)) {
                         if (orgNameLine[i].contains("Bendle") && statusLine[i].contains("Closed Today")) {
                             txtBendle.setText("Bendle: CLOSED");
-                            txtBendle.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtBendle.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Bendle = true;
                         } else {
@@ -748,7 +788,7 @@ public class SnowDayResult extends Activity {
                     if (!(Flint)) {
                         if (orgNameLine[i].contains("Flint Community Schools") && statusLine[i].contains("Closed Today")) {
                             txtFlint.setText("Flint: CLOSED");
-                            txtFlint.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtFlint.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Flint = true;
                         } else {
@@ -758,7 +798,7 @@ public class SnowDayResult extends Activity {
                     if (!(Goodrich)) {
                         if (orgNameLine[i].contains("Goodrich") && statusLine[i].contains("Closed Today")) {
                             txtGoodrich.setText("Goodrich: CLOSED");
-                            txtGoodrich.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtGoodrich.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Goodrich = true;
                         } else {
@@ -792,7 +832,8 @@ public class SnowDayResult extends Activity {
                     if (!(GBAcademy)) {
                         if (orgNameLine[i].contains("Grand Blanc Academy") && statusLine[i].contains("Closed Tomorrow")) {
                             txtGBAcademy.setText("Grand Blanc Academy: CLOSED");
-                            txtGBAcademy.setBackgroundColor(Color.rgb(255, 215, 0));
+                            //255, 215, 0
+                            txtGBAcademy.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier1++;
                             System.out.println("Closures Detected Correctly.");
                             GBAcademy = true;
@@ -803,8 +844,8 @@ public class SnowDayResult extends Activity {
                     if (!(GISD)) {
                         if (orgNameLine[i].contains("Genesee I.S.D.") && statusLine[i].contains("Closed Tomorrow")) {
                             txtGISD.setText("Genesee I.S.D.: CLOSED");
-                            txtGISD.setBackgroundColor(Color.rgb(255, 215, 0));
-                            txtGISD.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtGISD.setBackgroundColor(Color.rgb(255, 165, 0));
+                            txtGISD.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier1++;
                             GISD = true;
                         } else {
@@ -814,7 +855,7 @@ public class SnowDayResult extends Activity {
                     if (!(HolyFamily)) {
                         if (orgNameLine[i].contains("Holy Family") && statusLine[i].contains("Closed Tomorrow")) {
                             txtHolyFamily.setText("Holy Family: CLOSED");
-                            txtHolyFamily.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtHolyFamily.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier1++;
                             HolyFamily = true;
                         } else {
@@ -824,7 +865,7 @@ public class SnowDayResult extends Activity {
                     if (!(WPAcademy)) {
                         if (orgNameLine[i].contains("Woodland Park Academy") && statusLine[i].contains("Closed Tomorrow")) {
                             txtWPAcademy.setText("Woodland Park Academy: CLOSED");
-                            txtWPAcademy.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtWPAcademy.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier1++;
                             WPAcademy = true;
                         } else {
@@ -834,7 +875,7 @@ public class SnowDayResult extends Activity {
                     if (!(Durand)) {
                         if (orgNameLine[i].contains("Durand") && !orgNameLine[i].contains("Senior") && statusLine[i].contains("Closed Tomorrow")) {
                             txtDurand.setText("Durand: CLOSED");
-                            txtDurand.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtDurand.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Durand = true;
                         } else {
@@ -844,7 +885,7 @@ public class SnowDayResult extends Activity {
                     if (!(Holly)) {
                         if (orgNameLine[i].contains("Holly") && !orgNameLine[i].contains("Academy") && statusLine[i].contains("Closed Tomorrow")) {
                             txtHolly.setText("Holly: CLOSED");
-                            txtHolly.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtHolly.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Holly = true;
                         } else {
@@ -854,7 +895,7 @@ public class SnowDayResult extends Activity {
                     if (!(Lapeer)) {
                         if (orgNameLine[i].contains("Lapeer") && !orgNameLine[i].contains("Chatfield") && !orgNameLine[i].contains("Transit") && !orgNameLine[i].contains("CMH") && !orgNameLine[i].contains("Tech") && !orgNameLine[i].contains("Offices") && !orgNameLine[i].contains("Library") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Paul") && statusLine[i].contains("Closed Tomorrow")) {
                             txtLapeer.setText("Lapeer: CLOSED");
-                            txtLapeer.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtLapeer.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Lapeer = true;
                         } else {
@@ -864,7 +905,7 @@ public class SnowDayResult extends Activity {
                     if (!(Owosso)) {
                         if (orgNameLine[i].contains("Owosso") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Baker") && !orgNameLine[i].contains("Paul") && statusLine[i].contains("Closed Tomorrow")) {
                             txtOwosso.setText("Owosso: CLOSED");
-                            txtOwosso.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtOwosso.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Owosso = true;
                         } else {
@@ -874,7 +915,7 @@ public class SnowDayResult extends Activity {
                     if (!(Beecher)) {
                         if (orgNameLine[i].contains("Beecher") && statusLine[i].contains("Closed Tomorrow")) {
                             txtBeecher.setText("Beecher: CLOSED");
-                            txtBeecher.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtBeecher.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier2++;
                             Beecher = true;
                         } else {
@@ -884,7 +925,7 @@ public class SnowDayResult extends Activity {
                     if (!(Clio)) {
                         if (orgNameLine[i].contains("Clio") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Cornerstone") && statusLine[i].contains("Closed Tomorrow")) {
                             txtClio.setText("Clio: CLOSED");
-                            txtClio.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtClio.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Clio = true;
                         } else {
@@ -894,7 +935,7 @@ public class SnowDayResult extends Activity {
                     if (!(Davison)) {
                         if (orgNameLine[i].contains("Davison") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Faith") && !orgNameLine[i].contains("Montessori") && statusLine[i].contains("Closed Tomorrow")) {
                             txtDavison.setText("Davison: CLOSED");
-                            txtDavison.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtDavison.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Davison = true;
                         } else {
@@ -904,7 +945,7 @@ public class SnowDayResult extends Activity {
                     if (!(Fenton)) {
                         if (orgNameLine[i].contains("Fenton") && !orgNameLine[i].contains("Lake") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Montessori") && statusLine[i].contains("Closed Tomorrow")) {
                             txtFenton.setText("Fenton: CLOSED");
-                            txtFenton.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtFenton.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Fenton = true;
                         } else {
@@ -914,7 +955,7 @@ public class SnowDayResult extends Activity {
                     if (!(Flushing)) {
                         if (orgNameLine[i].contains("Flushing") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Robert") && statusLine[i].contains("Closed Tomorrow")) {
                             txtFlushing.setText("Flushing: CLOSED");
-                            txtFlushing.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtFlushing.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Flushing = true;
                         } else {
@@ -924,7 +965,7 @@ public class SnowDayResult extends Activity {
                     if (!(Genesee)) {
                         if (orgNameLine[i].contains("Genesee") && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Christian") && !orgNameLine[i].contains("Mobile") && !orgNameLine[i].contains("Programs") && !orgNameLine[i].contains("Hlth") && !orgNameLine[i].contains("Sys") && !orgNameLine[i].contains("Stem") && !orgNameLine[i].contains("I.S.D.") && statusLine[i].contains("Closed Tomorrow")) {
                             txtGenesee.setText("Genesee: CLOSED");
-                            txtGenesee.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtGenesee.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Genesee = true;
                         } else {
@@ -934,7 +975,7 @@ public class SnowDayResult extends Activity {
                     if (!(Kearsley)) {
                         if (orgNameLine[i].contains("Kearsley") && statusLine[i].contains("Closed Tomorrow")) {
                             txtKearsley.setText("Kearsley: CLOSED");
-                            txtKearsley.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtKearsley.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Kearsley = true;
                         } else {
@@ -944,7 +985,7 @@ public class SnowDayResult extends Activity {
                     if (!(LKFenton)) {
                         if (orgNameLine[i].contains("Lake Fenton") && statusLine[i].contains("Closed Tomorrow")) {
                             txtLKFenton.setText("Lake Fenton: CLOSED");
-                            txtLKFenton.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtLKFenton.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             LKFenton = true;
                         } else {
@@ -954,7 +995,7 @@ public class SnowDayResult extends Activity {
                     if (!(Linden)) {
                         if (orgNameLine[i].contains("Linden") && !orgNameLine[i].contains("Charter") && statusLine[i].contains("Closed Tomorrow")) {
                             txtLinden.setText("Linden: CLOSED");
-                            txtLinden.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtLinden.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Linden = true;
                         } else {
@@ -964,7 +1005,7 @@ public class SnowDayResult extends Activity {
                     if (!(Montrose)) {
                         if (orgNameLine[i].contains("Montrose") && !orgNameLine[i].contains("Senior") && statusLine[i].contains("Closed Tomorrow")) {
                             txtMontrose.setText("Montrose: CLOSED");
-                            txtMontrose.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtMontrose.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Montrose = true;
                         } else {
@@ -974,7 +1015,7 @@ public class SnowDayResult extends Activity {
                     if (!(Morris)) {
                         if (orgNameLine[i].contains("Mt. Morris") && !orgNameLine[i].contains("Administration") && !orgNameLine[i].contains("Twp") && !orgNameLine[i].contains("Mary") && statusLine[i].contains("Closed Tomorrow")) {
                             txtMorris.setText("Mount Morris: CLOSED");
-                            txtMorris.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtMorris.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             Morris = true;
                         } else {
@@ -984,7 +1025,7 @@ public class SnowDayResult extends Activity {
                     if (!(SzCreek)) {
                         if (orgNameLine[i].contains("Swartz Creek") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Montessori") && statusLine[i].contains("Closed Tomorrow")) {
                             txtSzCreek.setText("Swartz Creek: CLOSED");
-                            txtSzCreek.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtSzCreek.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier3++;
                             SzCreek = true;
                         } else {
@@ -994,7 +1035,7 @@ public class SnowDayResult extends Activity {
                     if (!(Atherton)) {
                         if (orgNameLine[i].contains("Atherton") && statusLine[i].contains("Closed Tomorrow")) {
                             txtAtherton.setText("Atherton: CLOSED");
-                            txtAtherton.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtAtherton.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Atherton = true;
                         } else {
@@ -1004,7 +1045,7 @@ public class SnowDayResult extends Activity {
                     if (!(Bendle)) {
                         if (orgNameLine[i].contains("Bendle") && statusLine[i].contains("Closed Tomorrow")) {
                             txtBendle.setText("Bendle: CLOSED");
-                            txtBendle.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtBendle.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Bendle = true;
                         } else {
@@ -1014,7 +1055,7 @@ public class SnowDayResult extends Activity {
                     if (!(Flint)) {
                         if (orgNameLine[i].contains("Flint Community Schools") && statusLine[i].contains("Closed Tomorrow")) {
                             txtFlint.setText("Flint: CLOSED");
-                            txtFlint.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtFlint.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Flint = true;
                         } else {
@@ -1024,7 +1065,7 @@ public class SnowDayResult extends Activity {
                     if (!(Goodrich)) {
                         if (orgNameLine[i].contains("Goodrich") && statusLine[i].contains("Closed Tomorrow")) {
                             txtGoodrich.setText("Goodrich: CLOSED");
-                            txtGoodrich.setBackgroundColor(Color.rgb(255, 215, 0));
+                            txtGoodrich.setBackgroundColor(Color.rgb(255, 165, 0));
                             tier4++;
                             Goodrich = true;
                         } else {
@@ -1333,12 +1374,12 @@ public class SnowDayResult extends Activity {
                     System.out.println("Waiting for scrapers to finish...");
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
-                    System.out.println("Scraper wait interrupted...somehow");
                     ex.printStackTrace();
                 }
             }
 
             System.out.println("Both scrapers have finished.");
+
 
             if (tier5 == 1) {
                 System.out.println("Carman-Ainsworth was closed. We'll close. 90% schoolpercent");
@@ -1358,14 +1399,11 @@ public class SnowDayResult extends Activity {
             }
 
             //Calculate the total percent.
-            System.out.println("Creating percentarray containing schoolpercent and weatherpercent.");
-            int percentarray[] = {schoolpercent, weatherpercent};
-            percent = percentarray[0];
-            for (int i = 0; i < percentarray.length; i++) {
-                System.out.println("The two values are being compared. The larger one becomes the final percent.");
-                if (percentarray[i] > percent) {
-                    percent = percentarray[i];
-                }
+
+            if (weatherpercent > schoolpercent) {
+                percent = weatherpercent;
+            }else if (schoolpercent > weatherpercent) {
+                percent = schoolpercent;
             }
 
             System.out.println("schoolpercent: " + schoolpercent);
@@ -1398,8 +1436,12 @@ public class SnowDayResult extends Activity {
             System.out.println("Enjoy this cool little animation.");
             runOnUiThread(new Runnable() {
                   public void run() {
+                      
+                      //Show all hidden views
+                      showViews();
                       txtPercent.setText("0%");
                       txtPercent.setVisibility(View.VISIBLE);
+                      txtInfo.setVisibility(View.VISIBLE);
                       progCalculate.setVisibility(View.GONE);
                   }
             });
@@ -1457,9 +1499,70 @@ public class SnowDayResult extends Activity {
         }
 
         protected void onPostExecute(Void Result) {
-            System.out.println("Program Completed. We made it!");
-            btnRadar.setEnabled(true);
+            System.out.println("Program Completed. We made it!");  
         }
+    }
+    
+    private void showViews() {
+        txtGBAcademy.setVisibility(View.VISIBLE);
+        
+        txtGISD.setVisibility(View.VISIBLE);
+        
+        txtHolyFamily.setVisibility(View.VISIBLE);
+        
+        txtWPAcademy.setVisibility(View.VISIBLE);
+       
+        txtBeecher.setVisibility(View.VISIBLE);
+       
+        txtClio.setVisibility(View.VISIBLE);
+       
+        txtDavison.setVisibility(View.VISIBLE);
+        
+        txtFenton.setVisibility(View.VISIBLE);
+        
+        txtFlushing.setVisibility(View.VISIBLE);
+        
+        txtGenesee.setVisibility(View.VISIBLE);
+        
+        txtKearsley.setVisibility(View.VISIBLE);
+        
+        txtLKFenton.setVisibility(View.VISIBLE);
+        
+        txtLinden.setVisibility(View.VISIBLE);
+        
+        txtMontrose.setVisibility(View.VISIBLE);
+       
+        txtMorris.setVisibility(View.VISIBLE);
+        
+        txtSzCreek.setVisibility(View.VISIBLE);
+        
+        txtAtherton.setVisibility(View.VISIBLE);
+       
+        txtBendle.setVisibility(View.VISIBLE);
+        
+        txtFlint.setVisibility(View.VISIBLE);
+        
+        txtGoodrich.setVisibility(View.VISIBLE);
+        
+        txtDurand.setVisibility(View.VISIBLE);
+       
+        txtHolly.setVisibility(View.VISIBLE);
+       
+        txtLapeer.setVisibility(View.VISIBLE);
+        
+        txtOwosso.setVisibility(View.VISIBLE);
+        
+        txtCarman.setVisibility(View.VISIBLE);
+
+        txtGB.setVisibility(View.VISIBLE);
+
+        txtTier1.setVisibility(View.VISIBLE);
+        txtTier2.setVisibility(View.VISIBLE);
+        txtTier3.setVisibility(View.VISIBLE);
+        txtTier4.setVisibility(View.VISIBLE);
+
+        txtWeather.setVisibility(View.VISIBLE);
+        btnRadar.setVisibility(View.VISIBLE);
     }
 }
 

@@ -2,6 +2,7 @@ package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -65,18 +66,25 @@ public class SnowDay extends Activity {
 
 
         //Make sure the user doesn't try to run the program on the weekend or during school hours
-        checkWeekend();
+        //checkWeekend();
         checkTime();
         //Listen for optToday or optTomorrow changes
         optToday.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                System.out.println("optToday checked");
+            System.out.println("optToday checked");
+            if (lstDays.getSelectedItemId() != 0) {
                 btnCalculate.setEnabled(true);
+                //btnCalculate.setBackgroundColor(Color.rgb(52, 181, 229));
+            }
             }
         });
         optTomorrow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 System.out.println("optTomorrow checked");
+                if (lstDays.getSelectedItemId() != 0) {
+                    btnCalculate.setEnabled(true);
+                    //btnCalculate.setBackgroundColor(Color.rgb(52, 181, 229));
+                }
             }
         });
 
@@ -85,8 +93,13 @@ public class SnowDay extends Activity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 if (lstDays.getSelectedItemId() == 0) {
                     btnCalculate.setEnabled(false);
+                    //btnCalculate.setBackgroundColor(Color.rgb(2, 154, 204));
+                }else if (!optToday.isChecked() && !optTomorrow.isChecked()) {
+                    btnCalculate.setEnabled(false);
+                    //btnCalculate.setBackgroundColor(Color.rgb(2, 154, 204));
                 }else{
                     btnCalculate.setEnabled(true);
+                    //btnCalculate.setBackgroundColor(Color.rgb(52, 181, 229));
                 }
             }
 
@@ -101,6 +114,7 @@ public class SnowDay extends Activity {
             public void onClick(View view) {
                 System.out.println("btnCalculate clicked");
                 btnCalculate.setEnabled(false);
+                //btnCalculate.setBackgroundColor(Color.rgb(2, 154, 204));
                 Calculate();
                 //Switch to SnowDayResult activity
                 //Pass value of 'days' to new activity
@@ -175,10 +189,10 @@ public class SnowDay extends Activity {
 
         //Set calculation to today or tomorrow
         if (dayrun == 0) {
-            txtInfo.setText(txtInfo.getText() + "\n" + getString(R.string.DayRun) + " " + getString(R.string.today));
+            txtInfo.setText(txtInfo.getText() + "\n" + this.getString(R.string.DayRun) + " " + this.getString(R.string.today));
             System.out.println("Today is " + today);
         } else if (dayrun == 1) {
-            txtInfo.setText(txtInfo.getText() + "\n" + getString(R.string.DayRun) + " " + getString(R.string.tomorrow));
+            txtInfo.setText(txtInfo.getText() + "\n" + this.getString(R.string.DayRun) + " " + this.getString(R.string.tomorrow));
             System.out.println("Tomorrow is " + tomorrow);
         }
 
@@ -203,18 +217,18 @@ public class SnowDay extends Activity {
 
         if (weekday == 6) {
             System.out.println("Today is Friday (6).");
-            txtInfo.setText(this.getString(R.string.SaturdayTomorrow));
+            txtInfo.setText(R.string.SaturdayTomorrow);
             optTomorrow.setEnabled(false);
             optToday.setChecked(true);
         } else if (weekday == 7) {
             System.out.println("Today is Saturday (7).");
-            txtInfo.setText(this.getString(R.string.SaturdayToday));
+            txtInfo.setText(R.string.SaturdayToday);
             optToday.setEnabled(false);
             optTomorrow.setEnabled(false);
             lstDays.setEnabled(false);
         } else if (weekday == 1) {
             System.out.println("Today is Sunday (1).");
-            txtInfo.setText(this.getString(R.string.SundayToday));
+            txtInfo.setText(R.string.SundayToday);
             optToday.setEnabled(false);
             optTomorrow.setChecked(true);
         }
@@ -230,9 +244,9 @@ public class SnowDay extends Activity {
             txtInfo.setText(txtInfo.getText() + this.getString(R.string.SchoolOpen));
             dayrun = 1;
         } else if (calendar.get(Calendar.HOUR_OF_DAY) >= 16 && weekday != 7 && weekday != 1) {
-            optToday.setEnabled(false);
             //txtGB.setText("Grand Blanc: Dismissed");
             //txtGB.setBackgroundColor(Color.YELLOW);
+            optToday.setEnabled(false);
             System.out.println("Time is after 4PM");
             System.out.println("School's already out for today!");
             txtInfo.setText(txtInfo.getText() + this.getString(R.string.GBDismissed));
