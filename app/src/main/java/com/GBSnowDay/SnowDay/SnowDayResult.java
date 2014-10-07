@@ -328,82 +328,82 @@ public class SnowDayResult extends Activity {
 
         txtPercent.setText("");
         txtGBAcademy.setText((R.string.GBAcademy));
-        txtGBAcademy.setBackgroundColor(Color.BLACK);
+        txtGBAcademy.setBackgroundColor(Color.GRAY);
         txtGBAcademy.setVisibility(View.GONE);
         txtGISD.setText(R.string.GISD);
-        txtGISD.setBackgroundColor(Color.BLACK);
+        txtGISD.setBackgroundColor(Color.GRAY);
         txtGISD.setVisibility(View.GONE);
         txtHolyFamily.setText(R.string.HolyFamily);
-        txtHolyFamily.setBackgroundColor(Color.BLACK);
+        txtHolyFamily.setBackgroundColor(Color.GRAY);
         txtHolyFamily.setVisibility(View.GONE);
         txtWPAcademy.setText(R.string.WPAcademy);
-        txtWPAcademy.setBackgroundColor(Color.BLACK);
+        txtWPAcademy.setBackgroundColor(Color.GRAY);
         txtWPAcademy.setVisibility(View.GONE);
         txtBeecher.setText(R.string.Beecher);
-        txtBeecher.setBackgroundColor(Color.BLACK);
+        txtBeecher.setBackgroundColor(Color.GRAY);
         txtBeecher.setVisibility(View.GONE);
         txtClio.setText(R.string.Clio);
-        txtClio.setBackgroundColor(Color.BLACK);
+        txtClio.setBackgroundColor(Color.GRAY);
         txtClio.setVisibility(View.GONE);
         txtDavison.setText(R.string.Davison);
-        txtDavison.setBackgroundColor(Color.BLACK);
+        txtDavison.setBackgroundColor(Color.GRAY);
         txtDavison.setVisibility(View.GONE);
         txtFenton.setText(R.string.Fenton);
-        txtFenton.setBackgroundColor(Color.BLACK);
+        txtFenton.setBackgroundColor(Color.GRAY);
         txtFenton.setVisibility(View.GONE);
         txtFlushing.setText(R.string.Flushing);
-        txtFlushing.setBackgroundColor(Color.BLACK);
+        txtFlushing.setBackgroundColor(Color.GRAY);
         txtFlushing.setVisibility(View.GONE);
         txtGenesee.setText(R.string.Genesee);
-        txtGenesee.setBackgroundColor(Color.BLACK);
+        txtGenesee.setBackgroundColor(Color.GRAY);
         txtGenesee.setVisibility(View.GONE);
         txtKearsley.setText(R.string.Kearsley);
-        txtKearsley.setBackgroundColor(Color.BLACK);
+        txtKearsley.setBackgroundColor(Color.GRAY);
         txtKearsley.setVisibility(View.GONE);
         txtLKFenton.setText(R.string.LKFenton);
-        txtLKFenton.setBackgroundColor(Color.BLACK);
+        txtLKFenton.setBackgroundColor(Color.GRAY);
         txtLKFenton.setVisibility(View.GONE);
         txtLinden.setText(R.string.Linden);
-        txtLinden.setBackgroundColor(Color.BLACK);
+        txtLinden.setBackgroundColor(Color.GRAY);
         txtLinden.setVisibility(View.GONE);
         txtMontrose.setText(R.string.Montrose);
-        txtMontrose.setBackgroundColor(Color.BLACK);
+        txtMontrose.setBackgroundColor(Color.GRAY);
         txtMontrose.setVisibility(View.GONE);
         txtMorris.setText(R.string.Morris);
-        txtMorris.setBackgroundColor(Color.BLACK);
+        txtMorris.setBackgroundColor(Color.GRAY);
         txtMorris.setVisibility(View.GONE);
         txtSzCreek.setText(R.string.SzCreek);
-        txtSzCreek.setBackgroundColor(Color.BLACK);
+        txtSzCreek.setBackgroundColor(Color.GRAY);
         txtSzCreek.setVisibility(View.GONE);
         txtAtherton.setText(R.string.Atherton);
-        txtAtherton.setBackgroundColor(Color.BLACK);
+        txtAtherton.setBackgroundColor(Color.GRAY);
         txtAtherton.setVisibility(View.GONE);
         txtBendle.setText(R.string.Bendle);
-        txtBendle.setBackgroundColor(Color.BLACK);
+        txtBendle.setBackgroundColor(Color.GRAY);
         txtBendle.setVisibility(View.GONE);
         txtFlint.setText(R.string.Flint);
-        txtFlint.setBackgroundColor(Color.BLACK);
+        txtFlint.setBackgroundColor(Color.GRAY);
         txtFlint.setVisibility(View.GONE);
         txtGoodrich.setText(R.string.Goodrich);
-        txtGoodrich.setBackgroundColor(Color.BLACK);
+        txtGoodrich.setBackgroundColor(Color.GRAY);
         txtGoodrich.setVisibility(View.GONE);
         txtDurand.setText(R.string.Durand);
-        txtDurand.setBackgroundColor(Color.BLACK);
+        txtDurand.setBackgroundColor(Color.GRAY);
         txtDurand.setVisibility(View.GONE);
         txtHolly.setText(R.string.Holly);
-        txtHolly.setBackgroundColor(Color.BLACK);
+        txtHolly.setBackgroundColor(Color.GRAY);
         txtHolly.setVisibility(View.GONE);
         txtLapeer.setText(R.string.Lapeer);
-        txtLapeer.setBackgroundColor(Color.BLACK);
+        txtLapeer.setBackgroundColor(Color.GRAY);
         txtLapeer.setVisibility(View.GONE);
         txtOwosso.setText(R.string.Owosso);
-        txtOwosso.setBackgroundColor(Color.BLACK);
+        txtOwosso.setBackgroundColor(Color.GRAY);
         txtOwosso.setVisibility(View.GONE);
         txtCarman.setText(R.string.Carman);
-        txtCarman.setBackgroundColor(Color.BLACK);
+        txtCarman.setBackgroundColor(Color.GRAY);
         txtCarman.setVisibility(View.GONE);
         txtGB.setText(R.string.GB);
-        txtGB.setBackgroundColor(Color.BLACK);
+        txtGB.setBackgroundColor(Color.GRAY);
         txtGB.setVisibility(View.GONE);
         
         txtTier1.setVisibility(View.GONE);
@@ -427,8 +427,8 @@ public class SnowDayResult extends Activity {
             /**WJRT SCHOOL CLOSINGS SCRAPER**/
             //Scrape School Closings from WJRT with Jsoup.
             //The following is a rigged archive from January 5th - every school referenced by this program was closed the following day.
-            System.out.println("Reading from Closings.htm on emulated SD card");
-            try {
+//            System.out.println("Reading from Closings.htm on emulated SD card");
+            /*try {
                 File input = new File("mnt/sdcard/Closings.htm");
                 schools = Jsoup.parse(input, "UTF-8", "");
                 System.out.println("Read successful");
@@ -437,7 +437,7 @@ public class SnowDayResult extends Activity {
                 txtInfo.setText(txtInfo.getText() + getString(R.string.NoConnection));
                 e.printStackTrace();
                 System.out.println("Couldn't read the file.");
-            }
+            }*/
 
             //This is a second rigged archive from December 23rd - Swartz Creek and Kearsley were closed on the day for reference.
 
@@ -464,13 +464,13 @@ public class SnowDayResult extends Activity {
 
             //Fourth html archive - every school except GB, Durand, Owosso, and Holy Family is closed (shouldn't trigger 100%)
 
-           /* try {
+            try {
                 File input = new File("mnt/sdcard/GBNotClosed.htm");
                 schools = Jsoup.parse(input, "UTF-8", "");
             } catch (IOException e) {
                 txtInfo.setText(getString(R.string.NoConnection));
                 e.printStackTrace();
-            }*/
+            }
 
             //This is a blank example (no active records) - check how the program runs when nullpointerexception is thrown
 
@@ -485,17 +485,19 @@ public class SnowDayResult extends Activity {
 
             //This is the current listings page.
 
-            /*try {
+           /* try {
                 schools = Jsoup.connect("http://ftpcontent2.worldnow.com/wjrt/school/closings.htm").get();
             } catch (IOException e) {
                 System.out.println(R.string.NoConnection);
-            }
-*/
+            }*/
+
             System.out.println("Attempting to parse input file");
+            int loopnum = 1; //for debugging purposes only
             for (Element row : schools.select("td[bgcolor]")) {
-                System.out.println("the for loop is working");
+                System.out.println("Reading closings (" + (loopnum) + ")");
                 orgName = orgName + "\n" + (row.select("font.orgname").first().text());
                 status = status + "\n" + (row.select("font.status").first().text());
+                loopnum++;
             }
             System.out.println("Loop exited.");
 
@@ -1088,9 +1090,9 @@ public class SnowDayResult extends Activity {
     }
 
     private void checkGBClosed() {
+        int gbnum = 0; //For debugging purposes only
                 System.out.println("Checking if GB is closed.");
                 for (int i = 1; i < orgNameLine.length; i++) {
-                    System.out.println("We're in the loop.");
                     if (!GB) {
                         System.out.println("GB is false.");
                         if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy") && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Offices") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Today") && dayrun == 0) {
@@ -1120,7 +1122,7 @@ public class SnowDayResult extends Activity {
                             System.out.println("GB Found (tomorrow)!");
                             break;
                         } else {
-                            System.out.println("Didn't find GB yet");
+                            System.out.println("Didn't find GB yet (" + (gbnum + 1) + ")");
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     txtGB.setText("Grand Blanc: OPEN");
@@ -1128,6 +1130,7 @@ public class SnowDayResult extends Activity {
                                 }
                             });
                             GB = false;
+                            gbnum++;
                         }
 
                     }
@@ -1143,16 +1146,24 @@ public class SnowDayResult extends Activity {
             //Change the percentage based on current storm/wind/temperature warnings.
             Document weatherdoc = null;
             //Live html
-//            try {
-//                weatherdoc = Jsoup.connect("http://forecast.weather.gov/afm/PointClick.php?lat=42.92580&lon=-83.61870").get();
-//            } catch (IOException ex) {
-//                Logger.getLogger(SnowDayGUI.class.getName()).log(Level.SEVERE, null, ex);
-//                txtInfo.setText(txtInfo.getText() + "\nCould not retrieve weather information. \nAre you connected to the internet?");
-//            }
-
+            /*try {
+                weatherdoc = Jsoup.connect("http://forecast.weather.gov/afm/PointClick.php?lat=42.92580&lon=-83.61870").get();
+            } catch (IOException ex) {
+                txtInfo.setText(txtInfo.getText() + "\nCould not retrieve weather information. \nAre you connected to the internet?");
+            }*/
             //Document with multiple preset conditions
-            System.out.println("Accessing Weather.htm from SD card.");
+            /*System.out.println("Accessing Weather.htm from SD card.");
             File weatherinput = new File("mnt/sdcard/Weather.htm");
+            try {
+                weatherdoc = Jsoup.parse(weatherinput, "UTF-8", "");
+                System.out.println("Successfully parsed file.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Couldn't read the file.");
+            }*/
+
+            //Document with no warnings
+            File weatherinput = new File("mnt/sdcard/WeatherTest.htm");
             try {
                 weatherdoc = Jsoup.parse(weatherinput, "UTF-8", "");
                 System.out.println("Successfully parsed file.");
@@ -1161,13 +1172,9 @@ public class SnowDayResult extends Activity {
                 System.out.println("Couldn't read the file.");
             }
 
-            //Document with no warnings
-            //File weatherinput = new File("mnt/sdcard/WeatherTest.htm");
-            //Document weatherdoc = Jsoup.parse(input2, "UTF-8", "");
-
-            //NullPointerException test
-            //File weatherinput = new File("mnt/sdcard/Blank.htm");
-            //Document weatherdoc = Jsoup.parse(input2, "UTF-8", "");
+            /*NullPointerException test
+            File weatherinput = new File("mnt/sdcard/Blank.htm");
+            Document weatherdoc = Jsoup.parse(input2, "UTF-8", "");*/
 
             //String weatherWarn = null;
             System.out.println("Searching for elements in class 'warn'");

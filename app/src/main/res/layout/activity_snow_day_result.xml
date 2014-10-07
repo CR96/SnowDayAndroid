@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.GBSnowDay.SnowDay.SnowDayResult"
-    android:background="@android:color/black"
     android:clickable="false"
     android:visibility="visible">
 
