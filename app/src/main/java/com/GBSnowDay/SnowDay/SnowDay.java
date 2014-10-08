@@ -67,7 +67,7 @@ public class SnowDay extends Activity {
 
         //Make sure the user doesn't try to run the program on the weekend or during school hours
         //checkWeekend();
-        checkTime();
+        //checkTime();
         //Listen for optToday or optTomorrow changes
         optToday.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
