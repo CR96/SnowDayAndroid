@@ -1538,7 +1538,6 @@ public class SnowDayResult extends Activity {
                 for (int i = 0; i < percent; i++) {
                     Thread.sleep(10);
                     if (percentscroll >= 0 && percentscroll <= 20) {
-                        System.out.println("this is being run");
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 txtPercent.setTextColor(Color.RED);
