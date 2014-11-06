@@ -10,8 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -31,6 +29,7 @@ public class SnowDayResult extends Activity {
     TextView txtCarman;
     TextView txtAtherton;
     TextView txtBendle;
+    TextView txtBentley;
     TextView txtFlint;
     TextView txtGoodrich;
     TextView txtBeecher;
@@ -58,7 +57,6 @@ public class SnowDayResult extends Activity {
     TextView txtTier2;
     TextView txtTier3;
     TextView txtTier4;
-    TextView txtTier5;
 
     TextView txtInfo;
     TextView txtPercent;
@@ -159,6 +157,7 @@ public class SnowDayResult extends Activity {
             txtCarman = (TextView) findViewById(R.id.txtCarman);
             txtAtherton = (TextView) findViewById(R.id.txtAtherton);
             txtBendle = (TextView) findViewById(R.id.txtBendle);
+            txtBentley = (TextView) findViewById(R.id.txtBentley);
             txtFlint = (TextView) findViewById(R.id.txtFlint);
             txtGoodrich = (TextView) findViewById(R.id.txtGoodrich);
             txtBeecher = (TextView) findViewById(R.id.txtBeecher);
@@ -399,6 +398,10 @@ public class SnowDayResult extends Activity {
         txtBendle.setTextColor(Color.WHITE);
         txtBendle.setBackgroundColor(Color.rgb(55, 60, 65));
         txtBendle.setVisibility(View.GONE);
+        txtBentley.setText(R.string.Bentley);
+        txtBentley.setTextColor(Color.WHITE);
+        txtBentley.setBackgroundColor(Color.rgb(55, 60, 65));
+        txtBentley.setVisibility(View.GONE);
         txtFlint.setText(R.string.Flint);
         txtFlint.setTextColor(Color.WHITE);
         txtFlint.setBackgroundColor(Color.rgb(55, 60, 65));
@@ -454,7 +457,7 @@ public class SnowDayResult extends Activity {
             //Scrape School Closings from WJRT with Jsoup.
             //The following is a rigged archive from January 5th - every school referenced by this program was closed the following day.
 //            System.out.println("Reading from Closings.htm on emulated SD card");
-            /*try {
+           /* try {
                 File input = new File("mnt/sdcard/Closings.htm");
                 schools = Jsoup.parse(input, "UTF-8", "");
                 System.out.println("Read successful");
@@ -490,13 +493,13 @@ public class SnowDayResult extends Activity {
 
             //Fourth html archive - every school except GB, Durand, Owosso, and Holy Family is closed (shouldn't trigger 100%)
 
-            try {
+           /* try {
                 File input = new File("mnt/sdcard/GBNotClosed.htm");
                 schools = Jsoup.parse(input, "UTF-8", "");
             } catch (IOException e) {
                 txtInfo.setText(getString(R.string.NoConnection));
                 e.printStackTrace();
-            }
+            }*/
 
             //This is a blank example (no active records) - check how the program runs when nullpointerexception is thrown
 
@@ -511,11 +514,11 @@ public class SnowDayResult extends Activity {
 
             //This is the current listings page.
 
-           /* try {
+            try {
                 schools = Jsoup.connect("http://ftpcontent2.worldnow.com/wjrt/school/closings.htm").get();
             } catch (IOException e) {
                 System.out.println(R.string.NoConnection);
-            }*/
+            }
 
             System.out.println("Attempting to parse input file");
             int loopnum = 1; //for debugging purposes only
@@ -835,6 +838,17 @@ public class SnowDayResult extends Activity {
                             txtBendle.setText("Bendle: OPEN");
                         }
                     }
+                    if (!(Bentley)) {
+                        if (orgNameLine[i].contains("Bentley") && statusLine[i].contains("Closed Today")) {
+                            txtBentley.setText("Bentley: CLOSED");
+                            txtBentley.setBackgroundColor(Color.rgb(255, 165, 0));
+                            txtBentley.setTextColor(Color.WHITE);
+                            tier4++;
+                            Bentley = true;
+                        } else {
+                            txtBentley.setText("Bentley: OPEN");
+                        }
+                    }
                     if (!(Flint)) {
                         if (orgNameLine[i].contains("Flint Community Schools") && statusLine[i].contains("Closed Today")) {
                             txtFlint.setText("Flint: CLOSED");
@@ -1126,6 +1140,17 @@ public class SnowDayResult extends Activity {
                             txtBendle.setText("Bendle: OPEN");
                         }
                     }
+                    if (!(Bentley)) {
+                        if (orgNameLine[i].contains("Bentley") && statusLine[i].contains("Closed Tomorrow")) {
+                            txtBentley.setText("Bentley: CLOSED");
+                            txtBentley.setBackgroundColor(Color.rgb(255, 165, 0));
+                            txtBentley.setTextColor(Color.WHITE);
+                            tier4++;
+                            Bentley = true;
+                        } else {
+                            txtBentley.setText("Bentley: OPEN");
+                        }
+                    }
                     if (!(Flint)) {
                         if (orgNameLine[i].contains("Flint Community Schools") && statusLine[i].contains("Closed Tomorrow")) {
                             txtFlint.setText("Flint: CLOSED");
@@ -1223,11 +1248,11 @@ public class SnowDayResult extends Activity {
             //Change the percentage based on current storm/wind/temperature warnings.
             Document weatherdoc = null;
             //Live html
-            /*try {
+            try {
                 weatherdoc = Jsoup.connect("http://forecast.weather.gov/afm/PointClick.php?lat=42.92580&lon=-83.61870").get();
             } catch (IOException ex) {
                 txtInfo.setText(txtInfo.getText() + "\nCould not retrieve weather information. \nAre you connected to the internet?");
-            }*/
+            }
             //Document with multiple preset conditions
             /*System.out.println("Accessing Weather.htm from SD card.");
             File weatherinput = new File("mnt/sdcard/Weather.htm");
@@ -1240,14 +1265,14 @@ public class SnowDayResult extends Activity {
             }*/
 
             //Document with no warnings
-            File weatherinput = new File("mnt/sdcard/WeatherTest.htm");
+           /* File weatherinput = new File("mnt/sdcard/WeatherTest.htm");
             try {
                 weatherdoc = Jsoup.parse(weatherinput, "UTF-8", "");
                 System.out.println("Successfully parsed file.");
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Couldn't read the file.");
-            }
+            }*/
 
             /*NullPointerException test
             File weatherinput = new File("mnt/sdcard/Blank.htm");
@@ -1623,6 +1648,8 @@ public class SnowDayResult extends Activity {
         txtAtherton.setVisibility(View.VISIBLE);
        
         txtBendle.setVisibility(View.VISIBLE);
+
+        txtBentley.setVisibility(View.VISIBLE);
         
         txtFlint.setVisibility(View.VISIBLE);
         

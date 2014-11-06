@@ -156,6 +156,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/Bentley"
+                                android:id="@+id/txtBentley"
+                                android:visibility="visible"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:text="@string/Flint"
                                 android:id="@+id/txtFlint"
                                 android:visibility="visible"
