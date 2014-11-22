@@ -24,6 +24,7 @@ import java.io.IOException;
 
 
 public class SnowDayResult extends Activity {
+
     //Declare all views
     TextView txtGB;
     TextView txtCarman;
@@ -152,7 +153,6 @@ public class SnowDayResult extends Activity {
             tabHost.addTab(specs);
 
             //Declare views
-            //picWJRT = (ImageView) findViewById(R.id.picWJRT);
             txtGB = (TextView) findViewById(R.id.txtGB);
             txtCarman = (TextView) findViewById(R.id.txtCarman);
             txtAtherton = (TextView) findViewById(R.id.txtAtherton);
@@ -197,24 +197,6 @@ public class SnowDayResult extends Activity {
             Calculate();
         }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.snow_day_result, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void radarToggle(View view) {
         if (webRadar.getVisibility() == View.GONE) {
@@ -451,66 +433,10 @@ public class SnowDayResult extends Activity {
             WJRTActive = true;
             Document schools = null;
             //Scrape School Closings from WJRT with Jsoup.
-            //Run scraper in an Async task.
 
             /**WJRT SCHOOL CLOSINGS SCRAPER**/
             //Scrape School Closings from WJRT with Jsoup.
-            //The following is a rigged archive from January 5th - every school referenced by this program was closed the following day.
-//            System.out.println("Reading from Closings.htm on emulated SD card");
-           /* try {
-                File input = new File("mnt/sdcard/Closings.htm");
-                schools = Jsoup.parse(input, "UTF-8", "");
-                System.out.println("Read successful");
-            }catch (IOException e) {
-                TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
-                txtInfo.setText(txtInfo.getText() + getString(R.string.NoConnection));
-                e.printStackTrace();
-                System.out.println("Couldn't read the file.");
-            }*/
-
-            //This is a second rigged archive from December 23rd - Swartz Creek and Kearsley were closed on the day for reference.
-
-//            try {
-//                File input = new File("mnt/sdcard/ClosingsToday.htm");
-//                schools = Jsoup.parse(input, "UTF-8", "");
-//            }catch (IOException e) {
-//                TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
-//                txtInfo.setText(txtInfo.getText() + getString(R.string.NoConnection));
-//                e.printStackTrace();
-//            }
-
-            //This third document tests for false triggers, e.g. "Owosso" shouldn't show as "closed" if only "Owosso Senior Center" is closed.
-            //This document will not trigger any closings if the code is working properly.
-
-            /*try {
-                File input = new File("mnt/sdcard/Trials.htm");
-                schools = Jsoup.parse(input, "UTF-8", "");
-            }catch (IOException e) {
-                TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
-                txtInfo.setText(txtInfo.getText() + getString(R.string.NoConnection));
-                e.printStackTrace();
-            }*/
-
-            //Fourth html archive - every school except GB, Durand, Owosso, and Holy Family is closed (shouldn't trigger 100%)
-
-           /* try {
-                File input = new File("mnt/sdcard/GBNotClosed.htm");
-                schools = Jsoup.parse(input, "UTF-8", "");
-            } catch (IOException e) {
-                txtInfo.setText(getString(R.string.NoConnection));
-                e.printStackTrace();
-            }*/
-
-            //This is a blank example (no active records) - check how the program runs when nullpointerexception is thrown
-
-        /*try {
-            File input = new File("mnt/sdcard/Blank.htm");
-            schools = Jsoup.parse(input, "UTF-8", "");
-        }catch (IOException e) {
-            TextView txtInfo = (TextView) findViewById(R.id.txtInfo);
-            txtInfo.setText(txtInfo.getText() + getString(R.string.NoConnection));
-            e.printStackTrace();
-        }*/
+            //Run scraper in an Async task.
 
             //This is the current listings page.
 
@@ -1244,41 +1170,17 @@ public class SnowDayResult extends Activity {
         protected Void doInBackground(Void... nothing) {
             System.out.println("Weather scraper started.");
             /**NATIONAL WEATHER SERVICE SCRAPER**/
-            //txtWeather.setText(txtWeather.getText() + "Retrieving Weather from NWS Detroit/Pontiac...");
             //Change the percentage based on current storm/wind/temperature warnings.
+
             Document weatherdoc = null;
+
             //Live html
             try {
                 weatherdoc = Jsoup.connect("http://forecast.weather.gov/afm/PointClick.php?lat=42.92580&lon=-83.61870").get();
             } catch (IOException ex) {
                 txtInfo.setText(txtInfo.getText() + "\nCould not retrieve weather information. \nAre you connected to the internet?");
             }
-            //Document with multiple preset conditions
-            /*System.out.println("Accessing Weather.htm from SD card.");
-            File weatherinput = new File("mnt/sdcard/Weather.htm");
-            try {
-                weatherdoc = Jsoup.parse(weatherinput, "UTF-8", "");
-                System.out.println("Successfully parsed file.");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Couldn't read the file.");
-            }*/
 
-            //Document with no warnings
-           /* File weatherinput = new File("mnt/sdcard/WeatherTest.htm");
-            try {
-                weatherdoc = Jsoup.parse(weatherinput, "UTF-8", "");
-                System.out.println("Successfully parsed file.");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Couldn't read the file.");
-            }*/
-
-            /*NullPointerException test
-            File weatherinput = new File("mnt/sdcard/Blank.htm");
-            Document weatherdoc = Jsoup.parse(input2, "UTF-8", "");*/
-
-            //String weatherWarn = null;
             System.out.println("Searching for elements in class 'warn'");
             Elements weatherWarn = weatherdoc.getElementsByClass("warn");
             System.out.println("Saving elements to searchable string weathertext");
@@ -1317,18 +1219,8 @@ public class SnowDayResult extends Activity {
         runOnUiThread(new Runnable() {
             public void run() {
                 System.out.println("Running getWeather()");
-                System.out.println("Only the highest weatherpercent is stored (not cumulative)");
+                //Only the highest weatherpercent is stored (not cumulative)
 
-                if (weathertext.contains("Hazardous Weather Outlook")) {
-                    System.out.println("Hazardous Weather Outlook - no effect on percent (too vague)");
-                    if (!nullWeather) {
-                        txtWeather.setText(txtWeather.getText() + "\nA Hazardous Weather Outlook is in effect.");
-                    } else {
-                        txtWeather.setText("A Hazardous Weather Outlook is in effect.");
-                        nullWeather = false;
-                    }
-                    weatherpercent = 0;
-                }
                 if (weathertext.contains("Significant Weather Advisory")) {
                     System.out.println("Significant Weather Advisory - 15% weatherpercent");
                     if (!nullWeather) {
@@ -1464,7 +1356,6 @@ public class SnowDayResult extends Activity {
         });
     }
 
-
     private class PercentCalculate extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... nothing) {
             System.out.println("Starting PercentCalculate");
@@ -1473,6 +1364,7 @@ public class SnowDayResult extends Activity {
 
             //Sleep for 1000 ms - if the while loop is run *too* soon a scraper might not have
             //a chance to start before being considered 'done'
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

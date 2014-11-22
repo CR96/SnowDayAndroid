@@ -12,43 +12,42 @@
 
 
     <RadioGroup
-        android:layout_width="123dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id='@+id/radiogroup'
-        android:layout_gravity="center_vertical"
-        android:layout_below="@+id/txtDay"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_gravity="center"
+        android:layout_below="@+id/txtDay">
 
         <RadioButton
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/today"
             android:id="@+id/optToday"
             android:checked="false"
-            android:textColor="@android:color/white" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"/>
 
         <RadioButton
-            android:layout_width="175dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tomorrow"
             android:id="@+id/optTomorrow"
             android:checked="false"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
+
     </RadioGroup>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/prev"
         android:id="@+id/txtPrev"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:layout_toEndOf="@+id/radiogroup"
-        android:layout_toRightOf="@id/radiogroup"
-        android:layout_below="@+id/radiogroup"
+        android:layout_above="@+id/lstDays"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -62,33 +61,34 @@
         android:textColor="@android:color/white"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lstDays"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
         android:spinnerMode="dropdown"
         android:entries="@array/days_array"
-        android:layout_toEndOf="@+id/radiogroup"
-        android:layout_toRightOf="@+id/radiogroup"
-        android:layout_below="@+id/txtPrev"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/txtInfo"
         android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:layout_toEndOf="@+id/radiogroup"
-        android:layout_toRightOf="@+id/radiogroup"
-        android:layout_below="@+id/lstDays"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/txtPrev"
+        android:layout_below="@+id/radiogroup"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -100,5 +100,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/txtInfo"
         android:layout_alignEnd="@+id/txtInfo" />
+
+
+
 
 </RelativeLayout>

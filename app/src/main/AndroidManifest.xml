@@ -5,15 +5,11 @@
     <!-- Allows applications to open network sockets. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--This permission is temporary (used for scraper test documents). Will be removed before release. -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/title_activity_snow_day">
+        android:label="@string/title_activity_snow_day"
+        android:configChanges="keyboardHidden|orientation" >
         <activity
             android:label="@string/title_activity_snow_day"
             android:name=".SnowDay"
@@ -30,8 +26,15 @@
             android:configChanges="keyboardHidden|orientation" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.GBSnowDay.SnowDay.snow_day" />
+                android:value="com.GBSnowDay.SnowDay.SnowDay" />
+        </activity>
+        <activity
+            android:name=".About"
+            android:label="@string/action_about"
+            android:configChanges="keyboardHidden|orientation" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.GBSnowDay.SnowDay.SnowDay" />
         </activity>
     </application>
-
 </manifest>
