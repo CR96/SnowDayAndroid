@@ -9,11 +9,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/title_activity_snow_day"
-        android:configChanges="keyboardHidden|orientation" >
+        android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
         <activity
             android:label="@string/title_activity_snow_day"
             android:name=".SnowDay"
-            android:configChanges="keyboardHidden|orientation" >
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,7 +23,7 @@
             android:name=".SnowDayResult"
             android:label="@string/title_activity_snow_day_result"
             android:parentActivityName=".SnowDay"
-            android:configChanges="keyboardHidden|orientation" >
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.GBSnowDay.SnowDay.SnowDay" />
@@ -31,7 +31,7 @@
         <activity
             android:name=".About"
             android:label="@string/action_about"
-            android:configChanges="keyboardHidden|orientation" >
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.GBSnowDay.SnowDay.SnowDay" />

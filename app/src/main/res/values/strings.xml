@@ -61,10 +61,9 @@
     <string name="Closed">" CLOSED</string>
     <string name="GBDismissed">School\'s already out for today.</string>
     <string name="Dismissed">" Dismissed</string>
-    <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>
-    <string name="SaturdayToday">Today is Saturday.</string>
-    <string name="SundayTomorrow">Tomorrow is Sunday.</string>
-    <string name="SundayToday">Today is Sunday.</string>
+    <string name="SaturdayTomorrow">Today is Friday. Calculation only available for today.</string>
+    <string name="SaturdayToday">Today is Saturday. Try again tomorrow!</string>
+    <string name="SundayToday">Today is Sunday. Calculation only available for tomorrow.</string>
     <string name="Weekend">Enjoy the weekend!</string>
     <string name="GBClosedToday">Grand Blanc is Closed Today!</string>
     <string name="GBClosedTomorrow">Grand Blanc is Closed Tomorrow!</string>

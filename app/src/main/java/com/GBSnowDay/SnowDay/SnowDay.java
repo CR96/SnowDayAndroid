@@ -2,23 +2,23 @@ package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class SnowDay extends Activity {
 
@@ -46,7 +46,7 @@ public class SnowDay extends Activity {
     //Declare all views
     RadioButton optToday;
     RadioButton optTomorrow;
-    TextView txtInfo;
+    ListView lstInfo;
     Spinner lstDays;
     Button btnCalculate;
 
@@ -56,8 +56,7 @@ public class SnowDay extends Activity {
     public Date date;
     public Format formatter;
 
-    public String[] orgNameLine;
-    public String[] statusLine;
+    public List<String> infoList = new ArrayList<>();
 
     public int days;
     public int dayrun;
@@ -76,14 +75,21 @@ public class SnowDay extends Activity {
         //Declare views
         optToday = (RadioButton) findViewById(R.id.optToday);
         optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
-        txtInfo = (TextView) findViewById(R.id.txtInfo);
+        lstInfo = (ListView) findViewById(R.id.lstInfo);
         lstDays = (Spinner) findViewById(R.id.lstDays);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
-
         //Make sure the user doesn't try to run the program on the weekend or during school hours
+        setDate();
         checkWeekend();
         checkTime();
+
+        //Set the content of the ListView
+        System.out.println(infoList);
+        ArrayAdapter<String> infoadapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, infoList);
+        lstInfo.setAdapter(infoadapter);
+
         //Listen for optToday or optTomorrow changes
         optToday.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -150,9 +156,6 @@ public class SnowDay extends Activity {
          * Obviously return 100% if GB is already closed.
          */
 
-        //Call a reset to clear any previous data
-        Reset();
-
         //Date setup
 
         if (optToday.isChecked()) {
@@ -164,7 +167,7 @@ public class SnowDay extends Activity {
             dayrun = 1;
         }
 
-        System.out.println("Determining date");
+        //Determine the date
         date = calendar.getTime();
         formatter = new SimpleDateFormat("MMM dd yyyy");
         today = formatter.format(date);
@@ -184,11 +187,11 @@ public class SnowDay extends Activity {
         days = lstDays.getSelectedItemPosition() - 1;
     }
 
-    private void Reset() {
-        //Reset variables
-        today = "";
-        tomorrow = "";
-        txtInfo.setText("");
+    private void setDate() {
+        //Set the current month, day, and year
+        String date = "Current Date: " + new SimpleDateFormat("MMMM dd yyyy").format(calendar.getTime());
+        infoList.add(0, date);
+
     }
 
     private void checkWeekend() {
@@ -197,16 +200,16 @@ public class SnowDay extends Activity {
         //Sunday is 1
 
         if (weekday == 6) {
-            txtInfo.setText(R.string.SaturdayTomorrow);
+            infoList.add(1, getString(R.string.SaturdayTomorrow));
             optTomorrow.setEnabled(false);
             optToday.setChecked(true);
         } else if (weekday == 7) {
-            txtInfo.setText(R.string.SaturdayToday);
+            infoList.add(1, getString(R.string.SaturdayToday));
             optToday.setEnabled(false);
             optTomorrow.setEnabled(false);
             lstDays.setEnabled(false);
         } else if (weekday == 1) {
-            txtInfo.setText(R.string.SundayToday);
+            infoList.add(1, getString(R.string.SundayToday));
             optToday.setEnabled(false);
             optTomorrow.setChecked(true);
         }
@@ -216,12 +219,12 @@ public class SnowDay extends Activity {
         if (calendar.get(Calendar.HOUR_OF_DAY) >= 7 && calendar.get(Calendar.HOUR_OF_DAY) < 16 && weekday != 7 && weekday != 1) {
             //Time is between 7AM and 4PM.
             optToday.setEnabled(false);
-            txtInfo.setText(txtInfo.getText() + "\n" + this.getString(R.string.SchoolOpen));
+            infoList.add(2, getString(R.string.SchoolOpen));
             dayrun = 1;
         } else if (calendar.get(Calendar.HOUR_OF_DAY) >= 16 && weekday != 7 && weekday != 1) {
             optToday.setEnabled(false);
             //Time is after 4PM.
-            txtInfo.setText(txtInfo.getText() + "\n" + this.getString(R.string.GBDismissed));
+            infoList.add(2, getString(R.string.GBDismissed));
             dayrun = 1;
         }
     }
