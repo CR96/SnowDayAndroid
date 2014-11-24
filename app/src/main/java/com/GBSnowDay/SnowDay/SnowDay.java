@@ -85,7 +85,6 @@ public class SnowDay extends Activity {
         checkTime();
 
         //Set the content of the ListView
-        System.out.println(infoList);
         ArrayAdapter<String> infoadapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, infoList);
         lstInfo.setAdapter(infoadapter);
@@ -127,7 +126,6 @@ public class SnowDay extends Activity {
         //Listen for button click
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                System.out.println("btnCalculate clicked");
                 btnCalculate.setEnabled(false);
                 Calculate();
 
@@ -175,13 +173,6 @@ public class SnowDay extends Activity {
         date = calendar.getTime();
         formatter = new SimpleDateFormat("MMM dd yyyy");
         tomorrow = formatter.format(date);
-
-        //Set calculation to today or tomorrow
-        if (dayrun == 0) {
-            btnCalculate.setText(this.getString(R.string.DayRun) + " " + this.getString(R.string.today));
-        } else if (dayrun == 1) {
-            btnCalculate.setText(this.getString(R.string.DayRun) + " " + this.getString(R.string.tomorrow));
-        }
 
         //Have the user input past snow days
         days = lstDays.getSelectedItemPosition() - 1;

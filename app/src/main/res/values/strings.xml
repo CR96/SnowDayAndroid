@@ -12,7 +12,7 @@
     <string name="dayinfo">Information</string>
     <string name="prev">How many snow days have occurred?</string>
     <string name="next">Next</string>
-    <string name="calculate">Calculate!</string>
+    <string name="calculate">CALCULATE</string>
     <string name="percent">Percent</string>
     <string name="list">Select a Number</string>
     <string name="quit">Quit</string>
@@ -109,32 +109,5 @@
         <item>9</item>
         <item>10 or more</item>
     </string-array>
-    <string-array name="closings_array">
-        <item>@string/GB</item>
-        <item>@string/Carman</item>
-        <item>@string/Atherton</item>
-        <item>@string/Bendle</item>
-        <item>@string/Flint</item>
-        <item>@string/Goodrich</item>
-        <item>@string/Beecher</item>
-        <item>@string/Clio</item>
-        <item>@string/Davison</item>
-        <item>@string/Fenton</item>
-        <item>@string/Flushing</item>
-        <item>@string/Genesee</item>
-        <item>@string/Kearsley</item>
-        <item>@string/LKFenton</item>
-        <item>@string/Linden</item>
-        <item>@string/Montrose</item>
-        <item>@string/Morris</item>
-        <item>@string/SzCreek</item>
-        <item>@string/Durand</item>
-        <item>@string/Holly</item>
-        <item>@string/Lapeer</item>
-        <item>@string/Owosso</item>
-        <item>@string/GBAcademy</item>
-        <item>@string/GISD</item>
-        <item>@string/HolyFamily</item>
-        <item>@string/WPAcademy</item>
-    </string-array>
+
 </resources>
