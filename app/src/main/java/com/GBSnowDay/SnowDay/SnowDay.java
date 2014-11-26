@@ -2,6 +2,7 @@ package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -85,7 +86,7 @@ public class SnowDay extends Activity {
         checkTime();
 
         //Set the content of the ListView
-        ArrayAdapter<String> infoadapter = new ArrayAdapter<String>(getApplicationContext(),
+        ArrayAdapter<String> infoadapter = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, infoList);
         lstInfo.setAdapter(infoadapter);
 
@@ -193,15 +194,19 @@ public class SnowDay extends Activity {
         if (weekday == 6) {
             infoList.add(1, getString(R.string.SaturdayTomorrow));
             optTomorrow.setEnabled(false);
+            optTomorrow.setTextColor(Color.GRAY);
             optToday.setChecked(true);
         } else if (weekday == 7) {
             infoList.add(1, getString(R.string.SaturdayToday));
             optToday.setEnabled(false);
+            optToday.setTextColor(Color.GRAY);
             optTomorrow.setEnabled(false);
+            optTomorrow.setTextColor(Color.GRAY);
             lstDays.setEnabled(false);
         } else if (weekday == 1) {
             infoList.add(1, getString(R.string.SundayToday));
             optToday.setEnabled(false);
+            optToday.setTextColor(Color.GRAY);
             optTomorrow.setChecked(true);
         }
     }
@@ -210,12 +215,22 @@ public class SnowDay extends Activity {
         if (calendar.get(Calendar.HOUR_OF_DAY) >= 7 && calendar.get(Calendar.HOUR_OF_DAY) < 16 && weekday != 7 && weekday != 1) {
             //Time is between 7AM and 4PM.
             optToday.setEnabled(false);
-            infoList.add(2, getString(R.string.SchoolOpen));
+            optToday.setTextColor(Color.GRAY);
+            if (infoList.size() == 1) {
+                infoList.add(1, getString(R.string.SchoolOpen));
+            }else{
+                infoList.add(2, getString(R.string.SchoolOpen));
+            }
             dayrun = 1;
         } else if (calendar.get(Calendar.HOUR_OF_DAY) >= 16 && weekday != 7 && weekday != 1) {
             optToday.setEnabled(false);
+            optToday.setTextColor(Color.GRAY);
             //Time is after 4PM.
-            infoList.add(2, getString(R.string.GBDismissed));
+            if (infoList.size() == 1) {
+                infoList.add(1, getString(R.string.GBDismissed));
+            }else{
+                infoList.add(2, getString(R.string.GBDismissed));
+            }
             dayrun = 1;
         }
     }
