@@ -61,6 +61,7 @@ public class SnowDayResult extends Activity {
 
     public List<String> closings = new ArrayList<>();
     public List<String> GBArray = new ArrayList<>();
+    public int GBCount = 1;
 
     public int days;
     public int schoolpercent = 0;
@@ -174,13 +175,20 @@ public class SnowDayResult extends Activity {
 
         txtPercent = (TextView) findViewById(R.id.txtPercent);
         lstGB = (ListView) findViewById(R.id.lstGB);
+
+        //Add the GBArray values so they can be set out of sequence
+        GBArray.add(0, "");
+        GBArray.add(1, "");
+        GBArray.add(2, "");
+        GBArray.add(3, "");
+        
+
         txtInfo = (TextView) findViewById(R.id.txtInfo);
 
         txtWeather = (TextView) findViewById(R.id.txtWeather);
         webRadar = (WebView) findViewById(R.id.webRadar);
         btnRadar = (Button) findViewById(R.id.btnRadar);
         progCalculate = (ProgressBar) findViewById(R.id.progCalculate);
-
 
         Calculate();
     }
@@ -322,8 +330,8 @@ public class SnowDayResult extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //info.add(infoCount, getString(R.string.NoConnection));
-                        //infoCount++;
+                        GBArray.set(GBCount, getString(R.string.NoConnection));
+                        GBCount++;
                     }
                 });
 
@@ -345,8 +353,8 @@ public class SnowDayResult extends Activity {
                     //No schools are closed.
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            //info.add(infoCount, getString(R.string.NoClosings));
-                            //infoCount++;
+                            GBArray.set(GBCount, getString(R.string.NoClosings));
+                            GBCount++;
                         }
                     });
 
@@ -354,9 +362,9 @@ public class SnowDayResult extends Activity {
                     //Webpage layout was not recognized.
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            //info.add(infoCount, getString(R.string.WJRTError));
-                            //info.add(infoCount + 1, getString(R.string.ErrorContact));
-                            //infoCount = infoCount + 2;
+                            GBArray.set(GBCount, getString(R.string.WJRTError));
+                            GBArray.set(GBCount + 1, getString(R.string.ErrorContact));
+                            GBCount = GBCount + 2;
                         }
                     });
                 }
@@ -375,6 +383,10 @@ public class SnowDayResult extends Activity {
             //The first test: School Closings!
             //Decide whether to check for today's closings or tomorrow's closings.
 
+            //Sanity check - make sure GB isn't actually closed before predicting
+            //Check to see if Grand Blanc is already closed.
+            checkGBClosed();
+
             if (dayrun == 0) {
                 //Check closings for today
                 checkClosingsToday();
@@ -384,10 +396,6 @@ public class SnowDayResult extends Activity {
                 checkClosingsTomorrow();
 
             }
-
-            //Sanity check - make sure GB isn't actually closed before predicting
-            //Check to see if Grand Blanc is already closed.
-            checkGBClosed();
 
             return null;
         }
@@ -884,8 +892,9 @@ public class SnowDayResult extends Activity {
                         if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy") && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Offices") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Today") && dayrun == 0) {
                             runOnUiThread(new Runnable() {
                                   public void run() {
-                                      GBArray.add(0, getString(R.string.GB) + " " + getString(R.string.Closed));
-                                      GBArray.add(1, getString(R.string.SnowDay));
+                                      GBArray.set(0, getString(R.string.GB) + " " + getString(R.string.Closed));
+                                      GBArray.set(GBCount, getString(R.string.SnowDay));
+                                      GBCount++;
                                       lstGB.setBackgroundColor(Color.RED);
                                       percent = 100;
                                       txtPercent.setText(percent + "%");
@@ -897,8 +906,9 @@ public class SnowDayResult extends Activity {
                         } else if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy") && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Offices") && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Senior") && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Tomorrow") && dayrun == 1) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    GBArray.add(0, getString(R.string.GB) + " " + getString(R.string.Closed));
-                                    GBArray.add(1, getString(R.string.SnowDay));
+                                    GBArray.set(0, getString(R.string.GB) + " " + getString(R.string.Closed));
+                                    GBArray.set(GBCount, getString(R.string.SnowDay));
+                                    GBCount++;
                                     lstGB.setBackgroundColor(Color.RED);
                                     percent = 100;
                                     txtPercent.setText(percent + "%");
@@ -916,7 +926,7 @@ public class SnowDayResult extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    GBArray.add(0, getString(R.string.GB) + " " + getString(R.string.Open));
+                    GBArray.set(0, getString(R.string.GB) + " " + getString(R.string.Open));
                 }
             });
 
@@ -935,9 +945,9 @@ public class SnowDayResult extends Activity {
                         try {
                             weatherdoc = Jsoup.connect("http://forecast.weather.gov/afm/PointClick.php?lat=42.92580&lon=-83.61870").get();
                         } catch (IOException ex) {
-                            //info.add(infoCount, getString(R.string.WeatherError));
-                            //info.add(infoCount + 1, getString(R.string.NoConnection));
-                            //infoCount = infoCount + 2;
+                            GBArray.set(GBCount, getString(R.string.WeatherError));
+                            GBArray.set(GBCount + 1, getString(R.string.NoConnection));
+                            GBCount = GBCount + 2;
                         }
 
                         //"Searching for elements in class 'warn'
@@ -1275,6 +1285,13 @@ public class SnowDayResult extends Activity {
                                     mAdapter.addSeparatorItem(getString(R.string.tier2));
                                 }else if (i == 22) {
                                     mAdapter.addSeparatorItem(getString(R.string.tier1));
+                                }
+                            }
+
+                            //Remove blank items
+                            for (int i = 0; i < GBArray.size(); i++) {
+                                if (GBArray.get(i).equals("")) {
+                                    GBArray.remove(i);
                                 }
                             }
 

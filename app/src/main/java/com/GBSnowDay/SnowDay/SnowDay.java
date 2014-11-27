@@ -58,6 +58,9 @@ public class SnowDay extends Activity {
     public Format formatter;
 
     public List<String> infoList = new ArrayList<>();
+    public int infoCount = 1;
+    public boolean todayValid;
+    public boolean tomorrowValid;
 
     public int days;
     public int dayrun;
@@ -81,9 +84,12 @@ public class SnowDay extends Activity {
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
         //Make sure the user doesn't try to run the program on the weekend or during school hours
-        setDate();
-        checkWeekend();
-        checkTime();
+        checkDate();
+
+        if (todayValid || tomorrowValid) {
+            checkWeekend();
+            checkTime();
+        }
 
         //Set the content of the ListView
         ArrayAdapter<String> infoadapter = new ArrayAdapter<>(getApplicationContext(),
@@ -179,11 +185,150 @@ public class SnowDay extends Activity {
         days = lstDays.getSelectedItemPosition() - 1;
     }
 
-    private void setDate() {
-        //Set the current month, day, and year
-        String date = "Current Date: " + new SimpleDateFormat("MMMM dd yyyy").format(calendar.getTime());
-        infoList.add(0, date);
+    private void checkDate() {
 
+        todayValid = true;
+        tomorrowValid = true;
+        //Set the current month, day, and year
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd yyyy");
+        String date = currentDate.format(calendar.getTime());
+        String dateFormatted = "Current Date: " + currentDate.format(calendar.getTime());
+        infoList.add(0, dateFormatted);
+
+        //Check for days school is not in session (such as Winter Break, development days, etc.)
+        //Dates are read as a String instead of calendar integers so they can be easily modified.
+
+        if (date.equals("December 09 2014") || date.equals("February 03 2015")
+                || date.equals("May 05 2015")) {
+            infoList.add(infoCount, "REMINDER: Tomorrow is a Late Start.");
+            infoCount++;
+        } else if (date.equals("December 10 2014") || date.equals("February 04 2015")
+                || date.equals("May 06 2015")) {
+            infoList.add(infoCount, "REMINDER: Today is a Late Start.");
+            infoCount++;
+        } else if (date.equals("December 21 2014")) {
+            infoList.add(infoCount, "Winter Break begins tomorrow.");
+            infoCount++;
+            tomorrowValid = false;
+        } else if (date.equals("December 22 2014") || date.equals("December 23 2014")
+                || date.equals("December 24 2014") || date.equals("December 25 2014")
+                || date.equals("December 26 2014") || date.equals("December 27 2014")
+                || date.equals("December 28 2014") || date.equals("December 29 2014")
+                || date.equals("December 30 2014") || date.equals("December 31 2014")
+                || date.equals("January 01 2015") || date.equals("January 02 2015")) {
+            //Winter Break
+            if (date.equals("December 25 2014")) {
+                infoList.add(infoCount, "Merry Christmas!");
+                infoCount++;
+            } else if (date.equals("January 01 2015")) {
+                infoList.add(infoCount, "Happy New Year!");
+                infoCount++;
+            }
+
+            infoList.add(infoCount, "Enjoy your winter break!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        } else if (date.equals("January 18 2015")) {
+            infoList.add(infoCount, "Tomorrow is MLK Day. School is not in session.");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        } else if (date.equals("January 19 2015")) {
+            //MLK Day
+            infoList.add(infoCount, "Happy MLK Day! School is not in session.");
+            infoList.add(infoCount + 1, "Tomorrow is Teacher Records Day. School is not in session.");
+            infoCount += 2;
+            todayValid = false;
+            //Teacher records day is the following day
+            tomorrowValid = false;
+        } else if (date.equals("January 20 2015")) {
+            infoList.add(infoCount, "Teacher Records Day. School is not in session.");
+            infoCount++;
+            todayValid = false;
+        } else if (date.equals("February 15 2015")) {
+            infoList.add(infoCount, "Tomorrow is President's Day. School is not in session.");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        } else if (date.equals("February 16 2015")) {
+            infoList.add(infoCount, "Happy President's Day! School is not in session.");
+            infoCount++;
+            todayValid = false;
+        } else if (date.equals("March 10 2015")) {
+            infoList.add(infoCount, "REMINDER: Tomorrow is a Half Day for elementary and middle school students.");
+            infoCount++;
+        } else if (date.equals("March 11 2015") || date.equals("March 12 2015")
+                || date.equals("March 13 2015")) {
+            infoList.add(infoCount, "REMINDER: Half Day for elementary and middle school students");
+            infoCount++;
+        } else if (date.equals("April 01 2015")) {
+            infoList.add(infoCount, "REMINDER: Tomorrow is a Half Day.");
+            infoCount++;
+        } else if (date.equals("April 02 2015")) {
+            infoList.add(infoCount, "REMINDER: Today is a Half Day.");
+            infoList.add(infoCount, "Spring Break begins tomorrow.");
+            infoCount++;
+            tomorrowValid = false;
+        } else if (date.equals("April 03 2015") || date.equals("April 04 2015")
+                || date.equals("April 05 2015") || date.equals("April 06 2015")
+                || date.equals("April 07 2015") || date.equals("April 08 2015")
+                || date.equals("April 09 2015") || date.equals("April 10 2015")) {
+            //Spring Break
+            if (date.equals("April 05 2015")) {
+                infoList.add(infoCount, "Happy Easter!");
+                infoCount++;
+            }
+
+            infoList.add(infoCount, "Enjoy your Spring Break!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        }else if (date.equals("April 22 2015")) {
+            infoList.add(infoCount, "Tomorrow is a Professional Development Day. School is not in session.");
+            infoCount++;
+            tomorrowValid = false;
+        }else if (date.equals("April 23 2015")) {
+            infoList.add(infoCount,"Staff Professional Development Day. School is not in session.");
+            infoCount++;
+            todayValid = false;
+        }else if (date.equals("April 24 2015")) {
+            infoList.add(infoCount, "Tomorrow is Memorial Day. School is not in session.");
+            infoCount++;
+            tomorrowValid = false;
+        }else if (date.equals("April 25 2015")) {
+            infoList.add(infoCount, "Happy Memorial Day! School is not in session.");
+            infoCount++;
+            todayValid = false;
+        }else if (date.equals("May 19 2015")) {
+            infoList.add(infoCount, "Congratulations Senior Class of 2015!");
+            infoCount++;
+        }else if (date.equals("June 11 2015")) {
+            infoList.add(infoCount, "Today is the last day of school!");
+            infoCount++;
+            tomorrowValid = false;
+        }else if (calendar.MONTH >= 5 && calendar.MONTH <= 7 && calendar.DAY_OF_MONTH > 11) {
+            infoList.add(infoCount, "Enjoy your Summer!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        }
+
+
+        //Determine if the program should be run
+        if (!tomorrowValid && !todayValid) {
+            optToday.setEnabled(false);
+            optToday.setTextColor(Color.GRAY);
+            optTomorrow.setEnabled(false);
+            optTomorrow.setTextColor(Color.GRAY);
+            lstDays.setEnabled(false);
+        }else if (!tomorrowValid) {
+            optTomorrow.setEnabled(false);
+            optTomorrow.setTextColor(Color.GRAY);
+        }else if (!todayValid) {
+            optToday.setEnabled(false);
+            optToday.setTextColor(Color.GRAY);
+        }
     }
 
     private void checkWeekend() {
@@ -192,22 +337,25 @@ public class SnowDay extends Activity {
         //Sunday is 1
 
         if (weekday == 6) {
-            infoList.add(1, getString(R.string.SaturdayTomorrow));
+            infoList.add(infoCount, getString(R.string.SaturdayTomorrow));
             optTomorrow.setEnabled(false);
             optTomorrow.setTextColor(Color.GRAY);
             optToday.setChecked(true);
+            infoCount++;
         } else if (weekday == 7) {
-            infoList.add(1, getString(R.string.SaturdayToday));
+            infoList.add(infoCount, getString(R.string.SaturdayToday));
             optToday.setEnabled(false);
             optToday.setTextColor(Color.GRAY);
             optTomorrow.setEnabled(false);
             optTomorrow.setTextColor(Color.GRAY);
             lstDays.setEnabled(false);
+            infoCount++;
         } else if (weekday == 1) {
-            infoList.add(1, getString(R.string.SundayToday));
+            infoList.add(infoCount, getString(R.string.SundayToday));
             optToday.setEnabled(false);
             optToday.setTextColor(Color.GRAY);
             optTomorrow.setChecked(true);
+            infoCount++;
         }
     }
 
@@ -216,21 +364,15 @@ public class SnowDay extends Activity {
             //Time is between 7AM and 4PM.
             optToday.setEnabled(false);
             optToday.setTextColor(Color.GRAY);
-            if (infoList.size() == 1) {
-                infoList.add(1, getString(R.string.SchoolOpen));
-            }else{
-                infoList.add(2, getString(R.string.SchoolOpen));
-            }
+            infoList.add(infoCount, getString(R.string.SchoolOpen));
+            infoCount++;
             dayrun = 1;
         } else if (calendar.get(Calendar.HOUR_OF_DAY) >= 16 && weekday != 7 && weekday != 1) {
             optToday.setEnabled(false);
             optToday.setTextColor(Color.GRAY);
             //Time is after 4PM.
-            if (infoList.size() == 1) {
-                infoList.add(1, getString(R.string.GBDismissed));
-            }else{
-                infoList.add(2, getString(R.string.GBDismissed));
-            }
+            infoList.add(infoCount, getString(R.string.GBDismissed));
+            infoCount++;
             dayrun = 1;
         }
     }
