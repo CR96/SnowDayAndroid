@@ -93,7 +93,8 @@
     <string name="action_about">About</string>
     <string name="GBCS">Grand Blanc Community Schools</string>
     <string name="dev_name">Developed by Corey Rowe</string>
-    <string name="dev_site">Web</string>
+    <string name="dev_site">gbsnowday.weebly.com</string>
+    <string name="dev_email">GBSnowDay@gmail.com</string>
 
     <string-array name="days_array">
         <item>Select</item>
