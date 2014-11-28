@@ -23,8 +23,9 @@
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
         android:textSize="22sp"
-        android:layout_above="@+id/txtSnowDay"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="32dp"/>
 
     <TextView
         android:layout_width="wrap_content"
