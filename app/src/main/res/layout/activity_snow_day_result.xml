@@ -7,6 +7,8 @@
     android:clickable="false"
     android:visibility="visible">
 
+    <!--TODO: Create a landscape layout for this activity-->
+
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
@@ -83,42 +85,70 @@
 
                 </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/tab2"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
+                    <ImageView
+                        android:id="@+id/wjrtFail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/error"
+                        android:baselineAlignBottom="true"
+                        android:src="@android:drawable/stat_sys_warning"
+                        android:gravity="center"
+                        android:visibility="gone"/>
+
                             <ListView
                                 android:id="@+id/lstClosings"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
+
+                            <ListView
+                                android:id="@+id/lstWJRT"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
 
                             <TextView
                                 android:id="@+id/txtTier1"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"/>
 
                             <TextView
                                 android:id="@+id/txtTier2"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"/>
 
                             <TextView
                                 android:id="@+id/txtTier3"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"/>
 
                             <TextView
                                 android:id="@+id/txtTier4"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"/>
 
-                </LinearLayout>
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/tab3"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
+
+                    <ImageView
+                        android:id="@+id/nwsFail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/error"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/stat_sys_warning"
+                        android:gravity="center"
+                        android:visibility="gone"/>
 
                     <WebView
                         android:layout_width="800dp"
@@ -135,14 +165,21 @@
                         android:id="@+id/btnRadar"
                         android:onClick="radarToggle"
                         android:textColor="@android:color/white"
-                        android:visibility="invisible" />
+                        android:visibility="gone" />
 
-                    <TextView
+                    <ListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/txtWeather"
-                        android:visibility="invisible" />
+                        android:id="@+id/lstWeather"
+                        android:visibility="gone"/>
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/lstNWS"
+                        android:visibility="gone"/>
                 </RelativeLayout>
 
 

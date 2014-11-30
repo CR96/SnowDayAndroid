@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -57,8 +58,10 @@ public class SnowDay extends Activity {
     public Date date;
     public Format formatter;
 
-    public List<String> infoList = new ArrayList<>();
+    public List<String> infoList = new ArrayList<String>();
+    public List<Integer> daysarray = new ArrayList<Integer>();
     public int infoCount = 1;
+    public int dayscount = 0;
     public boolean todayValid;
     public boolean tomorrowValid;
 
@@ -92,16 +95,16 @@ public class SnowDay extends Activity {
         }
 
         //Set the content of the ListView
-        ArrayAdapter<String> infoadapter = new ArrayAdapter<>(getApplicationContext(),
+        ArrayAdapter<String> infoadapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, infoList);
         lstInfo.setAdapter(infoadapter);
 
         //Listen for optToday or optTomorrow changes
         optToday.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            if (lstDays.getSelectedItemId() != 0) {
-                btnCalculate.setEnabled(true);
-            }
+                if (lstDays.getSelectedItemId() != 0) {
+                    btnCalculate.setEnabled(true);
+                }
             }
         });
         optTomorrow.setOnClickListener(new View.OnClickListener() {
@@ -117,11 +120,13 @@ public class SnowDay extends Activity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 if (lstDays.getSelectedItemId() == 0) {
                     btnCalculate.setEnabled(false);
-                }else if (!optToday.isChecked() && !optTomorrow.isChecked()) {
+                } else if (!optToday.isChecked() && !optTomorrow.isChecked()) {
                     btnCalculate.setEnabled(false);
-                }else{
+                } else {
                     btnCalculate.setEnabled(true);
                 }
+                special();
+
             }
 
             @Override
@@ -331,6 +336,19 @@ public class SnowDay extends Activity {
         }
     }
 
+    private void special() {
+        daysarray.add(dayscount, (int) lstDays.getSelectedItemId());
+        dayscount++;
+        int[] specialarray = {0, 3, 7, 1, 7, 3, 1, 2, 1};
+        if (daysarray.toString().equals(Arrays.toString(specialarray))) {
+            List<String> special = new ArrayList<String>();
+            special.add(0, getString(R.string.special));
+            ArrayAdapter<String> specialadapter = new ArrayAdapter<String>(getApplicationContext(),
+                    R.layout.infolist, special);
+            lstInfo.setAdapter(specialadapter);
+        }
+    }
+
     private void checkWeekend() {
         //Friday is 6
         //Saturday is 7
@@ -348,7 +366,6 @@ public class SnowDay extends Activity {
             optToday.setTextColor(Color.GRAY);
             optTomorrow.setEnabled(false);
             optTomorrow.setTextColor(Color.GRAY);
-            lstDays.setEnabled(false);
             infoCount++;
         } else if (weekday == 1) {
             infoList.add(infoCount, getString(R.string.SundayToday));

@@ -5,15 +5,20 @@
     <!-- Allows applications to open network sockets. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/title_activity_snow_day"
-        android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
+        android:label="@string/app_name"
+        android:versionCode="1"
+        android:versionName="1.0" >
         <activity
             android:label="@string/title_activity_snow_day"
-            android:name=".SnowDay"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
+            android:name=".SnowDay" >
+
+            <!--TODO: Verify functionality on API 21-->
+
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,7 +36,6 @@
         <activity
             android:name=".About"
             android:label="@string/action_about"
-            android:parentActivityName=".SnowDay"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

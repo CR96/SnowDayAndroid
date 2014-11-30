@@ -22,7 +22,7 @@
         android:id="@+id/txtGB"
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:paddingTop="32dp"/>
@@ -35,8 +35,8 @@
         android:id="@+id/txtSnowDay"
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
-        android:textSize="36sp"
-        android:layout_above="@+id/imgAbout"
+        android:textSize="34sp"
+        android:layout_below="@+id/txtGB"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -48,9 +48,9 @@
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
         android:textSize="25sp"
-        android:layout_below="@+id/imgAbout"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="16dp"/>
+        android:paddingBottom="16dp"
+        android:layout_below="@+id/txtSnowDay"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,7 +78,22 @@
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
         android:textSize="25sp"
-        android:layout_below="@+id/txtDev"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="16dp"/>
+        android:paddingBottom="16dp"
+        android:layout_above="@+id/txtWeb"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="@string/dev_twitter"
+        android:id="@+id/txtTwitter"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:paddingBottom="16dp"
+        android:layout_above="@+id/txtMail"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
