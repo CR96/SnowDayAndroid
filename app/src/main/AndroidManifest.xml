@@ -22,7 +22,8 @@
         <activity
             android:name=".SnowDayResult"
             android:label="@string/title_activity_snow_day_result"
-            android:parentActivityName=".SnowDay" >
+            android:parentActivityName=".SnowDay"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.GBSnowDay.SnowDay.SnowDay" />
@@ -30,7 +31,8 @@
         <activity
             android:name=".About"
             android:label="@string/action_about"
-            android:parentActivityName=".SnowDay" >
+            android:parentActivityName=".SnowDay"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.GBSnowDay.SnowDay.SnowDay" />

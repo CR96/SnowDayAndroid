@@ -58,6 +58,7 @@
     <string name="NoWeather">"No applicable weather warnings."</string>
     <string name="WeatherError">Unable to obtain weather.</string>
     <string name="NoConnection">Check your internet connection.</string>
+    <string name="NoNetwork">Network communication issues</string>
     <string name="error">Error</string>
     <string name="SchoolOpen">The school\'s already open.</string>
     <string name="Open"> OPEN</string>

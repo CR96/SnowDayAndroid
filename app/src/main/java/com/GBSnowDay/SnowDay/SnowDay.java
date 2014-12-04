@@ -72,11 +72,6 @@ public class SnowDay extends Activity {
     int days;
     int dayrun;
 
-    //UI values for onSaveInstanceState
-    boolean optTodayState;
-    boolean optTomorrowState;
-    int lstDaysState;
-
     //Declare lists that will be used in ListAdapters
     List<String> infoList = new ArrayList<String>();
     List<Integer> daysarray = new ArrayList<Integer>();
@@ -99,13 +94,6 @@ public class SnowDay extends Activity {
         lstInfo = (ListView) findViewById(R.id.lstInfo);
         lstDays = (Spinner) findViewById(R.id.lstDays);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
-
-        //Restore savedInstanceState if the activity was destroyed.
-        if (savedInstanceState != null){
-            optToday.setSelected(optTodayState);
-            optTomorrow.setSelected(optTomorrowState);
-            lstDays.setSelection(lstDaysState);
-        }
 
         //Make sure the user doesn't try to run the program on the weekend or on specific dates
         checkDate();
@@ -177,13 +165,6 @@ public class SnowDay extends Activity {
                 startActivity(result);
             }
         });
-    }
-
-    protected void onSaveInstanceState(Bundle outState) {
-        //Save the UI settings if the activity is destroyed.
-        optTodayState = optToday.isSelected();
-        optTomorrowState = optTomorrow.isSelected();
-        lstDaysState = lstDays.getSelectedItemPosition();
     }
 
     //Adapter class
