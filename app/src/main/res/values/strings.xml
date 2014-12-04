@@ -60,7 +60,7 @@
     <string name="NoConnection">Check your internet connection.</string>
     <string name="NoNetwork">Network communication issues</string>
     <string name="error">Error</string>
-    <string name="SchoolOpen">The school\'s already open.</string>
+    <string name="SchoolOpen">School is already in session.</string>
     <string name="Open"> OPEN</string>
     <string name="Closed">" CLOSED</string>
     <string name="GBDismissed">School\'s already out for today.</string>

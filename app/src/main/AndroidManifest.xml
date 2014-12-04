@@ -31,8 +31,7 @@
         <activity
             android:name=".About"
             android:label="@string/action_about"
-            android:parentActivityName=".SnowDay"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
+            android:parentActivityName=".SnowDay" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.GBSnowDay.SnowDay.SnowDay" />

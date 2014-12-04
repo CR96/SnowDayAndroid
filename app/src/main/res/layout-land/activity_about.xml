@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content" tools:context="com.GBSnowDay.SnowDay.About"
+    android:id="@+id/about">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgAbout"
+        android:layout_gravity="center"
+        android:src="@drawable/icon"
+        android:contentDescription="@string/title"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/GBCS"
+        android:id="@+id/txtGB"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/txtSnowDay"
+        android:layout_alignEnd="@+id/txtSnowDay"
+        android:layout_toRightOf="@+id/imgAbout"
+        android:layout_toEndOf="@+id/imgAbout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/title"
+        android:id="@+id/txtSnowDay"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:layout_below="@+id/txtGB"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/imgAbout"
+        android:layout_toEndOf="@+id/imgAbout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/dev_name"
+        android:id="@+id/txtDev"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:layout_below="@+id/txtSnowDay"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/txtSnowDay"
+        android:layout_alignStart="@+id/txtSnowDay"
+        android:layout_above="@+id/txtWeb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="@string/dev_site"
+        android:id="@+id/txtWeb"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:paddingBottom="8dp"
+        android:layout_above="@+id/txtMail"
+        android:layout_alignRight="@+id/txtDev"
+        android:layout_toRightOf="@+id/imgAbout"
+        android:layout_toEndOf="@+id/imgAbout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:autoLink="email"
+        android:linksClickable="true"
+        android:text="@string/dev_email"
+        android:id="@+id/txtMail"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:paddingBottom="8dp"
+        android:layout_above="@+id/txtTwitter"
+        android:layout_alignRight="@+id/txtDev"
+        android:layout_toRightOf="@+id/imgAbout"
+        android:layout_toEndOf="@+id/imgAbout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="@string/dev_twitter"
+        android:id="@+id/txtTwitter"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:paddingBottom="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/imgAbout"
+        android:layout_toEndOf="@+id/imgAbout" />
+</RelativeLayout>
