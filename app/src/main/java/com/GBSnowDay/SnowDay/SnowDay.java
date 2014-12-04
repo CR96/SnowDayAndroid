@@ -1,18 +1,23 @@
 package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -38,6 +43,7 @@ public class SnowDay extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_about) {
+            //Show the about activity
             Intent about = new Intent(getApplicationContext(), About.class);
             startActivity(about);
             return true;
@@ -53,20 +59,28 @@ public class SnowDay extends Activity {
     Button btnCalculate;
 
     //Declare variables
-    public String today;
-    public String tomorrow;
-    public Date date;
-    public Format formatter;
+    String today;
+    String tomorrow;
+    Date date;
+    Format formatter;
 
-    public List<String> infoList = new ArrayList<String>();
-    public List<Integer> daysarray = new ArrayList<Integer>();
-    public int infoCount = 1;
-    public int dayscount = 0;
-    public boolean todayValid;
-    public boolean tomorrowValid;
+    int dayscount = 0;
+    boolean todayValid;
+    boolean tomorrowValid;
+    boolean reminder;
 
-    public int days;
-    public int dayrun;
+    int days;
+    int dayrun;
+
+    //UI values for onSaveInstanceState
+    boolean optTodayState;
+    boolean optTomorrowState;
+    int lstDaysState;
+
+    //Declare lists that will be used in ListAdapters
+    List<String> infoList = new ArrayList<String>();
+    List<Integer> daysarray = new ArrayList<Integer>();
+    int infoCount = 1;
 
     //Figure out what tomorrow is
     //Saturday = 0, Sunday = 1
@@ -86,20 +100,31 @@ public class SnowDay extends Activity {
         lstDays = (Spinner) findViewById(R.id.lstDays);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
-        //Make sure the user doesn't try to run the program on the weekend or during school hours
+        //Restore savedInstanceState if the activity was destroyed.
+        if (savedInstanceState != null){
+            optToday.setSelected(optTodayState);
+            optTomorrow.setSelected(optTomorrowState);
+            lstDays.setSelection(lstDaysState);
+        }
+
+        //Make sure the user doesn't try to run the program on the weekend or on specific dates
         checkDate();
 
+        //Only run checkWeekend() if today or tomorrow is still valid
         if (todayValid || tomorrowValid) {
             checkWeekend();
-            checkTime();
         }
 
         //Set the content of the ListView
-        ArrayAdapter<String> infoadapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, infoList);
-        lstInfo.setAdapter(infoadapter);
+        CustomAdapter mAdapter = new CustomAdapter();
+        for (int i = 0; i < infoList.size(); i++) {
+            mAdapter.addItem(infoList.get(i));
+        }
+
+        lstInfo.setAdapter(mAdapter);
 
         //Listen for optToday or optTomorrow changes
+        //Don't allow the calculation to run if "Select a day" is selected
         optToday.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (lstDays.getSelectedItemId() != 0) {
@@ -116,9 +141,11 @@ public class SnowDay extends Activity {
         });
 
         //Listen for lstDays changes
-        lstDays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                if (lstDays.getSelectedItemId() == 0) {
+        //Don't allow the calculation to be run if "Select a day" is selected or no radio button
+        //is selected
+        lstDays.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (id == 0) {
                     btnCalculate.setEnabled(false);
                 } else if (!optToday.isChecked() && !optTomorrow.isChecked()) {
                     btnCalculate.setEnabled(false);
@@ -130,8 +157,8 @@ public class SnowDay extends Activity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Required empty method
             }
         });
 
@@ -139,10 +166,11 @@ public class SnowDay extends Activity {
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 btnCalculate.setEnabled(false);
+                //Start the calculation
                 Calculate();
 
                 //Switch to SnowDayResult activity
-                //Pass value of 'days' to new activity
+                //Pass values of 'dayrun' and 'days' to new activity
                 Intent result = new Intent(getApplicationContext(), SnowDayResult.class);
                 result.putExtra("dayrun", dayrun);
                 result.putExtra("days", days);
@@ -151,20 +179,82 @@ public class SnowDay extends Activity {
         });
     }
 
+    protected void onSaveInstanceState(Bundle outState) {
+        //Save the UI settings if the activity is destroyed.
+        optTodayState = optToday.isSelected();
+        optTomorrowState = optTomorrow.isSelected();
+        lstDaysState = lstDays.getSelectedItemPosition();
+    }
+
+    //Adapter class
+    private class CustomAdapter extends BaseAdapter {
+        private static final int TYPE_ITEM = 0;
+
+        private ArrayList<String> mData = new ArrayList<String>();
+        private LayoutInflater mInflater;
+
+        public CustomAdapter() {
+            mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public void addItem(final String item) {
+            mData.add(item);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return TYPE_ITEM;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 1;
+        }
+
+        @Override
+        public int getCount() {
+            return mData.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return mData.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+            int type = getItemViewType(position);
+            holder = new ViewHolder();
+            switch (type) {
+                case TYPE_ITEM:
+                    if (reminder && position == 1) {
+                        //If there is a reminder / event, make it blue
+                        convertView = mInflater.inflate(R.layout.itemreminder, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.text);
+                    } else {
+                        convertView = mInflater.inflate(R.layout.itemlist, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.text);
+                    }
+                    break;
+            }
+            convertView.setTag(holder);
+            holder.textView.setText(mData.get(position));
+            return convertView;
+        }
+    }
+
+    public static class ViewHolder {
+        public TextView textView;
+    }
+
 
     public void Calculate() {
-        /**
-         * This method will predict the possibility of a snow day for Grand Blanc Community Schools.
-         * Created by Corey Rowe, July 2014 - port of original Swing GUI.
-         * Factors:
-         * Predicted snowfall and time of arrival (not yet implemented)
-         * Predicted ice accumulation (not yet implemented)
-         * Predicted wind chill (below -20F?) (not yet implemented)
-         * Number of snow days accrued (more = smaller chance) (not yet implemented)
-         * Schools currently closed (data from WJRT) (not yet implemented)
-         * Schools in higher tiers (5 is highest) will increase the snow day chance.
-         * Obviously return 100% if GB is already closed.
-         */
 
         //Date setup
 
@@ -192,16 +282,19 @@ public class SnowDay extends Activity {
 
     private void checkDate() {
 
+        //These are set to false if the calculation cannot be run on that day
         todayValid = true;
         tomorrowValid = true;
+
         //Set the current month, day, and year
         SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd yyyy");
         String date = currentDate.format(calendar.getTime());
         String dateFormatted = "Current Date: " + currentDate.format(calendar.getTime());
         infoList.add(0, dateFormatted);
 
-        //Check for days school is not in session (such as Winter Break, development days, etc.)
-        //Dates are read as a String instead of calendar integers so they can be easily modified.
+        /*Check for days school is not in session (such as Winter Break, development days, etc.)
+        Dates are read as a String from SimpleDateFormat instead of calendar integers so they can
+        be easily modified without messing with the date/time API.*/
 
         if (date.equals("December 09 2014") || date.equals("February 03 2015")
                 || date.equals("May 05 2015")) {
@@ -235,24 +328,24 @@ public class SnowDay extends Activity {
             todayValid = false;
             tomorrowValid = false;
         } else if (date.equals("January 18 2015")) {
-            infoList.add(infoCount, "Tomorrow is MLK Day. School is not in session.");
+            infoList.add(infoCount, "Tomorrow is MLK Day. School will not be in session.");
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         } else if (date.equals("January 19 2015")) {
             //MLK Day
             infoList.add(infoCount, "Happy MLK Day! School is not in session.");
-            infoList.add(infoCount + 1, "Tomorrow is Teacher Records Day. School is not in session.");
+            infoList.add(infoCount + 1, "Tomorrow is Teacher Records Day. School will not be in session.");
             infoCount += 2;
             todayValid = false;
-            //Teacher records day is the following day
+            //Special case: teacher records day is the following day
             tomorrowValid = false;
         } else if (date.equals("January 20 2015")) {
             infoList.add(infoCount, "Teacher Records Day. School is not in session.");
             infoCount++;
             todayValid = false;
         } else if (date.equals("February 15 2015")) {
-            infoList.add(infoCount, "Tomorrow is President's Day. School is not in session.");
+            infoList.add(infoCount, "Tomorrow is President's Day. School will not be not in session.");
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
@@ -289,48 +382,62 @@ public class SnowDay extends Activity {
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        }else if (date.equals("April 22 2015")) {
-            infoList.add(infoCount, "Tomorrow is a Professional Development Day. School is not in session.");
+        } else if (date.equals("April 22 2015")) {
+            infoList.add(infoCount, "Tomorrow is a Professional Development Day. School will not be in session.");
             infoCount++;
             tomorrowValid = false;
-        }else if (date.equals("April 23 2015")) {
-            infoList.add(infoCount,"Staff Professional Development Day. School is not in session.");
+        } else if (date.equals("April 23 2015")) {
+            infoList.add(infoCount, "Staff Professional Development Day. School is not in session.");
             infoCount++;
             todayValid = false;
-        }else if (date.equals("April 24 2015")) {
-            infoList.add(infoCount, "Tomorrow is Memorial Day. School is not in session.");
+        } else if (date.equals("April 24 2015")) {
+            infoList.add(infoCount, "Tomorrow is Memorial Day. School will not be in session.");
             infoCount++;
             tomorrowValid = false;
-        }else if (date.equals("April 25 2015")) {
+        } else if (date.equals("April 25 2015")) {
             infoList.add(infoCount, "Happy Memorial Day! School is not in session.");
             infoCount++;
             todayValid = false;
-        }else if (date.equals("May 19 2015")) {
+        } else if (date.equals("May 19 2015")) {
+            //As a senior, it has to be said...
             infoList.add(infoCount, "Congratulations Senior Class of 2015!");
             infoCount++;
-        }else if (date.equals("June 11 2015")) {
+        } else if (date.equals("June 11 2015")) {
             infoList.add(infoCount, "Today is the last day of school!");
             infoCount++;
             tomorrowValid = false;
-        }else if (calendar.MONTH >= 5 && calendar.MONTH <= 7 && calendar.DAY_OF_MONTH > 11) {
+        } else if (calendar.MONTH == 5 && calendar.DAY_OF_MONTH > 11) {
+            //Summer break (June)
             infoList.add(infoCount, "Enjoy your Summer!");
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
+        } else if (calendar.MONTH > 5 && calendar.MONTH < 8) {
+            //Summer break (July and August)
+            infoList.add(infoCount, "Enjoy your Summer!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        } else if (calendar.MONTH == 9) {
+            //Summmer break (September)
+            //Conditions for the first day of the 2015-16 year
+            //To be determined
         }
 
+        //If items were added...
+        reminder = infoCount > 1;
 
-        //Determine if the program should be run
+
+        //Determine if the calculation should be available
         if (!tomorrowValid && !todayValid) {
             optToday.setEnabled(false);
             optToday.setTextColor(Color.GRAY);
             optTomorrow.setEnabled(false);
             optTomorrow.setTextColor(Color.GRAY);
-            lstDays.setEnabled(false);
-        }else if (!tomorrowValid) {
+        } else if (!tomorrowValid) {
             optTomorrow.setEnabled(false);
             optTomorrow.setTextColor(Color.GRAY);
-        }else if (!todayValid) {
+        } else if (!todayValid) {
             optToday.setEnabled(false);
             optToday.setTextColor(Color.GRAY);
         }
@@ -375,24 +482,7 @@ public class SnowDay extends Activity {
             infoCount++;
         }
     }
-
-    private void checkTime() {
-        if (calendar.get(Calendar.HOUR_OF_DAY) >= 7 && calendar.get(Calendar.HOUR_OF_DAY) < 16 && weekday != 7 && weekday != 1) {
-            //Time is between 7AM and 4PM.
-            optToday.setEnabled(false);
-            optToday.setTextColor(Color.GRAY);
-            infoList.add(infoCount, getString(R.string.SchoolOpen));
-            infoCount++;
-            dayrun = 1;
-        } else if (calendar.get(Calendar.HOUR_OF_DAY) >= 16 && weekday != 7 && weekday != 1) {
-            optToday.setEnabled(false);
-            optToday.setTextColor(Color.GRAY);
-            //Time is after 4PM.
-            infoList.add(infoCount, getString(R.string.GBDismissed));
-            infoCount++;
-            dayrun = 1;
-        }
-    }
 }
+
 
 

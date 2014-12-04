@@ -9,17 +9,14 @@ android {
     buildToolsVersion '21.1.1'
     defaultConfig {
         applicationId 'com.GBSnowDay.SnowDay'
-        minSdkVersion 4
+        minSdkVersion 8
         targetSdkVersion 21
         versionCode 1
         versionName '1.0'
-    }
-    dexOptions {
     }
 
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21+'
     compile 'org.jsoup:jsoup:1.8.1'
 }
