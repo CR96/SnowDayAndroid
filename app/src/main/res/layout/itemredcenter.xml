@@ -8,10 +8,12 @@
         android:textSize="17sp"
         android:layout_height="50dp"
         android:visibility="visible"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:layout_width="fill_parent"
-        android:background="#ffff8800"
-        android:textColor="@android:color/white"/>
+        android:background="#ffcc0000"
+        android:textColor="@android:color/white"
+        android:clickable="false"
+        android:focusable="false"/>
 </LinearLayout>

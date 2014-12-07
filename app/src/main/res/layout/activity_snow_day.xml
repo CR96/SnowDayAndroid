@@ -79,7 +79,9 @@
         android:textColor="@android:color/white"
         android:layout_below="@+id/txtPrev"
         android:spinnerMode="dropdown"
-        android:entries="@array/days_array"/>
+        android:entries="@array/days_array"
+        android:layout_toRightOf="@+id/txtInfo"
+        android:layout_toEndOf="@+id/txtInfo" />
 
     <ListView
         android:layout_width="match_parent"
@@ -91,7 +93,8 @@
         android:layout_below="@+id/txtInfo"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:choiceMode="none" />
+        android:clickable="false"
+        android:focusable="false" />
 
     <Button
         android:layout_width="match_parent"
@@ -105,12 +108,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dayinfo"
         android:id="@+id/txtInfo"
         android:layout_below="@+id/lstDays"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:paddingTop="16dp"/>
+        android:paddingTop="16dp"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

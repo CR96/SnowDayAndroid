@@ -7,8 +7,6 @@
     android:clickable="false"
     android:visibility="visible">
 
-    <!--TODO: Create a landscape layout for this activity-->
-
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
@@ -46,7 +44,7 @@
                     android:layout_height="fill_parent" >
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -54,22 +52,20 @@
                         android:visibility="visible"
                         android:textColor="#ffff0000"
                         android:textSize="72sp"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="60dp"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="75dp" />
+                        android:layout_centerHorizontal="true"/>
 
                     <ListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/white"
                         android:id="@+id/lstGB"
-                        android:textAlignment="center"
-                        android:layout_below="@+id/txtPercent"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:choiceMode="none" />
+                        android:gravity="center"
+                        android:layout_alignParentBottom="true"
+                        android:clickable="false"
+                        android:focusable="false" />
 
 
                 </RelativeLayout>
@@ -79,47 +75,41 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
-                    <ImageView
-                        android:id="@+id/wjrtFail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/error"
-                        android:baselineAlignBottom="true"
-                        android:src="@android:drawable/stat_sys_warning"
-                        android:gravity="center"
-                        android:visibility="gone"/>
+                        <ListView
+                            android:id="@+id/lstClosings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:clickable="false"
+                            android:focusable="false" />
 
-                            <ListView
-                                android:id="@+id/lstClosings"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"/>
+                        <ListView
+                            android:id="@+id/lstWJRT"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:clickable="false"
+                            android:focusable="false"/>
 
-                            <ListView
-                                android:id="@+id/lstWJRT"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/txtTier1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                            <TextView
-                                android:id="@+id/txtTier1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/txtTier2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                            <TextView
-                                android:id="@+id/txtTier2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/txtTier3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                            <TextView
-                                android:id="@+id/txtTier3"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:id="@+id/txtTier4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/txtTier4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
 
                 </RelativeLayout>
@@ -128,16 +118,6 @@
                     android:id="@+id/tab3"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
-
-                    <ImageView
-                        android:id="@+id/nwsFail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/error"
-                        android:layout_gravity="center"
-                        android:src="@android:drawable/stat_sys_warning"
-                        android:gravity="center"
-                        android:visibility="gone"/>
 
                     <WebView
                         android:layout_width="fill_parent"
@@ -159,16 +139,24 @@
                     <ListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop ="true"
+                        android:layout_above="@+id/btnRadar"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/lstWeather"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:clickable="false"
+                        android:focusable="false"/>
 
                     <ListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop ="true"
+                        android:layout_above="@id/btnRadar"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/lstNWS"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:clickable="false"
+                        android:focusable="false"/>
                 </RelativeLayout>
 
 
