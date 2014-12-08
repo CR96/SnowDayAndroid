@@ -172,8 +172,8 @@ public class SnowDayResult extends Activity {
     boolean BlizzardWarn;
 
     //Scraper status
-    boolean WJRTActive;
-    boolean NWSActive;
+    boolean WJRTActive = true;
+    boolean NWSActive = true;
 
     /*Used for catching IOExceptions / NullPointerExceptions if there are connectivity issues
     or a webpage is down*/
@@ -256,6 +256,9 @@ public class SnowDayResult extends Activity {
 
         //Add the first GBInfo value so it can be set out of sequence
         GBInfo.add(0, "");
+
+        //Add the first weather value so it can be set out of sequence
+        weather.add(0, "");
 
         lstWeather = (ListView) findViewById(R.id.lstWeather);
         webRadar = (WebView) findViewById(R.id.webRadar);
@@ -612,7 +615,6 @@ public class SnowDayResult extends Activity {
 
     private class WJRTScraper extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... nothing) {
-            WJRTActive = true;
             Document schools = null;
             //Scrape School Closings from WJRT with Jsoup.
 
@@ -1321,8 +1323,7 @@ public class SnowDayResult extends Activity {
 
                     if (weatherNull.toString().contains("No Hazards in Effect")) {
                         //Webpage parsed correctly: no hazards present.
-                        weather.add(0, getString(R.string.NoWeather));
-                        weatherCount++;
+                        weather.set(0, getString(R.string.NoWeather));
                         NWSFail = false;
                     }
                 } else {
@@ -1440,8 +1441,7 @@ public class SnowDayResult extends Activity {
 
         //If none of the above warnings are present
         if (weathertoday == 0 && weathertomorrow == 0) {
-            weather.add(0, getString(R.string.NoWeather));
-            weatherCount++;
+            weather.set(0, getString(R.string.NoWeather));
         }
 
         //Set entries in the list in order of decreasing category (warn -> watch -> advisory)
@@ -1500,15 +1500,6 @@ public class SnowDayResult extends Activity {
         protected Void doInBackground(Void... nothing) {
 
             //Give the scrapers time to act before displaying the percent
-
-            //Sleep for 1000 ms - if the while loop is run *too* soon a scraper might not have
-            //a chance to start before being considered 'done'
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             while (WJRTActive || NWSActive) {
                 try {
@@ -1709,6 +1700,14 @@ public class SnowDayResult extends Activity {
             //Set up the ListView adapter that displays weather warnings
             if (!NWSFail) {
                 //NWS has not failed.
+
+                //Remove blank entries
+                for (int i = 0; i < weather.size(); i++) {
+                    if (weather.get(i).equals("")) {
+                        weather.remove(i);
+                    }
+                }
+
                 weatherAdapter = new WeatherAdapter();
                 weatherAdapter.addSeparatorItem(getString(R.string.NWS));
                 for (int i = 0; i < weather.size(); i++) {

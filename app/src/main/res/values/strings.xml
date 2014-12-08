@@ -5,6 +5,20 @@
     <string name="title">Snow Day Calculator</string>
     <string name="title_activity_snow_day_result">Snow Day Calculator</string>
     <string name="title_activity_snow_day">Snow Day Calculator</string>
+    <string name="EULA">Terms and Conditions\n\nThis application is not guaranteed to work
+    as intended and may provide false information. <b>All reports of closings should be verified with
+    the official ABC 12 listings.</b> Please note that this application is not affiliated with or managed
+    by Grand Blanc Community Schools or ABC 12. The developer takes no responsibility for any
+    damages or injuries this application may cause.\n\nCopyright 2014 Corey Rowe\n\nLicensed under the Apache
+    License, Version 2.0 (the "License");\nyou may not use this file except in compliance with the
+    License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0
+    \n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License
+    is distributed on an "AS IS" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either expressed
+    or implied.\nSee the License for specific language governing permissions and\nlimitations under
+    the License.</string>
+    <string name="Updates">New in this version:\nInitial release.</string>
+    <string name="Continue">Continue</string>
+    <string name="Close">Close</string>
     <string name="btn_start">Start</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
@@ -63,7 +77,7 @@
     <string name="CalculateError">Unable to run calculation.</string>
     <string name="error">Error</string>
     <string name="SchoolOpen">School is already in session.</string>
-    <string name="Open"> OPEN</string>
+    <string name="Open">" OPEN</string>
     <string name="Closed">" CLOSED</string>
     <string name="Dismissed">" Dismissed</string>
     <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>

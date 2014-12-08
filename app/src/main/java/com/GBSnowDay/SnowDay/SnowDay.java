@@ -85,6 +85,9 @@ public class SnowDay extends Activity {
         lstDays = (Spinner) findViewById(R.id.lstDays);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
+        //Show the EULA if it hasn't been displayed
+        new EULA(this).show();
+
         //Make sure the user doesn't try to run the program on the weekend or on specific dates
         checkDate();
 
