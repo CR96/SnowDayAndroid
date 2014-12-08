@@ -51,7 +51,6 @@ public class SnowDay extends Activity {
 
     //Declare variables
     String date;
-    String dateTomorrow;
 
     int dayscount = 0;
     boolean todayValid;
@@ -151,12 +150,10 @@ public class SnowDay extends Activity {
                 Calculate();
 
                 //Switch to SnowDayResult activity
-                //Pass values of 'dayrun', 'days', and 'dateString' to new activity
+                //Pass values of 'dayrun' and 'days' to new activity
                 Intent result = new Intent(getApplicationContext(), SnowDayResult.class);
                 result.putExtra("dayrun", dayrun);
                 result.putExtra("days", days);
-                result.putExtra("date", date);
-                result.putExtra("dateTomorrow", dateTomorrow);
                 startActivity(result);
             }
         });
@@ -283,9 +280,6 @@ public class SnowDay extends Activity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd yyyy");
         date = currentDate.format(calendar.getTime());
-        calendar.add(Calendar.DATE, 1);
-        SimpleDateFormat tomorrow = new SimpleDateFormat("MMMM dd yyyy");
-        dateTomorrow = tomorrow.format(calendar.getTime());
 
         infoList.add(0, "Current Date: " + date);
 

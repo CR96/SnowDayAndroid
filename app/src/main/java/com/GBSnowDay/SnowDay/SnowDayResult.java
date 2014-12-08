@@ -92,8 +92,6 @@ public class SnowDayResult extends Activity {
 
     int days;
     int dayrun;
-    String date;
-    String dateTomorrow;
 
     //Individual components of the calculation
     int schoolpercent;
@@ -598,8 +596,6 @@ public class SnowDayResult extends Activity {
         Intent result = getIntent();
         dayrun = result.getIntExtra("dayrun", dayrun);
         days = result.getIntExtra("days", days);
-        date = result.getStringExtra("date");
-        dateTomorrow = result.getStringExtra("dateTomorrow");
 
         /**WJRT SCHOOL CLOSINGS SCRAPER**/
         new WJRTScraper().execute();
@@ -719,7 +715,7 @@ public class SnowDayResult extends Activity {
                         && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Today")
                         && dayrun == 0) {
 
-                    GBInfo.set(0, getString(R.string.GBClosedToday));
+                    GBInfo.set(0, getString(R.string.GB) + statusLine[i]);
                     GBInfo.add(GBCount, getString(R.string.SnowDay));
                     GBCount++;
                     //GB Found (today)
@@ -731,7 +727,7 @@ public class SnowDayResult extends Activity {
                         && !orgNameLine[i].contains("Holy") && !orgNameLine[i].contains("only")
                         && statusLine[i].contains("Closed Tomorrow") && dayrun == 1) {
 
-                    GBInfo.set(0, getString(R.string.GBClosedTomorrow));
+                    GBInfo.set(0, getString(R.string.GB) + statusLine[i]);
                     GBInfo.add(GBCount, getString(R.string.SnowDay));
                     GBCount++;
                     //GB Found (tomorrow)
@@ -764,111 +760,110 @@ public class SnowDayResult extends Activity {
         for (int i = 1; i < orgNameLine.length; i++) {
             if (!(Atherton)) {
                 if (orgNameLine[i].contains("Atherton") && statusLine[i].contains("Closed Today")) {
-                    closings.set(1, "Atherton: CLOSED");
+                    closings.set(1, getString(R.string.Atherton) + statusLine[i]);
                     tier4++;
                     Atherton = true;
                 } else {
-                    closings.set(1, "Atherton: OPEN");
+                    closings.set(1, getString(R.string.Atherton) + getString(R.string.Open));
                 }
             }
             if (!(Bendle)) {
                 if (orgNameLine[i].contains("Bendle") && statusLine[i].contains("Closed Today")) {
-                    closings.set(2, "Bendle: CLOSED");
+                    closings.set(2, getString(R.string.Bendle) + statusLine[i]);
                     tier4++;
                     Bendle = true;
                 } else {
-                    closings.set(2, "Bendle: OPEN");
+                    closings.set(2, getString(R.string.Bendle) + getString(R.string.Open));
                 }
             }
             if (!(Bentley)) {
                 if (orgNameLine[i].contains("Bentley") && statusLine[i].contains("Closed Today")) {
-                    closings.set(3, "Bentley: CLOSED");
+                    closings.set(3, getString(R.string.Bentley) + statusLine[i]);
                     tier4++;
                     Bentley = true;
                 } else {
-                    closings.set(3, "Bentley: OPEN");
+                    closings.set(3, getString(R.string.Bentley) + getString(R.string.Open));
                 }
             }
             if (!(Carman)) {
                 if (orgNameLine[i].contains("Carman-Ainsworth") && !orgNameLine[i].contains("Senior")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(4, "Carman-Ainsworth: CLOSED");
+                    closings.set(4, getString(R.string.Carman) + statusLine[i]);
                     tier4++;
                     Carman = true;
                 } else {
-                    closings.set(4, "Carman-Ainsworth: OPEN");
+                    closings.set(4, getString(R.string.Carman) + getString(R.string.Open));
                 }
             }
             if (!(Flint)) {
                 if (orgNameLine[i].contains("Flint Community Schools")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(5, "Flint: CLOSED");
+                    closings.set(5, getString(R.string.Flint) + statusLine[i]);
                     tier4++;
                     Flint = true;
                 } else {
-                    closings.set(5, "Flint: OPEN");
+                    closings.set(5, getString(R.string.Flint) + getString(R.string.Open));
                 }
             }
             if (!(Goodrich)) {
                 if (orgNameLine[i].contains("Goodrich") && statusLine[i].contains("Closed Today")) {
-                    closings.set(6, "Goodrich: CLOSED");
+                    closings.set(6, getString(R.string.Goodrich) + statusLine[i]);
                     tier4++;
                     Goodrich = true;
                 } else {
-                    closings.set(6, "Goodrich: OPEN");
+                    closings.set(6, getString(R.string.Goodrich) + getString(R.string.Open));
                 }
             }
             if (!(Beecher)) {
                 if (orgNameLine[i].contains("Beecher") && statusLine[i].contains("Closed Today")) {
-                    closings.set(7, "Beecher: CLOSED");
+                    closings.set(7, getString(R.string.Beecher) + statusLine[i]);
                     tier3++;
                     Beecher = true;
                 } else {
-                    closings.set(7, "Beecher: OPEN");
+                    closings.set(7, getString(R.string.Beecher) + getString(R.string.Open));
                 }
             }
             if (!(Clio)) {
                 if (orgNameLine[i].contains("Clio") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Cornerstone")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(8, "Clio: CLOSED");
+                    closings.set(8, getString(R.string.Clio) + statusLine[i]);
                     tier3++;
                     Clio = true;
                 } else {
-                    closings.set(8, "Clio: OPEN");
+                    closings.set(8, getString(R.string.Clio) + getString(R.string.Open));
                 }
             }
             if (!(Davison)) {
                 if (orgNameLine[i].contains("Davison") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Faith") && !orgNameLine[i].contains("Montessori")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(9, "Davison: CLOSED");
+                    closings.set(9, getString(R.string.Davison) + statusLine[i]);
                     tier3++;
                     Davison = true;
                 } else {
-                    closings.set(9, "Davison: OPEN");
+                    closings.set(9, getString(R.string.Davison) + getString(R.string.Open));
                 }
             }
             if (!(Fenton)) {
                 if (orgNameLine[i].contains("Fenton") && !orgNameLine[i].contains("Lake")
                         && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Montessori")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(10, "Fenton: CLOSED");
+                    closings.set(10, getString(R.string.Fenton) + statusLine[i]);
                     tier3++;
                     Fenton = true;
                 } else {
-                    closings.set(10, "Fenton: OPEN");
+                    closings.set(10, getString(R.string.Fenton) + getString(R.string.Open));
                 }
             }
             if (!(Flushing)) {
                 if (orgNameLine[i].contains("Flushing") && !orgNameLine[i].contains("Senior")
-                        && !orgNameLine[i].contains("Robert")
-                        && statusLine[i].contains("Closed Today")) {
-                    closings.set(11, "Flushing: CLOSED");
+                        && !orgNameLine[i].contains("Robert") && statusLine[i].contains("Closed Today")) {
+                    closings.set(11, getString(R.string.Flushing) + statusLine[i]);
                     tier3++;
                     Flushing = true;
                 } else {
-                    closings.set(11, "Flushing: OPEN");
+                    closings.set(11, getString(R.string.Flushing) + getString(R.string.Open));
                 }
             }
             if (!(Genesee)) {
@@ -877,91 +872,91 @@ public class SnowDayResult extends Activity {
                         && !orgNameLine[i].contains("Programs") && !orgNameLine[i].contains("Hlth")
                         && !orgNameLine[i].contains("Sys") && !orgNameLine[i].contains("Stem")
                         && !orgNameLine[i].contains("I.S.D.") && statusLine[i].contains("Closed Today")) {
-                    closings.set(12, "Genesee: CLOSED");
+                    closings.set(12, getString(R.string.Genesee) + statusLine[i]);
                     tier3++;
                     Genesee = true;
                 } else {
-                    closings.set(12, "Genesee: OPEN");
+                    closings.set(12, getString(R.string.Genesee) + getString(R.string.Open));
                 }
             }
             if (!(Kearsley)) {
                 if (orgNameLine[i].contains("Kearsley") && statusLine[i].contains("Closed Today")) {
-                    closings.set(13, "Kearsley: CLOSED");
+                    closings.set(13, getString(R.string.Kearsley) + statusLine[i]);
                     tier3++;
                     Kearsley = true;
                 } else {
-                    closings.set(13, "Kearsley: OPEN");
+                    closings.set(13, getString(R.string.Kearsley) + getString(R.string.Open));
                 }
             }
             if (!(LKFenton)) {
                 if (orgNameLine[i].contains("Lake Fenton") && statusLine[i].contains("Closed Today")) {
-                    closings.set(14, "Lake Fenton: CLOSED");
+                    closings.set(14, getString(R.string.LKFenton) + statusLine[i]);
                     tier3++;
                     LKFenton = true;
                 } else {
-                    closings.set(14, "Lake Fenton: OPEN");
+                    closings.set(14, getString(R.string.LKFenton) + getString(R.string.Open));
                 }
             }
             if (!(Linden)) {
                 if (orgNameLine[i].contains("Linden") && !orgNameLine[i].contains("Charter")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(15, "Linden: CLOSED");
+                    closings.set(15, getString(R.string.Linden) + statusLine[i]);
                     tier3++;
                     Linden = true;
                 } else {
-                    closings.set(15, "Linden: OPEN");
+                    closings.set(15, getString(R.string.Linden) + getString(R.string.Open));
                 }
             }
             if (!(Montrose)) {
                 if (orgNameLine[i].contains("Montrose") && !orgNameLine[i].contains("Senior")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(16, "Montrose: CLOSED");
+                    closings.set(16, getString(R.string.Montrose) + statusLine[i]);
                     tier3++;
                     Montrose = true;
                 } else {
-                    closings.set(16, "Montrose: OPEN");
+                    closings.set(16, getString(R.string.Montrose) + getString(R.string.Open));
                 }
             }
             if (!(Morris)) {
                 if (orgNameLine[i].contains("Mt. Morris") && !orgNameLine[i].contains("Administration")
                         && !orgNameLine[i].contains("Twp") && !orgNameLine[i].contains("Mary")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(17, "Mount Morris: CLOSED");
+                    closings.set(17, getString(R.string.Morris) + statusLine[i]);
                     tier3++;
                     Morris = true;
                 } else {
-                    closings.set(17, "Mount Morris: OPEN");
+                    closings.set(17, getString(R.string.Morris) + getString(R.string.Open));
                 }
             }
             if (!(SzCreek)) {
                 if (orgNameLine[i].contains("Swartz Creek") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Montessori")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(18, "Swartz Creek: CLOSED");
+                    closings.set(18, getString(R.string.SzCreek) + statusLine[i]);
                     tier3++;
                     SzCreek = true;
                 } else {
-                    closings.set(18, "Swartz Creek: OPEN");
+                    closings.set(18, getString(R.string.SzCreek) + getString(R.string.Open));
                 }
             }
             if (!(Durand)) {
                 if (orgNameLine[i].contains("Durand") && !orgNameLine[i].contains("Senior")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(19, "Durand: CLOSED");
+                    closings.set(19, getString(R.string.Durand) + statusLine[i]);
                     tier2++;
                     Durand = true;
                 } else {
-                    closings.set(19, "Durand: OPEN");
+                    closings.set(19, getString(R.string.Durand) + getString(R.string.Open));
                 }
             }
             if (!(Holly)) {
                 if (orgNameLine[i].contains("Holly") && !orgNameLine[i].contains("Academy")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(20, "Holly: CLOSED");
+                    closings.set(20, getString(R.string.Holly) + statusLine[i]);
                     tier2++;
                     Holly = true;
                 } else {
-                    closings.set(20, "Holly: OPEN");
+                    closings.set(20, getString(R.string.Holly) + getString(R.string.Open));
                 }
             }
             if (!(Lapeer)) {
@@ -970,60 +965,62 @@ public class SnowDayResult extends Activity {
                         && !orgNameLine[i].contains("Tech") && !orgNameLine[i].contains("Offices")
                         && !orgNameLine[i].contains("Library") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Paul") && statusLine[i].contains("Closed Today")) {
-                    closings.set(21, "Lapeer: CLOSED");
+                    closings.set(21, getString(R.string.Lapeer) + statusLine[i]);
                     tier2++;
                     Lapeer = true;
                 } else {
-                    closings.set(21, "Lapeer: OPEN");
+                    closings.set(21, getString(R.string.Lapeer) + getString(R.string.Open));
                 }
             }
             if (!(Owosso)) {
                 if (orgNameLine[i].contains("Owosso") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Baker") && !orgNameLine[i].contains("Paul")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(22, "Owosso: CLOSED");
+                    closings.set(22, getString(R.string.Owosso) + statusLine[i]);
                     tier2++;
                     Owosso = true;
                 } else {
-                    closings.set(22, "Owosso: OPEN");
+                    closings.set(22, getString(R.string.Owosso) + getString(R.string.Open));
                 }
             }
             if (!(GBAcademy)) {
                 if (orgNameLine[i].contains("Grand Blanc Academy")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(23, "Grand Blanc Academy: CLOSED");
+                    closings.set(23, getString(R.string.GBAcademy) + statusLine[i]);
                     tier1++;
                     GBAcademy = true;
                 } else {
-                    closings.set(23, "Grand Blanc Academy: OPEN");
+                    closings.set(23, getString(R.string.GBAcademy) + getString(R.string.Open));
                 }
             }
             if (!(GISD)) {
-                if (orgNameLine[i].contains("Genesee I.S.D.") && statusLine[i].contains("Closed Today")) {
-                    closings.set(24, "Genesee I.S.D.: CLOSED");
+                if (orgNameLine[i].contains("Genesee I.S.D.")
+                        && statusLine[i].contains("Closed Today")) {
+                    closings.set(24, getString(R.string.GISD) + statusLine[i]);
                     tier1++;
                     GISD = true;
                 } else {
-                    closings.set(24, "Genesee I.S.D.: OPEN");
+                    closings.set(24, getString(R.string.GISD) + getString(R.string.Open));
                 }
             }
             if (!(HolyFamily)) {
-                if (orgNameLine[i].contains("Holy Family") && statusLine[i].contains("Closed Today")) {
-                    closings.set(25, "Holy Family: CLOSED");
+                if (orgNameLine[i].contains("Holy Family")
+                        && statusLine[i].contains("Closed Today")) {
+                    closings.set(25, getString(R.string.HolyFamily) + statusLine[i]);
                     tier1++;
                     HolyFamily = true;
                 } else {
-                    closings.set(25, "Holy Family: OPEN");
+                    closings.set(25, getString(R.string.HolyFamily) + getString(R.string.Open));
                 }
             }
             if (!(WPAcademy)) {
                 if (orgNameLine[i].contains("Woodland Park Academy")
                         && statusLine[i].contains("Closed Today")) {
-                    closings.set(26, "Woodland Park Academy: CLOSED");
+                    closings.set(26, getString(R.string.WPAcademy) + statusLine[i]);
                     tier1++;
                     WPAcademy = true;
                 } else {
-                    closings.set(26, "Woodland Park Academy: OPEN");
+                    closings.set(26, getString(R.string.WPAcademy) + getString(R.string.Open));
                 }
             }
         }
@@ -1033,110 +1030,110 @@ public class SnowDayResult extends Activity {
         for (int i = 1; i < orgNameLine.length; i++) {
             if (!(Atherton)) {
                 if (orgNameLine[i].contains("Atherton") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(1, "Atherton: CLOSED");
+                    closings.set(1, getString(R.string.Atherton) + statusLine[i]);
                     tier4++;
                     Atherton = true;
                 } else {
-                    closings.set(1, "Atherton: OPEN");
+                    closings.set(1, getString(R.string.Atherton) + getString(R.string.Open));
                 }
             }
             if (!(Bendle)) {
                 if (orgNameLine[i].contains("Bendle") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(2, "Bendle: CLOSED");
+                    closings.set(2, getString(R.string.Bendle) + statusLine[i]);
                     tier4++;
                     Bendle = true;
                 } else {
-                    closings.set(2, "Bendle: OPEN");
+                    closings.set(2, getString(R.string.Bendle) + getString(R.string.Open));
                 }
             }
             if (!(Bentley)) {
                 if (orgNameLine[i].contains("Bentley") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(3, "Bentley: CLOSED");
+                    closings.set(3, getString(R.string.Bentley) + statusLine[i]);
                     tier4++;
                     Bentley = true;
                 } else {
-                    closings.set(3, "Bentley: OPEN");
+                    closings.set(3, getString(R.string.Bentley) + getString(R.string.Open));
                 }
             }
             if (!(Carman)) {
                 if (orgNameLine[i].contains("Carman-Ainsworth") && !orgNameLine[i].contains("Senior")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(4, "Carman-Ainsworth: CLOSED");
+                    closings.set(4, getString(R.string.Carman) + statusLine[i]);
                     tier4++;
                     Carman = true;
                 } else {
-                    closings.set(4, "Carman-Ainsworth: OPEN");
+                    closings.set(4, getString(R.string.Carman) + getString(R.string.Open));
                 }
             }
             if (!(Flint)) {
                 if (orgNameLine[i].contains("Flint Community Schools")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(5, "Flint: CLOSED");
+                    closings.set(5, getString(R.string.Flint) + statusLine[i]);
                     tier4++;
                     Flint = true;
                 } else {
-                    closings.set(5, "Flint: OPEN");
+                    closings.set(5, getString(R.string.Flint) + getString(R.string.Open));
                 }
             }
             if (!(Goodrich)) {
                 if (orgNameLine[i].contains("Goodrich") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(6, "Goodrich: CLOSED");
+                    closings.set(6, getString(R.string.Goodrich) + statusLine[i]);
                     tier4++;
                     Goodrich = true;
                 } else {
-                    closings.set(6, "Goodrich: OPEN");
+                    closings.set(6, getString(R.string.Goodrich) + getString(R.string.Open));
                 }
             }
             if (!(Beecher)) {
                 if (orgNameLine[i].contains("Beecher") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(7, "Beecher: CLOSED");
+                    closings.set(7, getString(R.string.Beecher) + statusLine[i]);
                     tier3++;
                     Beecher = true;
                 } else {
-                    closings.set(7, "Beecher: OPEN");
+                    closings.set(7, getString(R.string.Beecher) + getString(R.string.Open));
                 }
             }
             if (!(Clio)) {
                 if (orgNameLine[i].contains("Clio") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Cornerstone")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(8, "Clio: CLOSED");
+                    closings.set(8, getString(R.string.Clio) + statusLine[i]);
                     tier3++;
                     Clio = true;
                 } else {
-                    closings.set(8, "Clio: OPEN");
+                    closings.set(8, getString(R.string.Clio) + getString(R.string.Open));
                 }
             }
             if (!(Davison)) {
                 if (orgNameLine[i].contains("Davison") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Faith") && !orgNameLine[i].contains("Montessori")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(9, "Davison: CLOSED");
+                    closings.set(9, getString(R.string.Davison) + statusLine[i]);
                     tier3++;
                     Davison = true;
                 } else {
-                    closings.set(9, "Davison: OPEN");
+                    closings.set(9, getString(R.string.Davison) + getString(R.string.Open));
                 }
             }
             if (!(Fenton)) {
                 if (orgNameLine[i].contains("Fenton") && !orgNameLine[i].contains("Lake")
                         && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Montessori")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(10, "Fenton: CLOSED");
+                    closings.set(10, getString(R.string.Fenton) + statusLine[i]);
                     tier3++;
                     Fenton = true;
                 } else {
-                    closings.set(10, "Fenton: OPEN");
+                    closings.set(10, getString(R.string.Fenton) + getString(R.string.Open));
                 }
             }
             if (!(Flushing)) {
                 if (orgNameLine[i].contains("Flushing") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Robert") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(11, "Flushing: CLOSED");
+                    closings.set(11, getString(R.string.Flushing) + statusLine[i]);
                     tier3++;
                     Flushing = true;
                 } else {
-                    closings.set(11, "Flushing: OPEN");
+                    closings.set(11, getString(R.string.Flushing) + getString(R.string.Open));
                 }
             }
             if (!(Genesee)) {
@@ -1145,91 +1142,91 @@ public class SnowDayResult extends Activity {
                         && !orgNameLine[i].contains("Programs") && !orgNameLine[i].contains("Hlth")
                         && !orgNameLine[i].contains("Sys") && !orgNameLine[i].contains("Stem")
                         && !orgNameLine[i].contains("I.S.D.") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(12, "Genesee: CLOSED");
+                    closings.set(12, getString(R.string.Genesee) + statusLine[i]);
                     tier3++;
                     Genesee = true;
                 } else {
-                    closings.set(12, "Genesee: OPEN");
+                    closings.set(12, getString(R.string.Genesee) + getString(R.string.Open));
                 }
             }
             if (!(Kearsley)) {
                 if (orgNameLine[i].contains("Kearsley") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(13, "Kearsley: CLOSED");
+                    closings.set(13, getString(R.string.Kearsley) + statusLine[i]);
                     tier3++;
                     Kearsley = true;
                 } else {
-                    closings.set(13, "Kearsley: OPEN");
+                    closings.set(13, getString(R.string.Kearsley) + getString(R.string.Open));
                 }
             }
             if (!(LKFenton)) {
                 if (orgNameLine[i].contains("Lake Fenton") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(14, "Lake Fenton: CLOSED");
+                    closings.set(14, getString(R.string.LKFenton) + statusLine[i]);
                     tier3++;
                     LKFenton = true;
                 } else {
-                    closings.set(14, "Lake Fenton: OPEN");
+                    closings.set(14, getString(R.string.LKFenton) + getString(R.string.Open));
                 }
             }
             if (!(Linden)) {
                 if (orgNameLine[i].contains("Linden") && !orgNameLine[i].contains("Charter")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(15, "Linden: CLOSED");
+                    closings.set(15, getString(R.string.Linden) + statusLine[i]);
                     tier3++;
                     Linden = true;
                 } else {
-                    closings.set(15, "Linden: OPEN");
+                    closings.set(15, getString(R.string.Linden) + getString(R.string.Open));
                 }
             }
             if (!(Montrose)) {
                 if (orgNameLine[i].contains("Montrose") && !orgNameLine[i].contains("Senior")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(16, "Montrose: CLOSED");
+                    closings.set(16, getString(R.string.Montrose) + statusLine[i]);
                     tier3++;
                     Montrose = true;
                 } else {
-                    closings.set(16, "Montrose: OPEN");
+                    closings.set(16, getString(R.string.Montrose) + getString(R.string.Open));
                 }
             }
             if (!(Morris)) {
                 if (orgNameLine[i].contains("Mt. Morris") && !orgNameLine[i].contains("Administration")
                         && !orgNameLine[i].contains("Twp") && !orgNameLine[i].contains("Mary")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(17, "Mount Morris: CLOSED");
+                    closings.set(17, getString(R.string.Morris) + statusLine[i]);
                     tier3++;
                     Morris = true;
                 } else {
-                    closings.set(17, "Mount Morris: OPEN");
+                    closings.set(17, getString(R.string.Morris) + getString(R.string.Open));
                 }
             }
             if (!(SzCreek)) {
                 if (orgNameLine[i].contains("Swartz Creek") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Montessori")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(18, "Swartz Creek: CLOSED");
+                    closings.set(18, getString(R.string.SzCreek) + statusLine[i]);
                     tier3++;
                     SzCreek = true;
                 } else {
-                    closings.set(18, "Swartz Creek: OPEN");
+                    closings.set(18, getString(R.string.SzCreek) + getString(R.string.Open));
                 }
             }
             if (!(Durand)) {
                 if (orgNameLine[i].contains("Durand") && !orgNameLine[i].contains("Senior")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(19, "Durand: CLOSED");
+                    closings.set(19, getString(R.string.Durand) + statusLine[i]);
                     tier2++;
                     Durand = true;
                 } else {
-                    closings.set(19, "Durand: OPEN");
+                    closings.set(19, getString(R.string.Durand) + getString(R.string.Open));
                 }
             }
             if (!(Holly)) {
                 if (orgNameLine[i].contains("Holly") && !orgNameLine[i].contains("Academy")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(20, "Holly: CLOSED");
+                    closings.set(20, getString(R.string.Holly) + statusLine[i]);
                     tier2++;
                     Holly = true;
                 } else {
-                    closings.set(20, "Holly: OPEN");
+                    closings.set(20, getString(R.string.Holly) + getString(R.string.Open));
                 }
             }
             if (!(Lapeer)) {
@@ -1238,62 +1235,62 @@ public class SnowDayResult extends Activity {
                         && !orgNameLine[i].contains("Tech") && !orgNameLine[i].contains("Offices")
                         && !orgNameLine[i].contains("Library") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Paul") && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(21, "Lapeer: CLOSED");
+                    closings.set(21, getString(R.string.Lapeer) + statusLine[i]);
                     tier2++;
                     Lapeer = true;
                 } else {
-                    closings.set(21, "Lapeer: OPEN");
+                    closings.set(21, getString(R.string.Lapeer) + getString(R.string.Open));
                 }
             }
             if (!(Owosso)) {
                 if (orgNameLine[i].contains("Owosso") && !orgNameLine[i].contains("Senior")
                         && !orgNameLine[i].contains("Baker") && !orgNameLine[i].contains("Paul")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(22, "Owosso: CLOSED");
+                    closings.set(22, getString(R.string.Owosso) + statusLine[i]);
                     tier2++;
                     Owosso = true;
                 } else {
-                    closings.set(22, "Owosso: OPEN");
+                    closings.set(22, getString(R.string.Owosso) + getString(R.string.Open));
                 }
             }
             if (!(GBAcademy)) {
                 if (orgNameLine[i].contains("Grand Blanc Academy")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(23, "Grand Blanc Academy: CLOSED");
+                    closings.set(23, getString(R.string.GBAcademy) + statusLine[i]);
                     tier1++;
                     GBAcademy = true;
                 } else {
-                    closings.set(23, "Grand Blanc Academy: OPEN");
+                    closings.set(23, getString(R.string.GBAcademy) + getString(R.string.Open));
                 }
             }
             if (!(GISD)) {
                 if (orgNameLine[i].contains("Genesee I.S.D.")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(24, "Genesee I.S.D.: CLOSED");
+                    closings.set(24, getString(R.string.GISD) + statusLine[i]);
                     tier1++;
                     GISD = true;
                 } else {
-                    closings.set(24, "Genesee I.S.D.: OPEN");
+                    closings.set(24, getString(R.string.GISD) + getString(R.string.Open));
                 }
             }
             if (!(HolyFamily)) {
                 if (orgNameLine[i].contains("Holy Family")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(25, "Holy Family: CLOSED");
+                    closings.set(25, getString(R.string.HolyFamily) + statusLine[i]);
                     tier1++;
                     HolyFamily = true;
                 } else {
-                    closings.set(25, "Holy Family: OPEN");
+                    closings.set(25, getString(R.string.HolyFamily) + getString(R.string.Open));
                 }
             }
             if (!(WPAcademy)) {
                 if (orgNameLine[i].contains("Woodland Park Academy")
                         && statusLine[i].contains("Closed Tomorrow")) {
-                    closings.set(26, "Woodland Park Academy: CLOSED");
+                    closings.set(26, getString(R.string.WPAcademy) + statusLine[i]);
                     tier1++;
                     WPAcademy = true;
                 } else {
-                    closings.set(26, "Woodland Park Academy: OPEN");
+                    closings.set(26, getString(R.string.WPAcademy) + getString(R.string.Open));
                 }
             }
         }
@@ -1658,9 +1655,9 @@ public class SnowDayResult extends Activity {
                 //WJRT has not failed.
                 closingsAdapter = new ClosingsAdapter();
                 if (dayrun == 0) {
-                    closingsAdapter.addSeparatorItem("Closings for " + date);
+                    closingsAdapter.addSeparatorItem(getString(R.string.ClosingsToday));
                 }else if (dayrun == 1) {
-                    closingsAdapter.addSeparatorItem("Closings for " + dateTomorrow);
+                    closingsAdapter.addSeparatorItem(getString(R.string.ClosingsTomorrow));
                 }
 
                 closingsAdapter.addSeparatorItem(getString(R.string.tier4));
