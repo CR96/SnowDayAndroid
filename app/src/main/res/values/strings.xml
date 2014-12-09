@@ -61,10 +61,9 @@
     <string name="Bendle">Bendle: "</string>
     <string name="Bentley">Bentley: "</string>
     <string name="Flint">Flint: "</string>
-    <string name="Goodrich">Goodrich ":</string>
+    <string name="Goodrich">Goodrich: "</string>
     <string name="Carman">Carman-Ainsworth: "</string>
     <string name="GB">Grand Blanc: "</string>
-    <string name="DayRun">Running calculation for </string>
     <string name="NoClosings">No schools are closed.</string>
     <string name="WJRTClosings">WJRT School Closings</string>
     <string name="Closings">Closings</string>
@@ -79,9 +78,10 @@
     <string name="CalculateError">Unable to run calculation.</string>
     <string name="error">Error</string>
     <string name="SchoolOpen">School is already in session.</string>
-    <string name="Open">"OPEN</string>
-    <string name="Closed">"CLOSED</string>
-    <string name="Dismissed">" Dismissed</string>
+    <string name="Open">"Open</string>
+    <string name="OpenToday">"Open Today</string>
+    <string name="OpenTomorrow">"Open Tomorrow</string>
+    <string name="Dismissed">School has already been dismissed.</string>
     <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>
     <string name="SaturdayToday">Today is Saturday. Try again tomorrow!</string>
     <string name="SundayToday">Today is Sunday.</string>
@@ -93,7 +93,6 @@
     <string name="Weather">Weather</string>
     <string name="radarshow">Show Radar</string>
     <string name="radarhide">Hide Radar</string>
-    <string name="InEffect">in effect</string>
     <string name="HazardWeather">Hazardous Weather Outlook</string>
     <string name="SigWeather">Significant Weather Advisory</string>
     <string name="WinterAdvisory">Winter Weather Advisory</string>

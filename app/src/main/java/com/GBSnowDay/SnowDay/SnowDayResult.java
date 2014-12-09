@@ -188,6 +188,11 @@ public class SnowDayResult extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snow_day_result);
 
+        //Read variables from SnowDay class
+        Intent result = getIntent();
+        dayrun = result.getIntExtra("dayrun", dayrun);
+        days = result.getIntExtra("days", days);
+
         //Create TabHost
         tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
@@ -252,8 +257,13 @@ public class SnowDayResult extends Activity {
         lstWJRT = (ListView) findViewById(R.id.lstWJRT);
         lstNWS = (ListView) findViewById(R.id.lstNWS);
 
-        //Add the first GBInfo value so it can be set out of sequence
-        GBInfo.add(0, "");
+        //Add the first two GBInfo values so they can be set out of sequence
+        if (dayrun == 0) {
+            GBInfo.add(0, "");
+            GBInfo.add(1, "");
+        }else if (dayrun == 1) {
+            GBInfo.add(0, "");
+        }
 
         //Add the first weather value so it can be set out of sequence
         weather.add(0, "");
@@ -592,11 +602,6 @@ public class SnowDayResult extends Activity {
          * Obviously return 100% if GB is already closed.
          */
 
-        //Read variables from SnowDay class
-        Intent result = getIntent();
-        dayrun = result.getIntExtra("dayrun", dayrun);
-        days = result.getIntExtra("days", days);
-
         /**WJRT SCHOOL CLOSINGS SCRAPER**/
         new WJRTScraper().execute();
 
@@ -712,47 +717,48 @@ public class SnowDayResult extends Activity {
                 if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy")
                         && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Offices")
                         && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Senior")
-                        && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Today")
-                        && dayrun == 0) {
-
-                    GBInfo.set(0, getString(R.string.GB) + statusLine[i]);
-                    GBInfo.add(GBCount, getString(R.string.SnowDay));
-                    GBCount++;
-                    //GB Found (today)
-                    GB = true;
-                    break;
-                } if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy")
+                        && !orgNameLine[i].contains("Holy") && dayrun == 0) {
+                    if (statusLine[i].contains("Closed Today")) {
+                        GBInfo.set(0, getString(R.string.GB) + statusLine[i]);
+                        GBInfo.add(GBCount, getString(R.string.SnowDay));
+                        GBCount++;
+                        //GB Found (today)
+                        GB = true;
+                        break;
+                    }else{
+                        //GB doesn't contain "Closed Today" but still has a message.
+                        GBInfo.set(0, getString(R.string.GB) + statusLine[i]);
+                        break;
+                    }
+                }else if (orgNameLine[i].contains("Grand Blanc") && !orgNameLine[i].contains("Academy")
                         && !orgNameLine[i].contains("Freedom") && !orgNameLine[i].contains("Offices")
                         && !orgNameLine[i].contains("City") && !orgNameLine[i].contains("Senior")
-                        && !orgNameLine[i].contains("Holy") && !orgNameLine[i].contains("only")
-                        && statusLine[i].contains("Closed Tomorrow") && dayrun == 1) {
-
+                        && !orgNameLine[i].contains("Holy") && statusLine[i].contains("Closed Tomorrow")
+                        &&dayrun == 1) {
                     GBInfo.set(0, getString(R.string.GB) + statusLine[i]);
                     GBInfo.add(GBCount, getString(R.string.SnowDay));
                     GBCount++;
                     //GB Found (tomorrow)
                     GB = true;
                     break;
+                }else{
+                    //If GB is still false, GB is open
+                    if (dayrun == 0) {
+                        GBInfo.set(0, getString(R.string.GB) + getString(R.string.OpenToday));
+                    }else if (dayrun == 1) {
+                        GBInfo.set(0, getString(R.string.GB) + getString(R.string.OpenTomorrow));
+                    }
+                    if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16 && dayrun == 0) {
+                        //Time is between 7AM and 4PM. School is already in session.
+                        GBInfo.set(1, getString(R.string.SchoolOpen));
+                        GBOpen = true;
+                    } else if (dt.getHourOfDay() >= 16 && dayrun == 0) {
+                        //Time is after 4PM. School is already out.
+                        GBInfo.set(1, getString(R.string.Dismissed));
+                        GBOpen = true;
+                    }
                 }
-
             }
-        }
-
-        if (!GB) {
-            //If GB is still false, GB is open
-            GBInfo.set(0, getString(R.string.GB) + getString(R.string.Open));
-            if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16 && dayrun == 0) {
-                //Time is between 7AM and 4PM. School is already in session.
-                GBInfo.add(GBCount, getString(R.string.SchoolOpen));
-                GBOpen = true;
-                GBCount++;
-            }else if (dt.getHourOfDay() >= 16 && dayrun == 0) {
-                //Time is after 4PM. School is already out.
-                GBInfo.add(GBCount, getString(R.string.GB) + getString(R.string.Dismissed));
-                GBOpen = true;
-                GBCount++;
-            }
-
         }
     }
 
