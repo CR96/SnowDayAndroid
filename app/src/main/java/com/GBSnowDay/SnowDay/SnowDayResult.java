@@ -1322,25 +1322,29 @@ public class SnowDayResult extends Activity {
             }
 
             //Set the schoolpercent
-            if (tier4today > 2 && dayrun == 0
-                || tier4tomorrow > 2 && dayrun == 1) {
-                //3+ schools near GB are closed. 80% schoolpercent.
-                schoolpercent += 80;
-            }
-            if (tier3today > 2 && dayrun == 0
-                    || tier3tomorrow > 2 && dayrun == 1) {
-            //3+ schools in Genesee County are closed. 60% schoolpercent.
-            schoolpercent += 60;
-            }
-            if (tier2today > 2 && dayrun == 0
-                    || tier2tomorrow > 2 && dayrun == 1) {
-            //3+ schools in nearby counties are closed. 40% schoolpercent.
-            schoolpercent += 40;
-            }
             if (tier1today > 2 && dayrun == 0
                     || tier1tomorrow > 2 && dayrun == 1) {
                 //3+ academies are closed. 20% schoolpercent.
-                schoolpercent += 20;
+                schoolpercent = 20;
+            }
+            if (tier2today > 2 && dayrun == 0
+                    || tier2tomorrow > 2 && dayrun == 1) {
+                //3+ schools in nearby counties are closed. 40% schoolpercent.
+                schoolpercent = 40;
+            }
+            if (tier3today > 2 && dayrun == 0
+                    || tier3tomorrow > 2 && dayrun == 1) {
+                //3+ schools in Genesee County are closed. 60% schoolpercent.
+                schoolpercent = 60;
+            }
+            if (tier4today > 2 && dayrun == 0
+                || tier4tomorrow > 2 && dayrun == 1) {
+                //3+ schools near GB are closed. 80% schoolpercent.
+                schoolpercent = 80;
+                if (Carman) {
+                    //Carman is closed along with three close schools. 90% schoolpercent.
+                    schoolpercent = 90;
+                }
             }
 
             //Set the weatherpercent
