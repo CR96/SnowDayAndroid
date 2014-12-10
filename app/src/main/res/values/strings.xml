@@ -5,11 +5,7 @@
     <string name="title">Snow Day Calculator</string>
     <string name="title_activity_snow_day_result">Snow Day Calculator</string>
     <string name="title_activity_snow_day">Snow Day Calculator</string>
-    <string name="EULA">Terms and Conditions\n\nThis application is not guaranteed to work
-    as intended and may provide false information. <b>All reports of closings should be verified with
-    the official ABC 12 listings.</b> Please note that this application is not affiliated with or managed
-    by Grand Blanc Community Schools or ABC 12. The developer takes no responsibility for any
-    damages or injuries this application may cause.\n\nCopyright 2014 Corey Rowe\n\nLicensed under the Apache
+    <string name="EULA">License Agreement\n\nCopyright 2014 Corey Rowe\n\nLicensed under the Apache
     License, Version 2.0 (the "License");\nyou may not use this file except in compliance with the
     License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0
     \n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License
@@ -31,8 +27,6 @@
     <string name="Percent">Percent</string>
     <string name="list">Select a Number</string>
     <string name="quit">Quit</string>
-    <string name="ClosingsToday">Today\'s Closings</string>
-    <string name="ClosingsTomorrow">Tomorrow\'s Closings</string>
     <string name="tier1">Academies / Institutions</string>
     <string name="tier2">Districts in Neighboring Counties</string>
     <string name="tier3">Districts in Genesee County</string>
@@ -65,7 +59,7 @@
     <string name="Carman">Carman-Ainsworth: "</string>
     <string name="GB">Grand Blanc: "</string>
     <string name="NoClosings">No schools are closed.</string>
-    <string name="WJRTClosings">WJRT School Closings</string>
+    <string name="WJRTClosings">ABC 12 School Closings</string>
     <string name="Closings">Closings</string>
     <string name="WJRTConnectionError">Could not connect to ABC 12.</string>
     <string name="WJRTParseError">Unable to read ABC 12 closings.</string>
@@ -78,7 +72,7 @@
     <string name="CalculateError">Unable to run calculation.</string>
     <string name="error">Error</string>
     <string name="SchoolOpen">School is already in session.</string>
-    <string name="Open">"Open</string>
+    <string name="Open">"OPEN</string>
     <string name="OpenToday">"Open Today</string>
     <string name="OpenTomorrow">"Open Tomorrow</string>
     <string name="Dismissed">School has already been dismissed.</string>
