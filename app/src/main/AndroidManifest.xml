@@ -9,11 +9,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:versionCode="1"
-        android:versionName="1.0" >
+        android:versionCode="2"
+        android:versionName="1.1" >
         <activity
             android:label="@string/title_activity_snow_day"
-            android:name=".SnowDay" >
+            android:name=".SnowDay">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,19 +22,11 @@
         <activity
             android:name=".SnowDayResult"
             android:label="@string/title_activity_snow_day_result"
-            android:parentActivityName=".SnowDay"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.GBSnowDay.SnowDay.SnowDay" />
         </activity>
         <activity
             android:name=".About"
-            android:label="@string/action_about"
-            android:parentActivityName=".SnowDay" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.GBSnowDay.SnowDay.SnowDay" />
+            android:label="@string/action_about">
         </activity>
     </application>
 </manifest>

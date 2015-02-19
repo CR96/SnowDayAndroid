@@ -2,6 +2,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.GBSnowDay.SnowDay.snow_day" >
     <item android:id="@+id/action_about"
-        android:title="@string/action_about"
-        android:orderInCategory="100" />
+        android:title="@string/action_about" />
 </menu>

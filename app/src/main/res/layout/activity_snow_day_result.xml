@@ -119,12 +119,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
-                    <WebView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/webRadar"
-                        android:visibility="gone" />
-
                     <Button
                         style="?android:attr/buttonStyleSmall"
                         android:layout_width="wrap_content"
@@ -132,9 +126,7 @@
                         android:layout_alignParentBottom="true"
                         android:text="@string/radarshow"
                         android:id="@+id/btnRadar"
-                        android:onClick="radarToggle"
-                        android:textColor="@android:color/white"
-                        android:visibility="gone" />
+                        android:onClick="radarToggle" />
 
                     <ListView
                         android:layout_width="match_parent"
@@ -157,6 +149,12 @@
                         android:visibility="gone"
                         android:clickable="false"
                         android:focusable="false"/>
+
+                    <WebView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/webRadar"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
 

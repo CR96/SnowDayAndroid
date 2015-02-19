@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/imgAbout"
         android:layout_gravity="center"
-        android:src="@drawable/icon"
+        android:src="@drawable/iconlarge"
         android:contentDescription="@string/title"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />

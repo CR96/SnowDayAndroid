@@ -145,7 +145,6 @@ public class SnowDay extends Activity {
         //Listen for button click
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                btnCalculate.setEnabled(false);
                 //Start the calculation
                 Calculate();
 
@@ -336,7 +335,7 @@ public class SnowDay extends Activity {
             infoCount++;
             todayValid = false;
         } else if (date.equals("February 15 2015")) {
-            infoList.add(infoCount, "Tomorrow is President's Day. School will not be not in session.");
+            infoList.add(infoCount, "Tomorrow is President's Day. School will not be in session.");
             infoCount++;
             todayValid = false;
             tomorrowValid = false;

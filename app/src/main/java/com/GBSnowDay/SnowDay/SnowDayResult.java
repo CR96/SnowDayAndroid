@@ -1,12 +1,16 @@
 package com.GBSnowDay.SnowDay;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -18,12 +22,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,10 +75,11 @@ public class SnowDayResult extends Activity {
     String orgName;
     String status;
     String schooltext;
-    String weathertext;
+
 
     String[] orgNameLine;
     String[] statusLine;
+    String[] weatherwarn;
 
     //Declare lists that will be used in ListAdapters
     List<String> GBInfo = new ArrayList<String>();
@@ -111,9 +116,6 @@ public class SnowDayResult extends Activity {
     int tier3tomorrow = 0;
     int tier4tomorrow = 0;
 
-    //For the ending animation
-    int percentscroll;
-
     //Every school this program searches for: true = closed, false = open (default)
     boolean GBAcademy;
     boolean GISD;
@@ -125,11 +127,13 @@ public class SnowDayResult extends Activity {
     boolean Lapeer; //Check for "Chatfield School-Lapeer", "Greater Lapeer Transit Authority",
     // "Lapeer CMH Day Programs", "Lapeer Co. Ed-Tech Center", "Lapeer County Ofices", "
     // Lapeer District Library", "Lapeer Senior Center", and "St. Paul Lutheran-Lapeer"
-    boolean Owosso; //Check for "Owosso Senior Center", "Baker College-Owosso", and "St. Paul Catholic-Owosso"
+    boolean Owosso; //Check for "Owosso Senior Center", "Baker College-Owosso", "Owosso Social Security Office",
+    // and "St. Paul Catholic-Owosso"
 
     boolean Beecher;
     boolean Clio; //Check for "Clio Area Senior Center", "Clio City Hall", and "Cornerstone Clio"
-    boolean Davison; //Check for "Davison Senior Center", "Faith Baptist School-Davison", and "Montessori Academy-Davison"
+    boolean Davison; //Check for "Davison Senior Center", "Faith Baptist School-Davison", "Montessori Academy-Davison",
+    // and "Ross Medical Education-Davison"
     boolean Fenton; //Check for "Lake Fenton", "Fenton City Hall", and "Fenton Montessori Academy"
     boolean Flushing; //Check for "Flushing Senior Citizens Center" and "St. Robert-Flushing"
     boolean Genesee; //Check for "Freedom Work-Genesee Co.", "Genesee Christian-Burton",
@@ -191,7 +195,8 @@ public class SnowDayResult extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snow_day_result);
-
+        //Show the up arrow in the action bar
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         //Read variables from SnowDay class
         Intent result = getIntent();
         dayrun = result.getIntExtra("dayrun", dayrun);
@@ -274,6 +279,69 @@ public class SnowDayResult extends Activity {
 
         //Start the calculation
         Calculate();
+
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        super.onNavigateUp();
+        //Return to the previous activity
+        finish();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.snow_day_result, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.closings) {
+            //Open URL with warnings listed
+            String url = "http://www.abc12.com/category/213603/school-closings";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            Uri u = Uri.parse(url);
+            Context context = this;
+
+            try {
+                //Start the activity
+                i.setData(u);
+                startActivity(i);
+            }catch (ActivityNotFoundException e) {
+                //Raise on activity not found
+                Toast.makeText(context, "No browser found.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (id == R.id.weather) {
+            //Open URL with warnings listed
+            String url = "http://mobile.weather.gov/index.php?lat=42.92515852864426&lon=-83.63534793945507";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            Uri u = Uri.parse(url);
+            Context context = this;
+
+            try {
+                //Start the activity
+                i.setData(u);
+                startActivity(i);
+            }catch (ActivityNotFoundException e) {
+                //Raise on activity not found
+                Toast.makeText(context, "No browser found.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (id == R.id.action_about) {
+            //Show the about activity
+            Intent about = new Intent(getApplicationContext(), About.class);
+            startActivity(about);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //GBAdapter class
@@ -862,7 +930,8 @@ public class SnowDayResult extends Activity {
             }
             if (!(Davison)) {
                 if (orgNameLine[i].contains("Davison") && !orgNameLine[i].contains("Senior")
-                        && !orgNameLine[i].contains("Faith") && !orgNameLine[i].contains("Montessori")) {
+                        && !orgNameLine[i].contains("Faith") && !orgNameLine[i].contains("Medical")
+                        && !orgNameLine[i].contains("Montessori")) {
                     closings.set(9, getString(R.string.Davison) + statusLine[i]);
                     if (statusLine[i].contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -904,10 +973,10 @@ public class SnowDayResult extends Activity {
             }
             if (!(Genesee)) {
                 if (orgNameLine[i].contains("Genesee") && !orgNameLine[i].contains("Freedom")
-                        && !orgNameLine[i].contains("Christian") && !orgNameLine[i].contains("Mobile")
-                        && !orgNameLine[i].contains("Programs") && !orgNameLine[i].contains("Hlth")
-                        && !orgNameLine[i].contains("Sys") && !orgNameLine[i].contains("Stem")
-                        && !orgNameLine[i].contains("I.S.D.")) {
+                        && !orgNameLine[i].contains("Christian") && !orgNameLine[i].contains("Library")
+                        && !orgNameLine[i].contains("Mobile") && !orgNameLine[i].contains("Programs")
+                        && !orgNameLine[i].contains("Hlth") && !orgNameLine[i].contains("Sys")
+                        && !orgNameLine[i].contains("Stem") && !orgNameLine[i].contains("I.S.D.")) {
                     closings.set(12, getString(R.string.Genesee) + statusLine[i]);
                     if (statusLine[i].contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -1044,7 +1113,8 @@ public class SnowDayResult extends Activity {
             }
             if (!(Owosso)) {
                 if (orgNameLine[i].contains("Owosso") && !orgNameLine[i].contains("Senior")
-                        && !orgNameLine[i].contains("Baker") && !orgNameLine[i].contains("Paul")) {
+                        && !orgNameLine[i].contains("Baker") && !orgNameLine[i].contains("Paul")
+                        && !orgNameLine[i].contains("Security")) {
                     closings.set(22, getString(R.string.Owosso) + statusLine[i]);
                     if (statusLine[i].contains("Closed Today") && dayrun == 0) {
                         tier2today++;
@@ -1120,28 +1190,12 @@ public class SnowDayResult extends Activity {
 
             //Live html
             try {
-                weatherdoc = Jsoup.connect("http://forecast.weather.gov/afm/PointClick.php?lat=42.92580&lon=-83.61870").get();
+                 weatherdoc = Jsoup.connect("http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&y=0").get();
                 //"Searching for elements in class 'warn'
-                Elements weatherWarn = weatherdoc.getElementsByClass("warn");
                 //Saving elements to searchable string weathertext
-                weathertext = weatherWarn.toString();
-
-                if (weathertext.equals("")) {
-                    //weathertext is empty.
-                    //Searching for element 'hazards_content'
-                    //This element should always be present even if no hazards are present.
-                    Element weatherNull = weatherdoc.getElementById("hazards_content");
-
-                    if (weatherNull.toString().contains("No Hazards in Effect")) {
-                        //Webpage parsed correctly: no hazards present.
-                        weather.set(0, getString(R.string.NoWeather));
-                        NWSFail = false;
-                    }
-                } else {
-                    //Hazards found. Use the data
-                    getWeather();
-                }
-            } catch (IOException e) {
+                  weatherwarn=weatherdoc.toString().split("<title>");
+                  getWeather();
+            }catch (IOException e) {
                 //Connectivity issues
                 nwsInfo.add(nwsCount, getString(R.string.WeatherConnectionError) + " " + getString(R.string.NoConnection));
                 nwsCount++;
@@ -1153,8 +1207,6 @@ public class SnowDayResult extends Activity {
                 nwsCount += 2;
                 NWSFail = true;
             }
-
-
             return null;
         }
 
@@ -1168,92 +1220,94 @@ public class SnowDayResult extends Activity {
         /*Only the highest weatherpercent is stored (not cumulative).
         Watches affect tomorrow's calculation.
         Advisories and Warnings affect today's calculation.*/
+        for (int i = 1; i < weatherwarn.length; i++) {
+            if (weatherwarn[i].contains("Significant Weather Advisory")) {
+                //Significant Weather Advisory - 15% weatherpercent
+                SigWeather = true;
+                weathertoday = 15;
+            }
+            if (weatherwarn[i].contains("Winter Weather Advisory")) {
+                //Winter Weather Advisory - 30% weatherpercent
+                WinterAdvisory = true;
+                weathertoday = 30;
+            }
+            if (weatherwarn[i].contains("Lake-Effect Snow Advisory")) {
+                //Lake Effect Snow Advisory - 40% weatherpercent
+                LakeSnowAdvisory = true;
+                weathertoday = 40;
 
-        if (weathertext.contains("Significant Weather Advisory")) {
-            //Significant Weather Advisory - 15% weatherpercent
-            SigWeather = true;
-            weathertoday = 15;
-        }
-        if (weathertext.contains("Winter Weather Advisory")) {
-            //Winter Weather Advisory - 30% weatherpercent
-            WinterAdvisory = true;
-            weathertoday = 30;
-        }
-        if (weathertext.contains("Lake-Effect Snow Advisory")) {
-            //Lake Effect Snow Advisory - 40% weatherpercent
-            LakeSnowAdvisory = true;
-            weathertoday = 40;
-        }
-        if (weathertext.contains("Freezing Rain Advisory")) {
-            //Freezing Rain - 40% weatherpercent
-            Rain = true;
-            weathertoday = 40;
-        }
-        if (weathertext.contains("Freezing Drizzle Advisory")) {
-            //Freezing Drizzle - 40% weatherpercent
-            Drizzle = true;
-            weathertoday = 40;
-        }
-        if (weathertext.contains("Freezing Fog Advisory")) {
-            //Freezing Fog - 40% weatherpercent
-            Fog = true;
-            weathertoday = 40;
-        }
-        if (weathertext.contains("Wind Chill Advisory")) {
-            //Wind Chill Advisory - 40% weatherpercent
-            WindChillAdvisory = true;
-            weathertoday = 40;
-        }
-        if (weathertext.contains("Ice Storm Warning")) {
-            //Ice Storm Warning - 70% weatherpercent
-            IceStorm = true;
-            weathertoday = 70;
-        }
-        if (weathertext.contains("Wind Chill Watch")) {
-            //Wind Chill Watch - 70% weatherpercent
-            WindChillWatch = true;
-            weathertomorrow = 70;
-        }
-        if (weathertext.contains("Wind Chill Warning")) {
-            //Wind Chill Warning - 70% weatherpercent
-            WindChillWarn = true;
-            weathertoday = 70;
-        }
-        if (weathertext.contains("Winter Storm Watch")) {
-            //Winter Storm Watch - 80% weatherpercent
-            WinterWatch = true;
-            weathertomorrow = 80;
-        }
-        if (weathertext.contains("Winter Storm Warning")) {
-            //Winter Storm Warning - 80% weatherpercent
-            WinterWarn = true;
-            weathertoday = 80;
-        }
-        if (weathertext.contains("Lake-Effect Snow Watch")) {
-            //Lake Effect Snow Watch - 80% weatherpercent
-            LakeSnowWatch = true;
-            weathertomorrow = 80;
-        }
-        if (weathertext.contains("Lake-Effect Snow Warning")) {
-            //Lake Effect Snow Warning - 80% weatherpercent
-            LakeSnowWarn = true;
-            weathertoday = 80;
-        }
-        if (weathertext.contains("Blizzard Watch")) {
-            //Blizzard Watch - 90% weatherpercent
-            BlizzardWatch = true;
-            weathertomorrow = 90;
-        }
-        if (weathertext.contains("Blizzard Warning")) {
-            //Blizzard Warning - 90% weatherpercent
-            BlizzardWarn = true;
-            weathertoday = 90;
+            }
+            if (weatherwarn[i].contains("Freezing Rain Advisory")) {
+                //Freezing Rain - 40% weatherpercent
+                Rain = true;
+                weathertoday = 40;
+            }
+            if (weatherwarn[i].contains("Freezing Drizzle Advisory")) {
+                //Freezing Drizzle - 40% weatherpercent
+                Drizzle = true;
+                weathertoday = 40;
+            }
+            if (weatherwarn[i].contains("Freezing Fog Advisory")) {
+                //Freezing Fog - 40% weatherpercent
+                Fog = true;
+                weathertoday = 40;
+            }
+            if (weatherwarn[i].contains("Wind Chill Advisory")) {
+                //Wind Chill Advisory - 40% weatherpercent
+                WindChillAdvisory = true;
+                weathertoday = 40;
+            }
+            if (weatherwarn[i].contains("Ice Storm Warning")) {
+                //Ice Storm Warning - 70% weatherpercent
+                IceStorm = true;
+                weathertoday = 70;
+            }
+            if (weatherwarn[i].contains("Wind Chill Watch")) {
+                //Wind Chill Watch - 70% weatherpercent
+                WindChillWatch = true;
+                weathertomorrow = 70;
+            }
+            if (weatherwarn[i].contains("Wind Chill Warning")) {
+                //Wind Chill Warning - 70% weatherpercent
+                WindChillWarn = true;
+                weathertoday = 70;
+            }
+            if (weatherwarn[i].contains("Winter Storm Watch")) {
+                //Winter Storm Watch - 80% weatherpercent
+                WinterWatch = true;
+                weathertomorrow = 80;
+            }
+            if (weatherwarn[i].contains("Winter Storm Warning")) {
+                //Winter Storm Warning - 80% weatherpercent
+                WinterWarn = true;
+                weathertoday = 80;
+            }
+            if (weatherwarn[i].contains("Lake-Effect Snow Watch")) {
+                //Lake Effect Snow Watch - 80% weatherpercent
+                LakeSnowWatch = true;
+                weathertomorrow = 80;
+            }
+            if (weatherwarn[i].contains("Lake-Effect Snow Warning")) {
+                //Lake Effect Snow Warning - 80% weatherpercent
+                LakeSnowWarn = true;
+                weathertoday = 80;
+            }
+            if (weatherwarn[i].contains("Blizzard Watch")) {
+                //Blizzard Watch - 90% weatherpercent
+                BlizzardWatch = true;
+                weathertomorrow = 90;
+            }
+            if (weatherwarn[i].contains("Blizzard Warning")) {
+                //Blizzard Warning - 90% weatherpercent
+                BlizzardWarn = true;
+                weathertoday = 90;
+            }
         }
 
-        //If none of the above warnings are present
-        if (weathertoday == 0 && weathertomorrow == 0) {
-            weather.set(0, getString(R.string.NoWeather));
-        }
+            //If none of the above warnings are present
+            if (weathertoday == 0 && weathertomorrow == 0) {
+                weather.set(0, getString(R.string.NoWeather));
+            }
 
         //Set entries in the list in order of decreasing category (warn -> watch -> advisory)
         if (BlizzardWarn) {
@@ -1384,8 +1438,6 @@ public class SnowDayResult extends Activity {
                 percent = 0;
             }
 
-            percentscroll = 0;
-
             runOnUiThread(new Runnable() {
                 public void run() {
                     progCalculate.setVisibility(View.GONE);
@@ -1405,7 +1457,7 @@ public class SnowDayResult extends Activity {
                 });
             } else {
                 try {
-                    for (int i = 0; i < percent; i++) {
+                    for (int percentscroll = 0; percentscroll <= percent; percentscroll++) {
                         Thread.sleep(10);
                         if (percentscroll >= 0 && percentscroll <= 20) {
                             runOnUiThread(new Runnable() {
@@ -1432,12 +1484,12 @@ public class SnowDayResult extends Activity {
                                 }
                             });
                         }
+                        final int finalPercentscroll = percentscroll;
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                txtPercent.setText((percentscroll) + "%");
+                                txtPercent.setText((finalPercentscroll) + "%");
                             }
                         });
-                        percentscroll++;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -1450,13 +1502,6 @@ public class SnowDayResult extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    btnRadar.setVisibility(View.VISIBLE);
-                }
-            });
-
 
             //Set the content of the information ListView
             if (WJRTFail || NWSFail) {
