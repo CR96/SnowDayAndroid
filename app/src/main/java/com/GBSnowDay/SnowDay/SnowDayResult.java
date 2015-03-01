@@ -305,7 +305,7 @@ public class SnowDayResult extends Activity {
         int id = item.getItemId();
         if (id == R.id.closings) {
             //Open URL with warnings listed
-            String url = "http://www.abc12.com/category/213603/school-closings";
+            String url = "http://www.abc12.com/closings";
             Intent i = new Intent(Intent.ACTION_VIEW);
             Uri u = Uri.parse(url);
             Context context = this;
@@ -693,7 +693,7 @@ public class SnowDayResult extends Activity {
             //This is the current listings page.
 
             try {
-                schools = Jsoup.connect("http://ftpcontent2.worldnow.com/wjrt/school/closings.htm").get();
+                schools = Jsoup.connect("http://gray.ftp.clickability.com/wjrt/school/closings.htm").get();
                 //Attempt to parse input
                 for (Element row : schools.select("td[bgcolor]")) {
                     //Reading closings - name of institution and status
@@ -1191,8 +1191,7 @@ public class SnowDayResult extends Activity {
             //Live html
             try {
                  weatherdoc = Jsoup.connect("http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&y=0").get();
-                //"Searching for elements in class 'warn'
-                //Saving elements to searchable string weathertext
+                //Saving to searchable string array weatherwarn
                   weatherwarn=weatherdoc.toString().split("<title>");
                   getWeather();
             }catch (IOException e) {

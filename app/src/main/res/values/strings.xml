@@ -12,8 +12,7 @@
     is distributed on an "AS IS" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either expressed
     or implied.\nSee the License for specific language governing permissions and\nlimitations under
     the License.</string>
-    <string name="Updates">New in this version:\nAdded external links to weather and school closings
-    \nCode optimization and bug fixes</string>
+    <string name="Updates">New in this version:\nUpdated closings to work with ABC 12\'s new website.</string>
     <string name="Continue">Continue</string>
     <string name="Close">Close</string>
     <string name="btn_start">Start</string>
