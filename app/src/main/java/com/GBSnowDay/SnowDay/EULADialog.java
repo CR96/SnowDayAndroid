@@ -9,12 +9,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
-public class EULA {
+public class EULADialog {
 
     private String EULA_PREFIX = "eula_";
     private Activity mActivity;
 
-    public EULA(Activity context) {
+    public EULADialog(Activity context) {
         mActivity = context;
     }
 

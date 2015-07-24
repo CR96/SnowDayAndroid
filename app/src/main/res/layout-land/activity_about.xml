@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="wrap_content" tools:context="com.GBSnowDay.SnowDay.About"
+    android:layout_height="wrap_content" tools:context="com.GBSnowDay.SnowDay.AboutActivity"
     android:id="@+id/about">
 
 
