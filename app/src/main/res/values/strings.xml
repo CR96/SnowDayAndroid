@@ -203,8 +203,8 @@
 
     <string name="Summer">Enjoy your summer!</string>
 
-    <string name="NoSessionTomorrow"> School will not be in session.</string>
-    <string name="NoSessionToday">School is not in session.</string>
+    <string name="NoSessionTomorrow">" School will not be in session."</string>
+    <string name="NoSessionToday">" School is not in session."</string>
 
 
     <!--Error handling-->
