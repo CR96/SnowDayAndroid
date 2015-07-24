@@ -32,6 +32,20 @@
     <string name="tomorrow">Tomorrow</string>
 
     <string name="prev">How many snow days have occurred?</string>
+    <string-array name="days_array">
+        <item>Select</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10 or more</item>
+    </string-array>
 
     <string name="dayinfo">Information</string>
     <string name="special">Silence will fall when the question is asked.</string>
@@ -94,29 +108,6 @@
     <string name="GBClosedToday">Grand Blanc: Closed Today</string>
     <string name="GBClosedTomorrow">Grand Blanc: Closed Tomorrow</string>
 
-    <!--Results / Conditions-->
-    <string name="SchoolOpen">School is already in session.</string>
-    <string name="NoClosings">No schools are closed.</string>
-    <string name="Dismissed">School has already been dismissed.</string>
-
-    <string name="NoWeather">"No applicable weather warnings."</string>
-
-    <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>
-    <string name="SaturdayToday">Today is Saturday. Try again tomorrow!</string>
-    <string name="SundayToday">Today is Sunday.</string>
-    <string name="Weekend">Enjoy the weekend!</string>
-
-    <string name="SnowDay">Enjoy your Snow Day!</string>
-
-    <!--Error handling-->
-    <string name="CalculateError">Unable to run calculation.</string>
-
-    <string name="WJRTConnectionError">Could not connect to ABC 12.</string>
-    <string name="WJRTParseError">Unable to read ABC 12 closings.</string>
-
-    <string name="WeatherConnectionError">Could not connect to National Weather Service.</string>
-    <string name="WeatherParseError">Unable to read weather information.</string>
-
     <string name="NoConnection">Check your internet connection.</string>
     <string name="NoNetwork">Network communication issues</string>
 
@@ -143,19 +134,86 @@
     <string name="WindChillWarn">Wind Chill Warning</string>
     <string name="BlizzardWarn">Blizzard Warning</string>
 
-    <string-array name="days_array">
-        <item>Select</item>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10 or more</item>
-    </string-array>
+    <!--Results / Conditions-->
+    <string name="SchoolOpen">School is already in session.</string>
+    <string name="NoClosings">No schools are closed.</string>
+    <string name="Dismissed">School has already been dismissed.</string>
+
+    <string name="NoWeather">"No applicable weather warnings."</string>
+
+    <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>
+    <string name="SaturdayToday">Today is Saturday. Try again tomorrow!</string>
+    <string name="SundayToday">Today is Sunday.</string>
+    <string name="Weekend">Enjoy the weekend!</string>
+
+    <string name="SnowDay">Enjoy your Snow Day!</string>
+
+    <!--Dates and Holidays-->
+    <string name="Thanksgiving">Happy Thanksgiving!</string>
+    <string name="Christmas">Merry Christmas!</string>
+    <string name="NewYear">Happy New Year!</string>
+    <string name="Easter">Happy Easter!</string>
+
+    <string name="YearStart">The 2015–2016 school year begins tomorrow!</string>
+    <string name="YearEnd">Today is the last day of school!</string>
+
+    <string name="HC">Happy Homecoming!</string>
+
+    <string name="LSTomorrow">REMINDER: Tomorrow is a Late Start.</string>
+    <string name="LSToday">REMINDER: Today is a Late Start.</string>
+
+    <string name="HalfDayTomorrow">REMINDER: Tomorrow is a Half Day.</string>
+    <string name="HalfDay">REMINDER: Today is a Half Day.</string>
+
+    <string name="HalfDayConferenceMSTomorrow">REMINDER: Tomorrow is a Half Day for elementary and middle school students.</string>
+    <string name="HalfDayConferenceMSTodayTomorrow">Today and Tomorrow are Half Days for elementary and middle school students.</string>
+    <string name="HalfDayConferenceToday">REMINDER: Today is a Half Day for elementary and middle school students.</string>
+
+    <string name="ThanksgivingRecessTomorrow">Thanksgiving Recess begins tomorrow.</string>
+    <string name="ThanksgivingRecess">Enjoy your Thanksgiving Recess!</string>
+
+    <string name="WinterBreakTomorrow">Winter Break begins tomorrow.</string>
+    <string name="WinterBreak">Enjoy your winter break!</string>
+
+    <string name="GoodFridayTomorrow">Tomorrow is Good Friday.</string>
+    <string name="GoodFriday">Today is Good Friday.</string>
+
+    <string name="SpringBreakTomorrow">Spring Break begins tomorrow.</string>
+    <string name="SpringBreak">Enjoy your spring break!</string>
+
+    <string name="MLKTomorrow">Tomorrow is Martin Luther King Day.</string>
+    <string name="MLK">Today is Martin Luther King Day.</string>
+
+    <string name="RecordsTomorrow">Tomorrow is Staff Records Day.</string>
+    <string name="Records">Today is Staff Records Day.</string>
+
+    <string name="LincolnTomorrow">Tomorrow is Lincoln\'s Birthday.</string>
+    <string name="Lincoln">Today is Lincoln\'s Birthday.</string>
+
+    <string name="PresidentTomorrow">Tomorrow is President\'s Day.</string>
+    <string name="President">Today is President\'s Day.</string>
+
+    <string name="PDDTomorrow">Tomorrow is Staff Professional Development Day.</string>
+    <string name="PDD">Today is Staff Professional Development Day.</string>
+
+    <string name="MemorialDayTomorrow">Tomorrow is Memorial Day.</string>
+    <string name="MemorialDay">Today is Memorial Day.</string>
+
+    <string name="Senior">Congratulations Senior Class of 2016!</string>
+
+    <string name="Summer">Enjoy your summer!</string>
+
+    <string name="NoSessionTomorrow"> School will not be in session.</string>
+    <string name="NoSessionToday">School is not in session.</string>
+
+
+    <!--Error handling-->
+    <string name="CalculateError">Unable to run calculation.</string>
+
+    <string name="WJRTConnectionError">Could not connect to ABC 12.</string>
+    <string name="WJRTParseError">Unable to read ABC 12 closings.</string>
+
+    <string name="WeatherConnectionError">Could not connect to National Weather Service.</string>
+    <string name="WeatherParseError">Unable to read weather information.</string>
 
 </resources>

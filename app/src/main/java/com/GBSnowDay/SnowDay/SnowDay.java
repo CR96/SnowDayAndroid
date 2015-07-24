@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -277,7 +278,7 @@ public class SnowDay extends Activity {
 
         //Set the current month, day, and year
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd yyyy", Locale.US);
         date = currentDate.format(calendar.getTime());
 
         infoList.add(0, "Current Date: " + date);
@@ -288,48 +289,48 @@ public class SnowDay extends Activity {
 
         if (dt.getMonthOfYear() == 6 && dt.getDayOfMonth() > 15) {
             //Summer break (June)
-            infoList.add(infoCount, "Enjoy your Summer!");
+            infoList.add(infoCount, getString(R.string.Summer));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         } else if (dt.getMonthOfYear() > 6 && dt.getMonthOfYear() <= 8) {
             //Summer break (July and August)
-            infoList.add(infoCount, "Enjoy your Summer!");
+            infoList.add(infoCount, getString(R.string.Summer));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         } else if (dt.getMonthOfYear() == 9 && dt.getDayOfMonth() < 7) {
             //Summer break (September)
-            infoList.add(infoCount, "Enjoy your Summer!");
+            infoList.add(infoCount, getString(R.string.Summer));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         }else if (date.equals("September 07 2015")) {
-            infoList.add(infoCount, "The 2015-2016 school year begins tomorrow!");
+            infoList.add(infoCount, getString(R.string.YearStart));
             infoCount++;
             todayValid = false;
         }else if (date.equals("September 25 2015")) {
-            infoList.add(infoCount, "Happy Homecoming!");
+            infoList.add(infoCount, getString(R.string.HC));
             infoCount++;
         }else if (date.equals("October 20 2015") || date.equals("December 08 2015")
                 || date.equals("February 02 2016") || date.equals("May 03 2016")) {
-            infoList.add(infoCount, "REMINDER: Tomorrow is a Late Start.");
+            infoList.add(infoCount, getString(R.string.LSTomorrow));
             infoCount++;
         } else if (date.equals("October 21 2015") || date.equals("December 09 2015")
                 || date.equals("February 03 2016") || date.equals("May 04 2016")) {
-            infoList.add(infoCount, "REMINDER: Today is a Late Start.");
+            infoList.add(infoCount, getString(R.string.LSToday));
             infoCount++;
         }else if (date.equals("November 26 2015")) {
-            infoList.add(infoCount, "Happy Thanksgiving!");
+            infoList.add(infoCount, getString(R.string.Thanksgiving));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         }else if (date.equals("November 26 2015") || date.equals("November 27 2015")) {
-            infoList.add(infoCount, "Enjoy your Thanksgiving Recess!");
+            infoList.add(infoCount, getString(R.string.ThanksgivingRecess));
             infoCount++;
             todayValid = false;
         } else if (date.equals("December 22 2015")) {
-            infoList.add(infoCount, "Winter Break begins tomorrow.");
+            infoList.add(infoCount, getString(R.string.WinterBreakTomorrow));
             infoCount++;
             tomorrowValid = false;
         } else if (date.equals("December 23 2015") || date.equals("December 24 2015")
@@ -339,92 +340,92 @@ public class SnowDay extends Activity {
                 || date.equals("December 31 2015") || date.equals("January 01 2016")) {
             //Winter Break
             if (date.equals("December 25 2015")) {
-                infoList.add(infoCount, "Merry Christmas!");
+                infoList.add(infoCount, getString(R.string.Christmas));
                 infoCount++;
             } else if (date.equals("January 01 2016")) {
-                infoList.add(infoCount, "Happy New Year!");
+                infoList.add(infoCount, getString(R.string.NewYear));
                 infoCount++;
             }
 
-            infoList.add(infoCount, "Enjoy your winter break!");
+            infoList.add(infoCount, getString(R.string.WinterBreak));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         } else if (date.equals("January 17 2016")) {
-            infoList.add(infoCount, "Tomorrow is Martin Luther King Day. School will not be in session.");
+            infoList.add(infoCount, getString(R.string.MLKTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         } else if (date.equals("January 18 2016")) {
             //MLK Day
-            infoList.add(infoCount, "Happy Martin Luther King Day! School is not in session.");
+            infoList.add(infoCount, getString(R.string.MLK) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
         }else if (date.equals("January 24 2016")) {
-            infoList.add(infoCount, "Tomorrow is Staff Records Day. School will not be in session.");
+            infoList.add(infoCount, getString(R.string.RecordsTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
         } else if (date.equals("January 25 2016")) {
-            infoList.add(infoCount, "Today is Staff Records Day. School is not in session.");
+            infoList.add(infoCount, getString(R.string.Records) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
         }else if (date.equals("February 11 2016")) {
-            infoList.add(infoCount, "Tomorrow is Lincoln's Birthday. School will not be in session.");
+            infoList.add(infoCount, getString(R.string.LincolnTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
         } else if (date.equals("February 12 2016")) {
-            infoList.add(infoCount, "Today is Lincoln's Birthday. School is not in session.");
+            infoList.add(infoCount, getString(R.string.Lincoln) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
         } else if (date.equals("February 14 2016")) {
-            infoList.add(infoCount, "Tomorrow is President's Day. School will not be in session.");
+            infoList.add(infoCount, getString(R.string.PresidentTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         } else if (date.equals("February 15 2016")) {
-            infoList.add(infoCount, "Happy President's Day! School is not in session.");
+            infoList.add(infoCount, getString(R.string.President) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
         } else if (date.equals("November 10 2015") || date.equals("March 08 2016")) {
-            infoList.add(infoCount, "REMINDER: Tomorrow is a Half Day for elementary and middle school students.");
+            infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTomorrow));
             infoCount++;
         }else if (date.equals("November 11 2015") || date.equals("November 12 2015")
             || date.equals("March 09 2016") || date.equals("March 10 2016")) {
-            infoList.add(infoCount, "Today and Tomorrow are Half Days for elementary and middle school students.");
+            infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTodayTomorrow));
             infoCount++;
         } else if (date.equals("November 13 2015") || date.equals("March 11 2016")) {
-            infoList.add(infoCount, "REMINDER: Today is a Half Day for elementary and middle school students.");
+            infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTomorrow));
             infoCount++;
         } else if (date.equals("November 24 2015") || date.equals("September 24 2015")
             || date.equals("October 08 2015")
             || date.equals("March 31 2016")) {
-            infoList.add(infoCount, "REMINDER: Tomorrow is a Half Day.");
+            infoList.add(infoCount, getString(R.string.HalfDayTomorrow));
             infoCount++;
         }else if (date.equals("November 25 2015") || date.equals("September 25 2015")
                 || date.equals("October 09 2015")) {
             if (date.equals("November 25 2015")) {
-                infoList.add(infoCount, "Thanksgiving Recess begins tomorrow.");
+                infoList.add(infoCount, getString(R.string.ThanksgivingRecessTomorrow));
                 infoCount++;
                 tomorrowValid = false;
             }
 
-            infoList.add(infoCount, "REMINDER: Today is a Half Day.");
+            infoList.add(infoCount, getString(R.string.HalfDay));
             infoCount++;
         }else if (date.equals("March 24 2016")) {
-            infoList.add(infoCount, "Tomorrow is Good Friday. School will not be in session.");
+            infoList.add(infoCount, getString(R.string.GoodFridayTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
         }else if (date.equals("March 25 2016")) {
-            infoList.add(infoCount, "Today is Good Friday. School is not in session.");
+            infoList.add(infoCount, getString(R.string.GoodFriday) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
         }else if (date.equals("March 27 2016")) {
-            infoList.add(infoCount, "Happy Easter!");
+            infoList.add(infoCount, getString(R.string.Easter));
             infoCount++;
             todayValid = false;
         } else if (date.equals("April 01 2016")) {
-            infoList.add(infoCount, "REMINDER: Today is a Half Day.");
-            infoList.add(infoCount + 1, "Spring Break begins tomorrow.");
+            infoList.add(infoCount, getString(R.string.HalfDay));
+            infoList.add(infoCount + 1, getString(R.string.SpringBreakTomorrow));
             infoCount+=2;
             tomorrowValid = false;
         } else if (date.equals("April 02 2016") || date.equals("April 03 2016")
@@ -433,32 +434,32 @@ public class SnowDay extends Activity {
                 || date.equals("April 08 2016")) {
             //Spring Break
 
-            infoList.add(infoCount, "Enjoy your Spring Break!");
+            infoList.add(infoCount, getString(R.string.SpringBreak));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
         } else if (date.equals("November 02 2015") || date.equals("April 27 2016")) {
-            infoList.add(infoCount, "Tomorrow is Staff Professional Development Day. School will not be in session.");
+            infoList.add(infoCount, getString(R.string.PDDTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
         } else if (date.equals("November 03 2015") || date.equals("April 28 2016")) {
-            infoList.add(infoCount, "Today is Staff Professional Development Day. School is not in session.");
+            infoList.add(infoCount, getString(R.string.PDD) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
         } else if (date.equals("May 29 2016")) {
-            infoList.add(infoCount, "Tomorrow is Memorial Day. School will not be in session.");
+            infoList.add(infoCount, getString(R.string.MemorialDayTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
         } else if (date.equals("May 30 2016")) {
-            infoList.add(infoCount, "Today is Memorial Day. School is not in session.");
+            infoList.add(infoCount, getString(R.string.MemorialDay) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
         } else if (date.equals("June 02 2016")) {
-            infoList.add(infoCount, "Congratulations Senior Class of 2016!");
+            infoList.add(infoCount, getString(R.string.Senior));
             infoCount++;
             bobcats = true;
         } else if (date.equals("June 15 2016")) {
-            infoList.add(infoCount, "Today is the last day of school!");
+            infoList.add(infoCount, getString(R.string.YearEnd));
             infoCount++;
             tomorrowValid = false;
         }
@@ -494,7 +495,7 @@ public class SnowDay extends Activity {
             List<String> special = new ArrayList<String>();
             special.add(0, getString(R.string.special));
             ArrayAdapter<String> specialadapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.infolist, special);
+                    R.layout.item_list_small, special);
             lstInfo.setAdapter(specialadapter);
         }
     }
