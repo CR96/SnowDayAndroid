@@ -286,29 +286,62 @@ public class SnowDay extends Activity {
         Uses a mixture of SimpleDateFormat for simple string comparison and JodaTime for more
         complicated arguments*/
 
-        if (date.equals("December 09 2014") || date.equals("February 03 2015")
-                || date.equals("May 05 2015")) {
+        if (dt.getMonthOfYear() == 6 && dt.getDayOfMonth() > 15) {
+            //Summer break (June)
+            infoList.add(infoCount, "Enjoy your Summer!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        } else if (dt.getMonthOfYear() > 6 && dt.getMonthOfYear() <= 8) {
+            //Summer break (July and August)
+            infoList.add(infoCount, "Enjoy your Summer!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        } else if (dt.getMonthOfYear() == 9 && dt.getDayOfMonth() < 7) {
+            //Summer break (September)
+            infoList.add(infoCount, "Enjoy your Summer!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        }else if (date.equals("September 07 2015")) {
+            infoList.add(infoCount, "The 2015-2016 school year begins tomorrow!");
+            infoCount++;
+            todayValid = false;
+        }else if (date.equals("September 25 2015")) {
+            infoList.add(infoCount, "Happy Homecoming!");
+            infoCount++;
+        }else if (date.equals("October 20 2015") || date.equals("December 08 2015")
+                || date.equals("February 02 2016") || date.equals("May 03 2016")) {
             infoList.add(infoCount, "REMINDER: Tomorrow is a Late Start.");
             infoCount++;
-        } else if (date.equals("December 10 2014") || date.equals("February 04 2015")
-                || date.equals("May 06 2015")) {
+        } else if (date.equals("October 21 2015") || date.equals("December 09 2015")
+                || date.equals("February 03 2016") || date.equals("May 04 2016")) {
             infoList.add(infoCount, "REMINDER: Today is a Late Start.");
             infoCount++;
-        } else if (date.equals("December 21 2014")) {
+        }else if (date.equals("November 26 2015")) {
+            infoList.add(infoCount, "Happy Thanksgiving!");
+            infoCount++;
+            todayValid = false;
+            tomorrowValid = false;
+        }else if (date.equals("November 26 2015") || date.equals("November 27 2015")) {
+            infoList.add(infoCount, "Enjoy your Thanksgiving Recess!");
+            infoCount++;
+            todayValid = false;
+        } else if (date.equals("December 22 2015")) {
             infoList.add(infoCount, "Winter Break begins tomorrow.");
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("December 22 2014") || date.equals("December 23 2014")
-                || date.equals("December 24 2014") || date.equals("December 25 2014")
-                || date.equals("December 26 2014") || date.equals("December 27 2014")
-                || date.equals("December 28 2014") || date.equals("December 29 2014")
-                || date.equals("December 30 2014") || date.equals("December 31 2014")
-                || date.equals("January 01 2015") || date.equals("January 02 2015")) {
+        } else if (date.equals("December 23 2015") || date.equals("December 24 2015")
+                || date.equals("December 25 2015") || date.equals("December 26 2015") || date.equals("December 27 2014")
+                || date.equals("December 27 2015") || date.equals("December 28 2015")
+                || date.equals("December 29 2015") || date.equals("December 30 2015")
+                || date.equals("December 31 2015") || date.equals("January 01 2016")) {
             //Winter Break
-            if (date.equals("December 25 2014")) {
+            if (date.equals("December 25 2015")) {
                 infoList.add(infoCount, "Merry Christmas!");
                 infoCount++;
-            } else if (date.equals("January 01 2015")) {
+            } else if (date.equals("January 01 2016")) {
                 infoList.add(infoCount, "Happy New Year!");
                 infoCount++;
             }
@@ -317,103 +350,117 @@ public class SnowDay extends Activity {
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("January 18 2015")) {
+        } else if (date.equals("January 17 2016")) {
             infoList.add(infoCount, "Tomorrow is Martin Luther King Day. School will not be in session.");
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("January 19 2015")) {
+        } else if (date.equals("January 18 2016")) {
             //MLK Day
             infoList.add(infoCount, "Happy Martin Luther King Day! School is not in session.");
-            infoCount += 2;
             infoCount++;
             todayValid = false;
-            //Special case: teacher records day is the following day
+        }else if (date.equals("January 24 2016")) {
+            infoList.add(infoCount, "Tomorrow is Staff Records Day. School will not be in session.");
+            infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("January 20 2015")) {
-            infoList.add(infoCount, "Today is Teacher Records Day. School is not in session.");
+        } else if (date.equals("January 25 2016")) {
+            infoList.add(infoCount, "Today is Staff Records Day. School is not in session.");
             infoCount++;
             todayValid = false;
-        } else if (date.equals("February 15 2015")) {
+        }else if (date.equals("February 11 2016")) {
+            infoList.add(infoCount, "Tomorrow is Lincoln's Birthday. School will not be in session.");
+            infoCount++;
+            tomorrowValid = false;
+        } else if (date.equals("February 12 2016")) {
+            infoList.add(infoCount, "Today is Lincoln's Birthday. School is not in session.");
+            infoCount++;
+            todayValid = false;
+        } else if (date.equals("February 14 2016")) {
             infoList.add(infoCount, "Tomorrow is President's Day. School will not be in session.");
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("February 16 2015")) {
+        } else if (date.equals("February 15 2016")) {
             infoList.add(infoCount, "Happy President's Day! School is not in session.");
             infoCount++;
             todayValid = false;
-        } else if (date.equals("March 10 2015")) {
+        } else if (date.equals("November 10 2015") || date.equals("March 08 2016")) {
             infoList.add(infoCount, "REMINDER: Tomorrow is a Half Day for elementary and middle school students.");
             infoCount++;
-        }else if (date.equals("March 11 2015") || date.equals("March 12 2015")) {
-            infoList.add(infoCount, "REMINDER: Today and Tomorrow are Half Days for elementary and middle school students.");
+        }else if (date.equals("November 11 2015") || date.equals("November 12 2015")
+            || date.equals("March 09 2016") || date.equals("March 10 2016")) {
+            infoList.add(infoCount, "Today and Tomorrow are Half Days for elementary and middle school students.");
             infoCount++;
-        } else if (date.equals("March 13 2015")) {
+        } else if (date.equals("November 13 2015") || date.equals("March 11 2016")) {
             infoList.add(infoCount, "REMINDER: Today is a Half Day for elementary and middle school students.");
             infoCount++;
-        } else if (date.equals("April 01 2015")) {
+        } else if (date.equals("November 24 2015") || date.equals("September 24 2015")
+            || date.equals("October 08 2015")
+            || date.equals("March 31 2016")) {
             infoList.add(infoCount, "REMINDER: Tomorrow is a Half Day.");
             infoCount++;
-        } else if (date.equals("April 02 2015")) {
+        }else if (date.equals("November 25 2015") || date.equals("September 25 2015")
+                || date.equals("October 09 2015")) {
+            if (date.equals("November 25 2015")) {
+                infoList.add(infoCount, "Thanksgiving Recess begins tomorrow.");
+                infoCount++;
+                tomorrowValid = false;
+            }
+
             infoList.add(infoCount, "REMINDER: Today is a Half Day.");
-            infoList.add(infoCount, "Spring Break begins tomorrow.");
+            infoCount++;
+        }else if (date.equals("March 24 2016")) {
+            infoList.add(infoCount, "Tomorrow is Good Friday. School will not be in session.");
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("April 03 2015") || date.equals("April 04 2015")
-                || date.equals("April 05 2015") || date.equals("April 06 2015")
-                || date.equals("April 07 2015") || date.equals("April 08 2015")
-                || date.equals("April 09 2015") || date.equals("April 10 2015")) {
+        }else if (date.equals("March 25 2016")) {
+            infoList.add(infoCount, "Today is Good Friday. School is not in session.");
+            infoCount++;
+            todayValid = false;
+        }else if (date.equals("March 27 2016")) {
+            infoList.add(infoCount, "Happy Easter!");
+            infoCount++;
+            todayValid = false;
+        } else if (date.equals("April 01 2016")) {
+            infoList.add(infoCount, "REMINDER: Today is a Half Day.");
+            infoList.add(infoCount + 1, "Spring Break begins tomorrow.");
+            infoCount+=2;
+            tomorrowValid = false;
+        } else if (date.equals("April 02 2016") || date.equals("April 03 2016")
+                || date.equals("April 04 2016") || date.equals("April 05 2016")
+                || date.equals("April 06 2016") || date.equals("April 07 2016")
+                || date.equals("April 08 2016")) {
             //Spring Break
-            if (date.equals("April 05 2015")) {
-                infoList.add(infoCount, "Happy Easter!");
-                infoCount++;
-            }
 
             infoList.add(infoCount, "Enjoy your Spring Break!");
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("April 22 2015")) {
+        } else if (date.equals("November 02 2015") || date.equals("April 27 2016")) {
             infoList.add(infoCount, "Tomorrow is Staff Professional Development Day. School will not be in session.");
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("April 23 2015")) {
+        } else if (date.equals("November 03 2015") || date.equals("April 28 2016")) {
             infoList.add(infoCount, "Today is Staff Professional Development Day. School is not in session.");
             infoCount++;
             todayValid = false;
-        } else if (date.equals("April 24 2015")) {
+        } else if (date.equals("May 29 2016")) {
             infoList.add(infoCount, "Tomorrow is Memorial Day. School will not be in session.");
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("April 25 2015")) {
-            infoList.add(infoCount, "Happy Memorial Day! School is not in session.");
+        } else if (date.equals("May 30 2016")) {
+            infoList.add(infoCount, "Today is Memorial Day. School is not in session.");
             infoCount++;
             todayValid = false;
-        } else if (date.equals("May 19 2015")) {
-            infoList.add(infoCount, "Congratulations Senior Class of 2015!");
+        } else if (date.equals("June 02 2016")) {
+            infoList.add(infoCount, "Congratulations Senior Class of 2016!");
             infoCount++;
             bobcats = true;
-        } else if (date.equals("June 11 2015")) {
+        } else if (date.equals("June 15 2016")) {
             infoList.add(infoCount, "Today is the last day of school!");
             infoCount++;
             tomorrowValid = false;
-        } else if (dt.getMonthOfYear() == 6 && dt.getDayOfMonth() > 11) {
-            //Summer break (June)
-            infoList.add(infoCount, "Enjoy your Summer!");
-            infoCount++;
-            todayValid = false;
-            tomorrowValid = false;
-        } else if (dt.getMonthOfYear() > 6 && dt.getMonthOfYear() < 8) {
-            //Summer break (July and August)
-            infoList.add(infoCount, "Enjoy your Summer!");
-            infoCount++;
-            todayValid = false;
-            tomorrowValid = false;
-        } else if (dt.getMonthOfYear() == 9) {
-            /*Summmer break (September)
-            Conditions for the first day of the 2015-16 year
-            to be determined*/
         }
 
         //If items were added...
