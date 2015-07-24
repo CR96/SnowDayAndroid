@@ -209,19 +209,19 @@ public class SnowDayResult extends Activity {
         //Tab 1 - Percent and information
         TabHost.TabSpec specs = tabHost.newTabSpec("tab1");
         specs.setContent(R.id.tab1);
-        specs.setIndicator(getString(R.string.Percent));
+        specs.setIndicator(getString(R.string.tab1));
         tabHost.addTab(specs);
 
         //Tab 2 - ABC 12 closings
         specs = tabHost.newTabSpec("tab2");
         specs.setContent(R.id.tab2);
-        specs.setIndicator(getString(R.string.Closings));
+        specs.setIndicator(getString(R.string.tab2));
         tabHost.addTab(specs);
 
         //Tab 3 - Weather warnings and radar
         specs = tabHost.newTabSpec("tab3");
         specs.setContent(R.id.tab3);
-        specs.setIndicator(getString(R.string.Weather));
+        specs.setIndicator(getString(R.string.tab3));
         tabHost.addTab(specs);
 
         //Declare views

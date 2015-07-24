@@ -88,7 +88,7 @@ public class SnowDay extends Activity {
         new EULA(this).show();
 
         //Make sure the user doesn't try to run the program on the weekend or on specific dates
-        checkDate();
+        //checkDate();
 
         //Only run checkWeekend() if today or tomorrow is still valid
         if (todayValid || tomorrowValid) {

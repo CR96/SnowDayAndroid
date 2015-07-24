@@ -38,7 +38,7 @@ public class EULA {
         if(!hasBeenShown){
 
             // Show the Eula
-            String title = mActivity.getString(R.string.title) + " v" + versionInfo.versionName;
+            String title = mActivity.getString(R.string.app_name) + " v" + versionInfo.versionName;
 
             //Includes the updates as well so users know what changed.
             String message = mActivity.getString(R.string.Updates) + "\n\n" + mActivity.getString(R.string.EULA);

@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SnowDay</string>
-    <string name="title">Snow Day Calculator</string>
-    <string name="title_activity_snow_day_result">Snow Day Calculator</string>
-    <string name="title_activity_snow_day">Snow Day Calculator</string>
+    <!--Titles-->
+    <string name="app_name">Snow Day Calculator</string>
+    <string name="app_name_short">Snow Day</string>
+
+    <!--About-->
+    <string name="GBCS">Grand Blanc Community Schools</string>
+    <string name="dev_name">Developed by Corey Rowe</string>
+    <string name="dev_twitter">twitter.com/GBSnowDay</string>
+    <string name="dev_site">gbsnowday.weebly.com</string>
+    <string name="dev_email">gbsnowday@gmail.com</string>
+
+    <!--License and Updates-->
     <string name="EULA">License Agreement\n\nCopyright 2014 Corey Rowe\n\nLicensed under the Apache
     License, Version 2.0 (the "License");\nyou may not use this file except in compliance with the
     License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0
@@ -12,25 +20,46 @@
     is distributed on an "AS IS" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either expressed
     or implied.\nSee the License for specific language governing permissions and\nlimitations under
     the License.</string>
+
     <string name="Updates">New in this version:\nUpdated closings to work with ABC 12\'s new website.</string>
+
     <string name="Continue">Continue</string>
     <string name="Close">Close</string>
-    <string name="btn_start">Start</string>
+
+    <!--UI Views-->
+    <string name="day">Run calculation for:</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-    <string name="day">Run calculation for:</string>
-    <string name="dayinfo">Information</string>
+
     <string name="prev">How many snow days have occurred?</string>
+
+    <string name="dayinfo">Information</string>
     <string name="special">Silence will fall when the question is asked.</string>
-    <string name="next">Next</string>
+
     <string name="calculate">CALCULATE</string>
-    <string name="Percent">Percent</string>
-    <string name="list">Select a Number</string>
-    <string name="quit">Quit</string>
+
+    <string name="radarshow">Show Radar</string>
+    <string name="radarhide">Hide Radar</string>
+
+    <!--Menu-->
+    <string name="openclosings">Open ABC 12 Closings</string>
+    <string name="openweather">Open National Weather Service</string>
+    <string name="action_about">About</string>
+
+    <!--Tabs-->
+    <string name="tab1">Percent</string>
+    <string name="tab2">Closings</string>
+    <string name="tab3">Weather</string>
+
+    <!--Closings-->
+    <string name="WJRTClosings">ABC 12 School Closings</string>
+
     <string name="tier1">Academies / Institutions</string>
     <string name="tier2">Districts in Neighboring Counties</string>
     <string name="tier3">Districts in Genesee County</string>
     <string name="tier4">Districts near Grand Blanc</string>
+
+    <string name="GB">Grand Blanc: "</string>
     <string name="GBAcademy">Grand Blanc Academy: "</string>
     <string name="HolyFamily">Holy Family: "</string>
     <string name="WPAcademy">Woodland Park Academy: "</string>
@@ -57,38 +86,45 @@
     <string name="Flint">Flint: "</string>
     <string name="Goodrich">Goodrich: "</string>
     <string name="Carman">Carman-Ainsworth: "</string>
-    <string name="GB">Grand Blanc: "</string>
-    <string name="NoClosings">No schools are closed.</string>
-    <string name="WJRTClosings">ABC 12 School Closings</string>
-    <string name="Closings">Closings</string>
-    <string name="openclosings">Open ABC 12 Closings</string>
-    <string name="WJRTConnectionError">Could not connect to ABC 12.</string>
-    <string name="WJRTParseError">Unable to read ABC 12 closings.</string>
-    <string name="ErrorContact">If this error persists please contact the developer.</string>
-    <string name="NoWeather">"No applicable weather warnings."</string>
-    <string name="WeatherConnectionError">Could not connect to National Weather Service.</string>
-    <string name="WeatherParseError">Unable to read weather information.</string>
-    <string name="NoConnection">Check your internet connection.</string>
-    <string name="NoNetwork">Network communication issues</string>
-    <string name="CalculateError">Unable to run calculation.</string>
-    <string name="error">Error</string>
-    <string name="SchoolOpen">School is already in session.</string>
+
     <string name="Open">"OPEN</string>
     <string name="OpenToday">"Open Today</string>
     <string name="OpenTomorrow">"Open Tomorrow</string>
+
+    <string name="GBClosedToday">Grand Blanc: Closed Today</string>
+    <string name="GBClosedTomorrow">Grand Blanc: Closed Tomorrow</string>
+
+    <!--Results / Conditions-->
+    <string name="SchoolOpen">School is already in session.</string>
+    <string name="NoClosings">No schools are closed.</string>
     <string name="Dismissed">School has already been dismissed.</string>
+
+    <string name="NoWeather">"No applicable weather warnings."</string>
+
     <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>
     <string name="SaturdayToday">Today is Saturday. Try again tomorrow!</string>
     <string name="SundayToday">Today is Sunday.</string>
     <string name="Weekend">Enjoy the weekend!</string>
-    <string name="GBClosedToday">Grand Blanc: Closed Today</string>
-    <string name="GBClosedTomorrow">Grand Blanc: Closed Tomorrow</string>
+
     <string name="SnowDay">Enjoy your Snow Day!</string>
+
+    <!--Error handling-->
+    <string name="CalculateError">Unable to run calculation.</string>
+
+    <string name="WJRTConnectionError">Could not connect to ABC 12.</string>
+    <string name="WJRTParseError">Unable to read ABC 12 closings.</string>
+
+    <string name="WeatherConnectionError">Could not connect to National Weather Service.</string>
+    <string name="WeatherParseError">Unable to read weather information.</string>
+
+    <string name="NoConnection">Check your internet connection.</string>
+    <string name="NoNetwork">Network communication issues</string>
+
+    <string name="ErrorContact">If this error persists please contact the developer.</string>
+
+    <!--Weather-->
     <string name="NWS">National Weather Service Warnings</string>
-    <string name="Weather">Weather</string>
-    <string name="radarshow">Show Radar</string>
-    <string name="radarhide">Hide Radar</string>
-    <string name="openweather">Open National Weather Service</string>
+
     <string name="HazardWeather">Hazardous Weather Outlook</string>
     <string name="SigWeather">Significant Weather Advisory</string>
     <string name="WinterAdvisory">Winter Weather Advisory</string>
@@ -106,14 +142,6 @@
     <string name="IceStorm">Ice Storm Warning</string>
     <string name="WindChillWarn">Wind Chill Warning</string>
     <string name="BlizzardWarn">Blizzard Warning</string>
-    <string name="weather_image">NWS Radar Mosaic</string>
-
-    <string name="action_about">About</string>
-    <string name="GBCS">Grand Blanc Community Schools</string>
-    <string name="dev_name">Developed by Corey Rowe</string>
-    <string name="dev_twitter">twitter.com/GBSnowDay</string>
-    <string name="dev_site">gbsnowday.weebly.com</string>
-    <string name="dev_email">gbsnowday@gmail.com</string>
 
     <string-array name="days_array">
         <item>Select</item>
