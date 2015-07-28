@@ -1,6 +1,5 @@
 package com.GBSnowDay.SnowDay;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +7,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +37,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 
-public class ResultActivity extends Activity {
+public class ResultActivity extends AppCompatActivity {
 
     /*Copyright 2014 Corey Rowe
 
@@ -82,11 +84,11 @@ public class ResultActivity extends Activity {
     String[] weatherwarn;
 
     //Declare lists that will be used in ListAdapters
-    List<String> GBInfo = new ArrayList<String>();
-    List<String> closings = new ArrayList<String>();
-    List<String> wjrtInfo = new ArrayList<String>();
-    List<String> weather = new ArrayList<String>();
-    List<String> nwsInfo = new ArrayList<String>();
+    List<String> GBInfo = new ArrayList<>();
+    List<String> closings = new ArrayList<>();
+    List<String> wjrtInfo = new ArrayList<>();
+    List<String> weather = new ArrayList<>();
+    List<String> nwsInfo = new ArrayList<>();
 
     int GBCount = 1;
     int weatherCount = 0;
@@ -186,17 +188,19 @@ public class ResultActivity extends Activity {
     boolean WJRTFail;
     boolean NWSFail;
 
-    //Custom adapter
-    private ClosingsAdapter closingsAdapter;
-    private WeatherAdapter weatherAdapter;
-    private GBAdapter gbAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        //Show the up arrow in the action bar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
         //Read variables from MainActivity class
         Intent result = getIntent();
         dayrun = result.getIntExtra("dayrun", dayrun);
@@ -350,10 +354,8 @@ public class ResultActivity extends Activity {
         private static final int TYPE_SEPARATOR = 1;
         private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
 
-        private ArrayList<String> mData = new ArrayList<String>();
+        private ArrayList<String> mData = new ArrayList<>();
         private LayoutInflater mInflater;
-
-        private TreeSet<Integer> mSeparatorsSet = new TreeSet<Integer>();
 
         public GBAdapter() {
             mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -362,18 +364,6 @@ public class ResultActivity extends Activity {
         public void addItem(final String item) {
             mData.add(item);
             notifyDataSetChanged();
-        }
-
-        public void addSeparatorItem(final String item) {
-            mData.add(item);
-            //Save separator position
-            mSeparatorsSet.add(mData.size() - 1);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
         }
 
         @Override
@@ -397,7 +387,7 @@ public class ResultActivity extends Activity {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+            ViewHolder holder;
             int type = getItemViewType(position);
             holder = new ViewHolder();
             /*No 'if (convertView == null)' statement to prevent view recycling
@@ -406,15 +396,15 @@ public class ResultActivity extends Activity {
                 case TYPE_ITEM:
                     if (GB && position == 0) {
                         //If GB is closed, make it red.
-                        convertView = mInflater.inflate(R.layout.item_red_center, null);
+                        convertView = mInflater.inflate(R.layout.item_red_center, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                         break;
                     } else if (GB && position == 1) {
-                        convertView = mInflater.inflate(R.layout.item_blue_center, null);
+                        convertView = mInflater.inflate(R.layout.item_blue_center, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                         break;
                     }else{
-                        convertView = mInflater.inflate(R.layout.item_center, null);
+                        convertView = mInflater.inflate(R.layout.item_center, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                         break;
                     }
@@ -431,10 +421,10 @@ public class ResultActivity extends Activity {
         private static final int TYPE_SEPARATOR = 1;
         private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
 
-        private ArrayList<String> mData = new ArrayList<String>();
+        private ArrayList<String> mData = new ArrayList<>();
         private LayoutInflater mInflater;
 
-        private TreeSet<Integer> mSeparatorsSet = new TreeSet<Integer>();
+        private TreeSet<Integer> mSeparatorsSet = new TreeSet<>();
 
         public ClosingsAdapter() {
             mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -478,7 +468,7 @@ public class ResultActivity extends Activity {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+            ViewHolder holder;
             int type = getItemViewType(position);
             holder = new ViewHolder();
             /*No 'if (convertView == null)' statement to prevent view recycling
@@ -499,22 +489,22 @@ public class ResultActivity extends Activity {
                             || GBAcademy && position == 27 || GISD && position == 28
                             || HolyFamily && position == 29 || WPAcademy && position == 30) {
                         //If the school is closed, make it orange.
-                        convertView = mInflater.inflate(R.layout.item_orange, null);
+                        convertView = mInflater.inflate(R.layout.item_orange, parent, false);
                         holder.textView = (TextView)convertView.findViewById(R.id.text);
                         break;
                     }else{
-                        convertView = mInflater.inflate(R.layout.item, null);
+                        convertView = mInflater.inflate(R.layout.item, parent, false);
                         holder.textView = (TextView)convertView.findViewById(R.id.text);
                         break;
                     }
                 case TYPE_SEPARATOR:
                     //Set the text separators ("Districts near Grand Blanc", etc.)
                     if (position == 0) {
-                        convertView = mInflater.inflate(R.layout.separator_red, null);
+                        convertView = mInflater.inflate(R.layout.separator_red, parent, false);
                         holder.textView = (TextView)convertView.findViewById(R.id.textSeparator);
                         break;
                     }else{
-                        convertView = mInflater.inflate(R.layout.separator, null);
+                        convertView = mInflater.inflate(R.layout.separator, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
                         break;
                     }
@@ -531,10 +521,10 @@ public class ResultActivity extends Activity {
         private static final int TYPE_SEPARATOR = 1;
         private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
 
-        private ArrayList<String> mData = new ArrayList<String>();
+        private ArrayList<String> mData = new ArrayList<>();
         private LayoutInflater mInflater;
 
-        private TreeSet<Integer> mSeparatorsSet = new TreeSet<Integer>();
+        private TreeSet<Integer> mSeparatorsSet = new TreeSet<>();
 
         public WeatherAdapter() {
             mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -578,7 +568,7 @@ public class ResultActivity extends Activity {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+            ViewHolder holder;
             int type = getItemViewType(position);
             holder = new ViewHolder();
             /*No 'if (convertView == null)' statement to prevent view recycling
@@ -593,28 +583,28 @@ public class ResultActivity extends Activity {
                         || weather.get(position - 1).contains(getString(R.string.Drizzle))
                         || weather.get(position - 1).contains(getString(R.string.Fog))
                         || weather.get(position - 1).contains(getString(R.string.WindChillAdvisory))) {
-                        convertView = mInflater.inflate(R.layout.item_blue, null);
+                        convertView = mInflater.inflate(R.layout.item_blue, parent, false);
                         holder.textView = (TextView)convertView.findViewById(R.id.text);
                     }else if (weather.get(position - 1).contains(getString(R.string.WinterWatch))
                         || weather.get(position - 1).contains(getString(R.string.LakeSnowWatch))
                         || weather.get(position - 1).contains(getString(R.string.WindChillWatch))
                         || weather.get(position - 1).contains(getString(R.string.BlizzardWatch))){
-                        convertView = mInflater.inflate(R.layout.item_orange, null);
+                        convertView = mInflater.inflate(R.layout.item_orange, parent, false);
                         holder.textView = (TextView)convertView.findViewById(R.id.text);
                     }else if (weather.get(position - 1).contains(getString(R.string.WinterWarn))
                         || weather.get(position - 1).contains(getString(R.string.LakeSnowWarn))
                         || weather.get(position - 1).contains(getString(R.string.IceStorm))
                         || weather.get(position - 1).contains(getString(R.string.WindChillWarn))
                         || weather.get(position - 1).contains(getString(R.string.BlizzardWarn))) {
-                        convertView = mInflater.inflate(R.layout.item_red, null);
+                        convertView = mInflater.inflate(R.layout.item_red, parent, false);
                         holder.textView = (TextView)convertView.findViewById(R.id.text);
                     }else{
-                        convertView = mInflater.inflate(R.layout.item, null);
+                        convertView = mInflater.inflate(R.layout.item, parent, false);
                         holder.textView =(TextView)convertView.findViewById(R.id.text);
                     }
                     break;
                 case TYPE_SEPARATOR:
-                        convertView = mInflater.inflate(R.layout.separator, null);
+                        convertView = mInflater.inflate(R.layout.separator, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
                         break;
             }
@@ -683,7 +673,7 @@ public class ResultActivity extends Activity {
 
     private class WJRTScraper extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... nothing) {
-            Document schools = null;
+            Document schools;
             //Scrape School Closings from WJRT with Jsoup.
 
             /**WJRT SCHOOL CLOSINGS SCRAPER**/
@@ -1186,7 +1176,7 @@ public class ResultActivity extends Activity {
             /**NATIONAL WEATHER SERVICE SCRAPER**/
             //Change the percentage based on current storm/wind/temperature warnings.
 
-            Document weatherdoc = null;
+            Document weatherdoc;
 
             //Live html
             try {
@@ -1510,8 +1500,7 @@ public class ResultActivity extends Activity {
             }
 
 
-
-            gbAdapter = new GBAdapter();
+            GBAdapter gbAdapter = new GBAdapter();
             for (int i = 0; i < GBInfo.size(); i++) {
                 gbAdapter.addItem(GBInfo.get(i));
             }
@@ -1522,7 +1511,7 @@ public class ResultActivity extends Activity {
 
             if (!WJRTFail) {
                 //WJRT has not failed.
-                closingsAdapter = new ClosingsAdapter();
+                ClosingsAdapter closingsAdapter = new ClosingsAdapter();
                 closingsAdapter.addSeparatorItem(getString(R.string.WJRTClosings));
                 closingsAdapter.addSeparatorItem(getString(R.string.tier4));
                 for (int i = 1; i < closings.size(); i++) {
@@ -1546,7 +1535,7 @@ public class ResultActivity extends Activity {
                 });
             } else {
                 //WJRT has failed.
-                ArrayAdapter<String> WJRTadapter = new ArrayAdapter<String>(getApplicationContext(),
+                ArrayAdapter<String> WJRTadapter = new ArrayAdapter<>(getApplicationContext(),
                         android.R.layout.simple_list_item_1, wjrtInfo);
                 lstWJRT.setAdapter(WJRTadapter);
                 runOnUiThread(new Runnable() {
@@ -1569,7 +1558,7 @@ public class ResultActivity extends Activity {
                     }
                 }
 
-                weatherAdapter = new WeatherAdapter();
+                WeatherAdapter weatherAdapter = new WeatherAdapter();
                 weatherAdapter.addSeparatorItem(getString(R.string.NWS));
                 for (int i = 0; i < weather.size(); i++) {
                     weatherAdapter.addItem(weather.get(i));
@@ -1585,7 +1574,7 @@ public class ResultActivity extends Activity {
                 });
             } else {
                 //NWS has failed.
-                ArrayAdapter<String> NWSadapter = new ArrayAdapter<String>(getApplicationContext(),
+                ArrayAdapter<String> NWSadapter = new ArrayAdapter<>(getApplicationContext(),
                         android.R.layout.simple_list_item_1, nwsInfo);
                 lstNWS.setAdapter(NWSadapter);
                 runOnUiThread(new Runnable() {

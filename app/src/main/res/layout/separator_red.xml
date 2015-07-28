@@ -9,7 +9,6 @@
         android:gravity="center"
         android:visibility="visible"
         android:layout_width="fill_parent"
-        android:textColor="#ffffffff"
         android:background="#ffcc0000"
         android:clickable="false"
         android:focusable="false"/>

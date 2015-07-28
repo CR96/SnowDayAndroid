@@ -1,5 +1,12 @@
 <resources>
 
-    <color name="black_overlay">#66000000</color>
+    <color name="myPrimaryColor">#ff00679b</color>
+    <color name="myAccentColor">#ff0094e6</color>
+    <color name="myWindowBackground">#003865</color>
+    <color name="myTextPrimaryColor">#fff</color>
+    <color name="myNavigationColor">@color/myPrimaryColor</color>
 
+    <color name="bobcats">#ffcc0000</color>
+    <color name="orange">#ffff8800</color>
+    <color name="red">#ffff0000</color>
 </resources>

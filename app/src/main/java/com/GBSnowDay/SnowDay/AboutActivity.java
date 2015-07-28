@@ -1,24 +1,33 @@
 package com.GBSnowDay.SnowDay;
 
 
-import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
         PackageInfo versionInfo = getPackageInfo();
         TextView txtVersion = (TextView) findViewById(R.id.txtVersion);
         txtVersion.setText(" v" + versionInfo.versionName);
-        //Show the up arrow in the action bar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private PackageInfo getPackageInfo() {

@@ -12,8 +12,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:layout_width="fill_parent"
-        android:background="#ffff8800"
-        android:textColor="@android:color/white"
+        android:background="@color/orange"
         android:clickable="false"
         android:focusable="false"/>
 </LinearLayout>

@@ -10,8 +10,7 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:visibility="visible"
-        android:background="#ffcc0000"
-        android:textColor="@android:color/white"
+        android:background="@color/bobcats"
         android:clickable="false"
         android:focusable="false"/>
 </LinearLayout>

@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.GBSnowDay.SnowDay.AboutActivity">
     <item android:id="@+id/license"
         android:title="@string/license"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
 </menu>

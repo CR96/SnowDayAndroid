@@ -9,8 +9,7 @@
         android:gravity="center"
         android:visibility="visible"
         android:layout_width="fill_parent"
-        android:textColor="#FFFFFFFF"
-        android:background="#003D67"
+        android:background="@color/myAccentColor"
         android:clickable="false"
         android:focusable="false"/>
 </LinearLayout>

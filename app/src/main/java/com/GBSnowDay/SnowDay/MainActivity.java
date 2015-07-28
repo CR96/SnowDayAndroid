@@ -1,10 +1,10 @@
 package com.GBSnowDay.SnowDay;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +28,7 @@ import java.util.Locale;
 
 import org.joda.time.DateTime;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     /*Copyright 2014 Corey Rowe
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,8 +63,8 @@ public class MainActivity extends Activity {
     int dayrun;
 
     //Declare lists that will be used in ListAdapters
-    List<String> infoList = new ArrayList<String>();
-    List<Integer> daysarray = new ArrayList<Integer>();
+    List<String> infoList = new ArrayList<>();
+    List<Integer> daysarray = new ArrayList<>();
     int infoCount = 1;
 
     //Figure out what tomorrow is
@@ -77,6 +77,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Set toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //Declare views
         optToday = (RadioButton) findViewById(R.id.optToday);
@@ -182,7 +186,7 @@ public class MainActivity extends Activity {
     private class CustomAdapter extends BaseAdapter {
         private static final int TYPE_ITEM = 0;
 
-        private ArrayList<String> mData = new ArrayList<String>();
+        private ArrayList<String> mData = new ArrayList<>();
         private LayoutInflater mInflater;
 
         public CustomAdapter() {
@@ -220,21 +224,21 @@ public class MainActivity extends Activity {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+            ViewHolder holder;
             int type = getItemViewType(position);
             holder = new ViewHolder();
             switch (type) {
                 case TYPE_ITEM:
                     if (bobcats && position == 1) {
 
-                        convertView = mInflater.inflate(R.layout.item_bobcats, null);
+                        convertView = mInflater.inflate(R.layout.item_bobcats, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                     }else if (reminder && position == 1) {
                         //If there is a reminder / event, make it blue
-                        convertView = mInflater.inflate(R.layout.item_reminder, null);
+                        convertView = mInflater.inflate(R.layout.item_reminder, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                     } else {
-                        convertView = mInflater.inflate(R.layout.item_center, null);
+                        convertView = mInflater.inflate(R.layout.item_center, parent, false);
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                     }
                     break;
@@ -469,18 +473,14 @@ public class MainActivity extends Activity {
         if (!tomorrowValid && !todayValid) {
             optToday.setEnabled(false);
             optToday.setChecked(false);
-            optToday.setTextColor(Color.GRAY);
             optTomorrow.setEnabled(false);
             optTomorrow.setChecked(false);
-            optTomorrow.setTextColor(Color.GRAY);
         } else if (!tomorrowValid) {
             optTomorrow.setEnabled(false);
             optTomorrow.setChecked(false);
-            optTomorrow.setTextColor(Color.GRAY);
         } else if (!todayValid) {
             optToday.setEnabled(false);
             optToday.setChecked(false);
-            optToday.setTextColor(Color.GRAY);
         }
     }
 
@@ -489,10 +489,10 @@ public class MainActivity extends Activity {
         dayscount++;
         int[] specialarray = {0, 3, 7, 1, 7, 3, 1, 2, 1};
         if (daysarray.toString().equals(Arrays.toString(specialarray))) {
-            List<String> special = new ArrayList<String>();
+            List<String> special = new ArrayList<>();
             special.add(0, getString(R.string.special));
-            ArrayAdapter<String> specialadapter = new ArrayAdapter<String>(getApplicationContext(),
-                    R.layout.item, special);
+            ArrayAdapter<String> specialadapter = new ArrayAdapter<>(getApplicationContext(),
+                    R.layout.item_center, special);
             lstInfo.setAdapter(specialadapter);
         }
     }
@@ -506,22 +506,18 @@ public class MainActivity extends Activity {
             infoList.add(infoCount, getString(R.string.SaturdayTomorrow));
             optTomorrow.setEnabled(false);
             optTomorrow.setChecked(false);
-            optTomorrow.setTextColor(Color.GRAY);
             infoCount++;
         } else if (weekday == 6) {
             infoList.add(infoCount, getString(R.string.SaturdayToday));
             optToday.setEnabled(false);
             optToday.setChecked(false);
-            optToday.setTextColor(Color.GRAY);
             optTomorrow.setEnabled(false);
             optTomorrow.setChecked(false);
-            optTomorrow.setTextColor(Color.GRAY);
             infoCount++;
         } else if (weekday == 7) {
             infoList.add(infoCount, getString(R.string.SundayToday));
             optToday.setEnabled(false);
             optToday.setChecked(false);
-            optToday.setTextColor(Color.GRAY);
             infoCount++;
         }
     }

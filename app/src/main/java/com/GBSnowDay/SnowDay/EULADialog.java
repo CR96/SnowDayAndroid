@@ -1,7 +1,6 @@
 package com.GBSnowDay.SnowDay;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
@@ -36,7 +35,7 @@ public class EULADialog {
                 .setTitle(title)
                 .setMessage(message)
                 .setIcon(R.drawable.ic_launcher)
-                .setNeutralButton(R.string.Close, new Dialog.OnClickListener() {
+                .setNeutralButton(R.string.Close, new AlertDialog.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
