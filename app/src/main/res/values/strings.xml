@@ -8,9 +8,18 @@
     <!--About-->
     <string name="GBCS">Grand Blanc Community Schools</string>
     <string name="dev_name">Developed by Corey Rowe</string>
-    <string name="dev_twitter">twitter.com/GBSnowDay</string>
-    <string name="dev_site">gbsnowday.weebly.com</string>
-    <string name="dev_email">gbsnowday@gmail.com</string>
+
+    <string name="dev_twitter">\@GBSnowDay</string>
+    <string name="twitter_user">GBSnowDay</string>
+
+    <string name="dev_site">Website</string>
+    <string name="website">http://gbsnowday.weebly.com</string>
+
+    <string name="dev_git">GitHub</string>
+    <string name="git">http://github.com/CR96/SnowDayAndroid</string>
+
+    <string name="dev_email">Email</string>
+    <string name="email">gbsnowday@gmail.com</string>
 
     <!--License and Updates-->
     <string name="EULA">License Agreement\n\nCopyright 2014 Corey Rowe\n\nLicensed under the Apache
@@ -213,5 +222,9 @@
 
     <string name="WeatherConnectionError">Could not connect to National Weather Service.</string>
     <string name="WeatherParseError">Unable to read weather information.</string>
+
+    <string name="EmptyTimeline">No Tweets</string>
+    <string name="NoTwitter">Could not load timeline.</string>
+    <string name="Retry">Retry</string>
 
 </resources>

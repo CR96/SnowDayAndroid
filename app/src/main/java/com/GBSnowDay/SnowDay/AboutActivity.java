@@ -1,14 +1,18 @@
 package com.GBSnowDay.SnowDay;
 
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
@@ -24,6 +28,44 @@ public class AboutActivity extends AppCompatActivity {
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
         }
+
+        ImageButton btnTwitter = (ImageButton) findViewById(R.id.btnTwitter);
+        ImageButton btnMail = (ImageButton) findViewById(R.id.btnEmail);
+        ImageButton btnWeb = (ImageButton) findViewById(R.id.btnWeb);
+        ImageButton btnGit = (ImageButton) findViewById(R.id.btnGit);
+
+        btnTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tw = new Intent(AboutActivity.this, TwitterActivity.class);
+                startActivity(tw);
+            }
+        });
+
+        btnMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailing = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.email), null));
+                startActivity(emailing);
+
+            }
+        });
+
+        btnWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.website)));
+                startActivity(browserIntent);
+            }
+        });
+
+        btnGit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.git)));
+                startActivity(browserIntent);
+            }
+        });
 
         PackageInfo versionInfo = getPackageInfo();
         TextView txtVersion = (TextView) findViewById(R.id.txtVersion);
