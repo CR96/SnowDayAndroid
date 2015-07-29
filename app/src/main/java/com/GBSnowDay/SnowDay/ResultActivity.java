@@ -3,7 +3,7 @@ package com.GBSnowDay.SnowDay;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -1454,31 +1454,34 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 });
             } else {
+
+                final Resources res = getResources();
+
                 try {
                     for (int percentscroll = 0; percentscroll <= percent; percentscroll++) {
                         Thread.sleep(10);
                         if (percentscroll >= 0 && percentscroll <= 20) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(Color.RED);
+                                    txtPercent.setTextColor(res.getColor(R.color.red));
                                 }
                             });
                         } if (percentscroll > 20 && percentscroll <= 60) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(Color.rgb(255, 165, 0));
+                                    txtPercent.setTextColor(res.getColor(R.color.orange));
                                 }
                             });
                         } if (percentscroll > 60 && percentscroll <= 80) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(Color.GREEN);
+                                    txtPercent.setTextColor(res.getColor(R.color.green));
                                 }
                             });
                         } if (percentscroll > 80) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(Color.BLUE);
+                                    txtPercent.setTextColor(res.getColor(R.color.myAccentColor));
                                 }
                             });
                         }

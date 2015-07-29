@@ -10,7 +10,7 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:visibility="visible"
-        android:background="@color/myAccentColor"
+        android:background="@color/myPrimaryColor"
         android:clickable="false"
         android:focusable="false"/>
 </LinearLayout>

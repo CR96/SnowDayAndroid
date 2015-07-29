@@ -9,7 +9,7 @@
         android:gravity="center"
         android:visibility="visible"
         android:layout_width="fill_parent"
-        android:background="#ffcc0000"
+        android:background="@color/red"
         android:clickable="false"
         android:focusable="false"/>
 </LinearLayout>
