@@ -111,8 +111,6 @@
     <string name="NoConnection">Check your internet connection.</string>
     <string name="NoNetwork">Network communication issues</string>
 
-    <string name="ErrorContact">If this error persists please contact the developer.</string>
-
     <!--Weather-->
     <string name="NWS">National Weather Service Warnings</string>
 

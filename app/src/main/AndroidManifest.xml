@@ -29,5 +29,8 @@
             android:name=".AboutActivity"
             android:label="@string/action_about">
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="1866747e535fb8c3fc2267e7fcdb9c990db08d9d" />
     </application>
 </manifest>

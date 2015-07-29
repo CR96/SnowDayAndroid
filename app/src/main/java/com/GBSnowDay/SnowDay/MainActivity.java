@@ -19,6 +19,11 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+
+import io.fabric.sdk.android.Fabric;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         //Set toolbar
@@ -149,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Start the calculation
                 Calculate();
+
+                if (dayrun == 0) {
+                    Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Today"));
+                }else if (dayrun == 1) {
+                    Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Tomorrow"));
+                }
 
                 //Switch to result activity
                 //Pass values of 'dayrun' and 'days' to new activity

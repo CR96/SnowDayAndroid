@@ -26,6 +26,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -704,9 +706,10 @@ public class ResultActivity extends AppCompatActivity {
                     } else {
                         //Webpage layout was not recognized.
                         wjrtInfo.add(wjrtCount, getString(R.string.WJRTParseError));
-                        wjrtInfo.add(wjrtCount + 1, getString(R.string.ErrorContact));
-                        wjrtCount += 2;
+                        wjrtCount ++;
                         WJRTFail = true;
+
+                        Crashlytics.log(getString(R.string.WJRTParseError));
 
                     }
 
@@ -723,12 +726,15 @@ public class ResultActivity extends AppCompatActivity {
                 wjrtCount++;
                 WJRTFail = true;
 
+                Crashlytics.logException(e);
+
             } catch (NullPointerException e) {
                 //Webpage layout was not recognized.
                 wjrtInfo.add(wjrtCount, getString(R.string.WJRTParseError));
-                wjrtInfo.add(wjrtCount + 1, getString(R.string.ErrorContact));
-                wjrtCount += 2;
+                wjrtCount ++;
                 WJRTFail = true;
+
+                Crashlytics.logException(e);
             }
 
             //Only run if WJRTFail is false to avoid NullPointerExceptions
@@ -1189,12 +1195,15 @@ public class ResultActivity extends AppCompatActivity {
                 nwsInfo.add(nwsCount, getString(R.string.WeatherConnectionError) + " " + getString(R.string.NoConnection));
                 nwsCount++;
                 NWSFail = true;
+
+                Crashlytics.logException(e);
             } catch (NullPointerException e) {
                 //Webpage layout not recognized.
                 nwsInfo.add(nwsCount, getString(R.string.WeatherParseError));
-                nwsInfo.add(nwsCount + 1, getString(R.string.ErrorContact));
-                nwsCount += 2;
+                nwsCount ++;
                 NWSFail = true;
+
+                Crashlytics.logException(e);
             }
             return null;
         }
