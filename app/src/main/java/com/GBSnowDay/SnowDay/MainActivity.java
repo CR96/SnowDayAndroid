@@ -1,23 +1,18 @@
 package com.GBSnowDay.SnowDay;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
@@ -37,10 +32,6 @@ import org.joda.time.DateTime;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "";
-    private static final String TWITTER_SECRET = "";
-
     /*Copyright 2014 Corey Rowe
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -55,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
     See the License for the specific language governing permissions and
     limitations under the License.*/
 
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "";
+    private static final String TWITTER_SECRET = "";
+
     //Declare all views
     RadioButton optToday;
     RadioButton optTomorrow;
@@ -68,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
     int dayscount = 0;
     boolean todayValid;
     boolean tomorrowValid;
-    boolean reminder;
-    boolean bobcats;
+    static boolean reminder;
+    static boolean bobcats;
 
     int days;
     int dayrun;
@@ -112,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Set the content of the ListView
-        CustomAdapter mAdapter = new CustomAdapter();
+        CustomAdapter mAdapter = new CustomAdapter(this);
         for (int i = 0; i < infoList.size(); i++) {
             mAdapter.addItem(infoList.get(i));
         }
@@ -201,78 +196,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    //Adapter class
-    private class CustomAdapter extends BaseAdapter {
-        private static final int TYPE_ITEM = 0;
-
-        private ArrayList<String> mData = new ArrayList<>();
-        private LayoutInflater mInflater;
-
-        public CustomAdapter() {
-            mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void addItem(final String item) {
-            mData.add(item);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return TYPE_ITEM;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 1;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            int type = getItemViewType(position);
-            holder = new ViewHolder();
-            switch (type) {
-                case TYPE_ITEM:
-                    if (bobcats && position == 1) {
-
-                        convertView = mInflater.inflate(R.layout.item_bobcats, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.text);
-                    }else if (reminder && position == 1) {
-                        //If there is a reminder / event, make it blue
-                        convertView = mInflater.inflate(R.layout.item_reminder, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.text);
-                    } else {
-                        convertView = mInflater.inflate(R.layout.item_center, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.text);
-                    }
-                    break;
-            }
-            convertView.setTag(holder);
-            holder.textView.setText(mData.get(position));
-            return convertView;
-        }
-    }
-
-    public static class ViewHolder {
-        public TextView textView;
-    }
-
 
     public void Calculate() {
 

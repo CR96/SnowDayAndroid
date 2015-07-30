@@ -10,15 +10,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -36,7 +33,6 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 
 public class ResultActivity extends AppCompatActivity {
@@ -121,47 +117,47 @@ public class ResultActivity extends AppCompatActivity {
     int tier4tomorrow = 0;
 
     //Every school this program searches for: true = closed, false = open (default)
-    boolean GBAcademy;
-    boolean GISD;
-    boolean HolyFamily;
-    boolean WPAcademy;
+    static boolean GBAcademy;
+    static boolean GISD;
+    static boolean HolyFamily;
+    static boolean WPAcademy;
 
-    boolean Durand; //Check for "Durand Senior Center"
-    boolean Holly;  //Check for "Holly Academy"
-    boolean Lapeer; //Check for "Chatfield School-Lapeer", "Greater Lapeer Transit Authority",
+    static boolean Durand; //Check for "Durand Senior Center"
+    static boolean Holly;  //Check for "Holly Academy"
+    static boolean Lapeer; //Check for "Chatfield School-Lapeer", "Greater Lapeer Transit Authority",
     // "Lapeer CMH Day Programs", "Lapeer Co. Ed-Tech Center", "Lapeer County Ofices", "
     // Lapeer District Library", "Lapeer Senior Center", and "St. Paul Lutheran-Lapeer"
-    boolean Owosso; //Check for "Owosso Senior Center", "Baker College-Owosso", "Owosso Social Security Office",
+    static boolean Owosso; //Check for "Owosso Senior Center", "Baker College-Owosso", "Owosso Social Security Office",
     // and "St. Paul Catholic-Owosso"
 
-    boolean Beecher;
-    boolean Clio; //Check for "Clio Area Senior Center", "Clio City Hall", and "Cornerstone Clio"
-    boolean Davison; //Check for "Davison Senior Center", "Faith Baptist School-Davison", "Montessori Academy-Davison",
+    static boolean Beecher;
+    static boolean Clio; //Check for "Clio Area Senior Center", "Clio City Hall", and "Cornerstone Clio"
+    static boolean Davison; //Check for "Davison Senior Center", "Faith Baptist School-Davison", "Montessori Academy-Davison",
     // and "Ross Medical Education-Davison"
-    boolean Fenton; //Check for "Lake Fenton", "Fenton City Hall", and "Fenton Montessori Academy"
-    boolean Flushing; //Check for "Flushing Senior Citizens Center" and "St. Robert-Flushing"
-    boolean Genesee; //Check for "Freedom Work-Genesee Co.", "Genesee Christian-Burton",
+    static boolean Fenton; //Check for "Lake Fenton", "Fenton City Hall", and "Fenton Montessori Academy"
+    static boolean Flushing; //Check for "Flushing Senior Citizens Center" and "St. Robert-Flushing"
+    static boolean Genesee; //Check for "Freedom Work-Genesee Co.", "Genesee Christian-Burton",
     // "Genesee Co. Mobile Meals", "Genesee Hlth Sys Day Programs", "Genesee Stem Academy", and "Genesee I.S.D."
-    boolean Kearsley;
-    boolean LKFenton;
-    boolean Linden; //Check for "Linden Charter Academy"
-    boolean Montrose; //Check for "Montrose Senior Center"
-    boolean Morris;  //Check for "Mt Morris Twp Administration" and "St. Mary's-Mt. Morris"
-    boolean SzCreek; //Check for "Swartz Creek Area Senior Ctr." and "Swartz Creek Montessori"
+    static boolean Kearsley;
+    static boolean LKFenton;
+    static boolean Linden; //Check for "Linden Charter Academy"
+    static boolean Montrose; //Check for "Montrose Senior Center"
+    static boolean Morris;  //Check for "Mt Morris Twp Administration" and "St. Mary's-Mt. Morris"
+    static boolean SzCreek; //Check for "Swartz Creek Area Senior Ctr." and "Swartz Creek Montessori"
 
-    boolean Atherton;
-    boolean Bendle;
-    boolean Bentley;
-    boolean Carman; //Check for "Carman-Ainsworth Senior Ctr."
-    boolean Flint; //Thankfully this is listed as "Flint Community Schools" -
+    static boolean Atherton;
+    static boolean Bendle;
+    static boolean Bentley;
+    static boolean Carman; //Check for "Carman-Ainsworth Senior Ctr."
+    static boolean Flint; //Thankfully this is listed as "Flint Community Schools" -
     // otherwise there would be 25 exceptions to check for.
-    boolean Goodrich;
+    static boolean Goodrich;
 
-    boolean GB; //Check for "Freedom Work-Grand Blanc", "Grand Blanc Academy", "Grand Blanc City Offices",
+    static boolean GB; //Check for "Freedom Work-Grand Blanc", "Grand Blanc Academy", "Grand Blanc City Offices",
     // "Grand Blanc Senior Center", and "Holy Family-Grand Blanc"
 
     //True is GB is already open (GB is false, time is during or after school hours)
-    boolean GBOpen;
+    static boolean GBOpen;
 
     //Every weather warning this program searches for
     boolean SigWeather;
@@ -348,276 +344,6 @@ public class ResultActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    //GBAdapter class
-    private class GBAdapter extends BaseAdapter {
-        private static final int TYPE_ITEM = 0;
-        private static final int TYPE_SEPARATOR = 1;
-        private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
-
-        private ArrayList<String> mData = new ArrayList<>();
-        private LayoutInflater mInflater;
-
-        public GBAdapter() {
-            mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void addItem(final String item) {
-            mData.add(item);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return TYPE_MAX_COUNT;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            int type = getItemViewType(position);
-            holder = new ViewHolder();
-            /*No 'if (convertView == null)' statement to prevent view recycling
-            (views must remain fixed)*/
-            switch (type) {
-                case TYPE_ITEM:
-                    if (GB && position == 0) {
-                        //If GB is closed, make it red.
-                        convertView = mInflater.inflate(R.layout.item_red_center, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.text);
-                        break;
-                    } else if (GB && position == 1) {
-                        convertView = mInflater.inflate(R.layout.item_blue_center, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.text);
-                        break;
-                    }else{
-                        convertView = mInflater.inflate(R.layout.item_center, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.text);
-                        break;
-                    }
-            }
-            convertView.setTag(holder);
-            holder.textView.setText(mData.get(position));
-            return convertView;
-        }
-    }
-
-    //Closings adapter class
-    private class ClosingsAdapter extends BaseAdapter {
-        private static final int TYPE_ITEM = 0;
-        private static final int TYPE_SEPARATOR = 1;
-        private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
-
-        private ArrayList<String> mData = new ArrayList<>();
-        private LayoutInflater mInflater;
-
-        private TreeSet<Integer> mSeparatorsSet = new TreeSet<>();
-
-        public ClosingsAdapter() {
-            mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void addItem(final String item) {
-            mData.add(item);
-            notifyDataSetChanged();
-        }
-
-        public void addSeparatorItem(final String item) {
-            mData.add(item);
-            //Save separator position
-            mSeparatorsSet.add(mData.size() - 1);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return TYPE_MAX_COUNT;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            int type = getItemViewType(position);
-            holder = new ViewHolder();
-            /*No 'if (convertView == null)' statement to prevent view recycling
-            (views must remain fixed)*/
-            switch (type) {
-                case TYPE_ITEM:
-                    if (Atherton && position == 2 || Bendle && position == 3
-                            || Bentley && position == 4 || Carman && position == 5
-                            || Flint && position == 6 || Goodrich && position == 7
-                            || Beecher && position == 9 || Clio && position == 10
-                            || Davison && position == 11 || Fenton && position == 12
-                            || Flushing && position == 13 || Genesee && position == 14
-                            || Kearsley && position == 15 || LKFenton && position == 16
-                            || Linden && position == 17 || Montrose && position == 18
-                            || Morris && position == 19 || SzCreek && position == 20
-                            || Durand && position == 22 || Holly && position == 23
-                            || Lapeer && position == 24 || Owosso && position == 25
-                            || GBAcademy && position == 27 || GISD && position == 28
-                            || HolyFamily && position == 29 || WPAcademy && position == 30) {
-                        //If the school is closed, make it orange.
-                        convertView = mInflater.inflate(R.layout.item_orange, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.text);
-                        break;
-                    }else{
-                        convertView = mInflater.inflate(R.layout.item, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.text);
-                        break;
-                    }
-                case TYPE_SEPARATOR:
-                    //Set the text separators ("Districts near Grand Blanc", etc.)
-                    if (position == 0) {
-                        convertView = mInflater.inflate(R.layout.separator_red, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.textSeparator);
-                        break;
-                    }else{
-                        convertView = mInflater.inflate(R.layout.separator, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-                        break;
-                    }
-            }
-            convertView.setTag(holder);
-            holder.textView.setText(mData.get(position));
-            return convertView;
-        }
-    }
-
-    //WeatherAdapter class
-    private class WeatherAdapter extends BaseAdapter {
-        private static final int TYPE_ITEM = 0;
-        private static final int TYPE_SEPARATOR = 1;
-        private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
-
-        private ArrayList<String> mData = new ArrayList<>();
-        private LayoutInflater mInflater;
-
-        private TreeSet<Integer> mSeparatorsSet = new TreeSet<>();
-
-        public WeatherAdapter() {
-            mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void addItem(final String item) {
-            mData.add(item);
-            notifyDataSetChanged();
-        }
-
-        public void addSeparatorItem(final String item) {
-            mData.add(item);
-            //Save separator position
-            mSeparatorsSet.add(mData.size() - 1);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return TYPE_MAX_COUNT;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            int type = getItemViewType(position);
-            holder = new ViewHolder();
-            /*No 'if (convertView == null)' statement to prevent view recycling
-            (views must remain fixed)*/
-            switch (type) {
-                case TYPE_ITEM:
-                    //Color the weather warning based on severity.
-                    if (weather.get(position - 1).contains(getString(R.string.SigWeather))
-                        || weather.get(position - 1).contains(getString(R.string.WinterAdvisory))
-                        || weather.get(position - 1).contains(getString(R.string.LakeSnowAdvisory))
-                        || weather.get(position - 1).contains(getString(R.string.Rain))
-                        || weather.get(position - 1).contains(getString(R.string.Drizzle))
-                        || weather.get(position - 1).contains(getString(R.string.Fog))
-                        || weather.get(position - 1).contains(getString(R.string.WindChillAdvisory))) {
-                        convertView = mInflater.inflate(R.layout.item_blue, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.text);
-                    }else if (weather.get(position - 1).contains(getString(R.string.WinterWatch))
-                        || weather.get(position - 1).contains(getString(R.string.LakeSnowWatch))
-                        || weather.get(position - 1).contains(getString(R.string.WindChillWatch))
-                        || weather.get(position - 1).contains(getString(R.string.BlizzardWatch))){
-                        convertView = mInflater.inflate(R.layout.item_orange, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.text);
-                    }else if (weather.get(position - 1).contains(getString(R.string.WinterWarn))
-                        || weather.get(position - 1).contains(getString(R.string.LakeSnowWarn))
-                        || weather.get(position - 1).contains(getString(R.string.IceStorm))
-                        || weather.get(position - 1).contains(getString(R.string.WindChillWarn))
-                        || weather.get(position - 1).contains(getString(R.string.BlizzardWarn))) {
-                        convertView = mInflater.inflate(R.layout.item_red, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.text);
-                    }else{
-                        convertView = mInflater.inflate(R.layout.item, parent, false);
-                        holder.textView =(TextView)convertView.findViewById(R.id.text);
-                    }
-                    break;
-                case TYPE_SEPARATOR:
-                        convertView = mInflater.inflate(R.layout.separator, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-                        break;
-            }
-            convertView.setTag(holder);
-            holder.textView.setText(mData.get(position));
-            return convertView;
-        }
-    }
-
-    public static class ViewHolder {
-        public TextView textView;
     }
 
     public void radarToggle(View view) {
@@ -1512,7 +1238,7 @@ public class ResultActivity extends AppCompatActivity {
             }
 
 
-            GBAdapter gbAdapter = new GBAdapter();
+            GBAdapter gbAdapter = new GBAdapter(ResultActivity.this);
             for (int i = 0; i < GBInfo.size(); i++) {
                 gbAdapter.addItem(GBInfo.get(i));
             }
@@ -1523,7 +1249,7 @@ public class ResultActivity extends AppCompatActivity {
 
             if (!WJRTFail) {
                 //WJRT has not failed.
-                ClosingsAdapter closingsAdapter = new ClosingsAdapter();
+                ClosingsAdapter closingsAdapter = new ClosingsAdapter(ResultActivity.this);
                 closingsAdapter.addSeparatorItem(getString(R.string.WJRTClosings));
                 closingsAdapter.addSeparatorItem(getString(R.string.tier4));
                 for (int i = 1; i < closings.size(); i++) {
@@ -1570,7 +1296,7 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
 
-                WeatherAdapter weatherAdapter = new WeatherAdapter();
+                WeatherAdapter weatherAdapter = new WeatherAdapter(ResultActivity.this, weather);
                 weatherAdapter.addSeparatorItem(getString(R.string.NWS));
                 for (int i = 0; i < weather.size(); i++) {
                     weatherAdapter.addItem(weather.get(i));
