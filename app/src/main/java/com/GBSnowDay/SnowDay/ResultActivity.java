@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -1189,25 +1190,25 @@ public class ResultActivity extends AppCompatActivity {
                         if (percentscroll >= 0 && percentscroll <= 20) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(res.getColor(R.color.red));
+                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
                                 }
                             });
                         } if (percentscroll > 20 && percentscroll <= 60) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(res.getColor(R.color.orange));
+                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
                                 }
                             });
                         } if (percentscroll > 60 && percentscroll <= 80) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(res.getColor(R.color.green));
+                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
                                 }
                             });
                         } if (percentscroll > 80) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    txtPercent.setTextColor(res.getColor(R.color.myAccentColor));
+                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
                                 }
                             });
                         }

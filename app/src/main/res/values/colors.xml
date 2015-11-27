@@ -1,13 +1,13 @@
 <resources>
-    <color name="myPrimaryColor">#ff007bc9</color>
-    <color name="myPrimaryDarkColor">#ff005d97</color>
-    <color name="myAccentColor">#ff0091fb</color>
-    <color name="myWindowBackground">#003865</color>
-    <color name="myTextPrimaryColor">@android:color/white</color>
-    <color name="myNavigationColor">@color/myPrimaryDarkColor</color>
+    <color name="colorPrimary">#0277bd</color>
+    <color name="colorPrimaryDark">#01579b</color>
+    <color name="colorAccent">#40c4ff</color>
+    <color name="colorBackground">#003865</color>
+    <color name="textColorPrimary">@android:color/white</color>
+    <color name="navigationBarColor">@color/colorPrimaryDark</color>
 
-    <color name="bobcats">#ffcc0000</color>
-    <color name="green">#4CAF50</color>
-    <color name="orange">#FF9800</color>
-    <color name="red">#F44336</color>
+    <color name="bobcats">#d50000</color>
+    <color name="green">#4caf50</color>
+    <color name="orange">#ff9800</color>
+    <color name="red">#d32f2f</color>
 </resources>

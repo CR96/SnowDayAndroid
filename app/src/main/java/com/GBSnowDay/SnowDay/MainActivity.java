@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (lstDays.getSelectedItemId() != 0) {
                     btnCalculate.setEnabled(true);
+                    btnCalculate.setAlpha(1f);
                 }
             }
         });
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (lstDays.getSelectedItemId() != 0) {
                     btnCalculate.setEnabled(true);
+                    btnCalculate.setAlpha(1f);
                 }
             }
         });
@@ -138,10 +140,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (id == 0) {
                     btnCalculate.setEnabled(false);
+                    btnCalculate.setAlpha(.25f);
                 } else if (!optToday.isChecked() && !optTomorrow.isChecked()) {
                     btnCalculate.setEnabled(false);
+                    btnCalculate.setAlpha(.25f);
                 } else {
                     btnCalculate.setEnabled(true);
+                    btnCalculate.setAlpha(1f);
                 }
                 special();
 

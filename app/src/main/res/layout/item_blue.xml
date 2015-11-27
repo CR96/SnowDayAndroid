@@ -8,6 +8,6 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:layout_width="fill_parent"
-        android:background="@color/myPrimaryColor"
+        android:background="@color/colorPrimary"
         android:clickable="false"
         android:focusable="false"/>

@@ -75,7 +75,7 @@ public class GBAdapter extends BaseAdapter {
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     break;
                 } else if (ResultActivity.GB && position == 1) {
-                    convertView = mInflater.inflate(R.layout.item_blue_center, parent, false);
+                    convertView = mInflater.inflate(R.layout.item_accent_center, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     break;
                 } else {
