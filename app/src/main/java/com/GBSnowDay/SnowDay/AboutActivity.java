@@ -99,15 +99,10 @@ public class AboutActivity extends AppCompatActivity {
             //Show the license dialog
             new EULADialog(this).show();
             return true;
+        }else if (id == android.R.id.home) {
+            //Return to the previous activity
+            finish();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigateUp() {
-        super.onNavigateUp();
-        //Return to the previous activity
-        finish();
-        return true;
     }
 }

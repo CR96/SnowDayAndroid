@@ -286,14 +286,6 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onNavigateUp() {
-        super.onNavigateUp();
-        //Return to the previous activity
-        finish();
-        return true;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.result, menu);
@@ -343,6 +335,10 @@ public class ResultActivity extends AppCompatActivity {
             Intent about = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(about);
             return true;
+        }
+        if (id == android.R.id.home) {
+            //Return to the previous activity
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
