@@ -99,7 +99,7 @@ public class AboutActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.license) {
             //Show the license dialog
-            new EULADialog(this).show();
+            new LicenseDialog(this).show();
             return true;
         }else if (id == android.R.id.home) {
             //Return to the previous activity
