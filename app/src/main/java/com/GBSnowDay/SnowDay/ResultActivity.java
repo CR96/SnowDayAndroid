@@ -3,7 +3,6 @@ package com.GBSnowDay.SnowDay;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,6 +30,7 @@ import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,17 +81,18 @@ public class ResultActivity extends AppCompatActivity {
 
     String[] orgNameLine;
     String[] statusLine;
-    String[] weatherwarn;
 
     //Declare lists that will be used in ListAdapters
     List<String> GBInfo = new ArrayList<>();
     List<String> closings = new ArrayList<>();
     List<String> wjrtInfo = new ArrayList<>();
-    List<String> weather = new ArrayList<>();
     List<String> nwsInfo = new ArrayList<>();
 
+    List<String> weatherWarn = new ArrayList<>();
+    List<String> weatherSummary = new ArrayList<>();
+    List<String> weatherLink = new ArrayList<>();
+
     int GBCount = 1;
-    int weatherCount = 0;
     int wjrtCount = 0;
     int nwsCount = 0;
 
@@ -177,6 +179,9 @@ public class ResultActivity extends AppCompatActivity {
     boolean IceStorm;
     boolean WindChillWarn;
     boolean BlizzardWarn;
+
+    //Don't try to show weather warning information if no warnings are present
+    boolean WeatherWarningsPresent;
 
     //Scraper status
     boolean WJRTActive = true;
@@ -271,9 +276,6 @@ public class ResultActivity extends AppCompatActivity {
 
         //Add the first GBInfo value so it can be set out of sequence
         GBInfo.add(0, "");
-
-        //Add the first weather value so it can be set out of sequence
-        weather.add(0, "");
 
         lstWeather = (ListView) findViewById(R.id.lstWeather);
         webRadar = (WebView) findViewById(R.id.webRadar);
@@ -536,7 +538,7 @@ public class ResultActivity extends AppCompatActivity {
         /*General structure:
         ->Checks for the presence of a school name
         -->If the school appears in the list, show its status entry and set its boolean to "true"
-        --->If the status entry contains "Closed Today" and the calculation is being run for 'today', 
+        --->If the status entry contains "Closed Today" and the calculation is being run for 'today',
             increase that tier's 'today' count
         --->If the status entry contains "Closed Tomorrow" and the calculation is being run for 'tomorrow',
             increase that tier's 'tomorrow' count*/
@@ -909,10 +911,34 @@ public class ResultActivity extends AppCompatActivity {
 
             //Live html
             try {
-                 weatherdoc = Jsoup.connect("http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&y=0").get();
-                //Saving to searchable string array weatherwarn
-                  weatherwarn=weatherdoc.toString().split("<title>");
-                  getWeather();
+                weatherdoc = Jsoup.connect("http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&y=0").get();
+
+                Elements title = weatherdoc.select("title");
+                Elements summary = weatherdoc.select("summary");
+                Elements link = weatherdoc.select("link");
+
+
+                if (title != null) {
+                    for (int i = 0; i < title.size(); i++) {
+                        weatherWarn.add(title.get(i).text());
+                    }
+
+                    if (!weatherWarn.get(1).contains("no active")) {
+                        //Weather warnings are present.
+                        WeatherWarningsPresent = true;
+                    }
+
+                    for (int i = 0; i < summary.size(); i++) {
+                        weatherSummary.add(summary.get(i).text() + "...");
+                    }
+
+                    for (int i = 0; i < link.size(); i++) {
+                        weatherLink.add(link.get(i).attr("href"));
+                    }
+                }
+
+                getWeather();
+
             }catch (IOException e) {
                 //Connectivity issues
                 nwsInfo.add(nwsCount, getString(R.string.WeatherConnectionError) + " " + getString(R.string.NoConnection));
@@ -941,144 +967,88 @@ public class ResultActivity extends AppCompatActivity {
         /*Only the highest weatherpercent is stored (not cumulative).
         Watches affect tomorrow's calculation.
         Advisories and Warnings affect today's calculation.*/
-        for (int i = 1; i < weatherwarn.length; i++) {
-            if (weatherwarn[i].contains("Significant Weather Advisory")) {
+        for (int i = 0; i < weatherWarn.size(); i++) {
+            if (weatherWarn.get(i).contains("Significant Weather Advisory")) {
                 //Significant Weather Advisory - 15% weatherpercent
                 SigWeather = true;
                 weathertoday = 15;
             }
-            if (weatherwarn[i].contains("Winter Weather Advisory")) {
+            if (weatherWarn.get(i).contains("Winter Weather Advisory")) {
                 //Winter Weather Advisory - 30% weatherpercent
                 WinterAdvisory = true;
                 weathertoday = 30;
             }
-            if (weatherwarn[i].contains("Lake-Effect Snow Advisory")) {
+            if (weatherWarn.get(i).contains("Lake-Effect Snow Advisory")) {
                 //Lake Effect Snow Advisory - 40% weatherpercent
                 LakeSnowAdvisory = true;
                 weathertoday = 40;
 
             }
-            if (weatherwarn[i].contains("Freezing Rain Advisory")) {
+            if (weatherWarn.get(i).contains("Freezing Rain Advisory")) {
                 //Freezing Rain - 40% weatherpercent
                 Rain = true;
                 weathertoday = 40;
             }
-            if (weatherwarn[i].contains("Freezing Drizzle Advisory")) {
+            if (weatherWarn.get(i).contains("Freezing Drizzle Advisory")) {
                 //Freezing Drizzle - 40% weatherpercent
                 Drizzle = true;
                 weathertoday = 40;
             }
-            if (weatherwarn[i].contains("Freezing Fog Advisory")) {
+            if (weatherWarn.get(i).contains("Freezing Fog Advisory")) {
                 //Freezing Fog - 40% weatherpercent
                 Fog = true;
                 weathertoday = 40;
             }
-            if (weatherwarn[i].contains("Wind Chill Advisory")) {
+            if (weatherWarn.get(i).contains("Wind Chill Advisory")) {
                 //Wind Chill Advisory - 40% weatherpercent
                 WindChillAdvisory = true;
                 weathertoday = 40;
             }
-            if (weatherwarn[i].contains("Ice Storm Warning")) {
+            if (weatherWarn.get(i).contains("Ice Storm Warning")) {
                 //Ice Storm Warning - 70% weatherpercent
                 IceStorm = true;
                 weathertoday = 70;
             }
-            if (weatherwarn[i].contains("Wind Chill Watch")) {
+            if (weatherWarn.get(i).contains("Wind Chill Watch")) {
                 //Wind Chill Watch - 70% weatherpercent
                 WindChillWatch = true;
                 weathertomorrow = 70;
             }
-            if (weatherwarn[i].contains("Wind Chill Warning")) {
+            if (weatherWarn.get(i).contains("Wind Chill Warning")) {
                 //Wind Chill Warning - 70% weatherpercent
                 WindChillWarn = true;
                 weathertoday = 70;
             }
-            if (weatherwarn[i].contains("Winter Storm Watch")) {
+            if (weatherWarn.get(i).contains("Winter Storm Watch")) {
                 //Winter Storm Watch - 80% weatherpercent
                 WinterWatch = true;
                 weathertomorrow = 80;
             }
-            if (weatherwarn[i].contains("Winter Storm Warning")) {
+            if (weatherWarn.get(i).contains("Winter Storm Warning")) {
                 //Winter Storm Warning - 80% weatherpercent
                 WinterWarn = true;
                 weathertoday = 80;
             }
-            if (weatherwarn[i].contains("Lake-Effect Snow Watch")) {
+            if (weatherWarn.get(i).contains("Lake-Effect Snow Watch")) {
                 //Lake Effect Snow Watch - 80% weatherpercent
                 LakeSnowWatch = true;
                 weathertomorrow = 80;
             }
-            if (weatherwarn[i].contains("Lake-Effect Snow Warning")) {
+            if (weatherWarn.get(i).contains("Lake-Effect Snow Warning")) {
                 //Lake Effect Snow Warning - 80% weatherpercent
                 LakeSnowWarn = true;
                 weathertoday = 80;
             }
-            if (weatherwarn[i].contains("Blizzard Watch")) {
+            if (weatherWarn.get(i).contains("Blizzard Watch")) {
                 //Blizzard Watch - 90% weatherpercent
                 BlizzardWatch = true;
                 weathertomorrow = 90;
             }
-            if (weatherwarn[i].contains("Blizzard Warning")) {
+            if (weatherWarn.get(i).contains("Blizzard Warning")) {
                 //Blizzard Warning - 90% weatherpercent
                 BlizzardWarn = true;
                 weathertoday = 90;
             }
-        }
-
-            //If none of the above warnings are present
-            if (weathertoday == 0 && weathertomorrow == 0) {
-                weather.set(0, getString(R.string.NoWeather));
-            }
-
-        //Set entries in the list in order of decreasing category (warn -> watch -> advisory)
-        if (BlizzardWarn) {
-            weather.add(weatherCount, getString(R.string.BlizzardWarn));
-            weatherCount++;
-        }if (LakeSnowWarn) {
-            weather.add(weatherCount, getString(R.string.LakeSnowWarn));
-            weatherCount++;
-        }if (WinterWarn) {
-            weather.add(weatherCount, getString(R.string.WinterWarn));
-            weatherCount++;
-        }if (WindChillWarn) {
-            weather.add(weatherCount, getString(R.string.WindChillWarn));
-            weatherCount++;
-        }if (IceStorm) {
-            weather.add(weatherCount, getString(R.string.IceStorm));
-            weatherCount++;
-        }if (BlizzardWatch){
-            weather.add(weatherCount, getString(R.string.BlizzardWatch));
-            weatherCount++;
-        }if (LakeSnowWatch) {
-            weather.add(weatherCount, getString(R.string.LakeSnowWatch));
-            weatherCount++;
-        }if (WinterWatch) {
-            weather.add(weatherCount, getString(R.string.WinterWatch));
-            weatherCount++;
-        }if (WindChillWatch) {
-            weather.add(weatherCount, getString(R.string.WindChillWatch));
-            weatherCount++;
-        }if (LakeSnowAdvisory) {
-            weather.add(weatherCount, getString(R.string.LakeSnowAdvisory));
-            weatherCount++;
-        }if (WinterAdvisory) {
-            weather.add(weatherCount, getString(R.string.WinterAdvisory));
-            weatherCount++;
-        }if (WindChillAdvisory) {
-            weather.add(weatherCount, getString(R.string.WindChillAdvisory));
-            weatherCount++;
-        }if (Rain) {
-            weather.add(weatherCount, getString(R.string.Rain));
-            weatherCount++;
-        }if (Drizzle) {
-            weather.add(weatherCount, getString(R.string.Drizzle));
-            weatherCount++;
-        }if (Fog) {
-            weather.add(weatherCount, getString(R.string.Fog));
-            weatherCount++;
-        }if (SigWeather) {
-            weather.add(weatherCount, getString(R.string.SigWeather));
-            weatherCount++;
         }
     }
 
@@ -1177,8 +1147,6 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 });
             } else {
-
-                final Resources res = getResources();
 
                 try {
                     for (int percentscroll = 0; percentscroll <= percent; percentscroll++) {
@@ -1287,19 +1255,34 @@ public class ResultActivity extends AppCompatActivity {
                 //NWS has not failed.
 
                 //Remove blank entries
-                for (int i = 0; i < weather.size(); i++) {
-                    if (weather.get(i).equals("")) {
-                        weather.remove(i);
+                for (int i = 0; i < weatherWarn.size(); i++) {
+                    if (weatherWarn.get(i).equals("")) {
+                        weatherWarn.remove(i);
                     }
                 }
 
-                WeatherAdapter weatherAdapter = new WeatherAdapter(ResultActivity.this, weather);
-                weatherAdapter.addSeparatorItem(getString(R.string.NWS));
-                for (int i = 0; i < weather.size(); i++) {
-                    weatherAdapter.addItem(weather.get(i));
+                WeatherAdapter weatherAdapter = new WeatherAdapter(ResultActivity.this, weatherWarn);
+                weatherAdapter.addSeparatorItem(weatherWarn.get(0));
+                for (int i = 1; i < weatherWarn.size(); i++) {
+                    weatherAdapter.addItem(weatherWarn.get(i));
                 }
 
                 lstWeather.setAdapter(weatherAdapter);
+
+                lstWeather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                      @Override
+                      public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                          runOnUiThread(new Runnable() {
+                              @Override
+                              public void run() {
+                                  //Don't show a message for the list separator
+                                  if (position > 0 && WeatherWarningsPresent) {
+                                      new WeatherDialog(ResultActivity.this, weatherWarn.get(position), weatherSummary.get(position - 1), weatherLink.get(position)).show();
+                                  }
+                              }
+                          });
+                      }
+                  });
 
                 runOnUiThread(new Runnable() {
                     @Override

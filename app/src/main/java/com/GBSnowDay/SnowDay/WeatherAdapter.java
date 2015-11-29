@@ -93,26 +93,26 @@ public class WeatherAdapter extends BaseAdapter {
         switch (type) {
             case TYPE_ITEM:
                 //Color the weather warning based on severity.
-                if (weather.get(position - 1).contains(res.getString(R.string.SigWeather))
-                        || weather.get(position - 1).contains(res.getString(R.string.WinterAdvisory))
-                        || weather.get(position - 1).contains(res.getString(R.string.LakeSnowAdvisory))
-                        || weather.get(position - 1).contains(res.getString(R.string.Rain))
-                        || weather.get(position - 1).contains(res.getString(R.string.Drizzle))
-                        || weather.get(position - 1).contains(res.getString(R.string.Fog))
-                        || weather.get(position - 1).contains(res.getString(R.string.WindChillAdvisory))) {
+                if (weather.get(position).contains(res.getString(R.string.SigWeather))
+                        || weather.get(position).contains(res.getString(R.string.WinterAdvisory))
+                        || weather.get(position).contains(res.getString(R.string.LakeSnowAdvisory))
+                        || weather.get(position).contains(res.getString(R.string.Rain))
+                        || weather.get(position).contains(res.getString(R.string.Drizzle))
+                        || weather.get(position).contains(res.getString(R.string.Fog))
+                        || weather.get(position).contains(res.getString(R.string.WindChillAdvisory))) {
                     convertView = mInflater.inflate(R.layout.item_blue, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
-                } else if (weather.get(position - 1).contains(res.getString(R.string.WinterWatch))
-                        || weather.get(position - 1).contains(res.getString(R.string.LakeSnowWatch))
-                        || weather.get(position - 1).contains(res.getString(R.string.WindChillWatch))
-                        || weather.get(position - 1).contains(res.getString(R.string.BlizzardWatch))) {
+                } else if (weather.get(position).contains(res.getString(R.string.WinterWatch))
+                        || weather.get(position).contains(res.getString(R.string.LakeSnowWatch))
+                        || weather.get(position).contains(res.getString(R.string.WindChillWatch))
+                        || weather.get(position).contains(res.getString(R.string.BlizzardWatch))) {
                     convertView = mInflater.inflate(R.layout.item_orange, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
-                } else if (weather.get(position - 1).contains(res.getString(R.string.WinterWarn))
-                        || weather.get(position - 1).contains(res.getString(R.string.LakeSnowWarn))
-                        || weather.get(position - 1).contains(res.getString(R.string.IceStorm))
-                        || weather.get(position - 1).contains(res.getString(R.string.WindChillWarn))
-                        || weather.get(position - 1).contains(res.getString(R.string.BlizzardWarn))) {
+                } else if (weather.get(position).contains(res.getString(R.string.WinterWarn))
+                        || weather.get(position).contains(res.getString(R.string.LakeSnowWarn))
+                        || weather.get(position).contains(res.getString(R.string.IceStorm))
+                        || weather.get(position).contains(res.getString(R.string.WindChillWarn))
+                        || weather.get(position).contains(res.getString(R.string.BlizzardWarn))) {
                     convertView = mInflater.inflate(R.layout.item_red, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                 } else {
