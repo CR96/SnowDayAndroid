@@ -1,5 +1,6 @@
 package com.GBSnowDay.SnowDay;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -1178,6 +1179,7 @@ public class ResultActivity extends AppCompatActivity {
                         }
                         final int finalPercentscroll = percentscroll;
                         runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
                             public void run() {
                                 txtPercent.setText((finalPercentscroll) + "%");
                             }

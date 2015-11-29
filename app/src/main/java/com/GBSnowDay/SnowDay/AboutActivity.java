@@ -1,6 +1,7 @@
 package com.GBSnowDay.SnowDay;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

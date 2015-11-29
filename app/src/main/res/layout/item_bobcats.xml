@@ -2,15 +2,12 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent">
+    android:layout_width="match_parent">
     <TextView
         android:id="@+id/text"
         android:textSize="16sp"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="visible"
-        android:background="@color/bobcats"
-        android:clickable="false"
-        android:focusable="false"/>
+        android:background="@color/bobcats" />
 </LinearLayout>

@@ -2,17 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent">
+    android:layout_width="match_parent"
+    android:background="@color/orange">
     <TextView
         android:id="@+id/text"
-        android:textSize="17sp"
-        android:layout_height="50dp"
-        android:visibility="visible"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_width="fill_parent"
-        android:background="@color/orange"
-        android:clickable="false"
-        android:focusable="false"/>
+        android:padding="16dp"
+        android:background="?android:attr/selectableItemBackground" />
 </LinearLayout>
