@@ -25,6 +25,8 @@ public class GBAdapter extends BaseAdapter {
     See the License for the specific language governing permissions and
     limitations under the License.*/
 
+    boolean gb;
+
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
     private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
@@ -32,8 +34,9 @@ public class GBAdapter extends BaseAdapter {
     private ArrayList<String> mData = new ArrayList<>();
     private LayoutInflater mInflater;
 
-    public GBAdapter(Context context) {
+    public GBAdapter(Context context, boolean b) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        gb = b;
     }
 
     public void addItem(final String item) {
@@ -69,12 +72,12 @@ public class GBAdapter extends BaseAdapter {
             (views must remain fixed)*/
         switch (type) {
             case TYPE_ITEM:
-                if (ResultActivity.GB && position == 0) {
+                if (gb && position == 0) {
                     //If GB is closed, make it red.
                     convertView = mInflater.inflate(R.layout.item_red_center, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     break;
-                } else if (ResultActivity.GB && position == 1) {
+                } else if (gb && position == 1) {
                     convertView = mInflater.inflate(R.layout.item_accent_center, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     break;

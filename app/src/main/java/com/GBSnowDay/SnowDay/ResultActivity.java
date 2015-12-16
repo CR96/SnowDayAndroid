@@ -7,21 +7,25 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TabHost;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +38,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 
 public class ResultActivity extends AppCompatActivity {
@@ -55,24 +61,9 @@ public class ResultActivity extends AppCompatActivity {
     limitations under the License.*/
 
     //Declare all views
-    ListView lstClosings;
-    TextView txtTier1;
-    TextView txtTier2;
-    TextView txtTier3;
-    TextView txtTier4;
 
-    ListView lstGB;
-    ListView lstWJRT;
-    ListView lstNWS;
-
-    TextView txtPercent;
-
-    ListView lstWeather;
-    WebView webRadar;
-    Button btnRadar;
-    ProgressBar progCalculate;
-
-    TabHost tabHost;
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
     //Variable declaration
     String orgName;
@@ -121,47 +112,47 @@ public class ResultActivity extends AppCompatActivity {
     int tier4tomorrow = 0;
 
     //Every school this program searches for: true = closed, false = open (default)
-    static boolean GBAcademy;
-    static boolean GISD;
-    static boolean HolyFamily;
-    static boolean WPAcademy;
+    boolean GBAcademy;
+    boolean GISD;
+    boolean HolyFamily;
+    boolean WPAcademy;
 
-    static boolean Durand; //Check for "Durand Senior Center"
-    static boolean Holly;  //Check for "Holly Academy"
-    static boolean Lapeer; //Check for "Chatfield School-Lapeer", "Greater Lapeer Transit Authority",
+    boolean Durand; //Check for "Durand Senior Center"
+    boolean Holly;  //Check for "Holly Academy"
+    boolean Lapeer; //Check for "Chatfield School-Lapeer", "Greater Lapeer Transit Authority",
     // "Lapeer CMH Day Programs", "Lapeer Co. Ed-Tech Center", "Lapeer County Ofices", "
     // Lapeer District Library", "Lapeer Senior Center", and "St. Paul Lutheran-Lapeer"
-    static boolean Owosso; //Check for "Owosso Senior Center", "Baker College-Owosso", "Owosso Social Security Office",
+    boolean Owosso; //Check for "Owosso Senior Center", "Baker College-Owosso", "Owosso Social Security Office",
     // and "St. Paul Catholic-Owosso"
 
-    static boolean Beecher;
-    static boolean Clio; //Check for "Clio Area Senior Center", "Clio City Hall", and "Cornerstone Clio"
-    static boolean Davison; //Check for "Davison Senior Center", "Faith Baptist School-Davison", "Montessori Academy-Davison",
+    boolean Beecher;
+    boolean Clio; //Check for "Clio Area Senior Center", "Clio City Hall", and "Cornerstone Clio"
+    boolean Davison; //Check for "Davison Senior Center", "Faith Baptist School-Davison", "Montessori Academy-Davison",
     // and "Ross Medical Education-Davison"
-    static boolean Fenton; //Check for "Lake Fenton", "Fenton City Hall", and "Fenton Montessori Academy"
-    static boolean Flushing; //Check for "Flushing Senior Citizens Center" and "St. Robert-Flushing"
-    static boolean Genesee; //Check for "Freedom Work-Genesee Co.", "Genesee Christian-Burton",
+    boolean Fenton; //Check for "Lake Fenton", "Fenton City Hall", and "Fenton Montessori Academy"
+    boolean Flushing; //Check for "Flushing Senior Citizens Center" and "St. Robert-Flushing"
+    boolean Genesee; //Check for "Freedom Work-Genesee Co.", "Genesee Christian-Burton",
     // "Genesee Co. Mobile Meals", "Genesee Hlth Sys Day Programs", "Genesee Stem Academy", and "Genesee I.S.D."
-    static boolean Kearsley;
-    static boolean LKFenton;
-    static boolean Linden; //Check for "Linden Charter Academy"
-    static boolean Montrose; //Check for "Montrose Senior Center"
-    static boolean Morris;  //Check for "Mt Morris Twp Administration" and "St. Mary's-Mt. Morris"
-    static boolean SzCreek; //Check for "Swartz Creek Area Senior Ctr." and "Swartz Creek Montessori"
+    boolean Kearsley;
+    boolean LKFenton;
+    boolean Linden; //Check for "Linden Charter Academy"
+    boolean Montrose; //Check for "Montrose Senior Center"
+    boolean Morris;  //Check for "Mt Morris Twp Administration" and "St. Mary's-Mt. Morris"
+    boolean SzCreek; //Check for "Swartz Creek Area Senior Ctr." and "Swartz Creek Montessori"
 
-    static boolean Atherton;
-    static boolean Bendle;
-    static boolean Bentley;
-    static boolean Carman; //Check for "Carman-Ainsworth Senior Ctr."
-    static boolean Flint; //Thankfully this is listed as "Flint Community Schools" -
+    boolean Atherton;
+    boolean Bendle;
+    boolean Bentley;
+    boolean Carman; //Check for "Carman-Ainsworth Senior Ctr."
+    boolean Flint; //Thankfully this is listed as "Flint Community Schools" -
     // otherwise there would be 25 exceptions to check for.
-    static boolean Goodrich;
+    boolean Goodrich;
 
-    static boolean GB; //Check for "Freedom Work-Grand Blanc", "Grand Blanc Academy", "Grand Blanc City Offices",
+    boolean GB; //Check for "Freedom Work-Grand Blanc", "Grand Blanc Academy", "Grand Blanc City Offices",
     // "Grand Blanc Senior Center", and "Holy Family-Grand Blanc"
 
     //True is GB is already open (GB is false, time is during or after school hours)
-    static boolean GBOpen;
+    boolean GBOpen;
 
     //Every weather warning this program searches for
     boolean SigWeather;
@@ -206,35 +197,25 @@ public class ResultActivity extends AppCompatActivity {
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        if (viewPager != null) {
+            setupViewPager(viewPager);
+            viewPager.setPagingEnabled(false);
+        }
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        if (viewPager != null) {
+            tabLayout.setVisibility(View.INVISIBLE);
+            tabLayout.setupWithViewPager(viewPager);
+
+            //Make sure tab content stays in memory
+            viewPager.setOffscreenPageLimit(3);
+        }
+
         //Read variables from MainActivity class
         Intent result = getIntent();
         dayrun = result.getIntExtra("dayrun", dayrun);
         days = result.getIntExtra("days", days);
-
-        //Create TabHost
-        tabHost = (TabHost) findViewById(R.id.tabHost);
-        tabHost.setup();
-
-        //Tab 1 - Percent and information
-        TabHost.TabSpec specs = tabHost.newTabSpec("tab1");
-        specs.setContent(R.id.tab1);
-        specs.setIndicator(getString(R.string.tab1));
-        tabHost.addTab(specs);
-
-        //Tab 2 - ABC 12 closings
-        specs = tabHost.newTabSpec("tab2");
-        specs.setContent(R.id.tab2);
-        specs.setIndicator(getString(R.string.tab2));
-        tabHost.addTab(specs);
-
-        //Tab 3 - Weather warnings and radar
-        specs = tabHost.newTabSpec("tab3");
-        specs.setContent(R.id.tab3);
-        specs.setIndicator(getString(R.string.tab3));
-        tabHost.addTab(specs);
-
-        //Declare views
-        lstClosings = (ListView) findViewById(R.id.lstClosings);
 
         //Add the 27 fixed values so they can be set out of sequence
         closings.add(0, "");
@@ -265,27 +246,50 @@ public class ResultActivity extends AppCompatActivity {
         closings.add(25, "");
         closings.add(26, "");
 
-        txtTier1 = (TextView) findViewById(R.id.txtTier1);
-        txtTier2 = (TextView) findViewById(R.id.txtTier2);
-        txtTier3 = (TextView) findViewById(R.id.txtTier3);
-        txtTier4 = (TextView) findViewById(R.id.txtTier4);
-
-        txtPercent = (TextView) findViewById(R.id.txtPercent);
-        lstGB = (ListView) findViewById(R.id.lstGB);
-        lstWJRT = (ListView) findViewById(R.id.lstWJRT);
-        lstNWS = (ListView) findViewById(R.id.lstNWS);
 
         //Add the first GBInfo value so it can be set out of sequence
         GBInfo.add(0, "");
 
-        lstWeather = (ListView) findViewById(R.id.lstWeather);
-        webRadar = (WebView) findViewById(R.id.webRadar);
-        btnRadar = (Button) findViewById(R.id.btnRadar);
-        progCalculate = (ProgressBar) findViewById(R.id.progCalculate);
-
         //Start the calculation
         Calculate();
 
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new PercentFragment(), getString(R.string.tab1));
+        adapter.addFragment(new ClosingsFragment(), getString(R.string.tab2));
+        adapter.addFragment(new WeatherFragment(), getString(R.string.tab3));
+        viewPager.setAdapter(adapter);
+    }
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
     }
 
     @Override
@@ -344,35 +348,6 @@ public class ResultActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void radarToggle(View view) {
-        //Show / hide and configure the WebView-based radar
-        if (webRadar.getVisibility() == View.GONE) {
-            webRadar.setEnabled(true);
-            webRadar.setVisibility(View.VISIBLE);
-            webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
-            webRadar.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-            btnRadar.setText(getString(R.string.radarhide));
-            if (NWSFail) {
-                //Hide the ListView displaying the error message
-                lstNWS.setVisibility(View.GONE);
-            }else{
-                //Hide the ListView displaying the weather information
-                lstWeather.setVisibility(View.GONE);
-            }
-        } else {
-            webRadar.setVisibility(View.GONE);
-            webRadar.setEnabled(false);
-            btnRadar.setText(getString(R.string.radarshow));
-            if (NWSFail) {
-                //Show the ListView displaying the error message
-                lstNWS.setVisibility(View.VISIBLE);
-            }else{
-                //Show the ListView displaying the weather information
-                lstWeather.setVisibility(View.VISIBLE);
-            }
-        }
     }
 
     private void Calculate() {
@@ -1132,8 +1107,7 @@ public class ResultActivity extends AppCompatActivity {
 
             runOnUiThread(new Runnable() {
                 public void run() {
-                    progCalculate.setVisibility(View.GONE);
-                    txtPercent.setText("0%");
+                    PercentFragment.txtPercent.setText("0%");
                 }
             });
 
@@ -1144,50 +1118,17 @@ public class ResultActivity extends AppCompatActivity {
                 GBInfo.set(0, getString(R.string.CalculateError));
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        txtPercent.setText("--");
+                        PercentFragment.txtPercent.setText("--");
                     }
                 });
             } else {
-
-                try {
-                    for (int percentscroll = 0; percentscroll <= percent; percentscroll++) {
-                        Thread.sleep(10);
-                        if (percentscroll >= 0 && percentscroll <= 20) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
-                                }
-                            });
-                        } if (percentscroll > 20 && percentscroll <= 60) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
-                                }
-                            });
-                        } if (percentscroll > 60 && percentscroll <= 80) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
-                                }
-                            });
-                        } if (percentscroll > 80) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
-                                }
-                            });
-                        }
-                        final int finalPercentscroll = percentscroll;
-                        runOnUiThread(new Runnable() {
-                            @SuppressLint("SetTextI18n")
-                            public void run() {
-                                txtPercent.setText((finalPercentscroll) + "%");
-                            }
-                        });
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PercentFragment.progCalculate.setVisibility(View.GONE);
+                        countUp(PercentFragment.txtPercent, 0);
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                });
 
             }
             return null;
@@ -1205,12 +1146,12 @@ public class ResultActivity extends AppCompatActivity {
             }
 
 
-            GBAdapter gbAdapter = new GBAdapter(ResultActivity.this);
+            GBAdapter gbAdapter = new GBAdapter(ResultActivity.this, GB);
             for (int i = 0; i < GBInfo.size(); i++) {
                 gbAdapter.addItem(GBInfo.get(i));
             }
 
-            lstGB.setAdapter(gbAdapter);
+            PercentFragment.lstGB.setAdapter(gbAdapter);
 
             //Set up the ListView adapter that displays school closings
 
@@ -1230,23 +1171,23 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
 
-                lstClosings.setAdapter(closingsAdapter);
+                ClosingsFragment.lstClosings.setAdapter(closingsAdapter);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        lstClosings.setVisibility(View.VISIBLE);
+                        ClosingsFragment.lstClosings.setVisibility(View.VISIBLE);
                     }
                 });
             } else {
                 //WJRT has failed.
                 ArrayAdapter<String> WJRTadapter = new ArrayAdapter<>(getApplicationContext(),
                         android.R.layout.simple_list_item_1, wjrtInfo);
-                lstWJRT.setAdapter(WJRTadapter);
+                ClosingsFragment.lstWJRT.setAdapter(WJRTadapter);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        lstWJRT.setVisibility(View.VISIBLE);
+                        ClosingsFragment.lstWJRT.setVisibility(View.VISIBLE);
                     }
                 });
 
@@ -1269,9 +1210,9 @@ public class ResultActivity extends AppCompatActivity {
                     weatherAdapter.addItem(weatherWarn.get(i));
                 }
 
-                lstWeather.setAdapter(weatherAdapter);
+                WeatherFragment.lstWeather.setAdapter(weatherAdapter);
 
-                lstWeather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                WeatherFragment.lstWeather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                       @Override
                       public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                           runOnUiThread(new Runnable() {
@@ -1289,23 +1230,187 @@ public class ResultActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        lstWeather.setVisibility(View.VISIBLE);
+                        WeatherFragment.lstWeather.setVisibility(View.VISIBLE);
                     }
                 });
             } else {
                 //NWS has failed.
                 ArrayAdapter<String> NWSadapter = new ArrayAdapter<>(getApplicationContext(),
                         android.R.layout.simple_list_item_1, nwsInfo);
-                lstNWS.setAdapter(NWSadapter);
+                WeatherFragment.lstNWS.setAdapter(NWSadapter);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        lstNWS.setVisibility(View.VISIBLE);
+                        WeatherFragment.lstNWS.setVisibility(View.VISIBLE);
                     }
                 });
-
             }
         }
+    }
+
+    private class ClosingsAdapter extends BaseAdapter implements Serializable {
+
+        private static final int TYPE_ITEM = 0;
+        private static final int TYPE_SEPARATOR = 1;
+        private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
+
+        private ArrayList<String> mData = new ArrayList<>();
+        private LayoutInflater mInflater;
+
+        private TreeSet<Integer> mSeparatorsSet = new TreeSet<>();
+
+        public ClosingsAdapter(Context context) {
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public void addItem(final String item) {
+            mData.add(item);
+            notifyDataSetChanged();
+        }
+
+        public void addSeparatorItem(final String item) {
+            mData.add(item);
+            //Save separator position
+            mSeparatorsSet.add(mData.size() - 1);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return TYPE_MAX_COUNT;
+        }
+
+        @Override
+        public int getCount() {
+            return mData.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return mData.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            int type = getItemViewType(position);
+            holder = new ViewHolder();
+            /*No 'if (convertView == null)' statement to prevent view recycling
+            (views must remain fixed)*/
+            switch (type) {
+                case TYPE_ITEM:
+                    if (Atherton && position == 2 || Bendle && position == 3
+                            || Bentley && position == 4 || Carman && position == 5
+                            || Flint && position == 6 || Goodrich && position == 7
+                            || Beecher && position == 9 || Clio && position == 10
+                            || Davison && position == 11 || Fenton && position == 12
+                            || Flushing && position == 13 || Genesee && position == 14
+                            || Kearsley && position == 15 || LKFenton && position == 16
+                            || Linden && position == 17 || Montrose && position == 18
+                            || Morris && position == 19 || SzCreek && position == 20
+                            || Durand && position == 22 || Holly && position == 23
+                            || Lapeer && position == 24 || Owosso && position == 25
+                            || GBAcademy && position == 27 || GISD && position == 28
+                            || HolyFamily && position == 29 || WPAcademy && position == 30) {
+                        //If the school is closed, make it orange.
+                        convertView = mInflater.inflate(R.layout.item_orange, parent, false);
+                        holder.textView = (TextView)convertView.findViewById(R.id.text);
+                        break;
+                    }else{
+                        convertView = mInflater.inflate(R.layout.item, parent, false);
+                        holder.textView = (TextView)convertView.findViewById(R.id.text);
+                        break;
+                    }
+                case TYPE_SEPARATOR:
+                    //Set the text separators ("Districts near Grand Blanc", etc.)
+                    if (position == 0) {
+                        convertView = mInflater.inflate(R.layout.separator_red, parent, false);
+                        holder.textView = (TextView)convertView.findViewById(R.id.textSeparator);
+                        break;
+                    }else{
+                        convertView = mInflater.inflate(R.layout.separator, parent, false);
+                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                        break;
+                    }
+            }
+            convertView.setTag(holder);
+            holder.textView.setText(mData.get(position));
+            return convertView;
+        }
+
+        public class ViewHolder {
+            public TextView textView;
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void countUp(final TextView tv, final int count) {
+        if (count > percent) {
+            //Enable the tabs
+
+            tabLayout.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+            tabLayout.setVisibility(View.VISIBLE);
+            viewPager.setPagingEnabled(true);
+
+            PercentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+            PercentFragment.lstGB.setVisibility(View.VISIBLE);
+            return;
+        }
+        tv.setText(String.valueOf(count) + "%");
+
+        if (count >= 0 && count <= 20) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
+                }
+            });
+        } if (count > 20 && count <= 60) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
+                }
+            });
+        } if (count > 60 && count <= 80) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
+                }
+            });
+        } if (count > 80) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
+                }
+            });
+        }
+
+        AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);
+        animation.setDuration(5);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            public void onAnimationEnd(Animation anim) {
+                countUp(tv, count + 1);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        tv.startAnimation(animation);
     }
 }
 
