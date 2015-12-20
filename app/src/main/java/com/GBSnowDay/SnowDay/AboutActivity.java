@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -35,6 +37,32 @@ public class AboutActivity extends AppCompatActivity {
         ImageButton btnMail = (ImageButton) findViewById(R.id.btnEmail);
         ImageButton btnWeb = (ImageButton) findViewById(R.id.btnWeb);
         ImageButton btnGit = (ImageButton) findViewById(R.id.btnGit);
+
+        TextView txtVersion = (TextView) findViewById(R.id.txtVersion);
+
+        if (savedInstanceState == null) {
+
+            Animation twitter = AnimationUtils.loadAnimation(this, R.anim.slide_in_overshoot);
+            twitter.setStartOffset(500);
+            btnTwitter.startAnimation(twitter);
+
+            Animation mail = AnimationUtils.loadAnimation(this, R.anim.slide_in_overshoot);
+            mail.setStartOffset(600);
+            btnMail.startAnimation(mail);
+
+            Animation web = AnimationUtils.loadAnimation(this, R.anim.slide_in_overshoot);
+            web.setStartOffset(700);
+            btnWeb.startAnimation(web);
+
+            Animation git = AnimationUtils.loadAnimation(this, R.anim.slide_in_overshoot);
+            git.setStartOffset(800);
+            btnGit.startAnimation(git);
+
+            Animation version = AnimationUtils.loadAnimation(this, R.anim.slide_in);
+            version.setStartOffset(1300);
+            txtVersion.startAnimation(version);
+        }
+
 
         btnTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +98,6 @@ public class AboutActivity extends AppCompatActivity {
         });
 
         PackageInfo versionInfo = getPackageInfo();
-        TextView txtVersion = (TextView) findViewById(R.id.txtVersion);
         txtVersion.setText(" v" + versionInfo.versionName);
     }
 

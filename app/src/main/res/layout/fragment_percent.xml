@@ -3,7 +3,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.GBSnowDay.SnowDay.PercentFragment"
+    tools:ignore="ContentDescription"
     android:id="@+id/percentFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake1"
+        android:src="@drawable/ic_snowflake"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="-48dp"
+        android:layout_marginStart="-48dp"
+        android:layout_marginBottom="48dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake2"
+        android:src="@drawable/ic_snowflake"
+        android:layout_above="@+id/txtPercent"
+        android:layout_alignLeft="@+id/snowflake1"
+        android:layout_alignStart="@+id/snowflake1"
+        android:layout_marginBottom="48dp"
+        android:layout_marginLeft="-48dp"
+        android:layout_marginStart="-48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake3"
+        android:src="@drawable/ic_snowflake"
+        android:layout_above="@+id/snowflake2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="48dp"
+        android:layout_marginLeft="-48dp"
+        android:layout_marginStart="-48dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake4"
+        android:src="@drawable/ic_snowflake"
+        android:layout_above="@+id/snowflake3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="48dp"
+        android:layout_marginLeft="-48dp"
+        android:layout_marginStart="-48dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake5"
+        android:src="@drawable/ic_snowflake"
+        android:layout_marginTop="-48dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake6"
+        android:src="@drawable/ic_snowflake"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/snowflake7"
+        android:layout_toStartOf="@+id/snowflake7"
+        android:layout_marginRight="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="-48dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake7"
+        android:src="@drawable/ic_snowflake"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/snowflake8"
+        android:layout_toStartOf="@+id/snowflake8"
+        android:layout_marginRight="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="-48dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake8"
+        android:src="@drawable/ic_snowflake"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-48dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snowflake9"
+        android:src="@drawable/ic_snowflake"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/snowflake8"
+        android:layout_toEndOf="@+id/snowflake8"
+        android:layout_marginTop="-48dp" />
+
+    <android.support.v4.widget.Space
+        android:id="@+id/space"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,26 +121,31 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/txtPercent"
         android:textSize="72sp"
-        android:layout_marginTop="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:visibility="invisible"
+        android:layout_above="@+id/snowflake1"
+        android:layout_centerHorizontal="true" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="8dp"
+        android:stackFromBottom="true"
         android:id="@+id/lstGB"
         android:visibility="invisible"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
         android:clickable="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:layout_below="@+id/space"
+        android:layout_alignParentBottom="true"
+        tools:ignore="UnusedAttribute" />
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:id="@+id/progCalculate"
+        android:src="@drawable/ic_snowflake_large"
         android:indeterminate="true"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />

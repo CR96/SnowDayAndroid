@@ -1,11 +1,14 @@
 package com.GBSnowDay.SnowDay;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -1119,13 +1121,15 @@ public class ResultActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         PercentFragment.txtPercent.setText("--");
+                        crossFadePercent();
+                        enableTabs();
                     }
                 });
             } else {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        PercentFragment.progCalculate.setVisibility(View.GONE);
+                        crossFadePercent();
                         countUp(PercentFragment.txtPercent, 0);
                     }
                 });
@@ -1248,6 +1252,111 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    private void crossFadePercent() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+            PercentFragment.txtPercent.setAlpha(0f);
+            PercentFragment.txtPercent.animate()
+                    .alpha(1f)
+                    .setDuration(250);
+
+            PercentFragment.progCalculate.animate()
+                    .alpha(0f)
+                    .setDuration(250)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            PercentFragment.progCalculate.clearAnimation();
+                            PercentFragment.progCalculate.setVisibility(View.GONE);
+                        }
+                    });
+        }else{
+            Animation fade_out = AnimationUtils.loadAnimation(ResultActivity.this, android.R.anim.fade_out);
+            fade_out.setFillAfter(true);
+            fade_out.setDuration(250);
+            fade_out.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    PercentFragment.progCalculate.clearAnimation();
+                    PercentFragment.progCalculate.setVisibility(View.GONE);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+            PercentFragment.progCalculate.startAnimation(fade_out);
+
+            Animation fade_in = AnimationUtils.loadAnimation(ResultActivity.this, android.R.anim.fade_in);
+            fade_in.setDuration(250);
+            fade_in.setFillAfter(true);
+            PercentFragment.txtPercent.startAnimation(fade_in);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void countUp(final TextView tv, final int count) {
+        if (count > percent) {
+            if (percent > 0) {
+                PercentFragment.txtPercent.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.overshoot));
+            }
+            enableTabs();
+            return;
+        }
+        tv.setText(String.valueOf(count) + "%");
+
+        if (count >= 0 && count <= 20) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
+                }
+            });
+        } if (count > 20 && count <= 60) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
+                }
+            });
+        } if (count > 60 && count <= 80) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
+                }
+            });
+        } if (count > 80) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
+                }
+            });
+        }
+
+        Animation alpha = AnimationUtils.loadAnimation(ResultActivity.this, R.anim.alpha);
+        alpha.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation anim) {
+                countUp(tv, count + 1);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        tv.startAnimation(alpha);
+
+    }
+
+    private void enableTabs() {
+        //Enable the tabs
+        tabLayout.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+        tabLayout.setVisibility(View.VISIBLE);
+        viewPager.setPagingEnabled(true);
+
+        PercentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+        PercentFragment.lstGB.setVisibility(View.VISIBLE);
+    }
+
+
     private class ClosingsAdapter extends BaseAdapter implements Serializable {
 
         private static final int TYPE_ITEM = 0;
@@ -1350,67 +1459,6 @@ public class ResultActivity extends AppCompatActivity {
         public class ViewHolder {
             public TextView textView;
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void countUp(final TextView tv, final int count) {
-        if (count > percent) {
-            //Enable the tabs
-
-            tabLayout.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
-            tabLayout.setVisibility(View.VISIBLE);
-            viewPager.setPagingEnabled(true);
-
-            PercentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
-            PercentFragment.lstGB.setVisibility(View.VISIBLE);
-            return;
-        }
-        tv.setText(String.valueOf(count) + "%");
-
-        if (count >= 0 && count <= 20) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
-                }
-            });
-        } if (count > 20 && count <= 60) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
-                }
-            });
-        } if (count > 60 && count <= 80) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
-                }
-            });
-        } if (count > 80) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
-                }
-            });
-        }
-
-        AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);
-        animation.setDuration(5);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            public void onAnimationEnd(Animation anim) {
-                countUp(tv, count + 1);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        tv.startAnimation(animation);
     }
 }
 

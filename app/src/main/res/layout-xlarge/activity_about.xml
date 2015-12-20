@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imgAbout"
             android:layout_gravity="center"
-            android:src="@drawable/icon_large"
+            android:src="@drawable/icon"
             android:contentDescription="@string/app_name"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
