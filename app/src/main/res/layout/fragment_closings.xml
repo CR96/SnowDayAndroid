@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:requiresFadingEdge="vertical"
         android:fadingEdgeLength="8dp"
-        tools:targetApi="ice_cream_sandwich" />
+        android:listSelector="@android:color/transparent" />
 
     <ListView
         android:id="@+id/lstWJRT"

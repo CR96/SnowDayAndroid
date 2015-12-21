@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -442,6 +443,9 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<String> specialadapter = new ArrayAdapter<>(getApplicationContext(),
                     R.layout.item_center, special);
             lstInfo.setAdapter(specialadapter);
+
+            ImageView spcl = (ImageView) findViewById(R.id.imgSpecial);
+            spcl.setVisibility(View.VISIBLE);
         }
     }
 

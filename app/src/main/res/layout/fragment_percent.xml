@@ -135,8 +135,7 @@
         android:id="@+id/lstGB"
         android:visibility="invisible"
         android:gravity="center"
-        android:clickable="false"
-        android:focusable="false"
+        android:listSelector="@android:color/transparent"
         android:layout_below="@+id/space"
         android:layout_alignParentBottom="true"
         tools:ignore="UnusedAttribute" />
