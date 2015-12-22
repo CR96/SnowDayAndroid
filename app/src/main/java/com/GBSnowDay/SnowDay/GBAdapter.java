@@ -26,6 +26,7 @@ public class GBAdapter extends BaseAdapter {
     limitations under the License.*/
 
     boolean gb;
+    boolean gbmessage;
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
@@ -34,9 +35,10 @@ public class GBAdapter extends BaseAdapter {
     private ArrayList<String> mData = new ArrayList<>();
     private LayoutInflater mInflater;
 
-    public GBAdapter(Context context, boolean b) {
+    public GBAdapter(Context context, boolean b1, boolean b2) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        gb = b;
+        gb = b1;
+        gbmessage = b2;
     }
 
     public void addItem(final String item) {
@@ -75,18 +77,17 @@ public class GBAdapter extends BaseAdapter {
                 if (gb && position == 0) {
                     //If GB is closed, make it red.
                     convertView = mInflater.inflate(R.layout.item_red_center, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
-                    break;
-                } else if (gb && position == 1) {
+                }else if (gb && position == 1) {
+                    //Make "Enjoy your Snow Day!" blue.
                     convertView = mInflater.inflate(R.layout.item_accent_center, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
-                    break;
+                }else if (gbmessage && position == 0) {
+                    //If GB has a message, make it orange.
+                    convertView = mInflater.inflate(R.layout.item_orange_center, parent, false);
                 } else {
                     convertView = mInflater.inflate(R.layout.item_center, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
-                    break;
                 }
         }
+        holder.textView = (TextView) convertView.findViewById(R.id.text);
         convertView.setTag(holder);
         holder.textView.setText(mData.get(position));
         return convertView;
