@@ -401,6 +401,10 @@ public class ResultActivity extends AppCompatActivity {
                     //No schools are closed.
                     wjrtInfo.add(getString(R.string.NoClosings));
                     WJRTFail = false;
+
+                    //Add a blank entry so checkClosings() still works correctly
+                    orgName.add(" ");
+
                 } else {
                     //Webpage layout was not recognized.
                     wjrtInfo.add(getString(R.string.WJRTParseError));
