@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnCalculate;
 
     //Declare variables
-    String date;
+    String datetoday;
+    String datetomorrow;
+    String textdate;
 
     int dayscount = 0;
     boolean todayValid;
@@ -176,6 +178,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent result = new Intent(getApplicationContext(), ResultActivity.class);
                 result.putExtra("dayrun", dayrun);
                 result.putExtra("days", days);
+                result.putExtra("datetoday", datetoday);
+                result.putExtra("datetomorrow", datetomorrow);
                 startActivity(result);
             }
         });
@@ -228,10 +232,19 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the current month, day, and year
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd yyyy", Locale.US);
-        date = currentDate.format(calendar.getTime());
 
-        infoList.add(0, "Current Date: " + date);
+        SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        datetoday = sdt.format(calendar.getTime());
+
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd yyyy", Locale.US);
+        textdate = currentDate.format(calendar.getTime());
+
+        calendar.add(Calendar.DATE, 1);
+
+        datetomorrow = sdt.format(calendar.getTime());
+
+        infoList.add(0, "Current Date: " + textdate);
+
 
         /*Check for days school is not in session (such as Winter Break, development days, etc.)
         Uses a mixture of SimpleDateFormat for simple string comparison and JodaTime for more
@@ -255,44 +268,44 @@ public class MainActivity extends AppCompatActivity {
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        }else if (date.equals("September 07 2015")) {
+        }else if (textdate.equals("September 07 2015")) {
             infoList.add(infoCount, getString(R.string.YearStart));
             infoCount++;
             todayValid = false;
-        }else if (date.equals("September 25 2015")) {
+        }else if (textdate.equals("September 25 2015")) {
             infoList.add(infoCount, getString(R.string.HC));
             infoCount++;
-        }else if (date.equals("October 20 2015") || date.equals("December 08 2015")
-                || date.equals("February 02 2016") || date.equals("May 03 2016")) {
+        }else if (textdate.equals("October 20 2015") || textdate.equals("December 08 2015")
+                || textdate.equals("February 02 2016") || textdate.equals("May 03 2016")) {
             infoList.add(infoCount, getString(R.string.LSTomorrow));
             infoCount++;
-        } else if (date.equals("October 21 2015") || date.equals("December 09 2015")
-                || date.equals("February 03 2016") || date.equals("May 04 2016")) {
+        } else if (textdate.equals("October 21 2015") || textdate.equals("December 09 2015")
+                || textdate.equals("February 03 2016") || textdate.equals("May 04 2016")) {
             infoList.add(infoCount, getString(R.string.LSToday));
             infoCount++;
-        }else if (date.equals("November 26 2015")) {
+        }else if (textdate.equals("November 26 2015")) {
             infoList.add(infoCount, getString(R.string.Thanksgiving));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        }else if (date.equals("November 26 2015") || date.equals("November 27 2015")) {
+        }else if (textdate.equals("November 26 2015") || textdate.equals("November 27 2015")) {
             infoList.add(infoCount, getString(R.string.ThanksgivingRecess));
             infoCount++;
             todayValid = false;
-        } else if (date.equals("December 22 2015")) {
+        } else if (textdate.equals("December 22 2015")) {
             infoList.add(infoCount, getString(R.string.WinterBreakTomorrow));
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("December 23 2015") || date.equals("December 24 2015")
-                || date.equals("December 25 2015") || date.equals("December 26 2015") || date.equals("December 27 2014")
-                || date.equals("December 27 2015") || date.equals("December 28 2015")
-                || date.equals("December 29 2015") || date.equals("December 30 2015")
-                || date.equals("December 31 2015") || date.equals("January 01 2016")) {
+        } else if (textdate.equals("December 23 2015") || textdate.equals("December 24 2015")
+                || textdate.equals("December 25 2015") || textdate.equals("December 26 2015") || textdate.equals("December 27 2014")
+                || textdate.equals("December 27 2015") || textdate.equals("December 28 2015")
+                || textdate.equals("December 29 2015") || textdate.equals("December 30 2015")
+                || textdate.equals("December 31 2015") || textdate.equals("January 01 2016")) {
             //Winter Break
-            if (date.equals("December 25 2015")) {
+            if (textdate.equals("December 25 2015")) {
                 infoList.add(infoCount, getString(R.string.Christmas));
                 infoCount++;
-            } else if (date.equals("January 01 2016")) {
+            } else if (textdate.equals("January 01 2016")) {
                 infoList.add(infoCount, getString(R.string.NewYear));
                 infoCount++;
             }
@@ -301,59 +314,59 @@ public class MainActivity extends AppCompatActivity {
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("January 17 2016")) {
+        } else if (textdate.equals("January 17 2016")) {
             infoList.add(infoCount, getString(R.string.MLKTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("January 18 2016")) {
+        } else if (textdate.equals("January 18 2016")) {
             //MLK Day
             infoList.add(infoCount, getString(R.string.MLK) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
-        }else if (date.equals("January 24 2016")) {
+        }else if (textdate.equals("January 24 2016")) {
             infoList.add(infoCount, getString(R.string.RecordsTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("January 25 2016")) {
+        } else if (textdate.equals("January 25 2016")) {
             infoList.add(infoCount, getString(R.string.Records) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
-        }else if (date.equals("February 11 2016")) {
+        }else if (textdate.equals("February 11 2016")) {
             infoList.add(infoCount, getString(R.string.LincolnTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("February 12 2016")) {
+        } else if (textdate.equals("February 12 2016")) {
             infoList.add(infoCount, getString(R.string.Lincoln) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
-        } else if (date.equals("February 14 2016")) {
+        } else if (textdate.equals("February 14 2016")) {
             infoList.add(infoCount, getString(R.string.PresidentTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("February 15 2016")) {
+        } else if (textdate.equals("February 15 2016")) {
             infoList.add(infoCount, getString(R.string.President) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
-        } else if (date.equals("November 10 2015") || date.equals("March 08 2016")) {
+        } else if (textdate.equals("November 10 2015") || textdate.equals("March 08 2016")) {
             infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTomorrow));
             infoCount++;
-        }else if (date.equals("November 11 2015") || date.equals("November 12 2015")
-            || date.equals("March 09 2016") || date.equals("March 10 2016")) {
+        }else if (textdate.equals("November 11 2015") || textdate.equals("November 12 2015")
+                || textdate.equals("March 09 2016") || textdate.equals("March 10 2016")) {
             infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTodayTomorrow));
             infoCount++;
-        } else if (date.equals("November 13 2015") || date.equals("March 11 2016")) {
+        } else if (textdate.equals("November 13 2015") || textdate.equals("March 11 2016")) {
             infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTomorrow));
             infoCount++;
-        } else if (date.equals("November 24 2015") || date.equals("September 24 2015")
-            || date.equals("October 08 2015")
-            || date.equals("March 31 2016")) {
+        } else if (textdate.equals("November 24 2015") || textdate.equals("September 24 2015")
+                || textdate.equals("October 08 2015")
+                || textdate.equals("March 31 2016")) {
             infoList.add(infoCount, getString(R.string.HalfDayTomorrow));
             infoCount++;
-        }else if (date.equals("November 25 2015") || date.equals("September 25 2015")
-                || date.equals("October 09 2015")) {
-            if (date.equals("November 25 2015")) {
+        }else if (textdate.equals("November 25 2015") || textdate.equals("September 25 2015")
+                || textdate.equals("October 09 2015")) {
+            if (textdate.equals("November 25 2015")) {
                 infoList.add(infoCount, getString(R.string.ThanksgivingRecessTomorrow));
                 infoCount++;
                 tomorrowValid = false;
@@ -361,54 +374,54 @@ public class MainActivity extends AppCompatActivity {
 
             infoList.add(infoCount, getString(R.string.HalfDay));
             infoCount++;
-        }else if (date.equals("March 24 2016")) {
+        }else if (textdate.equals("March 24 2016")) {
             infoList.add(infoCount, getString(R.string.GoodFridayTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
-        }else if (date.equals("March 25 2016")) {
+        }else if (textdate.equals("March 25 2016")) {
             infoList.add(infoCount, getString(R.string.GoodFriday) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
-        }else if (date.equals("March 27 2016")) {
+        }else if (textdate.equals("March 27 2016")) {
             infoList.add(infoCount, getString(R.string.Easter));
             infoCount++;
             todayValid = false;
-        } else if (date.equals("April 01 2016")) {
+        } else if (textdate.equals("April 01 2016")) {
             infoList.add(infoCount, getString(R.string.HalfDay));
             infoList.add(infoCount + 1, getString(R.string.SpringBreakTomorrow));
             infoCount+=2;
             tomorrowValid = false;
-        } else if (date.equals("April 02 2016") || date.equals("April 03 2016")
-                || date.equals("April 04 2016") || date.equals("April 05 2016")
-                || date.equals("April 06 2016") || date.equals("April 07 2016")
-                || date.equals("April 08 2016")) {
+        } else if (textdate.equals("April 02 2016") || textdate.equals("April 03 2016")
+                || textdate.equals("April 04 2016") || textdate.equals("April 05 2016")
+                || textdate.equals("April 06 2016") || textdate.equals("April 07 2016")
+                || textdate.equals("April 08 2016")) {
             //Spring Break
 
             infoList.add(infoCount, getString(R.string.SpringBreak));
             infoCount++;
             todayValid = false;
             tomorrowValid = false;
-        } else if (date.equals("November 02 2015") || date.equals("April 27 2016")) {
+        } else if (textdate.equals("November 02 2015") || textdate.equals("April 27 2016")) {
             infoList.add(infoCount, getString(R.string.PDDTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("November 03 2015") || date.equals("April 28 2016")) {
+        } else if (textdate.equals("November 03 2015") || textdate.equals("April 28 2016")) {
             infoList.add(infoCount, getString(R.string.PDD) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
-        } else if (date.equals("May 29 2016")) {
+        } else if (textdate.equals("May 29 2016")) {
             infoList.add(infoCount, getString(R.string.MemorialDayTomorrow) + getString(R.string.NoSessionTomorrow));
             infoCount++;
             tomorrowValid = false;
-        } else if (date.equals("May 30 2016")) {
+        } else if (textdate.equals("May 30 2016")) {
             infoList.add(infoCount, getString(R.string.MemorialDay) + getString(R.string.NoSessionToday));
             infoCount++;
             todayValid = false;
-        } else if (date.equals("June 02 2016")) {
+        } else if (textdate.equals("June 02 2016")) {
             infoList.add(infoCount, getString(R.string.Senior));
             infoCount++;
             bobcats = true;
-        } else if (date.equals("June 15 2016")) {
+        } else if (textdate.equals("June 15 2016")) {
             infoList.add(infoCount, getString(R.string.YearEnd));
             infoCount++;
             tomorrowValid = false;

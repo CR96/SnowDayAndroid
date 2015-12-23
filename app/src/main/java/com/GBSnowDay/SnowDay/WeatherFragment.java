@@ -46,6 +46,9 @@ public class WeatherFragment extends Fragment {
         lstNWS = (ListView) view.findViewById(R.id.lstNWS);
         lstWeather = (ListView) view.findViewById(R.id.lstWeather);
 
+        webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
+        webRadar.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
         btnRadar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,8 +56,6 @@ public class WeatherFragment extends Fragment {
                 if (webRadar.getVisibility() == View.GONE) {
                     webRadar.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in));
                     webRadar.setVisibility(View.VISIBLE);
-                    webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
-                    webRadar.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
                     btnRadar.setText(getString(R.string.radarhide));
                 } else {
                     webRadar.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out));

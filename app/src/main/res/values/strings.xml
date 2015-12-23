@@ -225,6 +225,7 @@
 
     <string name="WeatherConnectionError">Could not connect to National Weather Service.</string>
     <string name="WeatherParseError">Unable to read weather information.</string>
+    <string name="WarningParseError">Error loading warning information.</string>
 
     <string name="EmptyTimeline">No Tweets</string>
     <string name="NoTwitter">Could not load timeline.</string>

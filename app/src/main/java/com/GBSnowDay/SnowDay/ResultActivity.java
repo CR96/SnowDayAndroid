@@ -80,12 +80,16 @@ public class ResultActivity extends AppCompatActivity {
 
     List<String> weatherWarn = new ArrayList<>();
     List<String> weatherSummary = new ArrayList<>();
+    List<String> weatherExpire = new ArrayList<>();
     List<String> weatherLink = new ArrayList<>();
 
     DateTime dt = new DateTime();
 
     int days;
     int dayrun;
+
+    String datetoday;
+    String datetomorrow;
 
     //Individual components of the calculation
     int schoolpercent;
@@ -99,7 +103,7 @@ public class ResultActivity extends AppCompatActivity {
     int tier2today = 0;
     int tier3today = 0;
     int tier4today = 0;
-    
+
     int tier1tomorrow = 0;
     int tier2tomorrow = 0;
     int tier3tomorrow = 0;
@@ -145,25 +149,9 @@ public class ResultActivity extends AppCompatActivity {
     boolean GB; //Check for "Freedom Work-Grand Blanc", "Grand Blanc Academy", "Grand Blanc City Offices",
     // "Grand Blanc Senior Center", and "Holy Family-Grand Blanc"
 
-    boolean GBMessage; //Grand Blanc has a message (e.g. "Early Dismissal") but isn't actually closed.
+    boolean GBOpen; //True if GB is already open (GB = false and time is during or after school hours)
 
-    //Every weather warning this program searches for
-    boolean SigWeather;
-    boolean WinterAdvisory;
-    boolean WinterWatch;
-    boolean LakeSnowAdvisory;
-    boolean LakeSnowWatch;
-    boolean Rain;
-    boolean Drizzle;
-    boolean Fog;
-    boolean WindChillAdvisory;
-    boolean WindChillWatch;
-    boolean BlizzardWatch;
-    boolean WinterWarn;
-    boolean LakeSnowWarn;
-    boolean IceStorm;
-    boolean WindChillWarn;
-    boolean BlizzardWarn;
+    boolean GBMessage; //Grand Blanc has a message (e.g. "Early Dismissal") but isn't actually closed.
 
     //Don't try to show weather warning information if no warnings are present
     boolean WeatherWarningsPresent;
@@ -209,6 +197,8 @@ public class ResultActivity extends AppCompatActivity {
         Intent result = getIntent();
         dayrun = result.getIntExtra("dayrun", dayrun);
         days = result.getIntExtra("days", days);
+        datetoday = result.getStringExtra("datetoday");
+        datetomorrow = result.getStringExtra("datetomorrow");
 
         //Add the 27 fixed values so they can be set out of sequence
         closings.add(0, "");
@@ -473,9 +463,11 @@ public class ResultActivity extends AppCompatActivity {
                 if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16) {
                     //Time is between 7AM and 4PM. School is already in session.
                     GBInfo.add(getString(R.string.SchoolOpen));
+                    GBOpen = true;
                 } else if (dt.getHourOfDay() >= 16) {
                     //Time is after 4PM. School is already out.
                     GBInfo.add(getString(R.string.Dismissed));
+                    GBOpen = true;
                 }
             }else if (dayrun == 1) {
                 if (!GBMessage) {
@@ -866,23 +858,33 @@ public class ResultActivity extends AppCompatActivity {
 
                 Elements title = weatherdoc.select("title");
                 Elements summary = weatherdoc.select("summary");
+                Elements expiretime = weatherdoc.select("cap|expires");
                 Elements link = weatherdoc.select("link");
 
 
                 if (title != null) {
                     for (int i = 0; i < title.size(); i++) {
-                        weatherWarn.add(title.get(i).text());
+                        weatherWarn.add(title.get(i).text().replace(" by NWS", ""));
                     }
 
                     if (!weatherWarn.get(1).contains("no active")) {
                         //Weather warnings are present.
                         WeatherWarningsPresent = true;
                     }
+                }
+                if (expiretime != null) {
+                    for (int i = 0; i < expiretime.size(); i++) {
+                        weatherExpire.add(expiretime.get(i).text());
+                    }
+                }
 
+                if (summary != null) {
                     for (int i = 0; i < summary.size(); i++) {
                         weatherSummary.add(summary.get(i).text() + "...");
                     }
+                }
 
+                if (weatherLink != null) {
                     for (int i = 0; i < link.size(); i++) {
                         weatherLink.add(link.get(i).attr("href"));
                     }
@@ -914,90 +916,83 @@ public class ResultActivity extends AppCompatActivity {
 
     private void getWeather() {
         /*Only the highest weatherpercent is stored (not cumulative).
-        Watches affect tomorrow's calculation.
-        Advisories and Warnings affect today's calculation.*/
+        Calculation is affected based on when warning expires.*/
         for (int i = 0; i < weatherWarn.size(); i++) {
             if (weatherWarn.get(i).contains("Significant Weather Advisory")) {
                 //Significant Weather Advisory - 15% weatherpercent
-                SigWeather = true;
-                weathertoday = 15;
+                checkWarningTime(i, 15);
             }
             if (weatherWarn.get(i).contains("Winter Weather Advisory")) {
                 //Winter Weather Advisory - 30% weatherpercent
-                WinterAdvisory = true;
-                weathertoday = 30;
+                checkWarningTime(i, 30);
             }
             if (weatherWarn.get(i).contains("Lake-Effect Snow Advisory")) {
                 //Lake Effect Snow Advisory - 40% weatherpercent
-                LakeSnowAdvisory = true;
-                weathertoday = 40;
-
+                checkWarningTime(i, 40);
             }
             if (weatherWarn.get(i).contains("Freezing Rain Advisory")) {
                 //Freezing Rain - 40% weatherpercent
-                Rain = true;
-                weathertoday = 40;
+                checkWarningTime(i, 40);
             }
             if (weatherWarn.get(i).contains("Freezing Drizzle Advisory")) {
                 //Freezing Drizzle - 40% weatherpercent
-                Drizzle = true;
-                weathertoday = 40;
+                checkWarningTime(i, 40);
             }
             if (weatherWarn.get(i).contains("Freezing Fog Advisory")) {
                 //Freezing Fog - 40% weatherpercent
-                Fog = true;
-                weathertoday = 40;
+                checkWarningTime(i, 40);
             }
             if (weatherWarn.get(i).contains("Wind Chill Advisory")) {
                 //Wind Chill Advisory - 40% weatherpercent
-                WindChillAdvisory = true;
-                weathertoday = 40;
+                checkWarningTime(i, 40);
             }
             if (weatherWarn.get(i).contains("Ice Storm Warning")) {
                 //Ice Storm Warning - 70% weatherpercent
-                IceStorm = true;
-                weathertoday = 70;
+                checkWarningTime(i, 70);
             }
             if (weatherWarn.get(i).contains("Wind Chill Watch")) {
                 //Wind Chill Watch - 70% weatherpercent
-                WindChillWatch = true;
-                weathertomorrow = 70;
+                checkWarningTime(i, 70);
             }
             if (weatherWarn.get(i).contains("Wind Chill Warning")) {
                 //Wind Chill Warning - 70% weatherpercent
-                WindChillWarn = true;
-                weathertoday = 70;
+                checkWarningTime(i, 70);
             }
             if (weatherWarn.get(i).contains("Winter Storm Watch")) {
                 //Winter Storm Watch - 80% weatherpercent
-                WinterWatch = true;
-                weathertomorrow = 80;
+                checkWarningTime(i, 80);
             }
             if (weatherWarn.get(i).contains("Winter Storm Warning")) {
                 //Winter Storm Warning - 80% weatherpercent
-                WinterWarn = true;
-                weathertoday = 80;
+                checkWarningTime(i, 80);
             }
             if (weatherWarn.get(i).contains("Lake-Effect Snow Watch")) {
                 //Lake Effect Snow Watch - 80% weatherpercent
-                LakeSnowWatch = true;
-                weathertomorrow = 80;
+                checkWarningTime(i, 80);
             }
             if (weatherWarn.get(i).contains("Lake-Effect Snow Warning")) {
                 //Lake Effect Snow Warning - 80% weatherpercent
-                LakeSnowWarn = true;
-                weathertoday = 80;
+                checkWarningTime(i, 80);
             }
             if (weatherWarn.get(i).contains("Blizzard Watch")) {
                 //Blizzard Watch - 90% weatherpercent
-                BlizzardWatch = true;
-                weathertomorrow = 90;
+                checkWarningTime(i, 90);
             }
             if (weatherWarn.get(i).contains("Blizzard Warning")) {
                 //Blizzard Warning - 90% weatherpercent
-                BlizzardWarn = true;
-                weathertoday = 90;
+                checkWarningTime(i, 90);
             }
+        }
+    }
+
+    private void checkWarningTime(int i, int w) {
+        if (weatherExpire.get(i - 1).substring(0, 10).equals(datetoday)) {
+            weathertoday = w;
+        }
+
+        if (weatherExpire.get(i - 1).substring(0, 10).equals(datetomorrow)) {
+            weathertoday = w;
+            weathertomorrow = w;
         }
     }
 
@@ -1032,7 +1027,7 @@ public class ResultActivity extends AppCompatActivity {
                 schoolpercent = 60;
             }
             if (tier4today > 2 && dayrun == 0
-                || tier4tomorrow > 2 && dayrun == 1) {
+                    || tier4tomorrow > 2 && dayrun == 1) {
                 //3+ schools near GB are closed. 80% schoolpercent.
                 schoolpercent = 80;
                 if (Carman) {
@@ -1073,7 +1068,7 @@ public class ResultActivity extends AppCompatActivity {
             if (GB) {
                 //WJRTScraper reports Grand Blanc is closed. Override percentage, set to 100%
                 percent = 100;
-            }else if (dayrun == 0){
+            }else if (GBOpen){
                 //GB is open and the time is during or after school hours. 0% chance.
                 percent = 0;
             }
@@ -1189,24 +1184,29 @@ public class ResultActivity extends AppCompatActivity {
                 WeatherFragment.lstWeather.setAdapter(weatherAdapter);
 
                 WeatherFragment.lstWeather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                      @Override
-                      public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                          runOnUiThread(new Runnable() {
-                              @Override
-                              public void run() {
-                                  //Don't show a message for the list separator
-                                  if (position > 0 && WeatherWarningsPresent) {
-                                      new WeatherDialog(ResultActivity.this, weatherWarn.get(position), weatherSummary.get(position - 1), weatherLink.get(position)).show();
-                                  }
-                              }
-                          });
-                      }
-                  });
-
-                runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
-                        WeatherFragment.lstWeather.setVisibility(View.VISIBLE);
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Don't show a message for the list separator
+                                if (position > 0 && WeatherWarningsPresent) {
+                                    try {
+                                        new WeatherDialog(ResultActivity.this, weatherWarn.get(position), weatherSummary.get(position - 1), weatherLink.get(position)).show();
+                                    }catch (NullPointerException | IndexOutOfBoundsException e) {
+                                        Toast.makeText(ResultActivity.this, getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
+                                        Crashlytics.logException(e);
+                                    }
+                                }
+                            }
+                        });
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                WeatherFragment.lstWeather.setVisibility(View.VISIBLE);
+                            }
+                        });
                     }
                 });
             } else {

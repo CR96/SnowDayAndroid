@@ -121,7 +121,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/txtPercent"
         android:textSize="72sp"
-        android:visibility="invisible"
         android:layout_above="@+id/snowflake1"
         android:layout_centerHorizontal="true" />
 
