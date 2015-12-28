@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.GBSnowDay.SnowDay.AboutActivity">
     <item android:id="@+id/license"
-        android:title="@string/license"
+        android:title="@string/action_info"
         app:showAsAction="ifRoom" />
 </menu>

@@ -399,7 +399,6 @@ public class ResultActivity extends AppCompatActivity {
                 //This shows in place of the table (as plain text) if no schools or institutions are closed.
                 if (schooltext.contains("no closings or delays")) {
                     //No schools are closed.
-                    wjrtInfo.add(getString(R.string.NoClosings));
                     WJRTFail = false;
 
                     //Add a blank entry so checkClosings() still works correctly
@@ -460,10 +459,11 @@ public class ResultActivity extends AppCompatActivity {
 
         if (!GB) {
             //Grand Blanc is open.
+            if (!GBMessage) {
+                GBInfo.set(0, getString(R.string.GB) + getString(R.string.NotClosed));
+            }
+
             if (dayrun == 0) {
-                if (!GBMessage) {
-                    GBInfo.set(0, getString(R.string.GB) + getString(R.string.OpenToday));
-                }
                 if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16) {
                     //Time is between 7AM and 4PM. School is already in session.
                     GBInfo.add(getString(R.string.SchoolOpen));
@@ -472,10 +472,6 @@ public class ResultActivity extends AppCompatActivity {
                     //Time is after 4PM. School is already out.
                     GBInfo.add(getString(R.string.Dismissed));
                     GBOpen = true;
-                }
-            }else if (dayrun == 1) {
-                if (!GBMessage) {
-                    GBInfo.set(0, getString(R.string.GB) + getString(R.string.OpenTomorrow));
                 }
             }
         }
@@ -1133,7 +1129,6 @@ public class ResultActivity extends AppCompatActivity {
             if (!WJRTFail) {
                 //WJRT has not failed.
                 ClosingsAdapter closingsAdapter = new ClosingsAdapter(ResultActivity.this);
-                closingsAdapter.addSeparatorItem(getString(R.string.WJRTClosings));
                 closingsAdapter.addSeparatorItem(getString(R.string.tier4));
                 for (int i = 1; i < closings.size(); i++) {
                     closingsAdapter.addItem(closings.get(i));
@@ -1393,19 +1388,19 @@ public class ResultActivity extends AppCompatActivity {
             (views must remain fixed)*/
             switch (type) {
                 case TYPE_ITEM:
-                    if (Atherton && position == 2 || Bendle && position == 3
-                            || Bentley && position == 4 || Carman && position == 5
-                            || Flint && position == 6 || Goodrich && position == 7
-                            || Beecher && position == 9 || Clio && position == 10
-                            || Davison && position == 11 || Fenton && position == 12
-                            || Flushing && position == 13 || Genesee && position == 14
-                            || Kearsley && position == 15 || LKFenton && position == 16
-                            || Linden && position == 17 || Montrose && position == 18
-                            || Morris && position == 19 || SzCreek && position == 20
-                            || Durand && position == 22 || Holly && position == 23
-                            || Lapeer && position == 24 || Owosso && position == 25
-                            || GBAcademy && position == 27 || GISD && position == 28
-                            || HolyFamily && position == 29 || WPAcademy && position == 30) {
+                    if (Atherton && position == 1 || Bendle && position == 2
+                            || Bentley && position == 3 || Carman && position == 4
+                            || Flint && position == 5 || Goodrich && position == 6
+                            || Beecher && position == 8 || Clio && position == 9
+                            || Davison && position == 10 || Fenton && position == 11
+                            || Flushing && position == 12 || Genesee && position == 13
+                            || Kearsley && position == 14 || LKFenton && position == 15
+                            || Linden && position == 16 || Montrose && position == 17
+                            || Morris && position == 18 || SzCreek && position == 19
+                            || Durand && position == 21 || Holly && position == 22
+                            || Lapeer && position == 23 || Owosso && position == 24
+                            || GBAcademy && position == 26 || GISD && position == 27
+                            || HolyFamily && position == 28 || WPAcademy && position == 29) {
                         //If the school is closed, make it orange.
                         convertView = mInflater.inflate(R.layout.item_orange, parent, false);
                         holder.textView = (TextView)convertView.findViewById(R.id.text);
@@ -1417,15 +1412,10 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 case TYPE_SEPARATOR:
                     //Set the text separators ("Districts near Grand Blanc", etc.)
-                    if (position == 0) {
-                        convertView = mInflater.inflate(R.layout.separator_red, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.textSeparator);
-                        break;
-                    }else{
-                        convertView = mInflater.inflate(R.layout.separator, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-                        break;
-                    }
+                    convertView = mInflater.inflate(R.layout.separator, parent, false);
+                    holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                    break;
+
             }
             convertView.setTag(holder);
             holder.textView.setText(mData.get(position));
