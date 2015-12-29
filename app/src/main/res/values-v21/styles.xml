@@ -19,7 +19,8 @@
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:background">@color/colorBackground</item>
-        <item name="android:colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textColorLink">@color/colorPrimary</item>
     </style>
 
     <style name="ToolBarStyle" parent="">

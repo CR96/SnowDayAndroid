@@ -117,37 +117,46 @@ public class ResultActivity extends AppCompatActivity {
 
     boolean Durand; //Check for "Durand Senior Center"
     boolean Holly;  //Check for "Holly Academy"
-    boolean Lapeer; //Check for "Chatfield School-Lapeer", "Greater Lapeer Transit Authority",
-    // "Lapeer CMH Day Programs", "Lapeer Co. Ed-Tech Center", "Lapeer County Ofices", "
-    // Lapeer District Library", "Lapeer Senior Center", and "St. Paul Lutheran-Lapeer"
-    boolean Owosso; //Check for "Owosso Senior Center", "Baker College-Owosso", "Owosso Social Security Office",
-    // and "St. Paul Catholic-Owosso"
+    boolean Lapeer; //Check for "Lapeer County CMH", "Lapeer Vocational Tech.", "Lapeer Team Work",
+    // "Lapeer Senior Center", "Lapeer Co. Education Technology Center", "Lapeer Co. Intermed. Special Ed",
+    // "Lapeer Growth and Opportunity, Inc.", "Lapeer District Library", "Lapeer County Offices", "NEMSCA-Lapeer Head Start",
+    // "Greater Lapeer Transportation Authority", "Foster Grandparents-Lapeer, Genesee, Shiawassee", "Davenport University-Lapeer",
+    // "MSU Extension Service-Lapeer Co.", "Community Connections-Lapeer", and "Chatfield School-Lapeer"
+    boolean Owosso; //Check for "Owosso Christian School", "Owosso Senior Center",
+    // "Owosso Seventh-day Adventist School", and "Social Security Administration-Owosso"
 
     boolean Beecher;
-    boolean Clio; //Check for "Clio Area Senior Center", "Clio City Hall", and "Cornerstone Clio"
+    boolean Clio; //Check for "Clio Area Christian School", Clio Area Senior Center",
+    // "Clio City Hall", and "Cornerstone Clio"
     boolean Davison; //Check for "Davison Senior Center", "Faith Baptist School-Davison", "Montessori Academy-Davison",
     // and "Ross Medical Education-Davison"
-    boolean Fenton; //Check for "Lake Fenton", "Fenton City Hall", and "Fenton Montessori Academy"
+    boolean Fenton; //Check for "Lake Fenton", "Fenton City Hall", "Fenton Academy of Cosmetology",
+    // and "Fenton Montessori Academy"
     boolean Flushing; //Check for "Flushing Senior Citizens Center" and "St. Robert-Flushing"
-    boolean Genesee; //Check for "Freedom Work-Genesee Co.", "Genesee Christian-Burton",
-    // "Genesee Co. Mobile Meals", "Genesee Hlth Sys Day Programs", "Genesee Stem Academy", and "Genesee I.S.D."
+    boolean Genesee; //Check for "Genesee I.S.D.", "Genesee Health System Day Programs", "Genesee Health System",
+    // "Genesee Health Plan", "Genesee Academy", "Genesee Area Skill Center", "Genesee Christian School",
+    // "Genesee County Free Medical Clinic", "Genesee District Library", "Genesee County Mobile Meal Program",
+    // "Genesee STEM Academy", "Genesee Co Circuit Court", "Genesee County Government", "Genesee County Literacy Coalition",
+    // "Flint Genesee Job Corps", "Leadership Genesee", "Freedom Work Genesee Co.", "Youth Leadership Genesee",
+    // "67th District Court-Genesee Co.", "MSU Extension Service-Genesee Co.",
+    // "Genesee Christian-Burton", and "Foster Grandparents-Lapeer, Genesee, Shiawassee"
     boolean Kearsley;
     boolean LKFenton;
     boolean Linden; //Check for "Linden Charter Academy"
     boolean Montrose; //Check for "Montrose Senior Center"
-    boolean Morris;  //Check for "Mt Morris Twp Administration" and "St. Mary's-Mt. Morris"
-    boolean SzCreek; //Check for "Swartz Creek Area Senior Ctr." and "Swartz Creek Montessori"
+    boolean Morris;  //Check for "Mt Morris Twp Administration" and "St. Mary Church Religious Ed-Mt. Morris"
+    boolean SzCreek; //Check for "Swartz Creek Area Senior Center" and "Swartz Creek Montessori"
 
     boolean Atherton;
     boolean Bendle;
     boolean Bentley;
-    boolean Carman; //Check for "Carman-Ainsworth Senior Ctr."
+    boolean Carman; //Check for "Carman-Ainsworth Senior Center"
     boolean Flint; //Thankfully this is listed as "Flint Community Schools" -
-    // otherwise there would be 25 exceptions to check for.
+    // otherwise there would be a lot of exceptions to check for.
     boolean Goodrich;
 
-    boolean GB; //Check for "Freedom Work-Grand Blanc", "Grand Blanc Academy", "Grand Blanc City Offices",
-    // "Grand Blanc Senior Center", and "Holy Family-Grand Blanc"
+    boolean GB; //Check for "Grand Blanc Senior Center", "Grand Blanc Academy", "Grand Blanc Road Montessori",
+    // "Grand Blanc Gymnastics Co.", and "Freedom Work Grand Blanc"
 
     boolean GBOpen; //True if GB is already open (GB = false and time is during or after school hours)
 
@@ -371,7 +380,7 @@ public class ResultActivity extends AppCompatActivity {
                 schools = Jsoup.connect("http://abc12.com/closings").get();
                 //Attempt to parse input
 
-                Element table = schools.select("table").get(0);
+                Element table = schools.select("table").last();
                 Elements rows = table.select("tr");
 
                 for (int i = 1; i < rows.size(); i++) { //Skip header row
@@ -441,7 +450,8 @@ public class ResultActivity extends AppCompatActivity {
                 if (orgName.get(i).contains("Grand Blanc") && !orgName.get(i).contains("Academy")
                         && !orgName.get(i).contains("Freedom") && !orgName.get(i).contains("Offices")
                         && !orgName.get(i).contains("City") && !orgName.get(i).contains("Senior")
-                        && !orgName.get(i).contains("Holy")) {
+                        && !orgName.get(i).contains("Holy") && !orgName.get(i).contains("Montessori")
+                        && !orgName.get(i).contains("Gym")) {
                     GBInfo.set(0, getString(R.string.GB) + status.get(i));
                     if (status.get(i).contains("Closed Today") && dayrun == 0
                             || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
@@ -579,8 +589,9 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
             if (!(Clio)) {
-                if (orgName.get(i).contains("Clio") && !orgName.get(i).contains("Senior")
-                        && !orgName.get(i).contains("City") && !orgName.get(i).contains("Cornerstone")) {
+                if (orgName.get(i).contains("Clio") && !orgName.get(i).contains("Christian")
+                        && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("City")
+                        && !orgName.get(i).contains("Cornerstone")) {
                     closings.set(8, getString(R.string.Clio) + status.get(i));
                     if (status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -609,7 +620,8 @@ public class ResultActivity extends AppCompatActivity {
             }
             if (!(Fenton)) {
                 if (orgName.get(i).contains("Fenton") && !orgName.get(i).contains("Lake")
-                        && !orgName.get(i).contains("City") && !orgName.get(i).contains("Montessori")) {
+                        && !orgName.get(i).contains("City") && !orgName.get(i).contains("Academy")
+                        && !orgName.get(i).contains("Montessori")) {
                     closings.set(10, getString(R.string.Fenton) + status.get(i));
                     if (status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -639,8 +651,13 @@ public class ResultActivity extends AppCompatActivity {
                 if (orgName.get(i).contains("Genesee") && !orgName.get(i).contains("Freedom")
                         && !orgName.get(i).contains("Christian") && !orgName.get(i).contains("Library")
                         && !orgName.get(i).contains("Mobile") && !orgName.get(i).contains("Programs")
-                        && !orgName.get(i).contains("Hlth") && !orgName.get(i).contains("Sys")
-                        && !orgName.get(i).contains("Stem") && !orgName.get(i).contains("I.S.D.")) {
+                        && !orgName.get(i).contains("Health") && !orgName.get(i).contains("Medical")
+                        && !orgName.get(i).contains("Academy") && !orgName.get(i).contains("Skill")
+                        && !orgName.get(i).contains("Sys") && !orgName.get(i).contains("STEM")
+                        && !orgName.get(i).contains("Court") && !orgName.get(i).contains("County")
+                        && !orgName.get(i).contains("Job") && !orgName.get(i).contains("Leadership")
+                        && !orgName.get(i).contains("Freedom") && !orgName.get(i).contains("MSU")
+                        && !orgName.get(i).contains("I.S.D.") && !orgName.get(i).contains("Foster")) {
                     closings.set(12, getString(R.string.Genesee) + status.get(i));
                     if (status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -760,10 +777,14 @@ public class ResultActivity extends AppCompatActivity {
             }
             if (!(Lapeer)) {
                 if (orgName.get(i).contains("Lapeer") && !orgName.get(i).contains("Chatfield")
-                        && !orgName.get(i).contains("Transit") && !orgName.get(i).contains("CMH")
-                        && !orgName.get(i).contains("Tech") && !orgName.get(i).contains("Offices")
-                        && !orgName.get(i).contains("Library") && !orgName.get(i).contains("Senior")
-                        && !orgName.get(i).contains("Paul")) {
+                        && !orgName.get(i).contains("Greater") && !orgName.get(i).contains("CMH")
+                        && !orgName.get(i).contains("Tech") && !orgName.get(i).contains("Team")
+                        && !orgName.get(i).contains("Center") && !orgName.get(i).contains("Special")
+                        && !orgName.get(i).contains("Growth") && !orgName.get(i).contains("Offices")
+                        && !orgName.get(i).contains("Library") && !orgName.get(i).contains("Head")
+                        && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("Foster")
+                        && !orgName.get(i).contains("Davenport") && !orgName.get(i).contains("MSU")
+                        && !orgName.get(i).contains("Paul") && !orgName.get(i).contains("Connections")) {
                     closings.set(21, getString(R.string.Lapeer) + status.get(i));
                     if (status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
@@ -776,7 +797,8 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
             if (!(Owosso)) {
-                if (orgName.get(i).contains("Owosso") && !orgName.get(i).contains("Senior")
+                if (orgName.get(i).contains("Owosso") && !orgName.get(i).contains("Christian")
+                        && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("Adventist")
                         && !orgName.get(i).contains("Baker") && !orgName.get(i).contains("Paul")
                         && !orgName.get(i).contains("Security")) {
                     closings.set(22, getString(R.string.Owosso) + status.get(i));
