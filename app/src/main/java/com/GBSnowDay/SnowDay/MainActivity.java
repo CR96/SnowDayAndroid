@@ -63,10 +63,9 @@ public class MainActivity extends AppCompatActivity {
     String datetomorrow;
     String textdate;
 
-    int dayscount = 0;
     boolean todayValid;
     boolean tomorrowValid;
-    static boolean reminder;
+    static boolean eventPresent;
     static boolean bobcats;
 
     int days;
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     //Declare lists that will be used in ListAdapters
     List<String> infoList = new ArrayList<>();
     List<Integer> daysarray = new ArrayList<>();
-    int infoCount = 1;
 
     //Figure out what tomorrow is
     //Saturday = 6, Sunday = 7
@@ -252,49 +250,49 @@ public class MainActivity extends AppCompatActivity {
 
         if (dt.getMonthOfYear() == 6 && dt.getDayOfMonth() > 15) {
             //Summer break (June)
-            infoList.add(infoCount, getString(R.string.Summer));
-            infoCount++;
+            infoList.add(getString(R.string.Summer));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         } else if (dt.getMonthOfYear() > 6 && dt.getMonthOfYear() <= 8) {
             //Summer break (July and August)
-            infoList.add(infoCount, getString(R.string.Summer));
-            infoCount++;
+            infoList.add(getString(R.string.Summer));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         } else if (dt.getMonthOfYear() == 9 && dt.getDayOfMonth() < 7) {
             //Summer break (September)
-            infoList.add(infoCount, getString(R.string.Summer));
-            infoCount++;
+            infoList.add(getString(R.string.Summer));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         }else if (textdate.equals("September 07 2015")) {
-            infoList.add(infoCount, getString(R.string.YearStart));
-            infoCount++;
+            infoList.add(getString(R.string.YearStart));
+            eventPresent  = true;
             todayValid = false;
         }else if (textdate.equals("September 25 2015")) {
-            infoList.add(infoCount, getString(R.string.HC));
-            infoCount++;
+            infoList.add(getString(R.string.HC));
+            eventPresent  = true;
         }else if (textdate.equals("October 20 2015") || textdate.equals("December 08 2015")
                 || textdate.equals("February 02 2016") || textdate.equals("May 03 2016")) {
-            infoList.add(infoCount, getString(R.string.LSTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.LSTomorrow));
+            eventPresent  = true;
         } else if (textdate.equals("October 21 2015") || textdate.equals("December 09 2015")
                 || textdate.equals("February 03 2016") || textdate.equals("May 04 2016")) {
-            infoList.add(infoCount, getString(R.string.LSToday));
-            infoCount++;
+            infoList.add(getString(R.string.LSToday));
+            eventPresent  = true;
         }else if (textdate.equals("November 26 2015")) {
-            infoList.add(infoCount, getString(R.string.Thanksgiving));
-            infoCount++;
+            infoList.add(getString(R.string.Thanksgiving));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         }else if (textdate.equals("November 26 2015") || textdate.equals("November 27 2015")) {
-            infoList.add(infoCount, getString(R.string.ThanksgivingRecess));
-            infoCount++;
+            infoList.add(getString(R.string.ThanksgivingRecess));
+            eventPresent  = true;
             todayValid = false;
         } else if (textdate.equals("December 22 2015")) {
-            infoList.add(infoCount, getString(R.string.WinterBreakTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.WinterBreakTomorrow));
+            eventPresent  = true;
             tomorrowValid = false;
         } else if (textdate.equals("December 23 2015") || textdate.equals("December 24 2015")
                 || textdate.equals("December 25 2015") || textdate.equals("December 26 2015") || textdate.equals("December 27 2014")
@@ -303,93 +301,93 @@ public class MainActivity extends AppCompatActivity {
                 || textdate.equals("December 31 2015") || textdate.equals("January 01 2016")) {
             //Winter Break
             if (textdate.equals("December 25 2015")) {
-                infoList.add(infoCount, getString(R.string.Christmas));
-                infoCount++;
+                infoList.add(getString(R.string.Christmas));
+                eventPresent  = true;
             } else if (textdate.equals("January 01 2016")) {
-                infoList.add(infoCount, getString(R.string.NewYear));
-                infoCount++;
+                infoList.add(getString(R.string.NewYear));
+                eventPresent  = true;
             }
 
-            infoList.add(infoCount, getString(R.string.WinterBreak));
-            infoCount++;
+            infoList.add(getString(R.string.WinterBreak));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         } else if (textdate.equals("January 17 2016")) {
-            infoList.add(infoCount, getString(R.string.MLKTomorrow) + getString(R.string.NoSessionTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.MLKTomorrow) + getString(R.string.NoSessionTomorrow));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         } else if (textdate.equals("January 18 2016")) {
             //MLK Day
-            infoList.add(infoCount, getString(R.string.MLK) + getString(R.string.NoSessionToday));
-            infoCount++;
+            infoList.add(getString(R.string.MLK) + getString(R.string.NoSessionToday));
+            eventPresent  = true;
             todayValid = false;
         }else if (textdate.equals("January 24 2016")) {
-            infoList.add(infoCount, getString(R.string.RecordsTomorrow) + getString(R.string.NoSessionTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.RecordsTomorrow) + getString(R.string.NoSessionTomorrow));
+            eventPresent  = true;
             tomorrowValid = false;
         } else if (textdate.equals("January 25 2016")) {
-            infoList.add(infoCount, getString(R.string.Records) + getString(R.string.NoSessionToday));
-            infoCount++;
+            infoList.add(getString(R.string.Records) + getString(R.string.NoSessionToday));
+            eventPresent  = true;
             todayValid = false;
         }else if (textdate.equals("February 11 2016")) {
-            infoList.add(infoCount, getString(R.string.LincolnTomorrow) + getString(R.string.NoSessionTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.LincolnTomorrow) + getString(R.string.NoSessionTomorrow));
+            eventPresent  = true;
             tomorrowValid = false;
         } else if (textdate.equals("February 12 2016")) {
-            infoList.add(infoCount, getString(R.string.Lincoln) + getString(R.string.NoSessionToday));
-            infoCount++;
+            infoList.add(getString(R.string.Lincoln) + getString(R.string.NoSessionToday));
+            eventPresent  = true;
             todayValid = false;
         } else if (textdate.equals("February 14 2016")) {
-            infoList.add(infoCount, getString(R.string.PresidentTomorrow) + getString(R.string.NoSessionTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.PresidentTomorrow) + getString(R.string.NoSessionTomorrow));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         } else if (textdate.equals("February 15 2016")) {
-            infoList.add(infoCount, getString(R.string.President) + getString(R.string.NoSessionToday));
-            infoCount++;
+            infoList.add(getString(R.string.President) + getString(R.string.NoSessionToday));
+            eventPresent  = true;
             todayValid = false;
         } else if (textdate.equals("November 10 2015") || textdate.equals("March 08 2016")) {
-            infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.HalfDayConferenceMSTomorrow));
+            eventPresent  = true;
         }else if (textdate.equals("November 11 2015") || textdate.equals("November 12 2015")
                 || textdate.equals("March 09 2016") || textdate.equals("March 10 2016")) {
-            infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTodayTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.HalfDayConferenceMSTodayTomorrow));
+            eventPresent  = true;
         } else if (textdate.equals("November 13 2015") || textdate.equals("March 11 2016")) {
-            infoList.add(infoCount, getString(R.string.HalfDayConferenceMSTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.HalfDayConferenceMSToday));
+            eventPresent  = true;
         } else if (textdate.equals("November 24 2015") || textdate.equals("September 24 2015")
                 || textdate.equals("October 08 2015")
                 || textdate.equals("March 31 2016")) {
-            infoList.add(infoCount, getString(R.string.HalfDayTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.HalfDayTomorrow));
+            eventPresent  = true;
         }else if (textdate.equals("November 25 2015") || textdate.equals("September 25 2015")
                 || textdate.equals("October 09 2015")) {
             if (textdate.equals("November 25 2015")) {
-                infoList.add(infoCount, getString(R.string.ThanksgivingRecessTomorrow));
-                infoCount++;
+                infoList.add(getString(R.string.ThanksgivingRecessTomorrow));
+                eventPresent  = true;
                 tomorrowValid = false;
             }
 
-            infoList.add(infoCount, getString(R.string.HalfDay));
-            infoCount++;
+            infoList.add(getString(R.string.HalfDay));
+            eventPresent  = true;
         }else if (textdate.equals("March 24 2016")) {
-            infoList.add(infoCount, getString(R.string.GoodFridayTomorrow) + getString(R.string.NoSessionTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.GoodFridayTomorrow) + getString(R.string.NoSessionTomorrow));
+            eventPresent  = true;
             tomorrowValid = false;
         }else if (textdate.equals("March 25 2016")) {
-            infoList.add(infoCount, getString(R.string.GoodFriday) + getString(R.string.NoSessionToday));
-            infoCount++;
+            infoList.add(getString(R.string.GoodFriday) + getString(R.string.NoSessionToday));
+            eventPresent  = true;
             todayValid = false;
         }else if (textdate.equals("March 27 2016")) {
-            infoList.add(infoCount, getString(R.string.Easter));
-            infoCount++;
+            infoList.add(getString(R.string.Easter));
+            eventPresent  = true;
             todayValid = false;
         } else if (textdate.equals("April 01 2016")) {
-            infoList.add(infoCount, getString(R.string.HalfDay));
-            infoList.add(infoCount + 1, getString(R.string.SpringBreakTomorrow));
-            infoCount+=2;
+            infoList.add(getString(R.string.HalfDay));
+            infoList.add(getString(R.string.SpringBreakTomorrow));
+            eventPresent  = true;
             tomorrowValid = false;
         } else if (textdate.equals("April 02 2016") || textdate.equals("April 03 2016")
                 || textdate.equals("April 04 2016") || textdate.equals("April 05 2016")
@@ -397,39 +395,35 @@ public class MainActivity extends AppCompatActivity {
                 || textdate.equals("April 08 2016")) {
             //Spring Break
 
-            infoList.add(infoCount, getString(R.string.SpringBreak));
-            infoCount++;
+            infoList.add(getString(R.string.SpringBreak));
+            eventPresent  = true;
             todayValid = false;
             tomorrowValid = false;
         } else if (textdate.equals("November 02 2015") || textdate.equals("April 27 2016")) {
-            infoList.add(infoCount, getString(R.string.PDDTomorrow) + getString(R.string.NoSessionTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.PDDTomorrow) + getString(R.string.NoSessionTomorrow));
+            eventPresent  = true;
             tomorrowValid = false;
         } else if (textdate.equals("November 03 2015") || textdate.equals("April 28 2016")) {
-            infoList.add(infoCount, getString(R.string.PDD) + getString(R.string.NoSessionToday));
-            infoCount++;
+            infoList.add(getString(R.string.PDD) + getString(R.string.NoSessionToday));
+            eventPresent  = true;
             todayValid = false;
         } else if (textdate.equals("May 29 2016")) {
-            infoList.add(infoCount, getString(R.string.MemorialDayTomorrow) + getString(R.string.NoSessionTomorrow));
-            infoCount++;
+            infoList.add(getString(R.string.MemorialDayTomorrow) + getString(R.string.NoSessionTomorrow));
+            eventPresent  = true;
             tomorrowValid = false;
         } else if (textdate.equals("May 30 2016")) {
-            infoList.add(infoCount, getString(R.string.MemorialDay) + getString(R.string.NoSessionToday));
-            infoCount++;
+            infoList.add(getString(R.string.MemorialDay) + getString(R.string.NoSessionToday));
+            eventPresent  = true;
             todayValid = false;
         } else if (textdate.equals("June 02 2016")) {
-            infoList.add(infoCount, getString(R.string.Senior));
-            infoCount++;
+            infoList.add(getString(R.string.Senior));
+            eventPresent  = true;
             bobcats = true;
         } else if (textdate.equals("June 15 2016")) {
-            infoList.add(infoCount, getString(R.string.YearEnd));
-            infoCount++;
+            infoList.add(getString(R.string.YearEnd));
+            eventPresent  = true;
             tomorrowValid = false;
         }
-
-        //If items were added...
-        reminder = infoCount > 1;
-
 
         //Determine if the calculation should be available
         if (!tomorrowValid && !todayValid) {
@@ -447,8 +441,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void special() {
-        daysarray.add(dayscount, (int) lstDays.getSelectedItemId());
-        dayscount++;
+        daysarray.add((int) lstDays.getSelectedItemId());
         int[] specialarray = {0, 3, 7, 1, 7, 3, 1, 2, 1};
         if (daysarray.toString().equals(Arrays.toString(specialarray))) {
             List<String> special = new ArrayList<>();
@@ -468,22 +461,22 @@ public class MainActivity extends AppCompatActivity {
         //Sunday is 7
 
         if (weekday == 5) {
-            infoList.add(infoCount, getString(R.string.SaturdayTomorrow));
+            infoList.add(getString(R.string.SaturdayTomorrow));
             optTomorrow.setEnabled(false);
             optTomorrow.setChecked(false);
-            infoCount++;
+            eventPresent  = true;
         } else if (weekday == 6) {
-            infoList.add(infoCount, getString(R.string.SaturdayToday));
+            infoList.add(getString(R.string.SaturdayToday));
             optToday.setEnabled(false);
             optToday.setChecked(false);
             optTomorrow.setEnabled(false);
             optTomorrow.setChecked(false);
-            infoCount++;
+            eventPresent  = true;
         } else if (weekday == 7) {
-            infoList.add(infoCount, getString(R.string.SundayToday));
+            infoList.add(getString(R.string.SundayToday));
             optToday.setEnabled(false);
             optToday.setChecked(false);
-            infoCount++;
+            eventPresent  = true;
         }
     }
 }

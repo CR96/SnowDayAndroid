@@ -58,7 +58,6 @@
         <item>10 or more</item>
     </string-array>
 
-    <string name="dayinfo">Information</string>
     <string name="special">Silence will fall when the question is asked.</string>
 
     <string name="calculate">CALCULATE</string>
@@ -115,9 +114,6 @@
     <string name="Open">"OPEN</string>
     <string name="NotClosed">"No current closures or delays."</string>
 
-    <string name="GBClosedToday">Grand Blanc: Closed Today</string>
-    <string name="GBClosedTomorrow">Grand Blanc: Closed Tomorrow</string>
-
     <string name="NoConnection">Check your internet connection.</string>
     <string name="NoNetwork">Network communication issues</string>
 
@@ -146,12 +142,9 @@
     <string name="SchoolOpen">School is already in session.</string>
     <string name="Dismissed">School has already been dismissed.</string>
 
-    <string name="NoWeather">"No applicable weather warnings."</string>
-
     <string name="SaturdayTomorrow">Tomorrow is Saturday.</string>
     <string name="SaturdayToday">Today is Saturday. Try again tomorrow!</string>
     <string name="SundayToday">Today is Sunday.</string>
-    <string name="Weekend">Enjoy the weekend!</string>
 
     <string name="SnowDay">Enjoy your Snow Day!</string>
 
@@ -174,7 +167,7 @@
 
     <string name="HalfDayConferenceMSTomorrow">REMINDER: Tomorrow is a Half Day for elementary and middle school students.</string>
     <string name="HalfDayConferenceMSTodayTomorrow">Today and Tomorrow are Half Days for elementary and middle school students.</string>
-    <string name="HalfDayConferenceToday">REMINDER: Today is a Half Day for elementary and middle school students.</string>
+    <string name="HalfDayConferenceMSToday">REMINDER: Today is a Half Day for elementary and middle school students.</string>
 
     <string name="ThanksgivingRecessTomorrow">Thanksgiving Recess begins tomorrow.</string>
     <string name="ThanksgivingRecess">Enjoy your Thanksgiving Recess!</string>

@@ -940,67 +940,67 @@ public class ResultActivity extends AppCompatActivity {
         /*Only the highest weatherpercent is stored (not cumulative).
         Calculation is affected based on when warning expires.*/
         for (int i = 0; i < weatherWarn.size(); i++) {
-            if (weatherWarn.get(i).contains("Significant Weather Advisory")) {
+            if (weatherWarn.get(i).contains(getString(R.string.SigWeather))) {
                 //Significant Weather Advisory - 15% weatherpercent
                 checkWarningTime(i, 15);
             }
-            if (weatherWarn.get(i).contains("Winter Weather Advisory")) {
+            if (weatherWarn.get(i).contains(getString(R.string.WinterAdvisory))) {
                 //Winter Weather Advisory - 30% weatherpercent
                 checkWarningTime(i, 30);
             }
-            if (weatherWarn.get(i).contains("Lake-Effect Snow Advisory")) {
+            if (weatherWarn.get(i).contains(getString(R.string.LakeSnowAdvisory))) {
                 //Lake Effect Snow Advisory - 40% weatherpercent
                 checkWarningTime(i, 40);
             }
-            if (weatherWarn.get(i).contains("Freezing Rain Advisory")) {
+            if (weatherWarn.get(i).contains(getString(R.string.Rain))) {
                 //Freezing Rain - 40% weatherpercent
                 checkWarningTime(i, 40);
             }
-            if (weatherWarn.get(i).contains("Freezing Drizzle Advisory")) {
+            if (weatherWarn.get(i).contains(getString(R.string.Drizzle))) {
                 //Freezing Drizzle - 40% weatherpercent
                 checkWarningTime(i, 40);
             }
-            if (weatherWarn.get(i).contains("Freezing Fog Advisory")) {
+            if (weatherWarn.get(i).contains(getString(R.string.Fog))) {
                 //Freezing Fog - 40% weatherpercent
                 checkWarningTime(i, 40);
             }
-            if (weatherWarn.get(i).contains("Wind Chill Advisory")) {
+            if (weatherWarn.get(i).contains(getString(R.string.WindChillAdvisory))) {
                 //Wind Chill Advisory - 40% weatherpercent
                 checkWarningTime(i, 40);
             }
-            if (weatherWarn.get(i).contains("Ice Storm Warning")) {
+            if (weatherWarn.get(i).contains(getString(R.string.IceStorm))) {
                 //Ice Storm Warning - 70% weatherpercent
                 checkWarningTime(i, 70);
             }
-            if (weatherWarn.get(i).contains("Wind Chill Watch")) {
+            if (weatherWarn.get(i).contains(getString(R.string.WindChillWatch))) {
                 //Wind Chill Watch - 70% weatherpercent
                 checkWarningTime(i, 70);
             }
-            if (weatherWarn.get(i).contains("Wind Chill Warning")) {
+            if (weatherWarn.get(i).contains(getString(R.string.WindChillWarn))) {
                 //Wind Chill Warning - 70% weatherpercent
                 checkWarningTime(i, 70);
             }
-            if (weatherWarn.get(i).contains("Winter Storm Watch")) {
+            if (weatherWarn.get(i).contains(getString(R.string.WinterWatch))) {
                 //Winter Storm Watch - 80% weatherpercent
                 checkWarningTime(i, 80);
             }
-            if (weatherWarn.get(i).contains("Winter Storm Warning")) {
+            if (weatherWarn.get(i).contains(getString(R.string.WinterWarn))) {
                 //Winter Storm Warning - 80% weatherpercent
                 checkWarningTime(i, 80);
             }
-            if (weatherWarn.get(i).contains("Lake-Effect Snow Watch")) {
+            if (weatherWarn.get(i).contains(getString(R.string.LakeSnowWatch))) {
                 //Lake Effect Snow Watch - 80% weatherpercent
                 checkWarningTime(i, 80);
             }
-            if (weatherWarn.get(i).contains("Lake-Effect Snow Warning")) {
+            if (weatherWarn.get(i).contains(getString(R.string.LakeSnowWarn))) {
                 //Lake Effect Snow Warning - 80% weatherpercent
                 checkWarningTime(i, 80);
             }
-            if (weatherWarn.get(i).contains("Blizzard Watch")) {
+            if (weatherWarn.get(i).contains(getString(R.string.BlizzardWatch))) {
                 //Blizzard Watch - 90% weatherpercent
                 checkWarningTime(i, 90);
             }
-            if (weatherWarn.get(i).contains("Blizzard Warning")) {
+            if (weatherWarn.get(i).contains(getString(R.string.BlizzardWarn))) {
                 //Blizzard Warning - 90% weatherpercent
                 checkWarningTime(i, 90);
             }

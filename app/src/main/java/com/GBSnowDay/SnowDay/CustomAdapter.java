@@ -74,7 +74,7 @@ public class CustomAdapter extends BaseAdapter {
 
                     convertView = mInflater.inflate(R.layout.item_bobcats, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
-                } else if (MainActivity.reminder && position == 1) {
+                } else if (MainActivity.eventPresent && position == 1) {
                     //If there is a reminder / event, make it blue
                     convertView = mInflater.inflate(R.layout.item_reminder, parent, false);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
