@@ -1,6 +1,7 @@
 package com.GBSnowDay.SnowDay;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WeatherDialog {
 
@@ -43,8 +45,12 @@ public class WeatherDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Uri uri = Uri.parse(link);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                context.startActivity(intent);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    context.startActivity(intent);
+                }catch (ActivityNotFoundException e) {
+                    Toast.makeText(context, "Can't open link", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         builder.setNegativeButton(R.string.Close, new DialogInterface.OnClickListener() {
