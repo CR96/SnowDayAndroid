@@ -47,7 +47,7 @@ import java.util.TreeSet;
 
 public class ResultActivity extends AppCompatActivity {
 
-    /*Copyright 2014-2015 Corey Rowe
+    /*Copyright 2014-2016 Corey Rowe
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -87,6 +87,9 @@ public class ResultActivity extends AppCompatActivity {
 
     int days;
     int dayrun;
+
+    String weekdaytoday;
+    String weekdaytomorrow;
 
     String datetoday;
     String datetomorrow;
@@ -376,8 +379,17 @@ public class ResultActivity extends AppCompatActivity {
             //Run scraper in an Async task.
 
             try {
+
+                //Get the day of the week as a string.
+                weekdaytoday = dt.dayOfWeek().getAsText();
+
+                //Get tomorrow's weekday as a string.
+                DateTime tomorrow = new DateTime();
+
+                weekdaytomorrow = tomorrow.plusDays(1).dayOfWeek().getAsText();
+
                 //This is the current listings page.
-                schools = Jsoup.connect("http://abc12.com/closings").get();
+                schools = Jsoup.connect("http://abc12.com/closings").timeout(10000).get();
                 //Attempt to parse input
 
                 Element table = schools.select("table").last();
@@ -453,7 +465,9 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Holy") && !orgName.get(i).contains("Montessori")
                         && !orgName.get(i).contains("Gym")) {
                     GBInfo.set(0, getString(R.string.GB) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0
+                    if (status.get(i).contains("Closed " + weekdaytoday)  && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0
+                            || status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
                             || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         GBInfo.add(getString(R.string.SnowDay));
                         //GB is closed.
@@ -491,18 +505,20 @@ public class ResultActivity extends AppCompatActivity {
         /*General structure:
         ->Checks for the presence of a school name
         -->If the school appears in the list, show its status entry and set its boolean to "true"
-        --->If the status entry contains "Closed Today" and the calculation is being run for 'today',
+        --->If the status entry contains "Closed [Today]" and the calculation is being run for 'today',
             increase that tier's 'today' count
-        --->If the status entry contains "Closed Tomorrow" and the calculation is being run for 'tomorrow',
+        --->If the status entry contains "Closed [Tomorrow]" and the calculation is being run for 'tomorrow',
             increase that tier's 'tomorrow' count*/
 
         for (int i = 0; i < orgName.size(); i++) {
             if (!(Atherton)) {
                 if (orgName.get(i).contains("Atherton")) {
                     closings.set(1, getString(R.string.Atherton) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier4tomorrow++;
                     }
                     Atherton = true;
@@ -513,9 +529,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Bendle)) {
                 if (orgName.get(i).contains("Bendle")) {
                     closings.set(2, getString(R.string.Bendle) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier4tomorrow++;
                     }
                     Bendle = true;
@@ -526,9 +544,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Bentley)) {
                 if (orgName.get(i).contains("Bentley")) {
                     closings.set(3, getString(R.string.Bentley) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier4tomorrow++;
                     }
                     Bentley = true;
@@ -539,9 +559,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Carman)) {
                 if (orgName.get(i).contains("Carman-Ainsworth") && !orgName.get(i).contains("Senior")) {
                     closings.set(4, getString(R.string.Carman) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier4tomorrow++;
                     }
                     Carman = true;
@@ -552,9 +574,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Flint)) {
                 if (orgName.get(i).contains("Flint Community Schools")) {
                     closings.set(5, getString(R.string.Flint) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier4tomorrow++;
                     }
                     Flint = true;
@@ -565,9 +589,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Goodrich)) {
                 if (orgName.get(i).contains("Goodrich")) {
                     closings.set(6, getString(R.string.Goodrich) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier4tomorrow++;
                     }
                     Goodrich = true;
@@ -578,9 +604,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Beecher)) {
                 if (orgName.get(i).contains("Beecher")) {
                     closings.set(7, getString(R.string.Beecher) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Beecher = true;
@@ -593,9 +621,11 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("City")
                         && !orgName.get(i).contains("Cornerstone")) {
                     closings.set(8, getString(R.string.Clio) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Clio = true;
@@ -608,9 +638,11 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Faith") && !orgName.get(i).contains("Medical")
                         && !orgName.get(i).contains("Montessori")) {
                     closings.set(9, getString(R.string.Davison) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Davison = true;
@@ -623,9 +655,11 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("City") && !orgName.get(i).contains("Academy")
                         && !orgName.get(i).contains("Montessori")) {
                     closings.set(10, getString(R.string.Fenton) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Fenton = true;
@@ -637,9 +671,11 @@ public class ResultActivity extends AppCompatActivity {
                 if (orgName.get(i).contains("Flushing") && !orgName.get(i).contains("Senior")
                         && !orgName.get(i).contains("Robert")) {
                     closings.set(11, getString(R.string.Flushing) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Flushing = true;
@@ -659,9 +695,11 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Freedom") && !orgName.get(i).contains("MSU")
                         && !orgName.get(i).contains("I.S.D.") && !orgName.get(i).contains("Foster")) {
                     closings.set(12, getString(R.string.Genesee) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Genesee = true;
@@ -672,9 +710,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Kearsley)) {
                 if (orgName.get(i).contains("Kearsley")) {
                     closings.set(13, getString(R.string.Kearsley) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Kearsley = true;
@@ -685,9 +725,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(LKFenton)) {
                 if (orgName.get(i).contains("Lake Fenton")) {
                     closings.set(14, getString(R.string.LKFenton) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     LKFenton = true;
@@ -698,9 +740,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Linden)) {
                 if (orgName.get(i).contains("Linden") && !orgName.get(i).contains("Charter")) {
                     closings.set(15, getString(R.string.Linden) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Linden = true;
@@ -711,9 +755,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Montrose)) {
                 if (orgName.get(i).contains("Montrose") && !orgName.get(i).contains("Senior")) {
                     closings.set(16, getString(R.string.Montrose) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    } else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    } else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Montrose = true;
@@ -725,9 +771,11 @@ public class ResultActivity extends AppCompatActivity {
                 if (orgName.get(i).contains("Mt. Morris") && !orgName.get(i).contains("Administration")
                         && !orgName.get(i).contains("Twp") && !orgName.get(i).contains("Mary")) {
                     closings.set(17, getString(R.string.Morris) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     Morris = true;
@@ -739,9 +787,11 @@ public class ResultActivity extends AppCompatActivity {
                 if (orgName.get(i).contains("Swartz Creek") && !orgName.get(i).contains("Senior")
                         && !orgName.get(i).contains("Montessori")) {
                     closings.set(18, getString(R.string.SzCreek) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier3tomorrow++;
                     }
                     SzCreek = true;
@@ -752,9 +802,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Durand)) {
                 if (orgName.get(i).contains("Durand") && !orgName.get(i).contains("Senior")) {
                     closings.set(19, getString(R.string.Durand) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier2tomorrow++;
                     }
                     Durand = true;
@@ -765,9 +817,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(Holly)) {
                 if (orgName.get(i).contains("Holly") && !orgName.get(i).contains("Academy")) {
                     closings.set(20, getString(R.string.Holly) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier2tomorrow++;
                     }
                     Holly = true;
@@ -786,9 +840,11 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Davenport") && !orgName.get(i).contains("MSU")
                         && !orgName.get(i).contains("Paul") && !orgName.get(i).contains("Connections")) {
                     closings.set(21, getString(R.string.Lapeer) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier2tomorrow++;
                     }
                     Lapeer = true;
@@ -802,9 +858,11 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Baker") && !orgName.get(i).contains("Paul")
                         && !orgName.get(i).contains("Security")) {
                     closings.set(22, getString(R.string.Owosso) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier2tomorrow++;
                     }
                     Owosso = true;
@@ -815,9 +873,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(GBAcademy)) {
                 if (orgName.get(i).contains("Grand Blanc Academy")) {
                     closings.set(23, getString(R.string.GBAcademy) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier1tomorrow++;
                     }
                     GBAcademy = true;
@@ -828,9 +888,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(GISD)) {
                 if (orgName.get(i).contains("Genesee I.S.D.")) {
                     closings.set(24, getString(R.string.GISD) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier1tomorrow++;
                     }
                     GISD = true;
@@ -841,9 +903,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(HolyFamily)) {
                 if (orgName.get(i).contains("Holy Family")) {
                     closings.set(25, getString(R.string.HolyFamily) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier1tomorrow++;
                     }
                     HolyFamily = true;
@@ -854,9 +918,11 @@ public class ResultActivity extends AppCompatActivity {
             if (!(WPAcademy)) {
                 if (orgName.get(i).contains("Woodland Park Academy")) {
                     closings.set(26, getString(R.string.WPAcademy) + status.get(i));
-                    if (status.get(i).contains("Closed Today") && dayrun == 0) {
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
-                    }else if (status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         tier1tomorrow++;
                     }
                     WPAcademy = true;
@@ -876,7 +942,7 @@ public class ResultActivity extends AppCompatActivity {
 
             //Live html
             try {
-                weatherdoc = Jsoup.connect("http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&y=0").get();
+                weatherdoc = Jsoup.connect("http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&y=0").timeout(10000).get();
 
                 Elements title = weatherdoc.select("title");
                 Elements summary = weatherdoc.select("summary");
