@@ -16,8 +16,8 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:text="@string/EmptyTimeline"
-            android:drawableLeft="@drawable/tw__ic_logo_white"
-            android:drawablePadding="8dp"/>
+            android:drawableLeft="@drawable/tw__ic_logo_default"
+            android:drawablePadding="4dp"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_layout"
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@android:id/list"
-                android:divider="@color/tw__medium_gray"
+                android:divider="@color/tw__light_gray"
                 android:dividerHeight="1dp"
                 android:drawSelectorOnTop="false"/>
         </android.support.v4.widget.SwipeRefreshLayout>
