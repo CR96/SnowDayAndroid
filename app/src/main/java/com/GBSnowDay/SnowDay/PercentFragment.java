@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 public class PercentFragment extends Fragment {
 
-    public static TextView txtPercent;
-    public static ListView lstGB;
+    public TextView txtPercent;
+    public ListView lstGB;
 
-    static ImageView progCalculate;
+    ImageView progCalculate;
 
     public PercentFragment() {
         // Required empty public constructor
@@ -40,10 +40,10 @@ public class PercentFragment extends Fragment {
         progCalculate = (ImageView) view.findViewById(R.id.progCalculate);
 
         Animation fade = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
-        PercentFragment.progCalculate.startAnimation(fade);
+        progCalculate.startAnimation(fade);
 
         Animation rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
-        PercentFragment.progCalculate.startAnimation(rotate);
+        progCalculate.startAnimation(rotate);
 
         ImageView sf1 = (ImageView) view.findViewById(R.id.snowflake1);
         ImageView sf2 = (ImageView) view.findViewById(R.id.snowflake2);

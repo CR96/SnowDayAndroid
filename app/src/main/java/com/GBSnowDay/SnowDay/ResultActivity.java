@@ -62,6 +62,9 @@ public class ResultActivity extends AppCompatActivity {
     limitations under the License.*/
 
     //Declare all views
+    PercentFragment percentFragment = new PercentFragment();
+    ClosingsFragment closingsFragment = new ClosingsFragment();
+    WeatherFragment weatherFragment = new WeatherFragment();
 
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -252,9 +255,9 @@ public class ResultActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new PercentFragment(), getString(R.string.tab1));
-        adapter.addFragment(new ClosingsFragment(), getString(R.string.tab2));
-        adapter.addFragment(new WeatherFragment(), getString(R.string.tab3));
+        adapter.addFragment(percentFragment, getString(R.string.tab1));
+        adapter.addFragment(closingsFragment, getString(R.string.tab2));
+        adapter.addFragment(weatherFragment, getString(R.string.tab3));
         viewPager.setAdapter(adapter);
     }
 
@@ -1163,7 +1166,7 @@ public class ResultActivity extends AppCompatActivity {
 
             runOnUiThread(new Runnable() {
                 public void run() {
-                    PercentFragment.txtPercent.setText("0%");
+                    percentFragment.txtPercent.setText("0%");
                 }
             });
 
@@ -1174,7 +1177,7 @@ public class ResultActivity extends AppCompatActivity {
                 GBInfo.add(getString(R.string.CalculateError));
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        PercentFragment.txtPercent.setText("--");
+                        percentFragment.txtPercent.setText("--");
                         crossFadePercent();
                         enableTabs();
                     }
@@ -1184,7 +1187,7 @@ public class ResultActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         crossFadePercent();
-                        countUp(PercentFragment.txtPercent, 0);
+                        countUp(percentFragment.txtPercent, 0);
                     }
                 });
 
@@ -1210,7 +1213,7 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
 
-            PercentFragment.lstGB.setAdapter(gbAdapter);
+            percentFragment.lstGB.setAdapter(gbAdapter);
 
             //Set up the ListView adapter that displays school closings
 
@@ -1229,23 +1232,23 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
 
-                ClosingsFragment.lstClosings.setAdapter(closingsAdapter);
+                closingsFragment.lstClosings.setAdapter(closingsAdapter);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ClosingsFragment.lstClosings.setVisibility(View.VISIBLE);
+                        closingsFragment.lstClosings.setVisibility(View.VISIBLE);
                     }
                 });
             } else {
                 //WJRT has failed.
                 ArrayAdapter<String> WJRTadapter = new ArrayAdapter<>(getApplicationContext(),
                         android.R.layout.simple_list_item_1, wjrtInfo);
-                ClosingsFragment.lstWJRT.setAdapter(WJRTadapter);
+                closingsFragment.lstWJRT.setAdapter(WJRTadapter);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ClosingsFragment.lstWJRT.setVisibility(View.VISIBLE);
+                        closingsFragment.lstWJRT.setVisibility(View.VISIBLE);
                     }
                 });
 
@@ -1268,9 +1271,9 @@ public class ResultActivity extends AppCompatActivity {
                     weatherAdapter.addItem(weatherWarn.get(i));
                 }
 
-                WeatherFragment.lstWeather.setAdapter(weatherAdapter);
+                weatherFragment.lstWeather.setAdapter(weatherAdapter);
 
-                WeatherFragment.lstWeather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                weatherFragment.lstWeather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                         runOnUiThread(new Runnable() {
@@ -1291,7 +1294,7 @@ public class ResultActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                WeatherFragment.lstWeather.setVisibility(View.VISIBLE);
+                                weatherFragment.lstWeather.setVisibility(View.VISIBLE);
                             }
                         });
                     }
@@ -1300,11 +1303,11 @@ public class ResultActivity extends AppCompatActivity {
                 //NWS has failed.
                 ArrayAdapter<String> NWSadapter = new ArrayAdapter<>(getApplicationContext(),
                         android.R.layout.simple_list_item_1, nwsInfo);
-                WeatherFragment.lstNWS.setAdapter(NWSadapter);
+                weatherFragment.lstNWS.setAdapter(NWSadapter);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        WeatherFragment.lstNWS.setVisibility(View.VISIBLE);
+                        weatherFragment.lstNWS.setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -1313,19 +1316,19 @@ public class ResultActivity extends AppCompatActivity {
 
     private void crossFadePercent() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-            PercentFragment.txtPercent.setAlpha(0f);
-            PercentFragment.txtPercent.animate()
+            percentFragment.txtPercent.setAlpha(0f);
+            percentFragment.txtPercent.animate()
                     .alpha(1f)
                     .setDuration(250);
 
-            PercentFragment.progCalculate.animate()
+            percentFragment.progCalculate.animate()
                     .alpha(0f)
                     .setDuration(250)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            PercentFragment.progCalculate.clearAnimation();
-                            PercentFragment.progCalculate.setVisibility(View.GONE);
+                            percentFragment.progCalculate.clearAnimation();
+                            percentFragment.progCalculate.setVisibility(View.GONE);
                         }
                     });
         }else{
@@ -1337,18 +1340,18 @@ public class ResultActivity extends AppCompatActivity {
                 public void onAnimationStart(Animation animation) {}
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    PercentFragment.progCalculate.clearAnimation();
-                    PercentFragment.progCalculate.setVisibility(View.GONE);
+                    percentFragment.progCalculate.clearAnimation();
+                    percentFragment.progCalculate.setVisibility(View.GONE);
                 }
                 @Override
                 public void onAnimationRepeat(Animation animation) {}
             });
-            PercentFragment.progCalculate.startAnimation(fade_out);
+            percentFragment.progCalculate.startAnimation(fade_out);
 
             Animation fade_in = AnimationUtils.loadAnimation(ResultActivity.this, android.R.anim.fade_in);
             fade_in.setDuration(250);
             fade_in.setFillAfter(true);
-            PercentFragment.txtPercent.startAnimation(fade_in);
+            percentFragment.txtPercent.startAnimation(fade_in);
         }
     }
 
@@ -1356,7 +1359,7 @@ public class ResultActivity extends AppCompatActivity {
     private void countUp(final TextView tv, final int count) {
         if (count > percent) {
             if (percent > 0) {
-                PercentFragment.txtPercent.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.overshoot));
+                percentFragment.txtPercent.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.overshoot));
             }
             enableTabs();
             return;
@@ -1366,25 +1369,25 @@ public class ResultActivity extends AppCompatActivity {
         if (count >= 0 && count <= 20) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
+                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
                 }
             });
         } if (count > 20 && count <= 60) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
+                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
                 }
             });
         } if (count > 60 && count <= 80) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
+                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
                 }
             });
         } if (count > 80) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    PercentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
+                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
                 }
             });
         }
@@ -1411,8 +1414,8 @@ public class ResultActivity extends AppCompatActivity {
         tabLayout.setVisibility(View.VISIBLE);
         viewPager.setPagingEnabled(true);
 
-        PercentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
-        PercentFragment.lstGB.setVisibility(View.VISIBLE);
+        percentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+        percentFragment.lstGB.setVisibility(View.VISIBLE);
     }
 
 

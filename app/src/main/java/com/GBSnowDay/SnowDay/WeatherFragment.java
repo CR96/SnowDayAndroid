@@ -21,8 +21,8 @@ public class WeatherFragment extends Fragment {
     WebView webRadar;
     Button btnRadar;
 
-    public static ListView lstNWS;
-    public static ListView lstWeather;
+    public ListView lstNWS;
+    public ListView lstWeather;
 
     public WeatherFragment() {
         // Required empty public constructor
