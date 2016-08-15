@@ -148,12 +148,15 @@
     <string name="SnowDay">Enjoy your Snow Day!</string>
 
     <!--Dates and Holidays-->
+    <string name="TomorrowGeneric">School is not in session tomorrow.</string>
+    <string name="TodayGeneric">School is not in session today.</string>
+
     <string name="Thanksgiving">Happy Thanksgiving!</string>
     <string name="Christmas">Merry Christmas!</string>
     <string name="NewYear">Happy New Year!</string>
     <string name="Easter">Happy Easter!</string>
 
-    <string name="YearStart">The 2015–2016 school year begins tomorrow!</string>
+    <string name="YearStart">The 2016–2017 school year begins tomorrow!</string>
     <string name="YearEnd">Today is the last day of school!</string>
 
     <string name="HC">Happy Homecoming!</string>
@@ -167,6 +170,9 @@
     <string name="HalfDayConferenceMSTomorrow">REMINDER: Tomorrow is a Half Day for elementary and middle school students.</string>
     <string name="HalfDayConferenceMSTodayTomorrow">Today and Tomorrow are Half Days for elementary and middle school students.</string>
     <string name="HalfDayConferenceMSToday">REMINDER: Today is a Half Day for elementary and middle school students.</string>
+
+    <string name="HalfDayHSTomorrow">REMINDER: Tomorrow is a Half Day for high school students.</string>
+    <string name="HalfDayHSToday">REMINDER: Today is a Half Day for high school students.</string>
 
     <string name="ThanksgivingRecessTomorrow">Thanksgiving Recess begins tomorrow.</string>
     <string name="ThanksgivingRecess">Enjoy your Thanksgiving Recess!</string>
@@ -198,7 +204,7 @@
     <string name="MemorialDayTomorrow">Tomorrow is Memorial Day.</string>
     <string name="MemorialDay">Today is Memorial Day.</string>
 
-    <string name="Senior">Congratulations Senior Class of 2016!</string>
+    <string name="Senior">Congratulations Senior Class of 2017!</string>
 
     <string name="Summer">Enjoy your summer!</string>
 
