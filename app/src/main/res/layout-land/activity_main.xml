@@ -73,13 +73,10 @@
             android:layout_alignLeft="@+id/txtPrev"
             android:layout_alignStart="@+id/txtPrev"/>
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:listSelector="@android:color/transparent"
             android:id="@+id/lstInfo"
-            android:choiceMode="none"
             android:layout_above="@+id/btnCalculate"
             android:layout_below="@+id/radiogroup" />
 

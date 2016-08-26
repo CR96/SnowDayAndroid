@@ -3,15 +3,15 @@ package com.GBSnowDay.SnowDay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     //Declare all views
     RadioButton optToday;
     RadioButton optTomorrow;
-    ListView lstInfo;
+    RecyclerView lstInfo;
     Spinner lstDays;
     Button btnCalculate;
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         //Declare views
         optToday = (RadioButton) findViewById(R.id.optToday);
         optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
-        lstInfo = (ListView) findViewById(R.id.lstInfo);
+        lstInfo = (RecyclerView) findViewById(R.id.lstInfo);
         lstDays = (Spinner) findViewById(R.id.lstDays);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
@@ -107,13 +107,10 @@ public class MainActivity extends AppCompatActivity {
             checkWeekend();
         }
 
-        //Set the content of the ListView
-        CustomAdapter mAdapter = new CustomAdapter(this);
-        for (int i = 0; i < infoList.size(); i++) {
-            mAdapter.addItem(infoList.get(i));
-        }
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
-        lstInfo.setAdapter(mAdapter);
+        lstInfo.setLayoutManager(layoutManager);
+        lstInfo.setAdapter(new CustomAdapter(infoList));
 
         //Listen for optToday or optTomorrow changes
         //Don't allow the calculation to run if "Select a day" is selected
@@ -472,9 +469,7 @@ public class MainActivity extends AppCompatActivity {
         if (daysarray.toString().equals(Arrays.toString(specialarray))) {
             List<String> special = new ArrayList<>();
             special.add(0, getString(R.string.special));
-            ArrayAdapter<String> specialadapter = new ArrayAdapter<>(getApplicationContext(),
-                    R.layout.item_center, special);
-            lstInfo.setAdapter(specialadapter);
+            lstInfo.setAdapter(new CustomAdapter(special));
 
             ImageView spcl = (ImageView) findViewById(R.id.imgSpecial);
             spcl.setVisibility(View.VISIBLE);

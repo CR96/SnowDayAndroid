@@ -75,11 +75,9 @@
             android:layout_toRightOf="@+id/txtInfo"
             android:layout_toEndOf="@+id/txtInfo" />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:listSelector="@android:color/transparent"
             android:id="@+id/lstInfo"
             android:layout_above="@+id/btnCalculate"
             android:layout_below="@+id/txtInfo"
