@@ -17,6 +17,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +45,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 
 public class ResultActivity extends AppCompatActivity {
@@ -1219,19 +1221,12 @@ public class ResultActivity extends AppCompatActivity {
 
             if (!WJRTFail) {
                 //WJRT has not failed.
-                ClosingsAdapter closingsAdapter = new ClosingsAdapter(ResultActivity.this);
-                closingsAdapter.addSeparatorItem(getString(R.string.tier4));
-                for (int i = 1; i < closings.size(); i++) {
-                    closingsAdapter.addItem(closings.get(i));
-                    if (i == 6) {
-                        closingsAdapter.addSeparatorItem(getString(R.string.tier3));
-                    } if (i == 18) {
-                        closingsAdapter.addSeparatorItem(getString(R.string.tier2));
-                    } if (i == 22) {
-                        closingsAdapter.addSeparatorItem(getString(R.string.tier1));
-                    }
-                }
+                ClosingsAdapter closingsAdapter = new ClosingsAdapter(closings);
 
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ResultActivity.this);
+                closingsFragment.lstClosings.setLayoutManager(linearLayoutManager);
+
+                // TODO: Create separator items in new RecyclerView implementation
                 closingsFragment.lstClosings.setAdapter(closingsAdapter);
 
                 runOnUiThread(new Runnable() {
@@ -1419,102 +1414,65 @@ public class ResultActivity extends AppCompatActivity {
     }
 
 
-    private class ClosingsAdapter extends BaseAdapter {
+    public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHolder> {
+        private Context mContext;
+        private List<String> mOrgList;
+        private List<String> mStatusList;
 
-        private static final int TYPE_ITEM = 0;
-        private static final int TYPE_SEPARATOR = 1;
-        private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
-
-        private ArrayList<String> mData = new ArrayList<>();
-        private LayoutInflater mInflater;
-
-        private TreeSet<Integer> mSeparatorsSet = new TreeSet<>();
-
-        public ClosingsAdapter(Context context) {
-            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void addItem(final String item) {
-            mData.add(item);
-            notifyDataSetChanged();
-        }
-
-        public void addSeparatorItem(final String item) {
-            mData.add(item);
-            //Save separator position
-            mSeparatorsSet.add(mData.size() - 1);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return TYPE_MAX_COUNT;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            int type = getItemViewType(position);
-            holder = new ViewHolder();
-            /*No 'if (convertView == null)' statement to prevent view recycling
-            (views must remain fixed)*/
-            switch (type) {
-                case TYPE_ITEM:
-                    if (Atherton && position == 1 || Bendle && position == 2
-                            || Bentley && position == 3 || Carman && position == 4
-                            || Flint && position == 5 || Goodrich && position == 6
-                            || Beecher && position == 8 || Clio && position == 9
-                            || Davison && position == 10 || Fenton && position == 11
-                            || Flushing && position == 12 || Genesee && position == 13
-                            || Kearsley && position == 14 || LKFenton && position == 15
-                            || Linden && position == 16 || Montrose && position == 17
-                            || Morris && position == 18 || SzCreek && position == 19
-                            || Durand && position == 21 || Holly && position == 22
-                            || Lapeer && position == 23 || Owosso && position == 24
-                            || GBAcademy && position == 26 || GISD && position == 27
-                            || HolyFamily && position == 28 || WPAcademy && position == 29) {
-                        //If the school is closed, make it orange.
-                        convertView = mInflater.inflate(R.layout.item_orange, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.text);
-                        break;
-                    }else{
-                        convertView = mInflater.inflate(R.layout.item, parent, false);
-                        holder.textView = (TextView)convertView.findViewById(R.id.text);
-                        break;
-                    }
-                case TYPE_SEPARATOR:
-                    //Set the text separators ("Districts near Grand Blanc", etc.)
-                    convertView = mInflater.inflate(R.layout.separator, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-                    break;
-
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public CardView mCardView;
+            public ViewHolder(CardView v) {
+                super(v);
+                mCardView = v;
             }
-            convertView.setTag(holder);
-            holder.textView.setText(mData.get(position));
-            return convertView;
         }
 
-        public class ViewHolder {
-            public TextView textView;
+        public ClosingsAdapter(List<String> data1) { //,List<String> data2) {
+            mOrgList = data1;
+            //mStatusList = data2;
+        }
+
+        @Override
+        public ClosingsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                             int viewType) {
+            mContext = parent.getContext();
+
+            View v = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_closings, parent, false);
+            return new ViewHolder((CardView) v);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+
+            LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
+            TextView txtOrg = (TextView) layout.getChildAt(0);
+            //TextView txtStatus = (TextView) layout.getChildAt(1);
+
+            txtOrg.setText(mOrgList.get(position));
+            //txtStatus.setText(mStatusList.get(position));
+
+            if (Atherton && position == 1 || Bendle && position == 2
+                    || Bentley && position == 3 || Carman && position == 4
+                    || Flint && position == 5 || Goodrich && position == 6
+                    || Beecher && position == 8 || Clio && position == 9
+                    || Davison && position == 10 || Fenton && position == 11
+                    || Flushing && position == 12 || Genesee && position == 13
+                    || Kearsley && position == 14 || LKFenton && position == 15
+                    || Linden && position == 16 || Montrose && position == 17
+                    || Morris && position == 18 || SzCreek && position == 19
+                    || Durand && position == 21 || Holly && position == 22
+                    || Lapeer && position == 23 || Owosso && position == 24
+                    || GBAcademy && position == 26 || GISD && position == 27
+                    || HolyFamily && position == 28 || WPAcademy && position == 29) {
+                //If the school is closed, make it orange.
+                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return mOrgList.size();
         }
     }
 }

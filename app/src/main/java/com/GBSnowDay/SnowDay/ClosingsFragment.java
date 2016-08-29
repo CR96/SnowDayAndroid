@@ -4,6 +4,7 @@ package com.GBSnowDay.SnowDay;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.ListView;
  */
 public class ClosingsFragment extends Fragment {
 
-    public ListView lstClosings;
+    public RecyclerView lstClosings;
 
     public ListView lstWJRT;
 
@@ -36,7 +37,7 @@ public class ClosingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Declare views
-        lstClosings = (ListView) view.findViewById(R.id.lstClosings);
+        lstClosings = (RecyclerView) view.findViewById(R.id.lstClosings);
 
         lstWJRT = (ListView) view.findViewById(R.id.lstWJRT);
     }
