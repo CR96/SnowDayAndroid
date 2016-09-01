@@ -79,7 +79,6 @@ public class ResultActivity extends AppCompatActivity {
 
     //Declare lists that will be used in ListAdapters
     List<String> GBInfo = new ArrayList<>();
-    List<String> closings = new ArrayList<>();
     List<String> wjrtInfo = new ArrayList<>();
     List<String> nwsInfo = new ArrayList<>();
 
@@ -216,36 +215,6 @@ public class ResultActivity extends AppCompatActivity {
         days = result.getIntExtra("days", days);
         datetoday = result.getStringExtra("datetoday");
         datetomorrow = result.getStringExtra("datetomorrow");
-
-        //Add the 27 fixed values so they can be set out of sequence
-        closings.add(0, "");
-        closings.add(1, "");
-        closings.add(2, "");
-        closings.add(3, "");
-        closings.add(4, "");
-        closings.add(5, "");
-        closings.add(6, "");
-        closings.add(7, "");
-        closings.add(8, "");
-        closings.add(9, "");
-        closings.add(10, "");
-        closings.add(11, "");
-        closings.add(12, "");
-        closings.add(13, "");
-        closings.add(14, "");
-        closings.add(15, "");
-        closings.add(16, "");
-        closings.add(17, "");
-        closings.add(18, "");
-        closings.add(19, "");
-        closings.add(20, "");
-        closings.add(21, "");
-        closings.add(22, "");
-        closings.add(23, "");
-        closings.add(24, "");
-        closings.add(25, "");
-        closings.add(26, "");
-
 
         //Add the first GBInfo value so it can be set out of sequence
         GBInfo.add(0, "");
@@ -518,7 +487,6 @@ public class ResultActivity extends AppCompatActivity {
         for (int i = 0; i < orgName.size(); i++) {
             if (!(Atherton)) {
                 if (orgName.get(i).contains("Atherton")) {
-                    closings.set(1, getString(R.string.Atherton) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
@@ -527,13 +495,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier4tomorrow++;
                     }
                     Atherton = true;
-                } else {
-                    closings.set(1, getString(R.string.Atherton) + getString(R.string.Open));
                 }
             }
             if (!(Bendle)) {
                 if (orgName.get(i).contains("Bendle")) {
-                    closings.set(2, getString(R.string.Bendle) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
@@ -542,13 +507,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier4tomorrow++;
                     }
                     Bendle = true;
-                } else {
-                    closings.set(2, getString(R.string.Bendle) + getString(R.string.Open));
                 }
             }
             if (!(Bentley)) {
                 if (orgName.get(i).contains("Bentley")) {
-                    closings.set(3, getString(R.string.Bentley) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
@@ -557,13 +519,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier4tomorrow++;
                     }
                     Bentley = true;
-                } else {
-                    closings.set(3, getString(R.string.Bentley) + getString(R.string.Open));
                 }
             }
             if (!(Carman)) {
                 if (orgName.get(i).contains("Carman-Ainsworth") && !orgName.get(i).contains("Senior")) {
-                    closings.set(4, getString(R.string.Carman) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
@@ -572,13 +531,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier4tomorrow++;
                     }
                     Carman = true;
-                } else {
-                    closings.set(4, getString(R.string.Carman) + getString(R.string.Open));
                 }
             }
             if (!(Flint)) {
                 if (orgName.get(i).contains("Flint Community Schools")) {
-                    closings.set(5, getString(R.string.Flint) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
@@ -587,13 +543,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier4tomorrow++;
                     }
                     Flint = true;
-                } else {
-                    closings.set(5, getString(R.string.Flint) + getString(R.string.Open));
                 }
             }
             if (!(Goodrich)) {
                 if (orgName.get(i).contains("Goodrich")) {
-                    closings.set(6, getString(R.string.Goodrich) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier4today++;
@@ -602,13 +555,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier4tomorrow++;
                     }
                     Goodrich = true;
-                } else {
-                    closings.set(6, getString(R.string.Goodrich) + getString(R.string.Open));
                 }
             }
             if (!(Beecher)) {
                 if (orgName.get(i).contains("Beecher")) {
-                    closings.set(7, getString(R.string.Beecher) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -617,15 +567,12 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Beecher = true;
-                } else {
-                    closings.set(7, getString(R.string.Beecher) + getString(R.string.Open));
                 }
             }
             if (!(Clio)) {
                 if (orgName.get(i).contains("Clio") && !orgName.get(i).contains("Christian")
                         && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("City")
                         && !orgName.get(i).contains("Cornerstone")) {
-                    closings.set(8, getString(R.string.Clio) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -634,15 +581,12 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Clio = true;
-                } else {
-                    closings.set(8, getString(R.string.Clio) + getString(R.string.Open));
                 }
             }
             if (!(Davison)) {
                 if (orgName.get(i).contains("Davison") && !orgName.get(i).contains("Senior")
                         && !orgName.get(i).contains("Faith") && !orgName.get(i).contains("Medical")
                         && !orgName.get(i).contains("Montessori")) {
-                    closings.set(9, getString(R.string.Davison) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -651,15 +595,12 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Davison = true;
-                } else {
-                    closings.set(9, getString(R.string.Davison) + getString(R.string.Open));
                 }
             }
             if (!(Fenton)) {
                 if (orgName.get(i).contains("Fenton") && !orgName.get(i).contains("Lake")
                         && !orgName.get(i).contains("City") && !orgName.get(i).contains("Academy")
                         && !orgName.get(i).contains("Montessori")) {
-                    closings.set(10, getString(R.string.Fenton) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -668,14 +609,11 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Fenton = true;
-                } else {
-                    closings.set(10, getString(R.string.Fenton) + getString(R.string.Open));
                 }
             }
             if (!(Flushing)) {
                 if (orgName.get(i).contains("Flushing") && !orgName.get(i).contains("Senior")
                         && !orgName.get(i).contains("Robert")) {
-                    closings.set(11, getString(R.string.Flushing) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -684,8 +622,6 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Flushing = true;
-                } else {
-                    closings.set(11, getString(R.string.Flushing) + getString(R.string.Open));
                 }
             }
             if (!(Genesee)) {
@@ -699,7 +635,6 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Job") && !orgName.get(i).contains("Leadership")
                         && !orgName.get(i).contains("Freedom") && !orgName.get(i).contains("MSU")
                         && !orgName.get(i).contains("I.S.D.") && !orgName.get(i).contains("Foster")) {
-                    closings.set(12, getString(R.string.Genesee) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -708,13 +643,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Genesee = true;
-                } else {
-                    closings.set(12, getString(R.string.Genesee) + getString(R.string.Open));
                 }
             }
             if (!(Kearsley)) {
                 if (orgName.get(i).contains("Kearsley")) {
-                    closings.set(13, getString(R.string.Kearsley) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -723,13 +655,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Kearsley = true;
-                } else {
-                    closings.set(13, getString(R.string.Kearsley) + getString(R.string.Open));
                 }
             }
             if (!(LKFenton)) {
                 if (orgName.get(i).contains("Lake Fenton")) {
-                    closings.set(14, getString(R.string.LKFenton) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -738,13 +667,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     LKFenton = true;
-                } else {
-                    closings.set(14, getString(R.string.LKFenton) + getString(R.string.Open));
                 }
             }
             if (!(Linden)) {
                 if (orgName.get(i).contains("Linden") && !orgName.get(i).contains("Charter")) {
-                    closings.set(15, getString(R.string.Linden) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -753,13 +679,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Linden = true;
-                } else {
-                    closings.set(15, getString(R.string.Linden) + getString(R.string.Open));
                 }
             }
             if (!(Montrose)) {
                 if (orgName.get(i).contains("Montrose") && !orgName.get(i).contains("Senior")) {
-                    closings.set(16, getString(R.string.Montrose) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -768,14 +691,11 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Montrose = true;
-                } else {
-                    closings.set(16, getString(R.string.Montrose) + getString(R.string.Open));
                 }
             }
             if (!(Morris)) {
                 if (orgName.get(i).contains("Mt. Morris") && !orgName.get(i).contains("Administration")
                         && !orgName.get(i).contains("Twp") && !orgName.get(i).contains("Mary")) {
-                    closings.set(17, getString(R.string.Morris) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -784,14 +704,11 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     Morris = true;
-                } else {
-                    closings.set(17, getString(R.string.Morris) + getString(R.string.Open));
                 }
             }
             if (!(SzCreek)) {
                 if (orgName.get(i).contains("Swartz Creek") && !orgName.get(i).contains("Senior")
                         && !orgName.get(i).contains("Montessori")) {
-                    closings.set(18, getString(R.string.SzCreek) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier3today++;
@@ -800,13 +717,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier3tomorrow++;
                     }
                     SzCreek = true;
-                } else {
-                    closings.set(18, getString(R.string.SzCreek) + getString(R.string.Open));
                 }
             }
             if (!(Durand)) {
                 if (orgName.get(i).contains("Durand") && !orgName.get(i).contains("Senior")) {
-                    closings.set(19, getString(R.string.Durand) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
@@ -815,13 +729,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier2tomorrow++;
                     }
                     Durand = true;
-                } else {
-                    closings.set(19, getString(R.string.Durand) + getString(R.string.Open));
                 }
             }
             if (!(Holly)) {
                 if (orgName.get(i).contains("Holly") && !orgName.get(i).contains("Academy")) {
-                    closings.set(20, getString(R.string.Holly) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
@@ -830,8 +741,6 @@ public class ResultActivity extends AppCompatActivity {
                         tier2tomorrow++;
                     }
                     Holly = true;
-                } else {
-                    closings.set(20, getString(R.string.Holly) + getString(R.string.Open));
                 }
             }
             if (!(Lapeer)) {
@@ -844,7 +753,6 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("Foster")
                         && !orgName.get(i).contains("Davenport") && !orgName.get(i).contains("MSU")
                         && !orgName.get(i).contains("Paul") && !orgName.get(i).contains("Connections")) {
-                    closings.set(21, getString(R.string.Lapeer) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
@@ -853,8 +761,6 @@ public class ResultActivity extends AppCompatActivity {
                         tier2tomorrow++;
                     }
                     Lapeer = true;
-                } else {
-                    closings.set(21, getString(R.string.Lapeer) + getString(R.string.Open));
                 }
             }
             if (!(Owosso)) {
@@ -862,7 +768,6 @@ public class ResultActivity extends AppCompatActivity {
                         && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("Adventist")
                         && !orgName.get(i).contains("Baker") && !orgName.get(i).contains("Paul")
                         && !orgName.get(i).contains("Security")) {
-                    closings.set(22, getString(R.string.Owosso) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier2today++;
@@ -871,13 +776,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier2tomorrow++;
                     }
                     Owosso = true;
-                } else {
-                    closings.set(22, getString(R.string.Owosso) + getString(R.string.Open));
                 }
             }
             if (!(GBAcademy)) {
                 if (orgName.get(i).contains("Grand Blanc Academy")) {
-                    closings.set(23, getString(R.string.GBAcademy) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
@@ -886,13 +788,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier1tomorrow++;
                     }
                     GBAcademy = true;
-                } else {
-                    closings.set(23, getString(R.string.GBAcademy) + getString(R.string.Open));
                 }
             }
             if (!(GISD)) {
                 if (orgName.get(i).contains("Genesee I.S.D.")) {
-                    closings.set(24, getString(R.string.GISD) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
@@ -901,13 +800,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier1tomorrow++;
                     }
                     GISD = true;
-                } else {
-                    closings.set(24, getString(R.string.GISD) + getString(R.string.Open));
                 }
             }
             if (!(HolyFamily)) {
                 if (orgName.get(i).contains("Holy Family")) {
-                    closings.set(25, getString(R.string.HolyFamily) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
@@ -916,13 +812,10 @@ public class ResultActivity extends AppCompatActivity {
                         tier1tomorrow++;
                     }
                     HolyFamily = true;
-                } else {
-                    closings.set(25, getString(R.string.HolyFamily) + getString(R.string.Open));
                 }
             }
             if (!(WPAcademy)) {
                 if (orgName.get(i).contains("Woodland Park Academy")) {
-                    closings.set(26, getString(R.string.WPAcademy) + status.get(i));
                     if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0) {
                         tier1today++;
@@ -931,8 +824,6 @@ public class ResultActivity extends AppCompatActivity {
                         tier1tomorrow++;
                     }
                     WPAcademy = true;
-                } else {
-                    closings.set(26, getString(R.string.WPAcademy) + getString(R.string.Open));
                 }
             }
         }
@@ -1221,7 +1112,7 @@ public class ResultActivity extends AppCompatActivity {
 
             if (!WJRTFail) {
                 //WJRT has not failed.
-                ClosingsAdapter closingsAdapter = new ClosingsAdapter(closings);
+                ClosingsAdapter closingsAdapter = new ClosingsAdapter(orgName, status);
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ResultActivity.this);
                 closingsFragment.lstClosings.setLayoutManager(linearLayoutManager);
@@ -1427,9 +1318,9 @@ public class ResultActivity extends AppCompatActivity {
             }
         }
 
-        public ClosingsAdapter(List<String> data1) { //,List<String> data2) {
+        public ClosingsAdapter(List<String> data1, List<String> data2) {
             mOrgList = data1;
-            //mStatusList = data2;
+            mStatusList = data2;
         }
 
         @Override
@@ -1447,10 +1338,10 @@ public class ResultActivity extends AppCompatActivity {
 
             LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
             TextView txtOrg = (TextView) layout.getChildAt(0);
-            //TextView txtStatus = (TextView) layout.getChildAt(1);
+            TextView txtStatus = (TextView) layout.getChildAt(1);
 
             txtOrg.setText(mOrgList.get(position));
-            //txtStatus.setText(mStatusList.get(position));
+            txtStatus.setText(mStatusList.get(position));
 
             if (Atherton && position == 1 || Bendle && position == 2
                     || Bentley && position == 3 || Carman && position == 4
