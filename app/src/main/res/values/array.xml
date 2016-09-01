@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="days_array">
+        <item>Select</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10 or more</item>
+    </string-array>
+
+    <string-array name="name_t1">
+        <item>Grand Blanc Academy</item>
+        <item>Holy Family</item>
+        <item>Woodland Park Academy</item>
+        <item>Genesee I.S.D.</item>
+    </string-array>
+
+    <string-array name="name_t2">
+        <item>Durand</item>
+        <item>Holly</item>
+        <item>Lapeer</item>
+        <item>Owosso</item>
+    </string-array>
+
+    <string-array name="name_t3">
+        <item>Beecher</item>
+        <item>Clio</item>
+        <item>Davison</item>
+        <item>Fenton</item>
+        <item>Flushing</item>
+        <item>Genesee</item>
+        <item>Kearsley</item>
+        <item>Lake Fenton</item>
+        <item>Linden</item>
+        <item>Montrose</item>
+        <item>Mount Morris</item>
+        <item>Swartz Creek</item>
+    </string-array>
+
+
+    <string-array name="name_t4">
+        <item>Atherton</item>
+        <item>Bendle</item>
+        <item>Bentley</item>
+        <item>Carman-Ainsworth</item>
+        <item>Flint</item>
+        <item>Goodrich</item>
+    </string-array>
+
+    <!--False positive checks-->
+    <!--TODO: Pull this information from Firebase in a future update.-->
+    <string-array name="checks_gbacademy"/>
+    <string-array name="checks_gisd"/>
+    <string-array name="checks_holyfamily"/>
+    <string-array name="checks_wpacademy"/>
+
+    <string-array name="checks_durand">
+        <item>Senior</item>
+    </string-array>
+    <string-array name="checks_holly">
+        <item>Academy</item>
+    </string-array>
+    <string-array name="checks_lapeer">
+        <item>Chatfield</item>
+        <item>Greater</item>
+        <item>CMH</item>
+        <item>Tech</item>
+        <item>Team</item>
+        <item>Center</item>
+        <item>Special</item>
+        <item>Growth</item>
+        <item>Offices</item>
+        <item>Library</item>
+        <item>Head</item>
+        <item>Senior</item>
+        <item>Foster</item>
+        <item>Davenport</item>
+        <item>MSU</item>
+        <item>Paul</item>
+        <item>Connections</item>
+    </string-array>
+    <string-array name="checks_owosso">
+        <item>Christian</item>
+        <item>Senior</item>
+        <item>Adventist</item>
+        <item>Baker</item>
+        <item>Paul</item>
+        <item>Security</item>
+    </string-array>
+
+    <string-array name="checks_atherton"/>
+    <string-array name="checks_bendle"/>
+    <string-array name="checks_bentley"/>
+    <string-array name="checks_carman">
+        <item>Senior</item>
+    </string-array>
+    <string-array name="checks_flint"/>
+    <string-array name="checks_goodrich"/>
+
+    <string-array name="checks_beecher"/>
+    <string-array name="checks_clio">
+        <item>Christian</item>
+        <item>Senior</item>
+        <item>City</item>
+        <item>Cornerstone</item>
+    </string-array>
+    <string-array name="checks_davison">
+        <item>Senior</item>
+        <item>Faith</item>
+        <item>Medical</item>
+        <item>Montessori</item>
+    </string-array>
+    <string-array name="checks_fenton">
+        <item>Lake</item>
+        <item>City</item>
+        <item>Academy</item>
+        <item>Montessori</item>
+    </string-array>
+    <string-array name="checks_flushing">
+        <item>Senior</item>
+        <item>Robert</item>
+    </string-array>
+    <string-array name="checks_genesee">
+        <item>Freedom</item>
+        <item>Christian</item> 
+        <item>Library</item>
+        <item>Mobile</item> 
+        <item>Programs</item>
+        <item>Health</item> 
+        <item>Medical</item>
+        <item>Academy</item> 
+        <item>Skill</item>
+        <item>Sys</item> 
+        <item>STEM</item>
+        <item>Court</item> 
+        <item>County</item>
+        <item>Job</item> 
+        <item>Leadership</item>
+        <item>Freedom</item>
+        <item>MSU</item>
+        <item>I.S.D.</item> 
+        <item>Foster</item>
+    </string-array>
+    <string-array name="checks_kearsley"/>
+    <string-array name="checks_lkfenton"/>
+    <string-array name="checks_linden" >
+        <item>Charter</item>
+    </string-array>
+    <string-array name="checks_montrose">
+        <item>Senior</item>
+    </string-array>
+    <string-array name="checks_morris">
+        <item>Senior</item>
+    </string-array>
+    <string-array name="checks_szcreek">
+        <item>Senior</item>
+        <item>Montessori</item>
+    </string-array>
+
+    <string-array name="checks_gb">
+        <item>Academy</item>
+        <item>Freedom</item>
+        <item>Offices</item>
+        <item>City</item>
+        <item>Senior</item>
+        <item>Holy</item>
+        <item>Montessori</item>
+        <item>Gym</item>
+    </string-array>
+
+</resources>
