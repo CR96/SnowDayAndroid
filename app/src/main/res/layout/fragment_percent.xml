@@ -124,20 +124,14 @@
         android:layout_above="@+id/snowflake1"
         android:layout_centerHorizontal="true" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:requiresFadingEdge="vertical"
-        android:fadingEdgeLength="8dp"
-        android:stackFromBottom="true"
         android:id="@+id/lstGB"
         android:visibility="invisible"
         android:gravity="center"
-        android:listSelector="@android:color/transparent"
         android:layout_below="@+id/space"
-        android:layout_alignParentBottom="true"
-        tools:ignore="UnusedAttribute" />
+        android:layout_alignParentBottom="true" />
 
     <ImageView
         android:layout_width="64dp"

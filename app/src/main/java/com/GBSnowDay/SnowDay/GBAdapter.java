@@ -1,99 +1,101 @@
 package com.GBSnowDay.SnowDay;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class GBAdapter extends BaseAdapter {
+/*Copyright 2014-2016 Corey Rowe
 
-    /*Copyright 2014-2016 Corey Rowe
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
 
-         http://www.apache.org/licenses/LICENSE-2.0
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.*/
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.*/
+class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
 
-    boolean gb;
-    boolean gbmessage;
+    private Context mContext;
+    private List<String> mData1;
+    private List<String> mData2;
 
-    private static final int TYPE_ITEM = 0;
-    private static final int TYPE_SEPARATOR = 1;
-    private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
+    private boolean gb;
+    private boolean gbmessage;
 
-    private ArrayList<String> mData = new ArrayList<>();
-    private LayoutInflater mInflater;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView mCardView;
+        ViewHolder(CardView v) {
+            super(v);
+            mCardView = v;
+        }
+    }
 
-    public GBAdapter(Context context, boolean b1, boolean b2) {
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    GBAdapter(List<String> data1, List<String> data2, boolean b1, boolean b2) {
+        mData1 = data1;
+        mData2 = data2;
         gb = b1;
         gbmessage = b2;
     }
 
-    public void addItem(final String item) {
-        mData.add(item);
-        notifyDataSetChanged();
+    @Override
+    public GBAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                         int viewType) {
+        mContext = parent.getContext();
+
+        View v = LayoutInflater.from(mContext)
+                .inflate(R.layout.item_gb, parent, false);
+        return new ViewHolder((CardView) v);
     }
 
     @Override
-    public int getViewTypeCount() {
-        return TYPE_MAX_COUNT;
-    }
-
-    @Override
-    public int getCount() {
-        return mData.size();
-    }
-
-    @Override
-    public String getItem(int position) {
-        return mData.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
+    public int getItemViewType(int position) {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        int type = getItemViewType(position);
-        holder = new ViewHolder();
-            /*No 'if (convertView == null)' statement to prevent view recycling
-            (views must remain fixed)*/
-        switch (type) {
-            case TYPE_ITEM:
-                if (gb && position == 0) {
-                    //If GB is closed, make it red.
-                    convertView = mInflater.inflate(R.layout.item_red_center, parent, false);
-                }else if (gb && position == 1) {
-                    //Make "Enjoy your Snow Day!" blue.
-                    convertView = mInflater.inflate(R.layout.item_accent_center, parent, false);
-                }else if (gbmessage && position == 0) {
-                    //If GB has a message, make it orange.
-                    convertView = mInflater.inflate(R.layout.item_orange_center, parent, false);
-                } else {
-                    convertView = mInflater.inflate(R.layout.item_center, parent, false);
-                }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
+        TextView text = (TextView) layout.getChildAt(0);
+        TextView subtext = (TextView) layout.getChildAt(1);
+
+        text.setText(mData1.get(position));
+
+        if (mData2.get(position) == null) {
+            subtext.setVisibility(View.GONE);
+        }else {
+            subtext.setText(mData2.get(position));
         }
-        holder.textView = (TextView) convertView.findViewById(R.id.text);
-        convertView.setTag(holder);
-        holder.textView.setText(mData.get(position));
-        return convertView;
+
+        if (gb && position == 0) {
+            //If GB is closed, make card background red.
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.red));
+        }else if (gb && position == 1) {
+            //Make "Enjoy your snow day!" blue.
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+        }else if (gbmessage && position == 0) {
+            //If GB has a message, make card background orange.
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+        }else{
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+        }
     }
 
-    public static class ViewHolder {
-        public TextView textView;
+    @Override
+    public int getItemCount() {
+        return mData1.size();
     }
 }

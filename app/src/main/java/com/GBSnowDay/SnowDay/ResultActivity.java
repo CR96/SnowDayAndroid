@@ -81,8 +81,10 @@ public class ResultActivity extends AppCompatActivity {
     List<String> displayedOrgNames = new ArrayList<>();
     List<String> displayedStatuses = new ArrayList<>();
 
-    //Declare lists that will be used in ListAdapters
-    List<String> GBInfo = new ArrayList<>();
+    //Declare lists that will be displayed in RecyclerViews
+    List<String> GBText = new ArrayList<>();
+    List<String> GBSubtext = new ArrayList<>();
+
     List<String> wjrtInfo = new ArrayList<>();
     List<String> nwsInfo = new ArrayList<>();
 
@@ -214,9 +216,6 @@ public class ResultActivity extends AppCompatActivity {
         days = result.getIntExtra("days", days);
         datetoday = result.getStringExtra("datetoday");
         datetomorrow = result.getStringExtra("datetomorrow");
-
-        //Add the first GBInfo value so it can be set out of sequence
-        GBInfo.add(0, "");
 
         //Start the calculation
         Calculate();
@@ -415,20 +414,23 @@ public class ResultActivity extends AppCompatActivity {
                 GB = isClosed(
                         res.getStringArray(R.array.checks_gb),
                         getString(R.string.GB),
-                        false,
+                        true,
                         -1);
 
                 if (GB) {
-                    GBInfo.add(getString(R.string.GB));
-                } else {
+                    GBText.add(getString(R.string.SnowDay));
+                    GBSubtext.add(null);
+                }else{
                     if (dayrun == 0) {
                         if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16) {
                             //Time is between 7AM and 4PM. School is already in session.
-                            GBInfo.add(getString(R.string.SchoolOpen));
+                            GBText.add(getString(R.string.SchoolOpen));
+                            GBSubtext.add(null);
                             GBOpen = true;
                         } else if (dt.getHourOfDay() >= 16) {
                             //Time is after 4PM. School is already out.
-                            GBInfo.add(getString(R.string.Dismissed));
+                            GBText.add(getString(R.string.Dismissed));
+                            GBSubtext.add(null);
                             GBOpen = true;
                         }
                     }
@@ -444,138 +446,138 @@ public class ResultActivity extends AppCompatActivity {
                 Atherton = isClosed(
                         res.getStringArray(R.array.checks_atherton),
                         tier4[0],
-                        true,
+                        false,
                         4);
                 Bendle = isClosed(
                         res.getStringArray(R.array.checks_bendle),
                         tier4[1],
-                        true,
+                        false,
                         4);
                 Bentley = isClosed(
                         res.getStringArray(R.array.checks_bentley),
                         tier4[2],
-                        true,
+                        false,
                         4);
                 Carman = isClosed(
                         res.getStringArray(R.array.checks_carman),
                         tier4[3],
-                        true,
+                        false,
                         4);
                 Flint = isClosed(
                         res.getStringArray(R.array.checks_flint),
                         tier4[4],
-                        true,
+                        false,
                         4);
                 Goodrich = isClosed(
                         res.getStringArray(R.array.checks_goodrich),
                         tier4[5],
-                        true,
+                        false,
                         4);
 
                 //Tier 3
                 Beecher = isClosed(
                         res.getStringArray(R.array.checks_beecher),
                         tier3[0],
-                        true,
+                        false,
                         3);
                 Clio = isClosed(
                         res.getStringArray(R.array.checks_clio),
                         tier3[1],
-                        true,
+                        false,
                         3);
                 Davison = isClosed(
                         res.getStringArray(R.array.checks_davison),
                         tier3[2],
-                        true,
+                        false,
                         3);
                 Fenton = isClosed(
                         res.getStringArray(R.array.checks_fenton),
                         tier3[3],
-                        true,
+                        false,
                         3);
                 Flushing = isClosed(
                         res.getStringArray(R.array.checks_flushing),
                         tier3[4],
-                        true,
+                        false,
                         3);
                 Genesee = isClosed(
                         res.getStringArray(R.array.checks_genesee),
                         tier3[5],
-                        true,
+                        false,
                         3);
                 Kearsley = isClosed(
                         res.getStringArray(R.array.checks_kearsley),
                         tier3[6],
-                        true,
+                        false,
                         3);
                 LKFenton = isClosed(
                         res.getStringArray(R.array.checks_lkfenton),
                         tier3[7],
-                        true,
+                        false,
                         3);
                 Linden = isClosed(
                         res.getStringArray(R.array.checks_linden),
                         tier3[8],
-                        true,
+                        false,
                         3);
                 Montrose = isClosed(
                         res.getStringArray(R.array.checks_montrose),
                         tier3[9],
-                        true,
+                        false,
                         3);
                 Morris = isClosed(
                         res.getStringArray(R.array.checks_morris),
                         tier3[10],
-                        true,
+                        false,
                         3);
                 SzCreek = isClosed(
                         res.getStringArray(R.array.checks_szcreek),
                         tier3[11],
-                        true,
+                        false,
                         3);
 
                 //Tier 2
                 Durand = isClosed(
                         res.getStringArray(R.array.checks_durand),
                         tier2[0],
-                        true,
+                        false,
                         2);
                 Holly = isClosed(
                         res.getStringArray(R.array.checks_holly),
                         tier2[1],
-                        true,
+                        false,
                         2);
                 Lapeer = isClosed(
                         res.getStringArray(R.array.checks_lapeer),
                         tier2[2],
-                        true,
+                        false,
                         2);
                 Owosso = isClosed(
                         res.getStringArray(R.array.checks_owosso),
                         tier2[3],
-                        true,
+                        false,
                         2);
 
                 //Tier 1
                 GBAcademy = isClosed(
                         res.getStringArray(R.array.checks_gbacademy),
                         tier1[0],
-                        true,
+                        false,
                         1);
                 GISD = isClosed(
                         res.getStringArray(R.array.checks_gisd),
                         tier1[1],
-                        true,
+                        false,
                         1);
                 HolyFamily = isClosed(
                         res.getStringArray(R.array.checks_holyfamily),
                         tier1[2],
-                        true,
+                        false,
                         1);
                 WPAcademy = isClosed(
                         res.getStringArray(R.array.checks_wpacademy),
                         tier1[3],
-                        true,
+                        false,
                         1);
             }
 
@@ -589,27 +591,32 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    /** Checks if a specified school or organization is closed.
+    /** Checks if a specified school or organization is closed or has a message.
      * @param checks The array of potential false positives to be checked
      * @param schoolName The name of the school as present in the array populated by {@link WJRTScraper}
-     * @param displayInList Show the result in {@link ClosingsFragment}
+     * @param isGrandBlanc Whether the school is Grand Blanc or another school
      * @param tier The tier the school belongs to (-1 for Grand Blanc)
      * @return The status of the school
      */
     private boolean isClosed(
             String[] checks,
             String schoolName,
-            boolean displayInList,
+            boolean isGrandBlanc,
             int tier) {
-        
+
+        boolean schoolFound = false;
         boolean result = false;
+
         for (int i = 0; i < orgName.size(); i++) {
             if (orgName.get(i).contains(schoolName)) {
-                if (isFalsePositive(checks, orgName.get(i))) {
-                    result = false;
-                }else{
-                    if (displayInList) {
-                        displayedOrgNames.add(orgName.get(i));
+                if (!isFalsePositive(checks, orgName.get(i))) {
+                    schoolFound = true;
+                    if (isGrandBlanc) {
+                        GBMessage = true;
+                        GBText.add(schoolName);
+                        GBSubtext.add(status.get(i));
+                    } else {
+                        displayedOrgNames.add(schoolName);
                         displayedStatuses.add(status.get(i));
                     }
 
@@ -617,32 +624,37 @@ public class ResultActivity extends AppCompatActivity {
                             || status.get(i).contains("Closed Today") && dayrun == 0
                             || status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
                             || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        switch (tier) {
-                            case 1:
-                                tier1++;
-                            case 2:
-                                tier2++;
-                            case 3:
-                                tier3++;
-                            case 4:
-                                tier4++;
-                            default:
+                        if (isGrandBlanc) {
+                            result = true;
+                        } else {
+                            switch (tier) {
+                                case 1:
+                                    tier1++;
+                                case 2:
+                                    tier2++;
+                                case 3:
+                                    tier3++;
+                                case 4:
+                                    tier4++;
+                                default:
+                            }
+                            result = true;
                         }
-                        result = true;
                     }
-                    break;
                 }
-            }else{
-                result = false;
             }
+
+            if (schoolFound) {break;}
         }
 
-        if (!result) {
-            if (displayInList) {
-                displayedOrgNames.add(schoolName);
-                displayedStatuses.add(getString(R.string.Open));
-            }
+        if (isGrandBlanc && !schoolFound) {
+            GBText.add(schoolName);
+            GBSubtext.add(getString(R.string.Open));
+        }else if (!schoolFound){
+            displayedOrgNames.add(schoolName);
+            displayedStatuses.add(getString(R.string.Open));
         }
+
         return result;
     }
 
@@ -890,7 +902,8 @@ public class ResultActivity extends AppCompatActivity {
             if (WJRTFail && NWSFail) {
                 //Both scrapers failed. A percentage cannot be determined.
                 //Don't set the percent.
-                GBInfo.add(getString(R.string.CalculateError));
+                GBText.add(getString(R.string.CalculateError));
+                GBSubtext.add(getString(R.string.NoConnection));
                 runOnUiThread(new Runnable() {
                     public void run() {
                         percentFragment.txtPercent.setText("--");
@@ -915,31 +928,21 @@ public class ResultActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            //Set the content of the information ListView
-            if (WJRTFail || NWSFail) {
-                //Network communication issues
-                GBInfo.add(getString(R.string.NoNetwork));
-            }
+            GBAdapter gbAdapter = new GBAdapter(GBText, GBSubtext, GB, GBMessage);
 
-
-            GBAdapter gbAdapter = new GBAdapter(ResultActivity.this, GB, GBMessage);
-            for (int i = 0; i < GBInfo.size(); i++) {
-                if (!GBInfo.get(i).isEmpty()) {
-                    gbAdapter.addItem(GBInfo.get(i));
-                }
-            }
+            LinearLayoutManager GBManager = new LinearLayoutManager(ResultActivity.this);
+            GBManager.setStackFromEnd(true);
+            percentFragment.lstGB.setLayoutManager(GBManager);
 
             percentFragment.lstGB.setAdapter(gbAdapter);
 
-            //Set up the ListView adapter that displays school closings
+            //Set up the RecyclerView adapter that displays school closings
 
             if (!WJRTFail) {
                 //WJRT has not failed.
-                ClosingsAdapter closingsAdapter = new ClosingsAdapter(
-                        displayedOrgNames, displayedStatuses);
 
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ResultActivity.this);
-                closingsFragment.lstClosings.setLayoutManager(linearLayoutManager);
+                RecyclerView.LayoutManager ClosingsManager = new LinearLayoutManager(ResultActivity.this);
+                closingsFragment.lstClosings.setLayoutManager(ClosingsManager);
 
                 //Add section headers
                 displayedOrgNames.add(0, getString(R.string.tier4));
@@ -953,6 +956,9 @@ public class ResultActivity extends AppCompatActivity {
 
                 displayedOrgNames.add(25, getString(R.string.tier1));
                 displayedStatuses.add(25, null);
+
+                ClosingsAdapter closingsAdapter = new ClosingsAdapter(
+                        displayedOrgNames, displayedStatuses);
 
                 closingsFragment.lstClosings.setAdapter(closingsAdapter);
 
@@ -1206,7 +1212,7 @@ public class ResultActivity extends AppCompatActivity {
                 holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
                 holder.mCardView.setCardElevation(16);
             }else{
-                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
                 holder.mCardView.setCardElevation(0);
             }
         }
