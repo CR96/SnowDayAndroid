@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -77,6 +78,9 @@ public class ResultActivity extends AppCompatActivity {
     List<String> orgName = new ArrayList<>();
     List<String> status = new ArrayList<>();
 
+    List<String> displayedOrgNames = new ArrayList<>();
+    List<String> displayedStatuses = new ArrayList<>();
+
     //Declare lists that will be used in ListAdapters
     List<String> GBInfo = new ArrayList<>();
     List<String> wjrtInfo = new ArrayList<>();
@@ -106,15 +110,10 @@ public class ResultActivity extends AppCompatActivity {
     int percent;
 
     //Levels of school closings (near vs. far)
-    int tier1today = 0;
-    int tier2today = 0;
-    int tier3today = 0;
-    int tier4today = 0;
-
-    int tier1tomorrow = 0;
-    int tier2tomorrow = 0;
-    int tier3tomorrow = 0;
-    int tier4tomorrow = 0;
+    int tier1 = 0;
+    int tier2 = 0;
+    int tier3 = 0;
+    int tier4 = 0;
 
     //Every school this program searches for: true = closed, false = open (default)
     boolean GBAcademy;
@@ -410,12 +409,174 @@ public class ResultActivity extends AppCompatActivity {
 
             //Only run if WJRTFail is false to avoid NullPointerExceptions
             if (!WJRTFail) {
+                Resources res = getResources();
+
                 //Sanity check - make sure Grand Blanc isn't already closed before predicting
-                checkGBClosed();
+                GB = isClosed(
+                        res.getStringArray(R.array.checks_gb),
+                        getString(R.string.GB),
+                        false,
+                        -1);
+
+                if (GB) {
+                    GBInfo.add(getString(R.string.GB));
+                } else {
+                    if (dayrun == 0) {
+                        if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16) {
+                            //Time is between 7AM and 4PM. School is already in session.
+                            GBInfo.add(getString(R.string.SchoolOpen));
+                            GBOpen = true;
+                        } else if (dt.getHourOfDay() >= 16) {
+                            //Time is after 4PM. School is already out.
+                            GBInfo.add(getString(R.string.Dismissed));
+                            GBOpen = true;
+                        }
+                    }
+                }
 
                 //Check school closings
-                checkClosings();
+                String[] tier1 = res.getStringArray(R.array.name_t1);
+                String[] tier2 = res.getStringArray(R.array.name_t2);
+                String[] tier3 = res.getStringArray(R.array.name_t3);
+                String[] tier4 = res.getStringArray(R.array.name_t4);
 
+                //Tier 4
+                Atherton = isClosed(
+                        res.getStringArray(R.array.checks_atherton),
+                        tier4[0],
+                        true,
+                        4);
+                Bendle = isClosed(
+                        res.getStringArray(R.array.checks_bendle),
+                        tier4[1],
+                        true,
+                        4);
+                Bentley = isClosed(
+                        res.getStringArray(R.array.checks_bentley),
+                        tier4[2],
+                        true,
+                        4);
+                Carman = isClosed(
+                        res.getStringArray(R.array.checks_carman),
+                        tier4[3],
+                        true,
+                        4);
+                Flint = isClosed(
+                        res.getStringArray(R.array.checks_flint),
+                        tier4[4],
+                        true,
+                        4);
+                Goodrich = isClosed(
+                        res.getStringArray(R.array.checks_goodrich),
+                        tier4[5],
+                        true,
+                        4);
+
+                //Tier 3
+                Beecher = isClosed(
+                        res.getStringArray(R.array.checks_beecher),
+                        tier3[0],
+                        true,
+                        3);
+                Clio = isClosed(
+                        res.getStringArray(R.array.checks_clio),
+                        tier3[1],
+                        true,
+                        3);
+                Davison = isClosed(
+                        res.getStringArray(R.array.checks_davison),
+                        tier3[2],
+                        true,
+                        3);
+                Fenton = isClosed(
+                        res.getStringArray(R.array.checks_fenton),
+                        tier3[3],
+                        true,
+                        3);
+                Flushing = isClosed(
+                        res.getStringArray(R.array.checks_flushing),
+                        tier3[4],
+                        true,
+                        3);
+                Genesee = isClosed(
+                        res.getStringArray(R.array.checks_genesee),
+                        tier3[5],
+                        true,
+                        3);
+                Kearsley = isClosed(
+                        res.getStringArray(R.array.checks_kearsley),
+                        tier3[6],
+                        true,
+                        3);
+                LKFenton = isClosed(
+                        res.getStringArray(R.array.checks_lkfenton),
+                        tier3[7],
+                        true,
+                        3);
+                Linden = isClosed(
+                        res.getStringArray(R.array.checks_linden),
+                        tier3[8],
+                        true,
+                        3);
+                Montrose = isClosed(
+                        res.getStringArray(R.array.checks_montrose),
+                        tier3[9],
+                        true,
+                        3);
+                Morris = isClosed(
+                        res.getStringArray(R.array.checks_morris),
+                        tier3[10],
+                        true,
+                        3);
+                SzCreek = isClosed(
+                        res.getStringArray(R.array.checks_szcreek),
+                        tier3[11],
+                        true,
+                        3);
+
+                //Tier 2
+                Durand = isClosed(
+                        res.getStringArray(R.array.checks_durand),
+                        tier2[0],
+                        true,
+                        2);
+                Holly = isClosed(
+                        res.getStringArray(R.array.checks_holly),
+                        tier2[1],
+                        true,
+                        2);
+                Lapeer = isClosed(
+                        res.getStringArray(R.array.checks_lapeer),
+                        tier2[2],
+                        true,
+                        2);
+                Owosso = isClosed(
+                        res.getStringArray(R.array.checks_owosso),
+                        tier2[3],
+                        true,
+                        2);
+
+                //Tier 1
+                GBAcademy = isClosed(
+                        res.getStringArray(R.array.checks_gbacademy),
+                        tier1[0],
+                        true,
+                        1);
+                GISD = isClosed(
+                        res.getStringArray(R.array.checks_gisd),
+                        tier1[1],
+                        true,
+                        1);
+                HolyFamily = isClosed(
+                        res.getStringArray(R.array.checks_holyfamily),
+                        tier1[2],
+                        true,
+                        1);
+                WPAcademy = isClosed(
+                        res.getStringArray(R.array.checks_wpacademy),
+                        tier1[3],
+                        true,
+                        1);
             }
 
             return null;
@@ -428,405 +589,71 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    private void checkGBClosed() {
-        //Checking if Grand Blanc is closed.
+    /** Checks if a specified school or organization is closed.
+     * @param checks The array of potential false positives to be checked
+     * @param schoolName The name of the school as present in the array populated by {@link WJRTScraper}
+     * @param displayInList Show the result in {@link ClosingsFragment}
+     * @param tier The tier the school belongs to (-1 for Grand Blanc)
+     * @return The status of the school
+     */
+    private boolean isClosed(
+            String[] checks,
+            String schoolName,
+            boolean displayInList,
+            int tier) {
+        
+        boolean result = false;
         for (int i = 0; i < orgName.size(); i++) {
-            //If Grand Blanc hasn't been found...
-            if (!GB) {
-                if (orgName.get(i).contains("Grand Blanc") && !orgName.get(i).contains("Academy")
-                        && !orgName.get(i).contains("Freedom") && !orgName.get(i).contains("Offices")
-                        && !orgName.get(i).contains("City") && !orgName.get(i).contains("Senior")
-                        && !orgName.get(i).contains("Holy") && !orgName.get(i).contains("Montessori")
-                        && !orgName.get(i).contains("Gym")) {
-                    GBInfo.set(0, getString(R.string.GB) + status.get(i));
-                    if (status.get(i).contains("Closed " + weekdaytoday)  && dayrun == 0
+            if (orgName.get(i).contains(schoolName)) {
+                if (isFalsePositive(checks, orgName.get(i))) {
+                    result = false;
+                }else{
+                    if (displayInList) {
+                        displayedOrgNames.add(orgName.get(i));
+                        displayedStatuses.add(status.get(i));
+                    }
+
+                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
                             || status.get(i).contains("Closed Today") && dayrun == 0
                             || status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
                             || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        GBInfo.add(getString(R.string.SnowDay));
-                        //GB is closed.
-                        GB = true;
-                    }else{
-                        //GB at least has a message.
-                        GBMessage = true;
+                        switch (tier) {
+                            case 1:
+                                tier1++;
+                            case 2:
+                                tier2++;
+                            case 3:
+                                tier3++;
+                            case 4:
+                                tier4++;
+                            default:
+                        }
+                        result = true;
                     }
                     break;
                 }
+            }else{
+                result = false;
             }
         }
 
-        if (!GB) {
-            //Grand Blanc is open.
-            if (!GBMessage) {
-                GBInfo.set(0, getString(R.string.GB) + getString(R.string.NotClosed));
-            }
-
-            if (dayrun == 0) {
-                if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16) {
-                    //Time is between 7AM and 4PM. School is already in session.
-                    GBInfo.add(getString(R.string.SchoolOpen));
-                    GBOpen = true;
-                } else if (dt.getHourOfDay() >= 16) {
-                    //Time is after 4PM. School is already out.
-                    GBInfo.add(getString(R.string.Dismissed));
-                    GBOpen = true;
-                }
+        if (!result) {
+            if (displayInList) {
+                displayedOrgNames.add(schoolName);
+                displayedStatuses.add(getString(R.string.Open));
             }
         }
+        return result;
     }
 
-    private void checkClosings() {
-        /*General structure:
-        ->Checks for the presence of a school name
-        -->If the school appears in the list, show its status entry and set its boolean to "true"
-        --->If the status entry contains "Closed [Today]" and the calculation is being run for 'today',
-            increase that tier's 'today' count
-        --->If the status entry contains "Closed [Tomorrow]" and the calculation is being run for 'tomorrow',
-            increase that tier's 'tomorrow' count*/
+    private boolean isFalsePositive(String[] checks, String org) {
 
-        for (int i = 0; i < orgName.size(); i++) {
-            if (!(Atherton)) {
-                if (orgName.get(i).contains("Atherton")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier4today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier4tomorrow++;
-                    }
-                    Atherton = true;
-                }
-            }
-            if (!(Bendle)) {
-                if (orgName.get(i).contains("Bendle")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier4today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier4tomorrow++;
-                    }
-                    Bendle = true;
-                }
-            }
-            if (!(Bentley)) {
-                if (orgName.get(i).contains("Bentley")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier4today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier4tomorrow++;
-                    }
-                    Bentley = true;
-                }
-            }
-            if (!(Carman)) {
-                if (orgName.get(i).contains("Carman-Ainsworth") && !orgName.get(i).contains("Senior")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier4today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier4tomorrow++;
-                    }
-                    Carman = true;
-                }
-            }
-            if (!(Flint)) {
-                if (orgName.get(i).contains("Flint Community Schools")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier4today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier4tomorrow++;
-                    }
-                    Flint = true;
-                }
-            }
-            if (!(Goodrich)) {
-                if (orgName.get(i).contains("Goodrich")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier4today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier4tomorrow++;
-                    }
-                    Goodrich = true;
-                }
-            }
-            if (!(Beecher)) {
-                if (orgName.get(i).contains("Beecher")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Beecher = true;
-                }
-            }
-            if (!(Clio)) {
-                if (orgName.get(i).contains("Clio") && !orgName.get(i).contains("Christian")
-                        && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("City")
-                        && !orgName.get(i).contains("Cornerstone")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Clio = true;
-                }
-            }
-            if (!(Davison)) {
-                if (orgName.get(i).contains("Davison") && !orgName.get(i).contains("Senior")
-                        && !orgName.get(i).contains("Faith") && !orgName.get(i).contains("Medical")
-                        && !orgName.get(i).contains("Montessori")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Davison = true;
-                }
-            }
-            if (!(Fenton)) {
-                if (orgName.get(i).contains("Fenton") && !orgName.get(i).contains("Lake")
-                        && !orgName.get(i).contains("City") && !orgName.get(i).contains("Academy")
-                        && !orgName.get(i).contains("Montessori")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Fenton = true;
-                }
-            }
-            if (!(Flushing)) {
-                if (orgName.get(i).contains("Flushing") && !orgName.get(i).contains("Senior")
-                        && !orgName.get(i).contains("Robert")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Flushing = true;
-                }
-            }
-            if (!(Genesee)) {
-                if (orgName.get(i).contains("Genesee") && !orgName.get(i).contains("Freedom")
-                        && !orgName.get(i).contains("Christian") && !orgName.get(i).contains("Library")
-                        && !orgName.get(i).contains("Mobile") && !orgName.get(i).contains("Programs")
-                        && !orgName.get(i).contains("Health") && !orgName.get(i).contains("Medical")
-                        && !orgName.get(i).contains("Academy") && !orgName.get(i).contains("Skill")
-                        && !orgName.get(i).contains("Sys") && !orgName.get(i).contains("STEM")
-                        && !orgName.get(i).contains("Court") && !orgName.get(i).contains("County")
-                        && !orgName.get(i).contains("Job") && !orgName.get(i).contains("Leadership")
-                        && !orgName.get(i).contains("Freedom") && !orgName.get(i).contains("MSU")
-                        && !orgName.get(i).contains("I.S.D.") && !orgName.get(i).contains("Foster")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Genesee = true;
-                }
-            }
-            if (!(Kearsley)) {
-                if (orgName.get(i).contains("Kearsley")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Kearsley = true;
-                }
-            }
-            if (!(LKFenton)) {
-                if (orgName.get(i).contains("Lake Fenton")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    LKFenton = true;
-                }
-            }
-            if (!(Linden)) {
-                if (orgName.get(i).contains("Linden") && !orgName.get(i).contains("Charter")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Linden = true;
-                }
-            }
-            if (!(Montrose)) {
-                if (orgName.get(i).contains("Montrose") && !orgName.get(i).contains("Senior")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    } else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Montrose = true;
-                }
-            }
-            if (!(Morris)) {
-                if (orgName.get(i).contains("Mt. Morris") && !orgName.get(i).contains("Administration")
-                        && !orgName.get(i).contains("Twp") && !orgName.get(i).contains("Mary")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    Morris = true;
-                }
-            }
-            if (!(SzCreek)) {
-                if (orgName.get(i).contains("Swartz Creek") && !orgName.get(i).contains("Senior")
-                        && !orgName.get(i).contains("Montessori")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier3today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier3tomorrow++;
-                    }
-                    SzCreek = true;
-                }
-            }
-            if (!(Durand)) {
-                if (orgName.get(i).contains("Durand") && !orgName.get(i).contains("Senior")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier2today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier2tomorrow++;
-                    }
-                    Durand = true;
-                }
-            }
-            if (!(Holly)) {
-                if (orgName.get(i).contains("Holly") && !orgName.get(i).contains("Academy")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier2today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier2tomorrow++;
-                    }
-                    Holly = true;
-                }
-            }
-            if (!(Lapeer)) {
-                if (orgName.get(i).contains("Lapeer") && !orgName.get(i).contains("Chatfield")
-                        && !orgName.get(i).contains("Greater") && !orgName.get(i).contains("CMH")
-                        && !orgName.get(i).contains("Tech") && !orgName.get(i).contains("Team")
-                        && !orgName.get(i).contains("Center") && !orgName.get(i).contains("Special")
-                        && !orgName.get(i).contains("Growth") && !orgName.get(i).contains("Offices")
-                        && !orgName.get(i).contains("Library") && !orgName.get(i).contains("Head")
-                        && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("Foster")
-                        && !orgName.get(i).contains("Davenport") && !orgName.get(i).contains("MSU")
-                        && !orgName.get(i).contains("Paul") && !orgName.get(i).contains("Connections")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier2today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier2tomorrow++;
-                    }
-                    Lapeer = true;
-                }
-            }
-            if (!(Owosso)) {
-                if (orgName.get(i).contains("Owosso") && !orgName.get(i).contains("Christian")
-                        && !orgName.get(i).contains("Senior") && !orgName.get(i).contains("Adventist")
-                        && !orgName.get(i).contains("Baker") && !orgName.get(i).contains("Paul")
-                        && !orgName.get(i).contains("Security")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier2today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier2tomorrow++;
-                    }
-                    Owosso = true;
-                }
-            }
-            if (!(GBAcademy)) {
-                if (orgName.get(i).contains("Grand Blanc Academy")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier1today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier1tomorrow++;
-                    }
-                    GBAcademy = true;
-                }
-            }
-            if (!(GISD)) {
-                if (orgName.get(i).contains("Genesee I.S.D.")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier1today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier1tomorrow++;
-                    }
-                    GISD = true;
-                }
-            }
-            if (!(HolyFamily)) {
-                if (orgName.get(i).contains("Holy Family")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier1today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier1tomorrow++;
-                    }
-                    HolyFamily = true;
-                }
-            }
-            if (!(WPAcademy)) {
-                if (orgName.get(i).contains("Woodland Park Academy")) {
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0) {
-                        tier1today++;
-                    }else if (status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
-                        tier1tomorrow++;
-                    }
-                    WPAcademy = true;
-                }
+        for (String check : checks) {
+            if (org.contains(check)) {
+                return true;
             }
         }
+        return false;
     }
 
     private class WeatherScraper extends AsyncTask<Void, Void, Void> {
@@ -995,27 +822,23 @@ public class ResultActivity extends AppCompatActivity {
             }
 
             //Set the schoolpercent
-            if (tier1today > 2 && dayrun == 0
-                    || tier1tomorrow > 2 && dayrun == 1) {
+            if (tier1 > 2) {
                 //3+ academies are closed. 20% schoolpercent.
                 schoolpercent = 20;
             }
-            if (tier2today > 2 && dayrun == 0
-                    || tier2tomorrow > 2 && dayrun == 1) {
+            if (tier2 > 2) {
                 //3+ schools in nearby counties are closed. 40% schoolpercent.
                 schoolpercent = 40;
             }
-            if (tier3today > 2 && dayrun == 0
-                    || tier3tomorrow > 2 && dayrun == 1) {
+            if (tier3 > 2) {
                 //3+ schools in Genesee County are closed. 60% schoolpercent.
                 schoolpercent = 60;
             }
-            if (tier4today > 2 && dayrun == 0
-                    || tier4tomorrow > 2 && dayrun == 1) {
+            if (tier4 > 2) {
                 //3+ schools near GB are closed. 80% schoolpercent.
                 schoolpercent = 80;
                 if (Carman) {
-                    //Carman is closed along with three close schools. 90% schoolpercent.
+                    //Carman is closed along with 2+ close schools. 90% schoolpercent.
                     schoolpercent = 90;
                 }
             }
@@ -1112,12 +935,25 @@ public class ResultActivity extends AppCompatActivity {
 
             if (!WJRTFail) {
                 //WJRT has not failed.
-                ClosingsAdapter closingsAdapter = new ClosingsAdapter(orgName, status);
+                ClosingsAdapter closingsAdapter = new ClosingsAdapter(
+                        displayedOrgNames, displayedStatuses);
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ResultActivity.this);
                 closingsFragment.lstClosings.setLayoutManager(linearLayoutManager);
 
-                // TODO: Create separator items in new RecyclerView implementation
+                //Add section headers
+                displayedOrgNames.add(0, getString(R.string.tier4));
+                displayedStatuses.add(0, null);
+
+                displayedOrgNames.add(7, getString(R.string.tier3));
+                displayedStatuses.add(7, null);
+
+                displayedOrgNames.add(20, getString(R.string.tier2));
+                displayedStatuses.add(20, null);
+
+                displayedOrgNames.add(25, getString(R.string.tier1));
+                displayedStatuses.add(25, null);
+
                 closingsFragment.lstClosings.setAdapter(closingsAdapter);
 
                 runOnUiThread(new Runnable() {
@@ -1334,6 +1170,11 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
+
+        @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
             LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
@@ -1342,8 +1183,13 @@ public class ResultActivity extends AppCompatActivity {
 
             txtOrg.setText(mOrgList.get(position));
             txtStatus.setText(mStatusList.get(position));
-
-            if (Atherton && position == 1 || Bendle && position == 2
+            if (position == 0 || position == 7 || position == 20 || position == 25) {
+                //Make section headers blue.
+                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
+                holder.mCardView.setCardElevation(0);
+                holder.mCardView.setContentPadding(16, 32, 0, 0);
+                txtStatus.setVisibility(View.GONE);
+            }else if (Atherton && position == 1 || Bendle && position == 2
                     || Bentley && position == 3 || Carman && position == 4
                     || Flint && position == 5 || Goodrich && position == 6
                     || Beecher && position == 8 || Clio && position == 9
@@ -1357,7 +1203,11 @@ public class ResultActivity extends AppCompatActivity {
                     || GBAcademy && position == 26 || GISD && position == 27
                     || HolyFamily && position == 28 || WPAcademy && position == 29) {
                 //If the school is closed, make it orange.
-                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
+                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+                holder.mCardView.setCardElevation(16);
+            }else{
+                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+                holder.mCardView.setCardElevation(0);
             }
         }
 

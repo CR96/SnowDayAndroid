@@ -40,17 +40,16 @@
         <item>Lake Fenton</item>
         <item>Linden</item>
         <item>Montrose</item>
-        <item>Mount Morris</item>
+        <item>Mt Morris</item>
         <item>Swartz Creek</item>
     </string-array>
-
 
     <string-array name="name_t4">
         <item>Atherton</item>
         <item>Bendle</item>
         <item>Bentley</item>
         <item>Carman-Ainsworth</item>
-        <item>Flint</item>
+        <item>Flint Community Schools</item>
         <item>Goodrich</item>
     </string-array>
 
@@ -94,15 +93,6 @@
         <item>Paul</item>
         <item>Security</item>
     </string-array>
-
-    <string-array name="checks_atherton"/>
-    <string-array name="checks_bendle"/>
-    <string-array name="checks_bentley"/>
-    <string-array name="checks_carman">
-        <item>Senior</item>
-    </string-array>
-    <string-array name="checks_flint"/>
-    <string-array name="checks_goodrich"/>
 
     <string-array name="checks_beecher"/>
     <string-array name="checks_clio">
@@ -163,6 +153,15 @@
         <item>Senior</item>
         <item>Montessori</item>
     </string-array>
+
+    <string-array name="checks_atherton"/>
+    <string-array name="checks_bendle"/>
+    <string-array name="checks_bentley"/>
+    <string-array name="checks_carman">
+        <item>Senior</item>
+    </string-array>
+    <string-array name="checks_flint"/>
+    <string-array name="checks_goodrich"/>
 
     <string-array name="checks_gb">
         <item>Academy</item>
