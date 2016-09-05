@@ -70,11 +70,10 @@
 
     <string name="GB">Grand Blanc</string>
 
-    <string name="Open">"OPEN</string>
+    <string name="Open">Open</string>
     <string name="NotClosed">"No current closures or delays."</string>
 
     <string name="NoConnection">Check your internet connection.</string>
-    <string name="NoNetwork">Network communication issues</string>
 
     <!--Weather-->
     <string name="NWS">National Weather Service Warnings</string>
@@ -105,7 +104,7 @@
     <string name="SaturdayToday">Today is Saturday. Try again tomorrow!</string>
     <string name="SundayToday">Today is Sunday.</string>
 
-    <string name="SnowDay">Enjoy your Snow Day!</string>
+    <string name="SnowDay">Enjoy your snow day!</string>
 
     <!--Dates and Holidays-->
     <string name="TomorrowGeneric">School is not in session tomorrow.</string>
@@ -173,7 +172,7 @@
 
 
     <!--Error handling-->
-    <string name="CalculateError">Unable to run calculation.</string>
+    <string name="CalculateError">Unable to run calculation</string>
 
     <string name="WJRTConnectionError">Could not connect to ABC 12.</string>
     <string name="WJRTParseError">Unable to read ABC 12 closings.</string>
