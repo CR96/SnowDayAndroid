@@ -171,7 +171,7 @@ public class ResultActivity extends AppCompatActivity {
     boolean GBMessage; //Grand Blanc has a message (e.g. "Early Dismissal") but isn't actually closed.
 
     //Don't try to show weather warning information if no warnings are present
-    boolean WeatherWarningsPresent;
+    static boolean WeatherWarningsPresent;
 
     //Scraper status
     boolean WJRTActive = true;
@@ -982,7 +982,7 @@ public class ResultActivity extends AppCompatActivity {
 
             }
 
-            //Set up the ListView adapter that displays weather warnings
+            //Set up the RecyclerView adapter that displays weather warnings
             if (!NWSFail) {
                 //NWS has not failed.
 
@@ -993,40 +993,11 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
 
-                WeatherAdapter weatherAdapter = new WeatherAdapter(ResultActivity.this, weatherWarn);
-                weatherAdapter.addSeparatorItem(weatherWarn.get(0));
-                for (int i = 1; i < weatherWarn.size(); i++) {
-                    weatherAdapter.addItem(weatherWarn.get(i));
-                }
+                RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
+                WeatherAdapter weatherAdapter = new WeatherAdapter(weatherWarn, weatherSummary, weatherLink);
 
+                weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                 weatherFragment.lstWeather.setAdapter(weatherAdapter);
-
-                weatherFragment.lstWeather.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Don't show a message for the list separator
-                                if (position > 0 && WeatherWarningsPresent) {
-                                    try {
-                                        new WeatherDialog(ResultActivity.this, weatherWarn.get(position), weatherSummary.get(position - 1), weatherLink.get(position)).show();
-                                    }catch (NullPointerException | IndexOutOfBoundsException e) {
-                                        Toast.makeText(ResultActivity.this, getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
-                                        Crashlytics.logException(e);
-                                    }
-                                }
-                            }
-                        });
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                weatherFragment.lstWeather.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                });
             } else {
                 //NWS has failed.
                 ArrayAdapter<String> NWSadapter = new ArrayAdapter<>(getApplicationContext(),

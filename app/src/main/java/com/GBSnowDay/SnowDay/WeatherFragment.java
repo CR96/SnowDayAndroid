@@ -4,6 +4,7 @@ package com.GBSnowDay.SnowDay;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class WeatherFragment extends Fragment {
     Button btnRadar;
 
     public ListView lstNWS;
-    public ListView lstWeather;
+    public RecyclerView lstWeather;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -44,7 +45,7 @@ public class WeatherFragment extends Fragment {
         btnRadar = (Button) view.findViewById(R.id.btnRadar);
 
         lstNWS = (ListView) view.findViewById(R.id.lstNWS);
-        lstWeather = (ListView) view.findViewById(R.id.lstWeather);
+        lstWeather = (RecyclerView) view.findViewById(R.id.lstWeather);
 
         webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");
         webRadar.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);

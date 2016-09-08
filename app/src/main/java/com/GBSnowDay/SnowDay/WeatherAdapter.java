@@ -1,136 +1,125 @@
 package com.GBSnowDay.SnowDay;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.crashlytics.android.Crashlytics;
+
 import java.util.List;
-import java.util.TreeSet;
 
-public class WeatherAdapter extends BaseAdapter {
+/*Copyright 2014-2016 Corey Rowe
 
-    /*Copyright 2014-2016 Corey Rowe
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
 
-         http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.*/
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.*/
-    
-    private static final int TYPE_ITEM = 0;
-    private static final int TYPE_SEPARATOR = 1;
-    private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
+class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
-    private ArrayList<String> mData = new ArrayList<>();
-    private LayoutInflater mInflater;
+    private Context mContext;
+    private List<String> mData;
+    private List<String> weatherSummary;
+    private List<String> weatherLink;
 
-    private TreeSet<Integer> mSeparatorsSet = new TreeSet<>();
-    
-    Context context;
-    List<String> weather;
-
-    public WeatherAdapter(Context context, List<String> weather) {
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.context = context;
-        this.weather = weather;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView mCardView;
+        ViewHolder(CardView v) {
+            super(v);
+            mCardView = v;
+        }
     }
 
-    public void addItem(final String item) {
-        mData.add(item);
-        notifyDataSetChanged();
+    WeatherAdapter(List<String> data1,
+                   List<String> data2,
+                   List<String> data3) {
+        mData = data1;
+        weatherSummary = data2;
+        weatherLink = data3;
     }
 
-    public void addSeparatorItem(final String item) {
-        mData.add(item);
-        //Save separator position
-        mSeparatorsSet.add(mData.size() - 1);
-        notifyDataSetChanged();
+    @Override
+    public WeatherAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
+        mContext = parent.getContext();
+
+        View v = LayoutInflater.from(mContext)
+                .inflate(R.layout.item_weather, parent, false);  //Just for now
+        return new ViewHolder((CardView) v);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return TYPE_MAX_COUNT;
-    }
-
-    @Override
-    public int getCount() {
-        return mData.size();
-    }
-
-    @Override
-    public String getItem(int position) {
-        return mData.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Resources res = context.getResources();
-        ViewHolder holder;
-        int type = getItemViewType(position);
-        holder = new ViewHolder();
-            /*No 'if (convertView == null)' statement to prevent view recycling
-            (views must remain fixed)*/
-        switch (type) {
-            case TYPE_ITEM:
-                //Color the weather warning based on severity.
-                if (weather.get(position).contains(res.getString(R.string.SigWeather))
-                        || weather.get(position).contains(res.getString(R.string.WinterAdvisory))
-                        || weather.get(position).contains(res.getString(R.string.LakeSnowAdvisory))
-                        || weather.get(position).contains(res.getString(R.string.Rain))
-                        || weather.get(position).contains(res.getString(R.string.Drizzle))
-                        || weather.get(position).contains(res.getString(R.string.Fog))
-                        || weather.get(position).contains(res.getString(R.string.WindChillAdvisory))) {
-                    convertView = mInflater.inflate(R.layout.item_blue, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
-                } else if (weather.get(position).contains(res.getString(R.string.WinterWatch))
-                        || weather.get(position).contains(res.getString(R.string.LakeSnowWatch))
-                        || weather.get(position).contains(res.getString(R.string.WindChillWatch))
-                        || weather.get(position).contains(res.getString(R.string.BlizzardWatch))) {
-                    convertView = mInflater.inflate(R.layout.item_orange, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
-                } else if (weather.get(position).contains(res.getString(R.string.WinterWarn))
-                        || weather.get(position).contains(res.getString(R.string.LakeSnowWarn))
-                        || weather.get(position).contains(res.getString(R.string.IceStorm))
-                        || weather.get(position).contains(res.getString(R.string.WindChillWarn))
-                        || weather.get(position).contains(res.getString(R.string.BlizzardWarn))) {
-                    convertView = mInflater.inflate(R.layout.item_red, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
-                } else {
-                    convertView = mInflater.inflate(R.layout.item, parent, false);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
-                }
-                break;
-            case TYPE_SEPARATOR:
-                convertView = mInflater.inflate(R.layout.separator, parent, false);
-                holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-                break;
+    @Override
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
+        TextView text = (TextView) layout.getChildAt(0);
+        text.setText(mData.get(position));
+
+        //Color the weather warning based on severity.
+        if (position == 0) {
+            holder.mCardView.setContentPadding(8, 8, 8, 8);
+            text.setTextSize(14);
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
+            holder.mCardView.setCardElevation(0);
         }
-        convertView.setTag(holder);
-        holder.textView.setText(mData.get(position));
-        return convertView;
+        if (mData.get(position).contains(mContext.getString(R.string.SigWeather))
+                || mData.get(position).contains(mContext.getString(R.string.WinterAdvisory))
+                || mData.get(position).contains(mContext.getString(R.string.LakeSnowAdvisory))
+                || mData.get(position).contains(mContext.getString(R.string.Rain))
+                || mData.get(position).contains(mContext.getString(R.string.Drizzle))
+                || mData.get(position).contains(mContext.getString(R.string.Fog))
+                || mData.get(position).contains(mContext.getString(R.string.WindChillAdvisory))) {
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+        } else if (mData.get(position).contains(mContext.getString(R.string.WinterWatch))
+                || mData.get(position).contains(mContext.getString(R.string.LakeSnowWatch))
+                || mData.get(position).contains(mContext.getString(R.string.WindChillWatch))
+                || mData.get(position).contains(mContext.getString(R.string.BlizzardWatch))) {
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+        } else if (mData.get(position).contains(mContext.getString(R.string.WinterWarn))
+                || mData.get(position).contains(mContext.getString(R.string.LakeSnowWarn))
+                || mData.get(position).contains(mContext.getString(R.string.IceStorm))
+                || mData.get(position).contains(mContext.getString(R.string.WindChillWarn))
+                || mData.get(position).contains(mContext.getString(R.string.BlizzardWarn))) {
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.red));
+        }
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Don't show a message for the list header
+                if (position > 0 && ResultActivity.WeatherWarningsPresent) {
+                    try {
+                        new WeatherDialog(mContext, mData.get(position), weatherSummary.get(position - 1), weatherLink.get(position)).show();
+                    } catch (NullPointerException | IndexOutOfBoundsException e) {
+                        Toast.makeText(mContext, mContext.getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
+                        Crashlytics.logException(e);
+                    }
+                }
+            }
+        });
     }
 
-    public static class ViewHolder {
-        public TextView textView;
+    @Override
+    public int getItemCount() {
+        return mData.size();
     }
 }
