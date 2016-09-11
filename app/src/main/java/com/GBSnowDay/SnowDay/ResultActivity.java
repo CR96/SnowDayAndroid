@@ -110,8 +110,6 @@ public class ResultActivity extends AppCompatActivity {
 
     //Individual components of the calculation
     int schoolpercent;
-    int weathertoday;
-    int weathertomorrow;
     int weatherpercent;
     int percent;
 
@@ -585,6 +583,28 @@ public class ResultActivity extends AppCompatActivity {
                         1);
             }
 
+            //Set the schoolpercent
+            if (tier1 > 2) {
+                //3+ academies are closed. 20% schoolpercent.
+                schoolpercent = 20;
+            }
+            if (tier2 > 2) {
+                //3+ schools in nearby counties are closed. 40% schoolpercent.
+                schoolpercent = 40;
+            }
+            if (tier3 > 2) {
+                //3+ schools in Genesee County are closed. 60% schoolpercent.
+                schoolpercent = 60;
+            }
+            if (tier4 > 2) {
+                //3+ schools near GB are closed. 80% schoolpercent.
+                schoolpercent = 80;
+                if (Carman) {
+                    //Carman is closed along with 2+ close schools. 90% schoolpercent.
+                    schoolpercent = 90;
+                }
+            }
+
             return null;
         }
 
@@ -813,13 +833,12 @@ public class ResultActivity extends AppCompatActivity {
     private void checkWeatherWarning(String warn, int weight) {
         for (int i = 0; i < weatherWarn.size(); i++) {
             if (weatherWarn.get(i).contains(warn)) {
-                if (weatherExpire.get(i - 1).substring(0, 10).equals(datetoday)) {
-                    weathertoday = weight;
+                if (weatherExpire.get(i - 1).substring(0, 10).equals(datetoday) && dayrun == 0) {
+                    weatherpercent = weight;
                 }
 
                 if (weatherExpire.get(i - 1).substring(0, 10).equals(datetomorrow)) {
-                    weathertoday = weight;
-                    weathertomorrow = weight;
+                    weatherpercent = weight;
                 }
             }
         }
@@ -837,35 +856,6 @@ public class ResultActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-
-            //Set the schoolpercent
-            if (tier1 > 2) {
-                //3+ academies are closed. 20% schoolpercent.
-                schoolpercent = 20;
-            }
-            if (tier2 > 2) {
-                //3+ schools in nearby counties are closed. 40% schoolpercent.
-                schoolpercent = 40;
-            }
-            if (tier3 > 2) {
-                //3+ schools in Genesee County are closed. 60% schoolpercent.
-                schoolpercent = 60;
-            }
-            if (tier4 > 2) {
-                //3+ schools near GB are closed. 80% schoolpercent.
-                schoolpercent = 80;
-                if (Carman) {
-                    //Carman is closed along with 2+ close schools. 90% schoolpercent.
-                    schoolpercent = 90;
-                }
-            }
-
-            //Set the weatherpercent
-            if (dayrun == 0) {
-                weatherpercent = weathertoday;
-            }else if (dayrun == 1) {
-                weatherpercent = weathertomorrow;
             }
 
             //Calculate the total percent.
