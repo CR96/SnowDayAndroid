@@ -1007,44 +1007,21 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void crossFadePercent() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-            percentFragment.txtPercent.setAlpha(0f);
-            percentFragment.txtPercent.animate()
-                    .alpha(1f)
-                    .setDuration(250);
+        percentFragment.txtPercent.setAlpha(0f);
+        percentFragment.txtPercent.animate()
+                .alpha(1f)
+                .setDuration(250);
 
-            percentFragment.progCalculate.animate()
-                    .alpha(0f)
-                    .setDuration(250)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            percentFragment.progCalculate.clearAnimation();
-                            percentFragment.progCalculate.setVisibility(View.GONE);
-                        }
-                    });
-        }else{
-            Animation fade_out = AnimationUtils.loadAnimation(ResultActivity.this, android.R.anim.fade_out);
-            fade_out.setFillAfter(true);
-            fade_out.setDuration(250);
-            fade_out.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {}
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    percentFragment.progCalculate.clearAnimation();
-                    percentFragment.progCalculate.setVisibility(View.GONE);
-                }
-                @Override
-                public void onAnimationRepeat(Animation animation) {}
-            });
-            percentFragment.progCalculate.startAnimation(fade_out);
-
-            Animation fade_in = AnimationUtils.loadAnimation(ResultActivity.this, android.R.anim.fade_in);
-            fade_in.setDuration(250);
-            fade_in.setFillAfter(true);
-            percentFragment.txtPercent.startAnimation(fade_in);
-        }
+        percentFragment.progCalculate.animate()
+                .alpha(0f)
+                .setDuration(250)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        percentFragment.progCalculate.clearAnimation();
+                        percentFragment.progCalculate.setVisibility(View.GONE);
+                    }
+                });
     }
 
     @SuppressLint("SetTextI18n")
