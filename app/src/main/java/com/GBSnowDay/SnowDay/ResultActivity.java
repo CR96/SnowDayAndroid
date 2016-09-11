@@ -29,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,8 +43,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ResultActivity extends AppCompatActivity {
@@ -89,6 +92,7 @@ public class ResultActivity extends AppCompatActivity {
     List<String> nwsInfo = new ArrayList<>();
 
     List<String> weatherWarn = new ArrayList<>();
+    List<String> weatherWarnTime = new ArrayList<>();
     List<String> weatherSummary = new ArrayList<>();
     List<String> weatherExpire = new ArrayList<>();
     List<String> weatherLink = new ArrayList<>();
@@ -687,7 +691,12 @@ public class ResultActivity extends AppCompatActivity {
 
                 if (title != null) {
                     for (int i = 0; i < title.size(); i++) {
-                        weatherWarn.add(title.get(i).text().replace(" by NWS", ""));
+                        int stringend = title.get(i).text().indexOf("issued");
+                        if (stringend != -1) {
+                            weatherWarn.add(title.get(i).text().substring(0, stringend));
+                        }else{
+                            weatherWarn.add(title.get(i).text());
+                        }
                     }
 
                     if (!weatherWarn.get(1).contains("no active")) {
@@ -696,8 +705,15 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
                 if (expiretime != null) {
+                    SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.US);
+                    SimpleDateFormat output = new SimpleDateFormat("MMMM dd 'at' h:mm a", Locale.US);
+                    Date date;
+                    String readableDate;
                     for (int i = 0; i < expiretime.size(); i++) {
                         weatherExpire.add(expiretime.get(i).text());
+                        date = input.parse(weatherExpire.get(i));
+                        readableDate = output.format(date);
+                        weatherWarnTime.add("Expires " + readableDate);
                     }
                 }
 
@@ -721,7 +737,7 @@ public class ResultActivity extends AppCompatActivity {
                 NWSFail = true;
 
                 Crashlytics.logException(e);
-            } catch (NullPointerException e) {
+            } catch (NullPointerException | ParseException e) {
                 //Webpage layout not recognized.
                 nwsInfo.add(getString(R.string.WeatherParseError));
                 NWSFail = true;
@@ -986,15 +1002,12 @@ public class ResultActivity extends AppCompatActivity {
             if (!NWSFail) {
                 //NWS has not failed.
 
-                //Remove blank entries
-                for (int i = 0; i < weatherWarn.size(); i++) {
-                    if (weatherWarn.get(i).equals("")) {
-                        weatherWarn.remove(i);
-                    }
-                }
-
                 RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
-                WeatherAdapter weatherAdapter = new WeatherAdapter(weatherWarn, weatherSummary, weatherLink);
+                WeatherAdapter weatherAdapter = new WeatherAdapter(
+                        weatherWarn,
+                        weatherWarnTime,
+                        weatherSummary,
+                        weatherLink);
 
                 weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                 weatherFragment.lstWeather.setAdapter(weatherAdapter);

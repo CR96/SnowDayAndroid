@@ -17,13 +17,18 @@ public class WeatherDialog {
     Context context;
 
     String title;
+    String expires;
     String summary;
     String link;
 
-    public WeatherDialog(Context c, String t,
-                        String s, String l) {
+    public WeatherDialog(Context c,
+                         String t,
+                         String e,
+                         String s,
+                         String l) {
         context = c;
         title = t;
+        expires = e;
         summary = s;
         link = l;
     }
@@ -36,9 +41,11 @@ public class WeatherDialog {
         View content = LayoutInflater.from(context).inflate(R.layout.dialog_weather, null);
 
         TextView txtTitle = (TextView) content.findViewById(R.id.txtTitle);
+        TextView txtExpires = (TextView) content.findViewById(R.id.txtExpires);
         TextView txtSummary = (TextView) content.findViewById(R.id.txtSummary);
 
         txtTitle.setText(title);
+        txtExpires.setText(expires);
         txtSummary.setText(summary);
 
         builder.setPositiveButton(R.string.action_info, new DialogInterface.OnClickListener() {

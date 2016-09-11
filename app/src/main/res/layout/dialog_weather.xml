@@ -5,13 +5,14 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
+            android:id="@+id/imgWeather"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/weather"
@@ -20,17 +21,25 @@
             android:id="@+id/txtTitle"
             android:textSize="18sp"
             android:textColor="@color/textColorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgWeather"
+            android:layout_alignTop="@+id/imgWeather"/>
+        <TextView
+            android:id="@+id/txtExpires"
+            android:textSize="14sp"
             android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitle"
+            android:layout_toRightOf="@+id/imgWeather"/>
+    </RelativeLayout>
 
 
     <TextView
         android:id="@+id/txtSummary"
+        android:textColor="@color/textColorPrimary"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

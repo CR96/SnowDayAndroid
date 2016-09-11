@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private Context mContext;
     private List<String> mData;
+    private List<String> weatherWarnTime;
     private List<String> weatherSummary;
     private List<String> weatherLink;
 
@@ -47,10 +47,12 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     WeatherAdapter(List<String> data1,
                    List<String> data2,
-                   List<String> data3) {
+                   List<String> data3,
+                   List<String> data4) {
         mData = data1;
-        weatherSummary = data2;
-        weatherLink = data3;
+        weatherWarnTime = data2;
+        weatherSummary = data3;
+        weatherLink = data4;
     }
 
     @Override
@@ -72,15 +74,24 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
         LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
         TextView text = (TextView) layout.getChildAt(0);
+        TextView subtext = (TextView) layout.getChildAt(1);
         text.setText(mData.get(position));
 
         //Color the weather warning based on severity.
+        holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+
         if (position == 0) {
-            holder.mCardView.setContentPadding(8, 8, 8, 8);
             text.setTextSize(14);
+            holder.mCardView.setContentPadding(16, 16, 0, 0);
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
             holder.mCardView.setCardElevation(0);
+            subtext.setVisibility(View.GONE);
+        }else if (weatherWarnTime.size() < 1) {
+            subtext.setVisibility(View.GONE);
+        }else{
+            subtext.setText(weatherWarnTime.get(position - 1));
         }
+
         if (mData.get(position).contains(mContext.getString(R.string.SigWeather))
                 || mData.get(position).contains(mContext.getString(R.string.WinterAdvisory))
                 || mData.get(position).contains(mContext.getString(R.string.LakeSnowAdvisory))
@@ -108,7 +119,12 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
                 //Don't show a message for the list header
                 if (position > 0 && ResultActivity.WeatherWarningsPresent) {
                     try {
-                        new WeatherDialog(mContext, mData.get(position), weatherSummary.get(position - 1), weatherLink.get(position)).show();
+                        new WeatherDialog(mContext,
+                                mData.get(position),
+                                weatherWarnTime.get(position - 1),
+                                weatherSummary.get(position - 1),
+                                weatherLink.get(position))
+                                .show();
                     } catch (NullPointerException | IndexOutOfBoundsException e) {
                         Toast.makeText(mContext, mContext.getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
                         Crashlytics.logException(e);
