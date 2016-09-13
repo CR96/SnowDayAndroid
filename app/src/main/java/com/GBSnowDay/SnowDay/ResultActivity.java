@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -97,16 +96,15 @@ public class ResultActivity extends AppCompatActivity {
     List<String> weatherExpire = new ArrayList<>();
     List<String> weatherLink = new ArrayList<>();
 
-    DateTime dt = new DateTime();
+    DateTime today = new DateTime();
+    SimpleDateFormat sdfInput;
+    SimpleDateFormat sdfOutput;
 
     int days;
     int dayrun;
 
     String weekdaytoday;
     String weekdaytomorrow;
-
-    String datetoday;
-    String datetomorrow;
 
     //Individual components of the calculation
     int schoolpercent;
@@ -216,8 +214,6 @@ public class ResultActivity extends AppCompatActivity {
         Intent result = getIntent();
         dayrun = result.getIntExtra("dayrun", dayrun);
         days = result.getIntExtra("days", days);
-        datetoday = result.getStringExtra("datetoday");
-        datetomorrow = result.getStringExtra("datetomorrow");
 
         //Start the calculation
         Calculate();
@@ -355,7 +351,7 @@ public class ResultActivity extends AppCompatActivity {
             try {
 
                 //Get the day of the week as a string.
-                weekdaytoday = dt.dayOfWeek().getAsText();
+                weekdaytoday = today.dayOfWeek().getAsText();
 
                 //Get tomorrow's weekday as a string.
                 DateTime tomorrow = new DateTime();
@@ -424,12 +420,12 @@ public class ResultActivity extends AppCompatActivity {
                     GBSubtext.add(null);
                 }else{
                     if (dayrun == 0) {
-                        if (dt.getHourOfDay() >= 7 && dt.getHourOfDay() < 16) {
+                        if (today.getHourOfDay() >= 7 && today.getHourOfDay() < 16) {
                             //Time is between 7AM and 4PM. School is already in session.
                             GBText.add(getString(R.string.SchoolOpen));
                             GBSubtext.add(null);
                             GBOpen = true;
-                        } else if (dt.getHourOfDay() >= 16) {
+                        } else if (today.getHourOfDay() >= 16) {
                             //Time is after 4PM. School is already out.
                             GBText.add(getString(R.string.Dismissed));
                             GBSubtext.add(null);
@@ -725,14 +721,14 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
                 if (expiretime != null) {
-                    SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.US);
-                    SimpleDateFormat output = new SimpleDateFormat("MMMM dd 'at' h:mm a", Locale.US);
+                    sdfInput = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.US);
+                    sdfOutput = new SimpleDateFormat("MMMM dd 'at' h:mm a", Locale.US);
                     Date date;
                     String readableDate;
                     for (int i = 0; i < expiretime.size(); i++) {
                         weatherExpire.add(expiretime.get(i).text());
-                        date = input.parse(weatherExpire.get(i));
-                        readableDate = output.format(date);
+                        date = sdfInput.parse(weatherExpire.get(i));
+                        readableDate = sdfOutput.format(date);
                         weatherWarnTime.add("Expires " + readableDate);
                     }
                 }
@@ -749,21 +745,6 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
 
-            } catch (IOException e) {
-                //Connectivity issues
-                nwsInfo.add(getString(R.string.WeatherConnectionError) + " " + getString(R.string.NoConnection));
-                NWSFail = true;
-
-                Crashlytics.logException(e);
-            } catch (NullPointerException | ParseException e) {
-                //Webpage layout not recognized.
-                nwsInfo.add(getString(R.string.WeatherParseError));
-                NWSFail = true;
-
-                Crashlytics.logException(e);
-            }
-
-            if (!NWSFail) {
                 //Significant Weather Advisory
                 checkWeatherWarning(getString(R.string.SigWeather), 15);
 
@@ -811,6 +792,19 @@ public class ResultActivity extends AppCompatActivity {
 
                 //Blizzard Warning
                 checkWeatherWarning(getString(R.string.BlizzardWarn), 90);
+
+            } catch (IOException e) {
+                //Connectivity issues
+                nwsInfo.add(getString(R.string.WeatherConnectionError) + " " + getString(R.string.NoConnection));
+                NWSFail = true;
+
+                Crashlytics.logException(e);
+            } catch (NullPointerException | ParseException e) {
+                //Webpage layout not recognized.
+                nwsInfo.add(getString(R.string.WeatherParseError));
+                NWSFail = true;
+
+                Crashlytics.logException(e);
             }
 
             return null;
@@ -828,16 +822,21 @@ public class ResultActivity extends AppCompatActivity {
      * Only the highest weather percent is stored (not cumulative).
      * Calculation is affected based on when warning expires.
      * @param warn The string identifying the warning to search for
-     * @param weight The value weatherpercent is set to if the warning is found (
+     * @param weight The value weatherpercent is set to if the warning is found
+     * @throws ParseException if date format is unrecognized
      */
-    private void checkWeatherWarning(String warn, int weight) {
+    private void checkWeatherWarning(String warn, int weight) throws ParseException {
+        DateTime warningDate;
+        DateTime tomorrow;
         for (int i = 0; i < weatherWarn.size(); i++) {
             if (weatherWarn.get(i).contains(warn)) {
-                if (weatherExpire.get(i - 1).substring(0, 10).equals(datetoday) && dayrun == 0) {
+                warningDate = new DateTime(sdfInput.parse(weatherExpire.get(i - 1)));
+                tomorrow = today.plusDays(1);
+                if ((warningDate.isEqual(today) || warningDate.isAfter(today))
+                    && (dayrun == 0)) {
                     weatherpercent = weight;
-                }
-
-                if (weatherExpire.get(i - 1).substring(0, 10).equals(datetomorrow)) {
+                }else if ((warningDate.isEqual(tomorrow) || warningDate.isAfter(tomorrow))
+                    && (dayrun == 1)) {
                     weatherpercent = weight;
                 }
             }
