@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,8 +22,8 @@ public class WeatherFragment extends Fragment {
     WebView webRadar;
     Button btnRadar;
 
-    public ListView lstNWS;
     public RecyclerView lstWeather;
+    public TextView txtWeatherInfo;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -44,7 +44,7 @@ public class WeatherFragment extends Fragment {
         webRadar = (WebView) view.findViewById(R.id.webRadar);
         btnRadar = (Button) view.findViewById(R.id.btnRadar);
 
-        lstNWS = (ListView) view.findViewById(R.id.lstNWS);
+        txtWeatherInfo = (TextView) view.findViewById(R.id.txtWeatherInfo);
         lstWeather = (RecyclerView) view.findViewById(R.id.lstWeather);
 
         webRadar.loadUrl("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif");

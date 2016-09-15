@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.TextView;
 
 
 /**
@@ -18,7 +18,7 @@ public class ClosingsFragment extends Fragment {
 
     public RecyclerView lstClosings;
 
-    public ListView lstWJRT;
+    public TextView txtClosingsInfo;
 
     public ClosingsFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class ClosingsFragment extends Fragment {
         //Declare views
         lstClosings = (RecyclerView) view.findViewById(R.id.lstClosings);
 
-        lstWJRT = (ListView) view.findViewById(R.id.lstWJRT);
+        txtClosingsInfo = (TextView) view.findViewById(R.id.txtClosingsInfo);
     }
 
 }

@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,8 +86,8 @@ public class ResultActivity extends AppCompatActivity {
     List<String> GBText = new ArrayList<>();
     List<String> GBSubtext = new ArrayList<>();
 
-    List<String> wjrtInfo = new ArrayList<>();
-    List<String> nwsInfo = new ArrayList<>();
+    String closingsError;
+    String weatherError;
 
     List<String> weatherWarn = new ArrayList<>();
     List<String> weatherWarnTime = new ArrayList<>();
@@ -374,7 +373,7 @@ public class ResultActivity extends AppCompatActivity {
             } catch (IOException e) {
 
                 //Connectivity issues
-                wjrtInfo.add(getString(R.string.WJRTConnectionError) + " " + getString(R.string.NoConnection));
+                closingsError = getString(R.string.WJRTConnectionError);
                 WJRTFail = true;
 
                 Crashlytics.logException(e);
@@ -397,7 +396,7 @@ public class ResultActivity extends AppCompatActivity {
 
                 } else {
                     //Webpage layout was not recognized.
-                    wjrtInfo.add(getString(R.string.WJRTParseError));
+                    closingsError = getString(R.string.WJRTParseError);
                     WJRTFail = true;
 
                     Crashlytics.logException(e);
@@ -795,13 +794,13 @@ public class ResultActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 //Connectivity issues
-                nwsInfo.add(getString(R.string.WeatherConnectionError) + " " + getString(R.string.NoConnection));
+                weatherError = getString(R.string.WeatherConnectionError);
                 NWSFail = true;
 
                 Crashlytics.logException(e);
             } catch (NullPointerException | ParseException e) {
                 //Webpage layout not recognized.
-                nwsInfo.add(getString(R.string.WeatherParseError));
+                weatherError = getString(R.string.WeatherParseError);
                 NWSFail = true;
 
                 Crashlytics.logException(e);
@@ -886,12 +885,12 @@ public class ResultActivity extends AppCompatActivity {
                 //GB is open and the time is during or after school hours. 0% chance.
                 percent = 0;
             }
+            return null;
+        }
 
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    percentFragment.txtPercent.setText("0%");
-                }
-            });
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
 
             //Animate txtPercent
             if (WJRTFail && NWSFail) {
@@ -899,29 +898,32 @@ public class ResultActivity extends AppCompatActivity {
                 //Don't set the percent.
                 GBText.add(getString(R.string.CalculateError));
                 GBSubtext.add(getString(R.string.NoConnection));
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        percentFragment.txtPercent.setText("--");
-                        crossFadePercent();
-                        enableTabs();
-                    }
-                });
+                percentFragment.progCalculate.clearAnimation();
+                percentFragment.progCalculate.setImageDrawable(
+                        ContextCompat.getDrawable(
+                                ResultActivity.this,
+                                R.drawable.ic_error_outline_white));
+                percentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+                percentFragment.lstGB.setVisibility(View.VISIBLE);
             } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        crossFadePercent();
-                        countUp(percentFragment.txtPercent, 0);
-                    }
-                });
+                crossFadePercent();
+                countUp(percentFragment.txtPercent, 0);
+                if (WJRTFail) {
+                    //WJRT has failed.
+                    closingsFragment.txtClosingsInfo.setText(closingsError);
+                    closingsFragment.txtClosingsInfo.setVisibility(View.VISIBLE);
 
+                    GBText.add(closingsError);
+                    GBSubtext.add(getString(R.string.CalculateWithoutClosings));
+                } else if (NWSFail) {
+                    //NWS has failed.
+                    weatherFragment.txtWeatherInfo.setText(weatherError);
+                    weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
+
+                    GBText.add(weatherError);
+                    GBSubtext.add(getString(R.string.CalculateWithoutWeather));
+                }
             }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
 
             GBAdapter gbAdapter = new GBAdapter(GBText, GBSubtext, GB, GBMessage);
 
@@ -963,18 +965,6 @@ public class ResultActivity extends AppCompatActivity {
                         closingsFragment.lstClosings.setVisibility(View.VISIBLE);
                     }
                 });
-            } else {
-                //WJRT has failed.
-                ArrayAdapter<String> WJRTadapter = new ArrayAdapter<>(getApplicationContext(),
-                        android.R.layout.simple_list_item_1, wjrtInfo);
-                closingsFragment.lstWJRT.setAdapter(WJRTadapter);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        closingsFragment.lstWJRT.setVisibility(View.VISIBLE);
-                    }
-                });
-
             }
 
             //Set up the RecyclerView adapter that displays weather warnings
@@ -990,17 +980,6 @@ public class ResultActivity extends AppCompatActivity {
 
                 weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                 weatherFragment.lstWeather.setAdapter(weatherAdapter);
-            } else {
-                //NWS has failed.
-                ArrayAdapter<String> NWSadapter = new ArrayAdapter<>(getApplicationContext(),
-                        android.R.layout.simple_list_item_1, nwsInfo);
-                weatherFragment.lstNWS.setAdapter(NWSadapter);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        weatherFragment.lstNWS.setVisibility(View.VISIBLE);
-                    }
-                });
             }
         }
     }

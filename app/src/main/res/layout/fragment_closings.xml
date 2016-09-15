@@ -1,22 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.GBSnowDay.SnowDay.ClosingsFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lstClosings"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:requiresFadingEdge="vertical"
-        android:fadingEdgeLength="8dp"
-        android:listSelector="@android:color/transparent" />
-
-    <ListView
-        android:id="@+id/lstWJRT"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/txtClosingsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawableTop="@drawable/ic_error_outline_white"
+        android:drawableTint="@color/colorAccent"
+        android:alpha="0.75"
+        android:visibility="gone"/>
 
-</LinearLayout>
+</RelativeLayout>
