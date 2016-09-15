@@ -270,8 +270,8 @@ public class ResultActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.closings) {
-            //Open URL with warnings listed
-            String url = "http://www.abc12.com/closings";
+            //Open URL with closings listed
+            String url = getString(R.string.ClosingsURL);
             Intent i = new Intent(Intent.ACTION_VIEW);
             Uri u = Uri.parse(url);
             Context context = this;
@@ -282,12 +282,12 @@ public class ResultActivity extends AppCompatActivity {
                 startActivity(i);
             }catch (ActivityNotFoundException e) {
                 //Raise on activity not found
-                Toast.makeText(context, "No browser found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.NoBrowser), Toast.LENGTH_SHORT).show();
             }
         }
         if (id == R.id.weather) {
             //Open URL with warnings listed
-            String url = "http://mobile.weather.gov/index.php?lat=42.92515852864426&lon=-83.63534793945507";
+            String url = getString(R.string.WeatherExternalLink);
             Intent i = new Intent(Intent.ACTION_VIEW);
             Uri u = Uri.parse(url);
             Context context = this;
@@ -298,7 +298,7 @@ public class ResultActivity extends AppCompatActivity {
                 startActivity(i);
             }catch (ActivityNotFoundException e) {
                 //Raise on activity not found
-                Toast.makeText(context, "No browser found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.NoBrowser), Toast.LENGTH_SHORT).show();
             }
         }
         if (id == R.id.action_about) {
@@ -358,7 +358,7 @@ public class ResultActivity extends AppCompatActivity {
                 weekdaytomorrow = tomorrow.plusDays(1).dayOfWeek().getAsText();
 
                 //This is the current listings page.
-                schools = Jsoup.connect("http://abc12.com/closings").timeout(10000).get();
+                schools = Jsoup.connect(getString(R.string.ClosingsURL)).timeout(10000).get();
                 //Attempt to parse input
 
                 Element table = schools.select("table").last();
@@ -696,7 +696,7 @@ public class ResultActivity extends AppCompatActivity {
 
             //Live html
             try {
-                weatherdoc = Jsoup.connect("http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&y=0").timeout(10000).get();
+                weatherdoc = Jsoup.connect(getString(R.string.WeatherURL)).timeout(10000).get();
 
                 Elements title = weatherdoc.select("title");
                 Elements summary = weatherdoc.select("summary");

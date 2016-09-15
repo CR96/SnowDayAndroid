@@ -13,10 +13,10 @@
     <string name="twitter_user">GBSnowDay</string>
 
     <string name="dev_site">Website</string>
-    <string name="website">http://gbsnowday.weebly.com</string>
+    <string name="website">https://gbsnowday.weebly.com</string>
 
     <string name="dev_git">GitHub</string>
-    <string name="git">http://github.com/CR96/SnowDayAndroid</string>
+    <string name="git">https://github.com/CR96/SnowDayAndroid</string>
 
     <string name="dev_email">Email</string>
     <string name="email">gbsnowday@gmail.com</string>
@@ -52,7 +52,10 @@
 
     <!--Menu-->
     <string name="openclosings">Open ABC 12 Closings</string>
+
     <string name="openweather">Open National Weather Service</string>
+    <string name="WeatherExternalLink">http://mobile.weather.gov/index.php?lat=42.92515852864426&amp;lon=-83.63534793945507</string>
+
     <string name="action_about">About</string>
     <string name="action_info">More Info</string>
 
@@ -62,6 +65,7 @@
     <string name="tab3">Weather</string>
 
     <!--Closings-->
+    <string name="ClosingsURL">http://abc12.com/weather/closings</string>
 
     <string name="tier1">Academies / Institutions</string>
     <string name="tier2">Districts in Neighboring Counties</string>
@@ -76,6 +80,8 @@
     <string name="NoConnection">Check your internet connection.</string>
 
     <!--Weather-->
+    <string name="WeatherURL">http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&amp;y=0</string>
+
     <string name="NWS">National Weather Service Warnings</string>
 
     <string name="HazardWeather">Hazardous Weather Outlook</string>
@@ -183,6 +189,8 @@
 
     <string name="CalculateWithoutClosings">Result only reflects current weather conditions</string>
     <string name="CalculateWithoutWeather">Result only reflects current school closings</string>
+
+    <string name="NoBrowser">No browser found.</string>
 
     <string name="EmptyTimeline">No Tweets</string>
     <string name="NoTwitter">Could not load timeline.</string>
