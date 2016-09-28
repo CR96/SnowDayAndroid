@@ -88,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
         setContentView(R.layout.activity_main);
 
-        //Set toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         //Declare views
         optToday = (RadioButton) findViewById(R.id.optToday);
         optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);

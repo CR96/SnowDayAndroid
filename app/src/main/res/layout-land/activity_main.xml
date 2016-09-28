@@ -1,107 +1,84 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.GBSnowDay.SnowDay.MainActivity"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include android:id="@+id/toolbar" layout="@layout/toolbar" />
-
-    <RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.GBSnowDay.SnowDay.MainActivity"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:padding="16dp">
-        <RadioGroup
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id='@+id/radiogroup'
+        android:layout_gravity="center"
+        android:layout_below="@+id/txtDay"
+        android:paddingBottom="16dp"
+        android:layout_toLeftOf="@+id/txtPrev"
+        android:layout_toStartOf="@+id/txtPrev"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id='@+id/radiogroup'
-            android:layout_gravity="center"
-            android:layout_below="@+id/txtDay"
-            android:paddingBottom="16dp"
-            android:layout_toLeftOf="@+id/txtPrev"
-            android:layout_toStartOf="@+id/txtPrev"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:text="@string/today"
+            android:id="@+id/optToday"
+            android:checked="false"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/today"
-                android:id="@+id/optToday"
-                android:checked="false"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tomorrow"
-                android:id="@+id/optTomorrow"
-                android:checked="false"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        </RadioGroup>
-
-        <TextView
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/prev"
-            android:id="@+id/txtPrev"
-            android:paddingBottom="8dp"
-            android:layout_alignRight="@+id/lstInfo"
-            android:layout_alignEnd="@+id/lstInfo" />
+            android:text="@string/tomorrow"
+            android:id="@+id/optTomorrow"
+            android:checked="false"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/day"
-            android:id="@+id/txtDay"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+    </RadioGroup>
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lstDays"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:spinnerMode="dropdown"
-            android:entries="@array/days_array"
-            android:layout_below="@+id/txtPrev"
-            android:layout_alignLeft="@+id/txtPrev"
-            android:layout_alignStart="@+id/txtPrev"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/prev"
+        android:id="@+id/txtPrev"
+        android:paddingBottom="8dp"
+        android:layout_alignRight="@+id/lstInfo"
+        android:layout_alignEnd="@+id/lstInfo" />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lstInfo"
-            android:layout_above="@+id/btnCalculate"
-            android:layout_below="@+id/radiogroup" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/day"
+        android:id="@+id/txtDay"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/calculate"
-            android:id="@+id/btnCalculate"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lstDays"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:spinnerMode="dropdown"
+        android:entries="@array/days_array"
+        android:layout_below="@+id/txtPrev"
+        android:layout_alignLeft="@+id/txtPrev"
+        android:layout_alignStart="@+id/txtPrev"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgSpecial"
-            android:src="@drawable/special"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_above="@+id/btnCalculate"
-            tools:ignore="ContentDescription"
-            android:layout_alignTop="@+id/lstInfo"
-            android:alpha="0.1"
-            android:visibility="gone" />
-    </RelativeLayout>
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lstInfo"
+        android:layout_above="@+id/btnCalculate"
+        android:layout_below="@+id/radiogroup" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/calculate"
+        android:id="@+id/btnCalculate"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+</RelativeLayout>
