@@ -20,7 +20,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -199,7 +198,6 @@ public class ResultActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         if (viewPager != null) {
-            tabLayout.setVisibility(View.INVISIBLE);
             tabLayout.setupWithViewPager(viewPager);
 
             //Make sure tab content stays in memory
@@ -1054,12 +1052,15 @@ public class ResultActivity extends AppCompatActivity {
 
     private void enableTabs() {
         //Enable the tabs
-        tabLayout.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setElevation(0);
+        }
+
         tabLayout.setVisibility(View.VISIBLE);
         viewPager.setPagingEnabled(true);
 
         percentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
-        percentFragment.lstGB.setVisibility(View.VISIBLE);
     }
 
 

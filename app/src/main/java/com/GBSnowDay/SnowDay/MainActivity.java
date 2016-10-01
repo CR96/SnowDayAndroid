@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -465,10 +463,8 @@ public class MainActivity extends AppCompatActivity {
         if (daysarray.toString().equals(Arrays.toString(specialarray))) {
             List<String> special = new ArrayList<>();
             special.add(0, getString(R.string.special));
+            special.add(1, "");
             lstInfo.setAdapter(new CustomAdapter(special));
-
-            ImageView spcl = (ImageView) findViewById(R.id.imgSpecial);
-            spcl.setVisibility(View.VISIBLE);
         }
     }
 

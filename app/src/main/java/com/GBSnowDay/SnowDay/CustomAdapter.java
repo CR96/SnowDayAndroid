@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -55,13 +56,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         TextView textView = (TextView) holder.mCardView.getChildAt(0);
+        ImageView imageView = (ImageView) holder.mCardView.getChildAt(1);
         textView.setText(mData.get(position));
 
-        if (MainActivity.bobcats && position == 1) {
+        if (MainActivity.bobcats && position >= 1) {
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.bobcats));
-        }else if (MainActivity.eventPresent && position == 1) {
+        }else if (MainActivity.eventPresent && position >= 1) {
             //If there is a reminder / event, make it blue
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+        }else if (mData.contains(mContext.getString(R.string.special)) && position == 1) {
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
+            holder.mCardView.setCardElevation(0);
+            imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.special));
+            imageView.setAlpha((float) 0.1);
         }else{
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
         }
