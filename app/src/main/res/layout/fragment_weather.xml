@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/radarshow"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/btnRadar"
         android:layout_margin="16dp"
         android:layout_alignParentRight="true"

@@ -9,6 +9,7 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
 
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
     </style>

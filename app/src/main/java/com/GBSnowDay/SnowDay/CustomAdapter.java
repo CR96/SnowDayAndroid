@@ -64,6 +64,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }else if (MainActivity.eventPresent && position >= 1) {
             //If there is a reminder / event, make it blue
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+            textView.setTextColor(
+                    ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
         }else if (mData.contains(mContext.getString(R.string.special)) && position == 1) {
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
             holder.mCardView.setCardElevation(0);
