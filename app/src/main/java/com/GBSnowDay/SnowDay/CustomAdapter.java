@@ -26,19 +26,23 @@ import java.util.List;
  See the License for the specific language governing permissions and
  limitations under the License.*/
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private Context mContext;
+    private boolean eventPresent;
+    private boolean bobcats;
     private List<String> mData;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public CardView mCardView;
-        public ViewHolder(CardView v) {
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView mCardView;
+        ViewHolder(CardView v) {
             super(v);
             mCardView = v;
         }
     }
 
-    public CustomAdapter(List<String> data) {
+    CustomAdapter(boolean b1, boolean b2, List<String> data) {
+        eventPresent = b1;
+        bobcats = b2;
         mData = data;
     }
 
@@ -59,9 +63,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         ImageView imageView = (ImageView) holder.mCardView.getChildAt(1);
         textView.setText(mData.get(position));
 
-        if (MainActivity.bobcats && position >= 1) {
+        if (bobcats && position >= 1) {
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.bobcats));
-        }else if (MainActivity.eventPresent && position >= 1) {
+        }else if (eventPresent && position >= 1) {
             //If there is a reminder / event, make it blue
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
             textView.setTextColor(
