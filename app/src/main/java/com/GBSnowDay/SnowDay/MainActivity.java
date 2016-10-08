@@ -61,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
     String datetomorrow;
     String textdate;
 
-    boolean todayValid;
-    boolean tomorrowValid;
+    //These are set to false if the calculation cannot be run on that day
+    boolean todayValid = true;
+    boolean tomorrowValid = true;
+
     static boolean eventPresent;
     static boolean bobcats;
 
@@ -99,6 +101,19 @@ public class MainActivity extends AppCompatActivity {
         //Only run checkWeekend() if today or tomorrow is still valid
         if (todayValid || tomorrowValid) {
             checkWeekend();
+        }
+
+        if (!todayValid && !tomorrowValid) {
+            optToday.setEnabled(false);
+            optToday.setChecked(false);
+            optTomorrow.setEnabled(false);
+            optTomorrow.setChecked(false);
+        } else if (!todayValid) {
+            optToday.setEnabled(false);
+            optToday.setChecked(false);
+        } else {
+            optTomorrow.setEnabled(false);
+            optTomorrow.setChecked(false);
         }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -148,8 +163,19 @@ public class MainActivity extends AppCompatActivity {
         //Listen for button click
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //Start the calculation
-                Calculate();
+                //Date setup
+
+                if (optToday.isChecked()) {
+                    //Set dayrun to 0 (Today)
+                    dayrun = 0;
+
+                } else if (optTomorrow.isChecked()) {
+                    //Set dayrun to 1 (Tomorrow)
+                    dayrun = 1;
+                }
+
+                //Have the user input past snow days
+                days = lstDays.getSelectedItemPosition() - 1;
 
                 if (dayrun == 0) {
                     Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Today"));
@@ -191,28 +217,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void Calculate() {
-
-        //Date setup
-
-        if (optToday.isChecked()) {
-            //Set dayrun to 0 (Today)
-            dayrun = 0;
-
-        } else if (optTomorrow.isChecked()) {
-            //Set dayrun to 1 (Tomorrow)
-            dayrun = 1;
-        }
-
-        //Have the user input past snow days
-        days = lstDays.getSelectedItemPosition() - 1;
-    }
-
     public void checkDate() {
-
-        //These are set to false if the calculation cannot be run on that day
-        todayValid = true;
-        tomorrowValid = true;
 
         //Set the current month, day, and year
         Calendar calendar = Calendar.getInstance();
@@ -436,20 +441,6 @@ public class MainActivity extends AppCompatActivity {
             eventPresent = true;
             tomorrowValid = false;
         }
-
-        //Determine if the calculation should be available
-        if (!tomorrowValid && !todayValid) {
-            optToday.setEnabled(false);
-            optToday.setChecked(false);
-            optTomorrow.setEnabled(false);
-            optTomorrow.setChecked(false);
-        } else if (!tomorrowValid) {
-            optTomorrow.setEnabled(false);
-            optTomorrow.setChecked(false);
-        } else if (!todayValid) {
-            optToday.setEnabled(false);
-            optToday.setChecked(false);
-        }
     }
 
     private void special() {
@@ -470,20 +461,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (weekday == 5) {
             infoList.add(getString(R.string.SaturdayTomorrow));
-            optTomorrow.setEnabled(false);
-            optTomorrow.setChecked(false);
+            todayValid = false;
             eventPresent = true;
         } else if (weekday == 6) {
             infoList.add(getString(R.string.SaturdayToday));
-            optToday.setEnabled(false);
-            optToday.setChecked(false);
-            optTomorrow.setEnabled(false);
-            optTomorrow.setChecked(false);
+            todayValid = false;
+            tomorrowValid = false;
             eventPresent = true;
         } else if (weekday == 7) {
             infoList.add(getString(R.string.SundayToday));
-            optToday.setEnabled(false);
-            optToday.setChecked(false);
+            todayValid = false;
             eventPresent = true;
         }
     }
