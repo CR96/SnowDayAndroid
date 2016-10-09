@@ -50,18 +50,6 @@ public class MainActivity extends AppCompatActivity {
     Spinner lstDays;
     Button btnCalculate;
 
-    boolean todayValid = true;
-    boolean tomorrowValid = true;
-    boolean eventPresent;
-    boolean bobcats;
-
-    int days;
-    int dayrun;
-
-    //Declare lists that will be used in ListAdapters
-    ArrayList<String> infoList = new ArrayList<>();
-    ArrayList<Integer> daysarray = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,19 +64,10 @@ public class MainActivity extends AppCompatActivity {
         lstDays = (Spinner) findViewById(R.id.lstDays);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
-        DateResult dateResult = new DateResult(
-                MainActivity.this,
-                todayValid,
-                tomorrowValid,
-                eventPresent,
-                bobcats,
-                infoList
-        );
+        DateResult dateResult = new DateResult(MainActivity.this);
 
-        todayValid = dateResult.getTodayValid();
-        tomorrowValid = dateResult.getTomorrowValid();
-        eventPresent = dateResult.getEventPresent();
-        bobcats = dateResult.getBobcats();
+        boolean todayValid = dateResult.getTodayValid();
+        boolean tomorrowValid = dateResult.getTomorrowValid();
 
         if (!todayValid && !tomorrowValid) {
             optToday.setEnabled(false);
@@ -107,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
         lstInfo.setLayoutManager(layoutManager);
         lstInfo.setAdapter(new CustomAdapter(
-                eventPresent,
-                bobcats,
-                infoList));
+                dateResult.getEventPresent(),
+                dateResult.getBobcats(),
+                dateResult.getInfoList()));
 
         //Listen for optToday or optTomorrow changes
         //Don't allow the calculation to run if "Select a day" is selected
@@ -155,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Date setup
 
+                int dayrun = -1;
+
                 if (optToday.isChecked()) {
                     //Set dayrun to 0 (Today)
                     dayrun = 0;
@@ -165,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //Have the user input past snow days
-                days = lstDays.getSelectedItemPosition() - 1;
+                int days = lstDays.getSelectedItemPosition() - 1;
 
                 if (dayrun == 0) {
                     Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Today"));
@@ -207,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void special() {
+        ArrayList<Integer> daysarray = new ArrayList<>();
         daysarray.add((int) lstDays.getSelectedItemId());
         int[] specialarray = {0, 3, 7, 1, 7, 3, 1, 2, 1};
         if (daysarray.toString().equals(Arrays.toString(specialarray))) {

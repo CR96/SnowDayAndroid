@@ -25,8 +25,8 @@ limitations under the License.*/
 
 class DateResult {
     private ArrayList<String> infoList = new ArrayList<>();
-    private boolean todayValid;
-    private boolean tomorrowValid;
+    private boolean todayValid = true;
+    private boolean tomorrowValid = true;
     private boolean eventPresent;
     private boolean bobcats;
 
@@ -39,26 +39,10 @@ class DateResult {
 
     /**
      * Make sure the user doesn't try to run the program on the weekend or on specific dates.
-     * @param c Application context used to access string resources
-     * @param b1 Whether today is valid
-     * @param b2 Whether tomorrow is valid
-     * @param b3 Whether an event is present (affects entry color)
-     * @param b4 Whether the program is run on the day of commencement (affects entry color)
-     * @param list The list to be populated in the initial activity's RecyclerView
+     * @param context Application context used to access string resources
      */
-    DateResult(
-            Context c,
-            boolean b1,
-            boolean b2,
-            boolean b3,
-            boolean b4,
-            ArrayList<String> list){
-        res = c.getResources();
-        todayValid = b1;
-        tomorrowValid = b2;
-        eventPresent = b3;
-        bobcats = b4;
-        infoList = list;
+    DateResult(Context context) {
+        res = context.getResources();
 
         checkDate();
 
@@ -68,20 +52,29 @@ class DateResult {
         }
     }
 
+    /** @return whether today is valid **/
     boolean getTodayValid() {
         return todayValid;
     }
 
+    /** @return whether tomorrow is valid **/
     boolean getTomorrowValid() {
         return tomorrowValid;
     }
 
+    /** @return whether an event is present (affects list entry color) **/
     boolean getEventPresent() {
         return eventPresent;
     }
 
+    /** @return whether the program is run on the day of commencement (affects list entry color) **/
     boolean getBobcats() {
         return bobcats;
+    }
+
+    /** @return the list to be populated in the initial activity's RecyclerView **/
+    ArrayList<String> getInfoList() {
+        return infoList;
     }
 
     private void checkDate() {
@@ -307,7 +300,7 @@ class DateResult {
 
         if (weekday == 5) {
             infoList.add(res.getString(R.string.SaturdayTomorrow));
-            todayValid = false;
+            tomorrowValid = false;
             eventPresent = true;
         } else if (weekday == 6) {
             infoList.add(res.getString(R.string.SaturdayToday));
