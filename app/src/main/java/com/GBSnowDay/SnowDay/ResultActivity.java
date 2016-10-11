@@ -36,7 +36,6 @@ import com.crashlytics.android.Crashlytics;
 import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -72,18 +71,18 @@ public class ResultActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
 
-    String schooltext;
+    ClosingsScraper closingsScraper;
 
 
-    List<String> orgName = new ArrayList<>();
-    List<String> status = new ArrayList<>();
+    ArrayList<String> orgNames = new ArrayList<>();
+    ArrayList<String> orgStatuses = new ArrayList<>();
 
-    List<String> displayedOrgNames = new ArrayList<>();
-    List<String> displayedStatuses = new ArrayList<>();
+    ArrayList<String> displayedOrgNames = new ArrayList<>();
+    ArrayList<String> displayedOrgStatuses = new ArrayList<>();
 
     //Declare lists that will be displayed in RecyclerViews
-    List<String> GBText = new ArrayList<>();
-    List<String> GBSubtext = new ArrayList<>();
+    ArrayList<String> GBText = new ArrayList<>();
+    ArrayList<String> GBSubtext = new ArrayList<>();
 
     String closingsError;
     String weatherError;
@@ -172,13 +171,11 @@ public class ResultActivity extends AppCompatActivity {
     static boolean WeatherWarningsPresent;
 
     //Scraper status
-    boolean WJRTActive = true;
     boolean NWSActive = true;
 
     /*Used for catching IOExceptions / NullPointerExceptions if there are connectivity issues
     or a webpage is down*/
-    boolean WJRTFail;
-    boolean NWSFail;
+     boolean NWSFail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -321,8 +318,21 @@ public class ResultActivity extends AppCompatActivity {
          * Obviously return 100% if GB is already closed.
          */
 
-        /**WJRT SCHOOL CLOSINGS SCRAPER**/
-        new WJRTScraper().execute();
+        closingsScraper = new ClosingsScraper(this, new ClosingsScraper.AsyncResponse() {
+            @Override
+            public void processFinish(ClosingsScraper.ClosingsData closingsData) {
+                if (closingsScraper.isCancelled()) {
+                    //Closings scraper has failed.
+                    closingsError = closingsData.error;
+                }else{
+                    orgNames.addAll(closingsData.orgNames);
+                    orgStatuses.addAll(closingsData.orgStatuses);
+                    parseClosings();
+                }
+            }
+        });
+
+        closingsScraper.execute();
 
         /**NATIONAL WEATHER SERVICE SCRAPER**/
         new WeatherScraper().execute();
@@ -333,281 +343,214 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    private class WJRTScraper extends AsyncTask<Void, Void, Void> {
-        protected Void doInBackground(Void... nothing) {
-            Document schools = null;
-            //Scrape School Closings from WJRT with Jsoup.
+    private void parseClosings() {
 
-            /**WJRT SCHOOL CLOSINGS SCRAPER**/
-            //Scrape School Closings from WJRT with Jsoup.
-            //Run scraper in an Async task.
+            //Get the day of the week as a string.
+            weekdaytoday = today.dayOfWeek().getAsText();
 
-            try {
+            //Get tomorrow's weekday as a string.
+            DateTime tomorrow = new DateTime();
 
-                //Get the day of the week as a string.
-                weekdaytoday = today.dayOfWeek().getAsText();
+            weekdaytomorrow = tomorrow.plusDays(1).dayOfWeek().getAsText();
 
-                //Get tomorrow's weekday as a string.
-                DateTime tomorrow = new DateTime();
+            Resources res = getResources();
 
-                weekdaytomorrow = tomorrow.plusDays(1).dayOfWeek().getAsText();
+            //Sanity check - make sure Grand Blanc isn't already closed before predicting
+            GB = isClosed(
+                    res.getStringArray(R.array.checks_gb),
+                    getString(R.string.GB),
+                    true,
+                    -1);
 
-                //This is the current listings page.
-                schools = Jsoup.connect(getString(R.string.ClosingsURL)).timeout(10000).get();
-                //Attempt to parse input
-
-                Element table = schools.select("table").last();
-                Elements rows = table.select("tr");
-
-                for (int i = 1; i < rows.size(); i++) { //Skip header row
-                    Element row = rows.get(i);
-                    orgName.add(row.select("td").get(0).text());
-                    status.add(row.select("td").get(1).text());
-                }
-
-            } catch (IOException e) {
-
-                //Connectivity issues
-                closingsError = getString(R.string.WJRTConnectionError);
-                WJRTFail = true;
-
-                Crashlytics.logException(e);
-
-            } catch (NullPointerException | IndexOutOfBoundsException e) {
-
-                if (schools != null) {
-                    schooltext = schools.text();
-                }else{
-                    schooltext = "";
-                }
-
-                //This shows in place of the table (as plain text) if no schools or institutions are closed.
-                if (schooltext.contains("no closings or delays")) {
-                    //No schools are closed.
-                    WJRTFail = false;
-
-                    //Add a blank entry so checkClosings() still works correctly
-                    orgName.add(" ");
-
-                } else {
-                    //Webpage layout was not recognized.
-                    closingsError = getString(R.string.WJRTParseError);
-                    WJRTFail = true;
-
-                    Crashlytics.logException(e);
-                }
-            }
-
-            //Only run if WJRTFail is false to avoid NullPointerExceptions
-            if (!WJRTFail) {
-                Resources res = getResources();
-
-                //Sanity check - make sure Grand Blanc isn't already closed before predicting
-                GB = isClosed(
-                        res.getStringArray(R.array.checks_gb),
-                        getString(R.string.GB),
-                        true,
-                        -1);
-
-                if (GB) {
-                    GBText.add(getString(R.string.SnowDay));
-                    GBSubtext.add(null);
-                }else{
-                    if (dayrun == 0) {
-                        if (today.getHourOfDay() >= 7 && today.getHourOfDay() < 16) {
-                            //Time is between 7AM and 4PM. School is already in session.
-                            GBText.add(getString(R.string.SchoolOpen));
-                            GBSubtext.add(null);
-                            GBOpen = true;
-                        } else if (today.getHourOfDay() >= 16) {
-                            //Time is after 4PM. School is already out.
-                            GBText.add(getString(R.string.Dismissed));
-                            GBSubtext.add(null);
-                            GBOpen = true;
-                        }
+            if (GB) {
+                GBText.add(getString(R.string.SnowDay));
+                GBSubtext.add(null);
+            } else {
+                if (dayrun == 0) {
+                    if (today.getHourOfDay() >= 7 && today.getHourOfDay() < 16) {
+                        //Time is between 7AM and 4PM. School is already in session.
+                        GBText.add(getString(R.string.SchoolOpen));
+                        GBSubtext.add(null);
+                        GBOpen = true;
+                    } else if (today.getHourOfDay() >= 16) {
+                        //Time is after 4PM. School is already out.
+                        GBText.add(getString(R.string.Dismissed));
+                        GBSubtext.add(null);
+                        GBOpen = true;
                     }
                 }
-
-                //Check school closings
-                String[] tier1 = res.getStringArray(R.array.name_t1);
-                String[] tier2 = res.getStringArray(R.array.name_t2);
-                String[] tier3 = res.getStringArray(R.array.name_t3);
-                String[] tier4 = res.getStringArray(R.array.name_t4);
-
-                //Tier 4
-                Atherton = isClosed(
-                        res.getStringArray(R.array.checks_atherton),
-                        tier4[0],
-                        false,
-                        4);
-                Bendle = isClosed(
-                        res.getStringArray(R.array.checks_bendle),
-                        tier4[1],
-                        false,
-                        4);
-                Bentley = isClosed(
-                        res.getStringArray(R.array.checks_bentley),
-                        tier4[2],
-                        false,
-                        4);
-                Carman = isClosed(
-                        res.getStringArray(R.array.checks_carman),
-                        tier4[3],
-                        false,
-                        4);
-                Flint = isClosed(
-                        res.getStringArray(R.array.checks_flint),
-                        tier4[4],
-                        false,
-                        4);
-                Goodrich = isClosed(
-                        res.getStringArray(R.array.checks_goodrich),
-                        tier4[5],
-                        false,
-                        4);
-
-                //Tier 3
-                Beecher = isClosed(
-                        res.getStringArray(R.array.checks_beecher),
-                        tier3[0],
-                        false,
-                        3);
-                Clio = isClosed(
-                        res.getStringArray(R.array.checks_clio),
-                        tier3[1],
-                        false,
-                        3);
-                Davison = isClosed(
-                        res.getStringArray(R.array.checks_davison),
-                        tier3[2],
-                        false,
-                        3);
-                Fenton = isClosed(
-                        res.getStringArray(R.array.checks_fenton),
-                        tier3[3],
-                        false,
-                        3);
-                Flushing = isClosed(
-                        res.getStringArray(R.array.checks_flushing),
-                        tier3[4],
-                        false,
-                        3);
-                Genesee = isClosed(
-                        res.getStringArray(R.array.checks_genesee),
-                        tier3[5],
-                        false,
-                        3);
-                Kearsley = isClosed(
-                        res.getStringArray(R.array.checks_kearsley),
-                        tier3[6],
-                        false,
-                        3);
-                LKFenton = isClosed(
-                        res.getStringArray(R.array.checks_lkfenton),
-                        tier3[7],
-                        false,
-                        3);
-                Linden = isClosed(
-                        res.getStringArray(R.array.checks_linden),
-                        tier3[8],
-                        false,
-                        3);
-                Montrose = isClosed(
-                        res.getStringArray(R.array.checks_montrose),
-                        tier3[9],
-                        false,
-                        3);
-                Morris = isClosed(
-                        res.getStringArray(R.array.checks_morris),
-                        tier3[10],
-                        false,
-                        3);
-                SzCreek = isClosed(
-                        res.getStringArray(R.array.checks_szcreek),
-                        tier3[11],
-                        false,
-                        3);
-
-                //Tier 2
-                Durand = isClosed(
-                        res.getStringArray(R.array.checks_durand),
-                        tier2[0],
-                        false,
-                        2);
-                Holly = isClosed(
-                        res.getStringArray(R.array.checks_holly),
-                        tier2[1],
-                        false,
-                        2);
-                Lapeer = isClosed(
-                        res.getStringArray(R.array.checks_lapeer),
-                        tier2[2],
-                        false,
-                        2);
-                Owosso = isClosed(
-                        res.getStringArray(R.array.checks_owosso),
-                        tier2[3],
-                        false,
-                        2);
-
-                //Tier 1
-                GBAcademy = isClosed(
-                        res.getStringArray(R.array.checks_gbacademy),
-                        tier1[0],
-                        false,
-                        1);
-                GISD = isClosed(
-                        res.getStringArray(R.array.checks_gisd),
-                        tier1[1],
-                        false,
-                        1);
-                HolyFamily = isClosed(
-                        res.getStringArray(R.array.checks_holyfamily),
-                        tier1[2],
-                        false,
-                        1);
-                WPAcademy = isClosed(
-                        res.getStringArray(R.array.checks_wpacademy),
-                        tier1[3],
-                        false,
-                        1);
             }
 
-            //Set the schoolpercent
-            if (tier1 > 2) {
-                //3+ academies are closed. 20% schoolpercent.
-                schoolpercent = 20;
-            }
-            if (tier2 > 2) {
-                //3+ schools in nearby counties are closed. 40% schoolpercent.
-                schoolpercent = 40;
-            }
-            if (tier3 > 2) {
-                //3+ schools in Genesee County are closed. 60% schoolpercent.
-                schoolpercent = 60;
-            }
-            if (tier4 > 2) {
-                //3+ schools near GB are closed. 80% schoolpercent.
-                schoolpercent = 80;
-                if (Carman) {
-                    //Carman is closed along with 2+ close schools. 90% schoolpercent.
-                    schoolpercent = 90;
-                }
-            }
+            //Check school closings
+            String[] tier1schools = res.getStringArray(R.array.name_t1);
+            String[] tier2schools = res.getStringArray(R.array.name_t2);
+            String[] tier3schools = res.getStringArray(R.array.name_t3);
+            String[] tier4schools = res.getStringArray(R.array.name_t4);
 
-            return null;
+            //Tier 4
+            Atherton = isClosed(
+                    res.getStringArray(R.array.checks_atherton),
+                    tier4schools[0],
+                    false,
+                    4);
+            Bendle = isClosed(
+                    res.getStringArray(R.array.checks_bendle),
+                    tier4schools[1],
+                    false,
+                    4);
+            Bentley = isClosed(
+                    res.getStringArray(R.array.checks_bentley),
+                    tier4schools[2],
+                    false,
+                    4);
+            Carman = isClosed(
+                    res.getStringArray(R.array.checks_carman),
+                    tier4schools[3],
+                    false,
+                    4);
+            Flint = isClosed(
+                    res.getStringArray(R.array.checks_flint),
+                    tier4schools[4],
+                    false,
+                    4);
+            Goodrich = isClosed(
+                    res.getStringArray(R.array.checks_goodrich),
+                    tier4schools[5],
+                    false,
+                    4);
+
+            //Tier 3
+            Beecher = isClosed(
+                    res.getStringArray(R.array.checks_beecher),
+                    tier3schools[0],
+                    false,
+                    3);
+            Clio = isClosed(
+                    res.getStringArray(R.array.checks_clio),
+                    tier3schools[1],
+                    false,
+                    3);
+            Davison = isClosed(
+                    res.getStringArray(R.array.checks_davison),
+                    tier3schools[2],
+                    false,
+                    3);
+            Fenton = isClosed(
+                    res.getStringArray(R.array.checks_fenton),
+                    tier3schools[3],
+                    false,
+                    3);
+            Flushing = isClosed(
+                    res.getStringArray(R.array.checks_flushing),
+                    tier3schools[4],
+                    false,
+                    3);
+            Genesee = isClosed(
+                    res.getStringArray(R.array.checks_genesee),
+                    tier3schools[5],
+                    false,
+                    3);
+            Kearsley = isClosed(
+                    res.getStringArray(R.array.checks_kearsley),
+                    tier3schools[6],
+                    false,
+                    3);
+            LKFenton = isClosed(
+                    res.getStringArray(R.array.checks_lkfenton),
+                    tier3schools[7],
+                    false,
+                    3);
+            Linden = isClosed(
+                    res.getStringArray(R.array.checks_linden),
+                    tier3schools[8],
+                    false,
+                    3);
+            Montrose = isClosed(
+                    res.getStringArray(R.array.checks_montrose),
+                    tier3schools[9],
+                    false,
+                    3);
+            Morris = isClosed(
+                    res.getStringArray(R.array.checks_morris),
+                    tier3schools[10],
+                    false,
+                    3);
+            SzCreek = isClosed(
+                    res.getStringArray(R.array.checks_szcreek),
+                    tier3schools[11],
+                    false,
+                    3);
+
+            //Tier 2
+            Durand = isClosed(
+                    res.getStringArray(R.array.checks_durand),
+                    tier2schools[0],
+                    false,
+                    2);
+            Holly = isClosed(
+                    res.getStringArray(R.array.checks_holly),
+                    tier2schools[1],
+                    false,
+                    2);
+            Lapeer = isClosed(
+                    res.getStringArray(R.array.checks_lapeer),
+                    tier2schools[2],
+                    false,
+                    2);
+            Owosso = isClosed(
+                    res.getStringArray(R.array.checks_owosso),
+                    tier2schools[3],
+                    false,
+                    2);
+
+            //Tier 1
+            GBAcademy = isClosed(
+                    res.getStringArray(R.array.checks_gbacademy),
+                    tier1schools[0],
+                    false,
+                    1);
+            GISD = isClosed(
+                    res.getStringArray(R.array.checks_gisd),
+                    tier1schools[1],
+                    false,
+                    1);
+            HolyFamily = isClosed(
+                    res.getStringArray(R.array.checks_holyfamily),
+                    tier1schools[2],
+                    false,
+                    1);
+            WPAcademy = isClosed(
+                    res.getStringArray(R.array.checks_wpacademy),
+                    tier1schools[3],
+                    false,
+                    1);
+
+        //Set the schoolpercent
+        if (tier1 > 2) {
+            //3+ academies are closed. 20% schoolpercent.
+            schoolpercent = 20;
         }
-
-        protected void onPostExecute(Void result) {
-            //WJRT scraper has finished.
-            WJRTActive = false;
+        if (tier2 > 2) {
+            //3+ schools in nearby counties are closed. 40% schoolpercent.
+            schoolpercent = 40;
         }
-
+        if (tier3 > 2) {
+            //3+ schools in Genesee County are closed. 60% schoolpercent.
+            schoolpercent = 60;
+        }
+        if (tier4 > 2) {
+            //3+ schools near GB are closed. 80% schoolpercent.
+            schoolpercent = 80;
+            if (Carman) {
+                //Carman is closed along with 2+ close schools. 90% schoolpercent.
+                schoolpercent = 90;
+            }
+        }
     }
 
     /** Checks if a specified school or organization is closed or has a message.
      * @param checks The array of potential false positives to be checked
-     * @param schoolName The name of the school as present in the array populated by {@link WJRTScraper}
+     * @param schoolName The name of the school as present in the array populated by {@link ClosingsScraper}
      * @param isGrandBlanc Whether the school is Grand Blanc or another school
      * @param tier The tier the school belongs to (-1 for Grand Blanc)
      * @return The status of the school
@@ -621,23 +564,23 @@ public class ResultActivity extends AppCompatActivity {
         boolean schoolFound = false;
         boolean result = false;
 
-        for (int i = 0; i < orgName.size(); i++) {
-            if (orgName.get(i).contains(schoolName)) {
-                if (!isFalsePositive(checks, orgName.get(i))) {
+        for (int i = 0; i < orgNames.size(); i++) {
+            if (orgNames.get(i).contains(schoolName)) {
+                if (!isFalsePositive(checks, orgNames.get(i))) {
                     schoolFound = true;
                     if (isGrandBlanc) {
                         GBMessage = true;
                         GBText.add(schoolName);
-                        GBSubtext.add(status.get(i));
+                        GBSubtext.add(orgStatuses.get(i));
                     } else {
                         displayedOrgNames.add(schoolName);
-                        displayedStatuses.add(status.get(i));
+                        displayedOrgStatuses.add(orgStatuses.get(i));
                     }
 
-                    if (status.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
-                            || status.get(i).contains("Closed Today") && dayrun == 0
-                            || status.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
-                            || status.get(i).contains("Closed Tomorrow") && dayrun == 1) {
+                    if (orgStatuses.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
+                            || orgStatuses.get(i).contains("Closed Today") && dayrun == 0
+                            || orgStatuses.get(i).contains("Closed " + weekdaytomorrow) && dayrun == 1
+                            || orgStatuses.get(i).contains("Closed Tomorrow") && dayrun == 1) {
                         if (isGrandBlanc) {
                             result = true;
                         } else {
@@ -666,7 +609,7 @@ public class ResultActivity extends AppCompatActivity {
             GBSubtext.add(getString(R.string.Open));
         }else if (!schoolFound){
             displayedOrgNames.add(schoolName);
-            displayedStatuses.add(getString(R.string.Open));
+            displayedOrgStatuses.add(getString(R.string.Open));
         }
 
         return result;
@@ -842,7 +785,7 @@ public class ResultActivity extends AppCompatActivity {
 
             //Give the scrapers time to act before displaying the percent
 
-            while (WJRTActive || NWSActive) {
+            while (closingsScraper.getStatus() == Status.RUNNING || NWSActive) {
                 try {
                     //Wait for scrapers to finish before continuing
                     Thread.sleep(100);
@@ -888,7 +831,7 @@ public class ResultActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             //Animate txtPercent
-            if (WJRTFail && NWSFail) {
+            if (closingsScraper.isCancelled() && NWSFail) {
                 //Both scrapers failed. A percentage cannot be determined.
                 //Don't set the percent.
                 GBText.add(getString(R.string.CalculateError));
@@ -903,7 +846,7 @@ public class ResultActivity extends AppCompatActivity {
             } else {
                 crossFadePercent();
                 countUp(percentFragment.txtPercent, 0);
-                if (WJRTFail) {
+                if (closingsScraper.isCancelled()) {
                     //WJRT has failed.
                     closingsFragment.txtClosingsInfo.setText(closingsError);
                     closingsFragment.txtClosingsInfo.setVisibility(View.VISIBLE);
@@ -930,7 +873,7 @@ public class ResultActivity extends AppCompatActivity {
 
             //Set up the RecyclerView adapter that displays school closings
 
-            if (!WJRTFail) {
+            if (!closingsScraper.isCancelled()) {
                 //WJRT has not failed.
 
                 RecyclerView.LayoutManager ClosingsManager = new LinearLayoutManager(ResultActivity.this);
@@ -938,19 +881,19 @@ public class ResultActivity extends AppCompatActivity {
 
                 //Add section headers
                 displayedOrgNames.add(0, getString(R.string.tier4));
-                displayedStatuses.add(0, null);
+                displayedOrgStatuses.add(0, null);
 
                 displayedOrgNames.add(7, getString(R.string.tier3));
-                displayedStatuses.add(7, null);
+                displayedOrgStatuses.add(7, null);
 
                 displayedOrgNames.add(20, getString(R.string.tier2));
-                displayedStatuses.add(20, null);
+                displayedOrgStatuses.add(20, null);
 
                 displayedOrgNames.add(25, getString(R.string.tier1));
-                displayedStatuses.add(25, null);
+                displayedOrgStatuses.add(25, null);
 
                 ClosingsAdapter closingsAdapter = new ClosingsAdapter(
-                        displayedOrgNames, displayedStatuses);
+                        displayedOrgNames, displayedOrgStatuses);
 
                 closingsFragment.lstClosings.setAdapter(closingsAdapter);
 
