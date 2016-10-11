@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (!todayValid) {
             optToday.setEnabled(false);
             optToday.setChecked(false);
-        } else {
+        } else if (!tomorrowValid) {
             optTomorrow.setEnabled(false);
             optTomorrow.setChecked(false);
         }
