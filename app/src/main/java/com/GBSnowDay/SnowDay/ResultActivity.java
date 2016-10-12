@@ -31,20 +31,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.joda.time.DateTime;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
 public class ResultActivity extends AppCompatActivity {
@@ -72,7 +64,7 @@ public class ResultActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
     ClosingsScraper closingsScraper;
-
+    WeatherScraper weatherScraper;
 
     ArrayList<String> orgNames = new ArrayList<>();
     ArrayList<String> orgStatuses = new ArrayList<>();
@@ -87,15 +79,14 @@ public class ResultActivity extends AppCompatActivity {
     String closingsError;
     String weatherError;
 
-    List<String> weatherWarn = new ArrayList<>();
-    List<String> weatherWarnTime = new ArrayList<>();
-    List<String> weatherSummary = new ArrayList<>();
-    List<String> weatherExpire = new ArrayList<>();
-    List<String> weatherLink = new ArrayList<>();
+    ArrayList<String> warningTitles = new ArrayList<>();
+    ArrayList<String> warningExpireTimes = new ArrayList<>();
+    ArrayList<String> warningReadableTimes = new ArrayList<>();
+    ArrayList<String> warningSummaries = new ArrayList<>();
+    ArrayList<String> warningLinks = new ArrayList<>();
 
     DateTime today = new DateTime();
     SimpleDateFormat sdfInput;
-    SimpleDateFormat sdfOutput;
 
     int days;
     int dayrun;
@@ -168,14 +159,7 @@ public class ResultActivity extends AppCompatActivity {
     boolean GBMessage; //Grand Blanc has a message (e.g. "Early Dismissal") but isn't actually closed.
 
     //Don't try to show weather warning information if no warnings are present
-    static boolean WeatherWarningsPresent;
-
-    //Scraper status
-    boolean NWSActive = true;
-
-    /*Used for catching IOExceptions / NullPointerExceptions if there are connectivity issues
-    or a webpage is down*/
-     boolean NWSFail;
+    boolean weatherWarningsPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -334,8 +318,25 @@ public class ResultActivity extends AppCompatActivity {
 
         closingsScraper.execute();
 
-        /**NATIONAL WEATHER SERVICE SCRAPER**/
-        new WeatherScraper().execute();
+        weatherScraper = new WeatherScraper(this, new WeatherScraper.AsyncResponse() {
+            @Override
+            public void processFinish(WeatherScraper.WeatherData weatherData) {
+                if (weatherScraper.isCancelled()) {
+                    //Weather scraper has failed.
+                    weatherError = weatherData.error;
+                }else{
+                    warningTitles.addAll(weatherData.warningTitles);
+                    warningExpireTimes.addAll(weatherData.warningExpireTimes);
+                    warningReadableTimes.addAll(weatherData.warningReadableTimes);
+                    warningSummaries.addAll(weatherData.warningSummaries);
+                    warningLinks.addAll(weatherData.warningLinks);
+                    weatherWarningsPresent = weatherData.weatherWarningsPresent;
+                    parseWeather();
+                }
+            }
+        });
+
+        weatherScraper.execute();
 
         //Final Percent Calculator
         new PercentCalculate().execute();
@@ -624,136 +625,56 @@ public class ResultActivity extends AppCompatActivity {
         }
         return false;
     }
+    
+    private void parseWeather() {
+        //Significant Weather Advisory
+        checkWeatherWarning(getString(R.string.SigWeather), 15);
 
-    private class WeatherScraper extends AsyncTask<Void, Void, Void> {
-        protected Void doInBackground(Void... nothing) {
-            /**NATIONAL WEATHER SERVICE SCRAPER**/
-            //Change the percentage based on current storm/wind/temperature warnings.
+        //Winter Weather Advisory
+        checkWeatherWarning(getString(R.string.WinterAdvisory), 30);
 
-            Document weatherdoc;
+        //Lake Effect Snow Advisory
+        checkWeatherWarning(getString(R.string.LakeSnowAdvisory), 40);
 
-            //Live html
-            try {
-                weatherdoc = Jsoup.connect(getString(R.string.WeatherURL)).timeout(10000).get();
+        //Freezing Rain
+        checkWeatherWarning(getString(R.string.Rain), 40);
 
-                Elements title = weatherdoc.select("title");
-                Elements summary = weatherdoc.select("summary");
-                Elements expiretime = weatherdoc.select("cap|expires");
-                Elements link = weatherdoc.select("link");
+        //Freezing Drizzle
+        checkWeatherWarning(getString(R.string.Drizzle), 40);
 
+        //Freezing Fog
+        checkWeatherWarning(getString(R.string.Fog), 40);
 
-                if (title != null) {
-                    for (int i = 0; i < title.size(); i++) {
-                        int stringend = title.get(i).text().indexOf("issued");
-                        if (stringend != -1) {
-                            weatherWarn.add(title.get(i).text().substring(0, stringend));
-                        } else {
-                            weatherWarn.add(title.get(i).text());
-                        }
-                    }
+        //Wind Chill Advisory
+        checkWeatherWarning(getString(R.string.WindChillAdvisory), 40);
 
-                    if (!weatherWarn.get(1).contains("no active")) {
-                        //Weather warnings are present.
-                        WeatherWarningsPresent = true;
-                    }
-                }
-                if (expiretime != null) {
-                    sdfInput = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.US);
-                    sdfOutput = new SimpleDateFormat("MMMM dd 'at' h:mm a", Locale.US);
-                    Date date;
-                    String readableDate;
-                    for (int i = 0; i < expiretime.size(); i++) {
-                        weatherExpire.add(expiretime.get(i).text());
-                        date = sdfInput.parse(weatherExpire.get(i));
-                        readableDate = sdfOutput.format(date);
-                        weatherWarnTime.add("Expires " + readableDate);
-                    }
-                }
+        //Ice Storm Warning
+        checkWeatherWarning(getString(R.string.IceStorm), 70);
 
-                if (summary != null) {
-                    for (int i = 0; i < summary.size(); i++) {
-                        weatherSummary.add(summary.get(i).text() + "...");
-                    }
-                }
+        //Wind Chill Watch
+        checkWeatherWarning(getString(R.string.WindChillWatch), 70);
 
-                if (weatherLink != null) {
-                    for (int i = 0; i < link.size(); i++) {
-                        weatherLink.add(link.get(i).attr("href"));
-                    }
-                }
+        //Wind Chill Warning
+        checkWeatherWarning(getString(R.string.WindChillWarn), 70);
 
-                //Significant Weather Advisory
-                checkWeatherWarning(getString(R.string.SigWeather), 15);
+        //Winter Storm Watch
+        checkWeatherWarning(getString(R.string.WinterWatch), 80);
 
-                //Winter Weather Advisory
-                checkWeatherWarning(getString(R.string.WinterAdvisory), 30);
+        //Winter Storm Warning
+        checkWeatherWarning(getString(R.string.WinterWarn), 80);
 
-                //Lake Effect Snow Advisory
-                checkWeatherWarning(getString(R.string.LakeSnowAdvisory), 40);
+        //Lake Effect Snow Watch
+        checkWeatherWarning(getString(R.string.LakeSnowWatch), 80);
 
-                //Freezing Rain
-                checkWeatherWarning(getString(R.string.Rain), 40);
+        //Lake Effect Snow Warning
+        checkWeatherWarning(getString(R.string.LakeSnowWarn), 80);
 
-                //Freezing Drizzle
-                checkWeatherWarning(getString(R.string.Drizzle), 40);
+        //Blizzard Watch
+        checkWeatherWarning(getString(R.string.BlizzardWatch), 90);
 
-                //Freezing Fog
-                checkWeatherWarning(getString(R.string.Fog), 40);
-
-                //Wind Chill Advisory
-                checkWeatherWarning(getString(R.string.WindChillAdvisory), 40);
-
-                //Ice Storm Warning
-                checkWeatherWarning(getString(R.string.IceStorm), 70);
-
-                //Wind Chill Watch
-                checkWeatherWarning(getString(R.string.WindChillWatch), 70);
-
-                //Wind Chill Warning
-                checkWeatherWarning(getString(R.string.WindChillWarn), 70);
-
-                //Winter Storm Watch
-                checkWeatherWarning(getString(R.string.WinterWatch), 80);
-
-                //Winter Storm Warning
-                checkWeatherWarning(getString(R.string.WinterWarn), 80);
-
-                //Lake Effect Snow Watch
-                checkWeatherWarning(getString(R.string.LakeSnowWatch), 80);
-
-                //Lake Effect Snow Warning
-                checkWeatherWarning(getString(R.string.LakeSnowWarn), 80);
-
-                //Blizzard Watch
-                checkWeatherWarning(getString(R.string.BlizzardWatch), 90);
-
-                //Blizzard Warning
-                checkWeatherWarning(getString(R.string.BlizzardWarn), 90);
-
-            } catch (IOException e) {
-                //Connectivity issues
-                weatherError = getString(R.string.WeatherConnectionError);
-                NWSFail = true;
-
-                Crashlytics.logException(e);
-            } catch (NullPointerException | ParseException e) {
-                //Webpage layout not recognized.
-                weatherError = getString(R.string.WeatherParseError);
-                NWSFail = true;
-
-                Crashlytics.logException(e);
-            }
-
-            return null;
-
-        }
-
-        protected void onPostExecute(Void result) {
-            //Weather scraper has finished.
-            NWSActive = false;
-        }
+        //Blizzard Warning
+        checkWeatherWarning(getString(R.string.BlizzardWarn), 90);
     }
-
 
     /**Check for the presence of weather warnings.
      * Only the highest weather percent is stored (not cumulative).
@@ -762,12 +683,16 @@ public class ResultActivity extends AppCompatActivity {
      * @param weight The value weatherpercent is set to if the warning is found
      * @throws ParseException if date format is unrecognized
      */
-    private void checkWeatherWarning(String warn, int weight) throws ParseException {
-        DateTime warningDate;
+    private void checkWeatherWarning(String warn, int weight) {
+        DateTime warningDate = null;
         DateTime tomorrow;
-        for (int i = 0; i < weatherWarn.size(); i++) {
-            if (weatherWarn.get(i).contains(warn)) {
-                warningDate = new DateTime(sdfInput.parse(weatherExpire.get(i - 1)));
+        for (int i = 0; i < warningTitles.size(); i++) {
+            if (warningTitles.get(i).contains(warn)) {
+                try {
+                    warningDate = new DateTime(sdfInput.parse(warningExpireTimes.get(i - 1)));
+                } catch (ParseException e) {
+                    // TODO: Handle this exception
+                }
                 tomorrow = today.plusDays(1);
                 if ((warningDate.isEqual(today) || warningDate.isAfter(today))
                     && (dayrun == 0)) {
@@ -785,7 +710,8 @@ public class ResultActivity extends AppCompatActivity {
 
             //Give the scrapers time to act before displaying the percent
 
-            while (closingsScraper.getStatus() == Status.RUNNING || NWSActive) {
+            while (closingsScraper.getStatus() == Status.RUNNING
+                    || weatherScraper.getStatus() == Status.RUNNING) {
                 try {
                     //Wait for scrapers to finish before continuing
                     Thread.sleep(100);
@@ -831,7 +757,8 @@ public class ResultActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             //Animate txtPercent
-            if (closingsScraper.isCancelled() && NWSFail) {
+            if (closingsScraper.isCancelled()
+                    && weatherScraper.isCancelled()) {
                 //Both scrapers failed. A percentage cannot be determined.
                 //Don't set the percent.
                 GBText.add(getString(R.string.CalculateError));
@@ -853,7 +780,7 @@ public class ResultActivity extends AppCompatActivity {
 
                     GBText.add(closingsError);
                     GBSubtext.add(getString(R.string.CalculateWithoutClosings));
-                } else if (NWSFail) {
+                } else if (weatherScraper.isCancelled()) {
                     //NWS has failed.
                     weatherFragment.txtWeatherInfo.setText(weatherError);
                     weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
@@ -906,15 +833,16 @@ public class ResultActivity extends AppCompatActivity {
             }
 
             //Set up the RecyclerView adapter that displays weather warnings
-            if (!NWSFail) {
+            if (!weatherScraper.isCancelled()) {
                 //NWS has not failed.
 
                 RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
                 WeatherAdapter weatherAdapter = new WeatherAdapter(
-                        weatherWarn,
-                        weatherWarnTime,
-                        weatherSummary,
-                        weatherLink);
+                        warningTitles,
+                        warningReadableTimes,
+                        warningSummaries,
+                        warningLinks,
+                        weatherWarningsPresent);
 
                 weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                 weatherFragment.lstWeather.setAdapter(weatherAdapter);

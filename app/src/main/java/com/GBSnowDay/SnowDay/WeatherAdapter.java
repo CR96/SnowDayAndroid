@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*Copyright 2014-2016 Corey Rowe
@@ -32,10 +33,11 @@ limitations under the License.*/
 class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<String> mData;
-    private List<String> weatherWarnTime;
-    private List<String> weatherSummary;
-    private List<String> weatherLink;
+    private ArrayList<String> warningTitles = new ArrayList<>();
+    private ArrayList<String> warningReadableTimes = new ArrayList<>();
+    private ArrayList<String> warningSummaries = new ArrayList<>();
+    private ArrayList<String> warningLinks = new ArrayList<>();
+    private boolean weatherWarningsPresent;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
@@ -45,14 +47,16 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
         }
     }
 
-    WeatherAdapter(List<String> data1,
-                   List<String> data2,
-                   List<String> data3,
-                   List<String> data4) {
-        mData = data1;
-        weatherWarnTime = data2;
-        weatherSummary = data3;
-        weatherLink = data4;
+    WeatherAdapter(ArrayList<String> data1,
+                   ArrayList<String> data2,
+                   ArrayList<String> data3,
+                   ArrayList<String> data4,
+                   boolean b1) {
+        warningTitles = data1;
+        warningReadableTimes = data2;
+        warningSummaries = data3;
+        warningLinks = data4;
+        weatherWarningsPresent = b1;
     }
 
     @Override
@@ -75,7 +79,7 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
         LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
         TextView text = (TextView) layout.getChildAt(0);
         TextView subtext = (TextView) layout.getChildAt(1);
-        text.setText(mData.get(position));
+        text.setText(warningTitles.get(position));
 
         //Color the weather warning based on severity.
         holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
@@ -86,30 +90,30 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
             holder.mCardView.setCardElevation(0);
             subtext.setVisibility(View.GONE);
-        }else if (weatherWarnTime.size() < 1) {
+        }else if (warningReadableTimes.size() < 1) {
             subtext.setVisibility(View.GONE);
         }else{
-            subtext.setText(weatherWarnTime.get(position - 1));
+            subtext.setText(warningReadableTimes.get(position - 1));
         }
 
-        if (mData.get(position).contains(mContext.getString(R.string.SigWeather))
-                || mData.get(position).contains(mContext.getString(R.string.WinterAdvisory))
-                || mData.get(position).contains(mContext.getString(R.string.LakeSnowAdvisory))
-                || mData.get(position).contains(mContext.getString(R.string.Rain))
-                || mData.get(position).contains(mContext.getString(R.string.Drizzle))
-                || mData.get(position).contains(mContext.getString(R.string.Fog))
-                || mData.get(position).contains(mContext.getString(R.string.WindChillAdvisory))) {
+        if (warningTitles.get(position).contains(mContext.getString(R.string.SigWeather))
+                || warningTitles.get(position).contains(mContext.getString(R.string.WinterAdvisory))
+                || warningTitles.get(position).contains(mContext.getString(R.string.LakeSnowAdvisory))
+                || warningTitles.get(position).contains(mContext.getString(R.string.Rain))
+                || warningTitles.get(position).contains(mContext.getString(R.string.Drizzle))
+                || warningTitles.get(position).contains(mContext.getString(R.string.Fog))
+                || warningTitles.get(position).contains(mContext.getString(R.string.WindChillAdvisory))) {
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
-        } else if (mData.get(position).contains(mContext.getString(R.string.WinterWatch))
-                || mData.get(position).contains(mContext.getString(R.string.LakeSnowWatch))
-                || mData.get(position).contains(mContext.getString(R.string.WindChillWatch))
-                || mData.get(position).contains(mContext.getString(R.string.BlizzardWatch))) {
+        } else if (warningTitles.get(position).contains(mContext.getString(R.string.WinterWatch))
+                || warningTitles.get(position).contains(mContext.getString(R.string.LakeSnowWatch))
+                || warningTitles.get(position).contains(mContext.getString(R.string.WindChillWatch))
+                || warningTitles.get(position).contains(mContext.getString(R.string.BlizzardWatch))) {
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
-        } else if (mData.get(position).contains(mContext.getString(R.string.WinterWarn))
-                || mData.get(position).contains(mContext.getString(R.string.LakeSnowWarn))
-                || mData.get(position).contains(mContext.getString(R.string.IceStorm))
-                || mData.get(position).contains(mContext.getString(R.string.WindChillWarn))
-                || mData.get(position).contains(mContext.getString(R.string.BlizzardWarn))) {
+        } else if (warningTitles.get(position).contains(mContext.getString(R.string.WinterWarn))
+                || warningTitles.get(position).contains(mContext.getString(R.string.LakeSnowWarn))
+                || warningTitles.get(position).contains(mContext.getString(R.string.IceStorm))
+                || warningTitles.get(position).contains(mContext.getString(R.string.WindChillWarn))
+                || warningTitles.get(position).contains(mContext.getString(R.string.BlizzardWarn))) {
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.red));
         }
 
@@ -117,13 +121,13 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 //Don't show a message for the list header
-                if (position > 0 && ResultActivity.WeatherWarningsPresent) {
+                if (position > 0 && weatherWarningsPresent) {
                     try {
                         new WeatherDialog(mContext,
-                                mData.get(position),
-                                weatherWarnTime.get(position - 1),
-                                weatherSummary.get(position - 1),
-                                weatherLink.get(position))
+                                warningTitles.get(position),
+                                warningReadableTimes.get(position - 1),
+                                warningSummaries.get(position - 1),
+                                warningLinks.get(position))
                                 .show();
                     } catch (NullPointerException | IndexOutOfBoundsException e) {
                         Toast.makeText(mContext, mContext.getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
@@ -136,6 +140,6 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return warningTitles.size();
     }
 }
