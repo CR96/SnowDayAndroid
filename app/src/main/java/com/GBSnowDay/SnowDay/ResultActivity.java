@@ -204,11 +204,11 @@ public class ResultActivity extends AppCompatActivity {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
 
-        public Adapter(FragmentManager fm) {
+        Adapter(FragmentManager fm) {
             super(fm);
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragments.add(fragment);
             mFragmentTitles.add(title);
         }
@@ -915,15 +915,15 @@ public class ResultActivity extends AppCompatActivity {
         private List<String> mOrgList;
         private List<String> mStatusList;
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public CardView mCardView;
-            public ViewHolder(CardView v) {
+        class ViewHolder extends RecyclerView.ViewHolder {
+            CardView mCardView;
+            ViewHolder(CardView v) {
                 super(v);
                 mCardView = v;
             }
         }
 
-        public ClosingsAdapter(List<String> data1, List<String> data2) {
+        ClosingsAdapter(List<String> data1, List<String> data2) {
             mOrgList = data1;
             mStatusList = data2;
         }
