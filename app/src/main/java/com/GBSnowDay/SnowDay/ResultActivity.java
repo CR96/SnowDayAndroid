@@ -76,9 +76,6 @@ public class ResultActivity extends AppCompatActivity {
     ArrayList<String> GBText = new ArrayList<>();
     ArrayList<String> GBSubtext = new ArrayList<>();
 
-    String closingsError;
-    String weatherError;
-
     ArrayList<String> warningTitles = new ArrayList<>();
     ArrayList<String> warningExpireTimes = new ArrayList<>();
     ArrayList<String> warningReadableTimes = new ArrayList<>();
@@ -307,11 +304,38 @@ public class ResultActivity extends AppCompatActivity {
             public void processFinish(ClosingsScraper.ClosingsData closingsData) {
                 if (closingsScraper.isCancelled()) {
                     //Closings scraper has failed.
-                    closingsError = closingsData.error;
+                    closingsFragment.txtClosingsInfo.setText(closingsData.error);
+                    closingsFragment.txtClosingsInfo.setVisibility(View.VISIBLE);
+
+                    GBText.add(closingsData.error);
+                    GBSubtext.add(getString(R.string.CalculateWithoutClosings));
                 }else{
                     orgNames.addAll(closingsData.orgNames);
                     orgStatuses.addAll(closingsData.orgStatuses);
                     parseClosings();
+
+                    //Set up the RecyclerView adapter that displays school closings
+                    RecyclerView.LayoutManager ClosingsManager = new LinearLayoutManager(ResultActivity.this);
+                    closingsFragment.lstClosings.setLayoutManager(ClosingsManager);
+
+                    //Add section headers
+                    displayedOrgNames.add(0, getString(R.string.tier4));
+                    displayedOrgStatuses.add(0, null);
+
+                    displayedOrgNames.add(7, getString(R.string.tier3));
+                    displayedOrgStatuses.add(7, null);
+
+                    displayedOrgNames.add(20, getString(R.string.tier2));
+                    displayedOrgStatuses.add(20, null);
+
+                    displayedOrgNames.add(25, getString(R.string.tier1));
+                    displayedOrgStatuses.add(25, null);
+
+                    ClosingsAdapter closingsAdapter = new ClosingsAdapter(
+                            displayedOrgNames, displayedOrgStatuses);
+
+                    closingsFragment.lstClosings.setAdapter(closingsAdapter);
+                    closingsFragment.lstClosings.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -323,7 +347,11 @@ public class ResultActivity extends AppCompatActivity {
             public void processFinish(WeatherScraper.WeatherData weatherData) {
                 if (weatherScraper.isCancelled()) {
                     //Weather scraper has failed.
-                    weatherError = weatherData.error;
+                    weatherFragment.txtWeatherInfo.setText(weatherData.error);
+                    weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
+
+                    GBText.add(weatherData.error);
+                    GBSubtext.add(getString(R.string.CalculateWithoutWeather));
                 }else{
                     warningTitles.addAll(weatherData.warningTitles);
                     warningExpireTimes.addAll(weatherData.warningExpireTimes);
@@ -332,6 +360,18 @@ public class ResultActivity extends AppCompatActivity {
                     warningLinks.addAll(weatherData.warningLinks);
                     weatherWarningsPresent = weatherData.weatherWarningsPresent;
                     parseWeather();
+
+                    //Set up the RecyclerView adapter that displays weather warnings
+                    RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
+                    WeatherAdapter weatherAdapter = new WeatherAdapter(
+                            warningTitles,
+                            warningReadableTimes,
+                            warningSummaries,
+                            warningLinks,
+                            weatherWarningsPresent);
+
+                    weatherFragment.lstWeather.setLayoutManager(WeatherManager);
+                    weatherFragment.lstWeather.setAdapter(weatherAdapter);
                 }
             }
         });
@@ -773,21 +813,6 @@ public class ResultActivity extends AppCompatActivity {
             } else {
                 crossFadePercent();
                 countUp(percentFragment.txtPercent, 0);
-                if (closingsScraper.isCancelled()) {
-                    //WJRT has failed.
-                    closingsFragment.txtClosingsInfo.setText(closingsError);
-                    closingsFragment.txtClosingsInfo.setVisibility(View.VISIBLE);
-
-                    GBText.add(closingsError);
-                    GBSubtext.add(getString(R.string.CalculateWithoutClosings));
-                } else if (weatherScraper.isCancelled()) {
-                    //NWS has failed.
-                    weatherFragment.txtWeatherInfo.setText(weatherError);
-                    weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
-
-                    GBText.add(weatherError);
-                    GBSubtext.add(getString(R.string.CalculateWithoutWeather));
-                }
             }
 
             GBAdapter gbAdapter = new GBAdapter(GBText, GBSubtext, GB, GBMessage);
@@ -797,56 +822,6 @@ public class ResultActivity extends AppCompatActivity {
             percentFragment.lstGB.setLayoutManager(GBManager);
 
             percentFragment.lstGB.setAdapter(gbAdapter);
-
-            //Set up the RecyclerView adapter that displays school closings
-
-            if (!closingsScraper.isCancelled()) {
-                //WJRT has not failed.
-
-                RecyclerView.LayoutManager ClosingsManager = new LinearLayoutManager(ResultActivity.this);
-                closingsFragment.lstClosings.setLayoutManager(ClosingsManager);
-
-                //Add section headers
-                displayedOrgNames.add(0, getString(R.string.tier4));
-                displayedOrgStatuses.add(0, null);
-
-                displayedOrgNames.add(7, getString(R.string.tier3));
-                displayedOrgStatuses.add(7, null);
-
-                displayedOrgNames.add(20, getString(R.string.tier2));
-                displayedOrgStatuses.add(20, null);
-
-                displayedOrgNames.add(25, getString(R.string.tier1));
-                displayedOrgStatuses.add(25, null);
-
-                ClosingsAdapter closingsAdapter = new ClosingsAdapter(
-                        displayedOrgNames, displayedOrgStatuses);
-
-                closingsFragment.lstClosings.setAdapter(closingsAdapter);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        closingsFragment.lstClosings.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-
-            //Set up the RecyclerView adapter that displays weather warnings
-            if (!weatherScraper.isCancelled()) {
-                //NWS has not failed.
-
-                RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
-                WeatherAdapter weatherAdapter = new WeatherAdapter(
-                        warningTitles,
-                        warningReadableTimes,
-                        warningSummaries,
-                        warningLinks,
-                        weatherWarningsPresent);
-
-                weatherFragment.lstWeather.setLayoutManager(WeatherManager);
-                weatherFragment.lstWeather.setAdapter(weatherAdapter);
-            }
         }
     }
 
