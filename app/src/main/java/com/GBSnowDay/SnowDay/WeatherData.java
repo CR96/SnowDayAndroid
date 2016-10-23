@@ -18,14 +18,14 @@ limitations under the License.*/
 
 public class WeatherData {
     public ArrayList<String> warningTitles = new ArrayList<>();
-    ArrayList<String> warningExpireTimes = new ArrayList<>();
+    public ArrayList<String> warningExpireTimes = new ArrayList<>();
     public ArrayList<String> warningReadableTimes = new ArrayList<>();
     public ArrayList<String> warningSummaries = new ArrayList<>();
     public ArrayList<String> warningLinks = new ArrayList<>();
 
-    int weatherpercent;
+    public int weatherpercent;
 
     public boolean weatherWarningsPresent;
 
-    String error;
+    public String error;
 }

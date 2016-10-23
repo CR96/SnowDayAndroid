@@ -32,6 +32,8 @@ import com.GBSnowDay.SnowDay.adapter.WeatherAdapter;
 import com.GBSnowDay.SnowDay.fragment.ClosingsFragment;
 import com.GBSnowDay.SnowDay.fragment.PercentFragment;
 import com.GBSnowDay.SnowDay.fragment.WeatherFragment;
+import com.GBSnowDay.SnowDay.network.ClosingsScraper;
+import com.GBSnowDay.SnowDay.network.WeatherScraper;
 import com.GBSnowDay.SnowDay.view.ViewPager;
 
 import java.util.ArrayList;

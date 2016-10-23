@@ -1,9 +1,11 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.network;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
+import com.GBSnowDay.SnowDay.R;
+import com.GBSnowDay.SnowDay.WeatherData;
 import com.crashlytics.android.Crashlytics;
 
 import org.joda.time.DateTime;
@@ -31,7 +33,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
+public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
 
     private WeatherData weatherData;
 
@@ -45,11 +47,11 @@ class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
     private AsyncResponse delegate = null;
     private Resources res;
 
-    interface AsyncResponse {
+    public interface AsyncResponse {
         void processFinish(WeatherData weatherData);
     }
 
-    WeatherScraper(Context context, int i, AsyncResponse delegate) {
+    public WeatherScraper(Context context, int i, AsyncResponse delegate) {
         res = context.getResources();
         dayrun = i;
         this.delegate = delegate;

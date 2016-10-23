@@ -1,9 +1,11 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.network;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
+import com.GBSnowDay.SnowDay.ClosingsData;
+import com.GBSnowDay.SnowDay.R;
 import com.crashlytics.android.Crashlytics;
 
 import org.joda.time.DateTime;
@@ -29,7 +31,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
+public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
 
     private ClosingsData closingsData;
 
@@ -43,11 +45,11 @@ class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
     private AsyncResponse delegate = null;
     private Resources res;
 
-    interface AsyncResponse {
+    public interface AsyncResponse {
         void processFinish(ClosingsData closingsData);
     }
 
-    ClosingsScraper(Context context, int i, AsyncResponse delegate) {
+    public ClosingsScraper(Context context, int i, AsyncResponse delegate) {
         res = context.getResources();
         dayrun = i;
         this.delegate = delegate;

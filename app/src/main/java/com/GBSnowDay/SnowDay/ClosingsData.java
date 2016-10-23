@@ -20,16 +20,16 @@ public class ClosingsData {
     public ArrayList<String> displayedOrgNames = new ArrayList<>();
     public ArrayList<String> displayedOrgStatuses = new ArrayList<>();
 
-    ArrayList<String> GBText = new ArrayList<>();
-    ArrayList<String> GBSubtext = new ArrayList<>();
+    public ArrayList<String> GBText = new ArrayList<>();
+    public ArrayList<String> GBSubtext = new ArrayList<>();
 
     //Levels of school closings (near vs. far)
-    int tier1 = 0;
-    int tier2 = 0;
-    int tier3 = 0;
-    int tier4 = 0;
+    public int tier1 = 0;
+    public int tier2 = 0;
+    public int tier3 = 0;
+    public int tier4 = 0;
 
-    int schoolpercent;
+    public int schoolpercent;
 
     //Every school this program searches for: true = closed, false = open (default)
     public boolean GBAcademy;
@@ -77,12 +77,12 @@ public class ClosingsData {
     // otherwise there would be a lot of exceptions to check for.
     public boolean Goodrich;
 
-    boolean GB; //Check for "Grand Blanc Senior Center", "Grand Blanc Academy", "Grand Blanc Road Montessori",
+    public boolean GB; //Check for "Grand Blanc Senior Center", "Grand Blanc Academy", "Grand Blanc Road Montessori",
     // "Grand Blanc Gymnastics Co.", and "Freedom Work Grand Blanc"
 
-    boolean GBOpen; //True if GB is already open (GB = false and time is during or after school hours)
+    public boolean GBOpen; //True if GB is already open (GB = false and time is during or after school hours)
 
-    boolean GBMessage; //Grand Blanc has a message (e.g. "Early Dismissal") but isn't actually closed.
+    public boolean GBMessage; //Grand Blanc has a message (e.g. "Early Dismissal") but isn't actually closed.
 
-    String error;
+    public String error;
 }
