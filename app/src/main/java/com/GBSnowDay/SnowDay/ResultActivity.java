@@ -26,10 +26,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.joda.time.DateTime;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,15 +63,6 @@ public class ResultActivity extends AppCompatActivity {
     ArrayList<String> GBText = new ArrayList<>();
     ArrayList<String> GBSubtext = new ArrayList<>();
 
-    ArrayList<String> warningTitles = new ArrayList<>();
-    ArrayList<String> warningExpireTimes = new ArrayList<>();
-    ArrayList<String> warningReadableTimes = new ArrayList<>();
-    ArrayList<String> warningSummaries = new ArrayList<>();
-    ArrayList<String> warningLinks = new ArrayList<>();
-
-    DateTime today = new DateTime();
-    SimpleDateFormat sdfInput;
-
     int days;
     int dayrun;
 
@@ -83,9 +70,6 @@ public class ResultActivity extends AppCompatActivity {
     int schoolpercent;
     int weatherpercent;
     int percent;
-
-    //Don't try to show weather warning information if no warnings are present
-    boolean weatherWarningsPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,9 +258,9 @@ public class ResultActivity extends AppCompatActivity {
 
         closingsScraper.execute();
 
-        weatherScraper = new WeatherScraper(this, new WeatherScraper.AsyncResponse() {
+        weatherScraper = new WeatherScraper(this, dayrun, new WeatherScraper.AsyncResponse() {
             @Override
-            public void processFinish(WeatherScraper.WeatherData weatherData) {
+            public void processFinish(WeatherData weatherData) {
                 if (weatherScraper.isCancelled()) {
                     //Weather scraper has failed.
                     weatherFragment.txtWeatherInfo.setText(weatherData.error);
@@ -285,22 +269,14 @@ public class ResultActivity extends AppCompatActivity {
                     GBText.add(weatherData.error);
                     GBSubtext.add(getString(R.string.CalculateWithoutWeather));
                 }else{
-                    warningTitles.addAll(weatherData.warningTitles);
-                    warningExpireTimes.addAll(weatherData.warningExpireTimes);
-                    warningReadableTimes.addAll(weatherData.warningReadableTimes);
-                    warningSummaries.addAll(weatherData.warningSummaries);
-                    warningLinks.addAll(weatherData.warningLinks);
-                    weatherWarningsPresent = weatherData.weatherWarningsPresent;
-                    parseWeather();
-
                     //Set up the RecyclerView adapter that displays weather warnings
                     RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
                     WeatherAdapter weatherAdapter = new WeatherAdapter(
-                            warningTitles,
-                            warningReadableTimes,
-                            warningSummaries,
-                            warningLinks,
-                            weatherWarningsPresent);
+                            weatherData.warningTitles,
+                            weatherData.warningReadableTimes,
+                            weatherData.warningSummaries,
+                            weatherData.warningLinks,
+                            weatherData.weatherWarningsPresent);
 
                     weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                     weatherFragment.lstWeather.setAdapter(weatherAdapter);
@@ -312,85 +288,6 @@ public class ResultActivity extends AppCompatActivity {
 
         //Final Percent Calculator
         new PercentCalculate().execute();
-    }
-
-    private void parseWeather() {
-        //Significant Weather Advisory
-        checkWeatherWarning(getString(R.string.SigWeather), 15);
-
-        //Winter Weather Advisory
-        checkWeatherWarning(getString(R.string.WinterAdvisory), 30);
-
-        //Lake Effect Snow Advisory
-        checkWeatherWarning(getString(R.string.LakeSnowAdvisory), 40);
-
-        //Freezing Rain
-        checkWeatherWarning(getString(R.string.Rain), 40);
-
-        //Freezing Drizzle
-        checkWeatherWarning(getString(R.string.Drizzle), 40);
-
-        //Freezing Fog
-        checkWeatherWarning(getString(R.string.Fog), 40);
-
-        //Wind Chill Advisory
-        checkWeatherWarning(getString(R.string.WindChillAdvisory), 40);
-
-        //Ice Storm Warning
-        checkWeatherWarning(getString(R.string.IceStorm), 70);
-
-        //Wind Chill Watch
-        checkWeatherWarning(getString(R.string.WindChillWatch), 70);
-
-        //Wind Chill Warning
-        checkWeatherWarning(getString(R.string.WindChillWarn), 70);
-
-        //Winter Storm Watch
-        checkWeatherWarning(getString(R.string.WinterWatch), 80);
-
-        //Winter Storm Warning
-        checkWeatherWarning(getString(R.string.WinterWarn), 80);
-
-        //Lake Effect Snow Watch
-        checkWeatherWarning(getString(R.string.LakeSnowWatch), 80);
-
-        //Lake Effect Snow Warning
-        checkWeatherWarning(getString(R.string.LakeSnowWarn), 80);
-
-        //Blizzard Watch
-        checkWeatherWarning(getString(R.string.BlizzardWatch), 90);
-
-        //Blizzard Warning
-        checkWeatherWarning(getString(R.string.BlizzardWarn), 90);
-    }
-
-    /**Check for the presence of weather warnings.
-     * Only the highest weather percent is stored (not cumulative).
-     * Calculation is affected based on when warning expires.
-     * @param warn The string identifying the warning to search for
-     * @param weight The value weatherpercent is set to if the warning is found
-     * @throws ParseException if date format is unrecognized
-     */
-    private void checkWeatherWarning(String warn, int weight) {
-        DateTime warningDate = null;
-        DateTime tomorrow;
-        for (int i = 0; i < warningTitles.size(); i++) {
-            if (warningTitles.get(i).contains(warn)) {
-                try {
-                    warningDate = new DateTime(sdfInput.parse(warningExpireTimes.get(i - 1)));
-                } catch (ParseException e) {
-                    // TODO: Handle this exception
-                }
-                tomorrow = today.plusDays(1);
-                if ((warningDate.isEqual(today) || warningDate.isAfter(today))
-                    && (dayrun == 0)) {
-                    weatherpercent = weight;
-                }else if ((warningDate.isEqual(tomorrow) || warningDate.isAfter(tomorrow))
-                    && (dayrun == 1)) {
-                    weatherpercent = weight;
-                }
-            }
-        }
     }
 
     private class PercentCalculate extends AsyncTask<Void, Void, Void> {
