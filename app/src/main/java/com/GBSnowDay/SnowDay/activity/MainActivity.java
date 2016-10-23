@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.GBSnowDay.SnowDay.DateResult;
+import com.GBSnowDay.SnowDay.model.DateResult;
 import com.GBSnowDay.SnowDay.R;
 import com.GBSnowDay.SnowDay.adapter.CustomAdapter;
 import com.crashlytics.android.Crashlytics;

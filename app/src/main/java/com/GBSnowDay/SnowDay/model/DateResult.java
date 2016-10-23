@@ -1,7 +1,9 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.model;
 
 import android.content.Context;
 import android.content.res.Resources;
+
+import com.GBSnowDay.SnowDay.R;
 
 import org.joda.time.DateTime;
 

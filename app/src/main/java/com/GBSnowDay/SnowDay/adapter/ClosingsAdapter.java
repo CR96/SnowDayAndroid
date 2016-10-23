@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.GBSnowDay.SnowDay.ClosingsData;
+import com.GBSnowDay.SnowDay.model.ClosingsData;
 import com.GBSnowDay.SnowDay.R;
 
 /*Copyright 2014-2016 Corey Rowe

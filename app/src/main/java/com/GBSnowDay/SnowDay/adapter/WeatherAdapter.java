@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.GBSnowDay.SnowDay.R;
-import com.GBSnowDay.SnowDay.WeatherData;
+import com.GBSnowDay.SnowDay.model.WeatherData;
 import com.GBSnowDay.SnowDay.dialog.WeatherDialog;
 import com.crashlytics.android.Crashlytics;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
-import com.GBSnowDay.SnowDay.ClosingsData;
+import com.GBSnowDay.SnowDay.model.ClosingsData;
 import com.GBSnowDay.SnowDay.R;
 import com.crashlytics.android.Crashlytics;
 
