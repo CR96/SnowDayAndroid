@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.GBSnowDay.SnowDay.R;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ import java.util.List;
  See the License for the specific language governing permissions and
  limitations under the License.*/
 
-class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private Context mContext;
     private boolean eventPresent;
     private boolean bobcats;
@@ -40,7 +42,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
         }
     }
 
-    CustomAdapter(boolean b1, boolean b2, List<String> data) {
+    public CustomAdapter(boolean b1, boolean b2, List<String> data) {
         eventPresent = b1;
         bobcats = b2;
         mData = data;

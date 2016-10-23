@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.GBSnowDay.SnowDay.R;
+import com.GBSnowDay.SnowDay.WeatherData;
+import com.GBSnowDay.SnowDay.WeatherDialog;
 import com.crashlytics.android.Crashlytics;
 
 /*Copyright 2014-2016 Corey Rowe
@@ -27,7 +30,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
+public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private Context mContext;
     private WeatherData mData;
@@ -40,7 +43,7 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
         }
     }
 
-    WeatherAdapter(WeatherData weatherData) {
+    public WeatherAdapter(WeatherData weatherData) {
         mData = weatherData;
     }
 

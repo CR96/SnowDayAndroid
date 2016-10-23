@@ -26,6 +26,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.GBSnowDay.SnowDay.adapter.ClosingsAdapter;
+import com.GBSnowDay.SnowDay.adapter.GBAdapter;
+import com.GBSnowDay.SnowDay.adapter.WeatherAdapter;
 import com.GBSnowDay.SnowDay.view.ViewPager;
 
 import java.util.ArrayList;

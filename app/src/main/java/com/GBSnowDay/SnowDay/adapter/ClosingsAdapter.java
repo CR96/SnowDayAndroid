@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.GBSnowDay.SnowDay.ClosingsData;
+import com.GBSnowDay.SnowDay.R;
 
 /*Copyright 2014-2016 Corey Rowe
 
@@ -24,7 +27,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHolder> {
+public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHolder> {
     private Context mContext;
     private ClosingsData mData;
 
@@ -36,7 +39,7 @@ class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHolder> {
         }
     }
 
-    ClosingsAdapter(ClosingsData closingsData) {
+    public ClosingsAdapter(ClosingsData closingsData) {
         mData = closingsData;
     }
 

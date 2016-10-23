@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.GBSnowDay.SnowDay.R;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ import java.util.List;
    See the License for the specific language governing permissions and
    limitations under the License.*/
 
-class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
+public class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
 
     private Context mContext;
     private List<String> mData1;
@@ -43,7 +45,7 @@ class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
         }
     }
 
-    GBAdapter(List<String> data1, List<String> data2, boolean b1, boolean b2) {
+    public GBAdapter(List<String> data1, List<String> data2, boolean b1, boolean b2) {
         mData1 = data1;
         mData2 = data2;
         gb = b1;

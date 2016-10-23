@@ -16,16 +16,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-class WeatherData {
-    ArrayList<String> warningTitles = new ArrayList<>();
+public class WeatherData {
+    public ArrayList<String> warningTitles = new ArrayList<>();
     ArrayList<String> warningExpireTimes = new ArrayList<>();
-    ArrayList<String> warningReadableTimes = new ArrayList<>();
-    ArrayList<String> warningSummaries = new ArrayList<>();
-    ArrayList<String> warningLinks = new ArrayList<>();
+    public ArrayList<String> warningReadableTimes = new ArrayList<>();
+    public ArrayList<String> warningSummaries = new ArrayList<>();
+    public ArrayList<String> warningLinks = new ArrayList<>();
 
     int weatherpercent;
 
-    boolean weatherWarningsPresent;
+    public boolean weatherWarningsPresent;
 
     String error;
 }
