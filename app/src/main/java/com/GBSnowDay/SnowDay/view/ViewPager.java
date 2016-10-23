@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -24,9 +24,5 @@ public class ViewPager extends android.support.v4.view.ViewPager {
 
     public void setPagingEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public boolean isPagingEnabled() {
-        return enabled;
     }
 }

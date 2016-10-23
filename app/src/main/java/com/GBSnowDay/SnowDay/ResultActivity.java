@@ -26,6 +26,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.GBSnowDay.SnowDay.view.ViewPager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,43 +105,6 @@ public class ResultActivity extends AppCompatActivity {
         //Start the calculation
         Calculate();
 
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(percentFragment, getString(R.string.tab1));
-        adapter.addFragment(closingsFragment, getString(R.string.tab2));
-        adapter.addFragment(weatherFragment, getString(R.string.tab3));
-        viewPager.setAdapter(adapter);
-    }
-
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
-
-        Adapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        void addFragment(Fragment fragment, String title) {
-            mFragments.add(fragment);
-            mFragmentTitles.add(title);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
-        }
     }
 
     @Override
@@ -451,5 +416,42 @@ public class ResultActivity extends AppCompatActivity {
         viewPager.setPagingEnabled(true);
 
         percentFragment.lstGB.startAnimation(AnimationUtils.loadAnimation(ResultActivity.this, R.anim.slide_in));
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(percentFragment, getString(R.string.tab1));
+        adapter.addFragment(closingsFragment, getString(R.string.tab2));
+        adapter.addFragment(weatherFragment, getString(R.string.tab3));
+        viewPager.setAdapter(adapter);
+    }
+
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
     }
 }
