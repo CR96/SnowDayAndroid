@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -26,6 +26,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.GBSnowDay.SnowDay.ClosingsData;
+import com.GBSnowDay.SnowDay.R;
+import com.GBSnowDay.SnowDay.WeatherData;
 import com.GBSnowDay.SnowDay.adapter.ClosingsAdapter;
 import com.GBSnowDay.SnowDay.adapter.GBAdapter;
 import com.GBSnowDay.SnowDay.adapter.WeatherAdapter;

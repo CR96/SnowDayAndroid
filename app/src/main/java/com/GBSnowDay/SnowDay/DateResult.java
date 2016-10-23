@@ -23,7 +23,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-class DateResult {
+public class DateResult {
     private ArrayList<String> infoList = new ArrayList<>();
     private boolean todayValid = true;
     private boolean tomorrowValid = true;
@@ -41,7 +41,7 @@ class DateResult {
      * Make sure the user doesn't try to run the program on the weekend or on specific dates.
      * @param context Application context used to access string resources
      */
-    DateResult(Context context) {
+    public DateResult(Context context) {
         res = context.getResources();
 
         checkDate();
@@ -53,27 +53,27 @@ class DateResult {
     }
 
     /** @return whether today is valid **/
-    boolean getTodayValid() {
+    public boolean getTodayValid() {
         return todayValid;
     }
 
     /** @return whether tomorrow is valid **/
-    boolean getTomorrowValid() {
+    public boolean getTomorrowValid() {
         return tomorrowValid;
     }
 
     /** @return whether an event is present (affects list entry color) **/
-    boolean getEventPresent() {
+    public boolean getEventPresent() {
         return eventPresent;
     }
 
     /** @return whether the program is run on the day of commencement (affects list entry color) **/
-    boolean getBobcats() {
+    public boolean getBobcats() {
         return bobcats;
     }
 
     /** @return the list to be populated in the initial activity's RecyclerView **/
-    ArrayList<String> getInfoList() {
+    public ArrayList<String> getInfoList() {
         return infoList;
     }
 
@@ -142,6 +142,7 @@ class DateResult {
                 || textdate.equals("December 30 2016") || textdate.equals("December 31 2016")
                 || textdate.equals("January 01 2017") || textdate.equals("January 02 2017")) {
             //Winter Break
+            //noinspection IfCanBeSwitch
             if (textdate.equals("December 25 2016")) {
                 infoList.add(res.getString(R.string.Christmas));
                 eventPresent = true;

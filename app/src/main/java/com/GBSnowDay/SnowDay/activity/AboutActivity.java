@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.activity;
 
 
 import android.annotation.SuppressLint;
@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.GBSnowDay.SnowDay.R;
 import com.GBSnowDay.SnowDay.dialog.LicenseDialog;
 
 public class AboutActivity extends AppCompatActivity {
