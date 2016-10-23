@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.fragment;
 
 
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.GBSnowDay.SnowDay.R;
 
 /**
  * A simple {@link Fragment} subclass.

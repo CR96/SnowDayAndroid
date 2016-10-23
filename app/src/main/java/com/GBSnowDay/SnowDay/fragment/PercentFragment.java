@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.fragment;
 
 
 import android.os.Bundle;
@@ -13,12 +13,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.GBSnowDay.SnowDay.R;
+
 public class PercentFragment extends Fragment {
 
     public TextView txtPercent;
     public RecyclerView lstGB;
 
-    ImageView progCalculate;
+    public ImageView progCalculate;
 
     public PercentFragment() {
         // Required empty public constructor
