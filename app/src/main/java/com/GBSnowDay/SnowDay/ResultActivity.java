@@ -271,12 +271,7 @@ public class ResultActivity extends AppCompatActivity {
                 }else{
                     //Set up the RecyclerView adapter that displays weather warnings
                     RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
-                    WeatherAdapter weatherAdapter = new WeatherAdapter(
-                            weatherData.warningTitles,
-                            weatherData.warningReadableTimes,
-                            weatherData.warningSummaries,
-                            weatherData.warningLinks,
-                            weatherData.weatherWarningsPresent);
+                    WeatherAdapter weatherAdapter = new WeatherAdapter(weatherData);
 
                     weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                     weatherFragment.lstWeather.setAdapter(weatherAdapter);
