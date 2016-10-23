@@ -26,9 +26,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.GBSnowDay.SnowDay.model.ClosingsData;
+import com.GBSnowDay.SnowDay.model.ClosingsModel;
 import com.GBSnowDay.SnowDay.R;
-import com.GBSnowDay.SnowDay.model.WeatherData;
+import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.GBSnowDay.SnowDay.adapter.ClosingsAdapter;
 import com.GBSnowDay.SnowDay.adapter.GBAdapter;
 import com.GBSnowDay.SnowDay.adapter.WeatherAdapter;
@@ -70,7 +70,7 @@ public class ResultActivity extends AppCompatActivity {
     ClosingsScraper closingsScraper;
     WeatherScraper weatherScraper;
 
-    ClosingsData mClosingsData;
+    ClosingsModel mClosingsModel;
 
     //Declare lists that will be displayed in RecyclerViews
     ArrayList<String> GBText = new ArrayList<>();
@@ -190,41 +190,41 @@ public class ResultActivity extends AppCompatActivity {
 
         closingsScraper = new ClosingsScraper(this, dayrun, new ClosingsScraper.AsyncResponse() {
             @Override
-            public void processFinish(ClosingsData closingsData) {
+            public void processFinish(ClosingsModel closingsModel) {
                 if (closingsScraper.isCancelled()) {
                     //Closings scraper has failed.
-                    closingsFragment.txtClosingsInfo.setText(closingsData.error);
+                    closingsFragment.txtClosingsInfo.setText(closingsModel.error);
                     closingsFragment.txtClosingsInfo.setVisibility(View.VISIBLE);
 
-                    GBText.add(closingsData.error);
+                    GBText.add(closingsModel.error);
                     GBSubtext.add(getString(R.string.CalculateWithoutClosings));
                 } else {
-                    mClosingsData = closingsData;
+                    mClosingsModel = closingsModel;
 
                     //Set the school percent
-                    schoolpercent = closingsData.schoolpercent;
+                    schoolpercent = mClosingsModel.schoolpercent;
 
-                    GBText.addAll(closingsData.GBText);
-                    GBSubtext.addAll(closingsData.GBSubtext);
+                    GBText.addAll(mClosingsModel.GBText);
+                    GBSubtext.addAll(mClosingsModel.GBSubtext);
 
                     //Set up the RecyclerView adapter that displays school closings
                     RecyclerView.LayoutManager ClosingsManager = new LinearLayoutManager(ResultActivity.this);
                     closingsFragment.lstClosings.setLayoutManager(ClosingsManager);
 
                     //Add section headers
-                    closingsData.displayedOrgNames.add(0, getString(R.string.tier4));
-                    closingsData.displayedOrgStatuses.add(0, null);
+                    mClosingsModel.displayedOrgNames.add(0, getString(R.string.tier4));
+                    mClosingsModel.displayedOrgStatuses.add(0, null);
 
-                    closingsData.displayedOrgNames.add(7, getString(R.string.tier3));
-                    closingsData.displayedOrgStatuses.add(7, null);
+                    mClosingsModel.displayedOrgNames.add(7, getString(R.string.tier3));
+                    mClosingsModel.displayedOrgStatuses.add(7, null);
 
-                    closingsData.displayedOrgNames.add(20, getString(R.string.tier2));
-                    closingsData.displayedOrgStatuses.add(20, null);
+                    mClosingsModel.displayedOrgNames.add(20, getString(R.string.tier2));
+                    mClosingsModel.displayedOrgStatuses.add(20, null);
 
-                    closingsData.displayedOrgNames.add(25, getString(R.string.tier1));
-                    closingsData.displayedOrgStatuses.add(25, null);
+                    mClosingsModel.displayedOrgNames.add(25, getString(R.string.tier1));
+                    mClosingsModel.displayedOrgStatuses.add(25, null);
 
-                    ClosingsAdapter closingsAdapter = new ClosingsAdapter(closingsData);
+                    ClosingsAdapter closingsAdapter = new ClosingsAdapter(mClosingsModel);
 
                     closingsFragment.lstClosings.setAdapter(closingsAdapter);
                     closingsFragment.lstClosings.setVisibility(View.VISIBLE);
@@ -236,18 +236,18 @@ public class ResultActivity extends AppCompatActivity {
 
         weatherScraper = new WeatherScraper(this, dayrun, new WeatherScraper.AsyncResponse() {
             @Override
-            public void processFinish(WeatherData weatherData) {
+            public void processFinish(WeatherModel weatherModel) {
                 if (weatherScraper.isCancelled()) {
                     //Weather scraper has failed.
-                    weatherFragment.txtWeatherInfo.setText(weatherData.error);
+                    weatherFragment.txtWeatherInfo.setText(weatherModel.error);
                     weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
 
-                    GBText.add(weatherData.error);
+                    GBText.add(weatherModel.error);
                     GBSubtext.add(getString(R.string.CalculateWithoutWeather));
                 }else{
                     //Set up the RecyclerView adapter that displays weather warnings
                     RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
-                    WeatherAdapter weatherAdapter = new WeatherAdapter(weatherData);
+                    WeatherAdapter weatherAdapter = new WeatherAdapter(weatherModel);
 
                     weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                     weatherFragment.lstWeather.setAdapter(weatherAdapter);
@@ -298,10 +298,10 @@ public class ResultActivity extends AppCompatActivity {
             }
 
             //Negate the above results for special cases
-            if (mClosingsData.GB) {
+            if (mClosingsModel.GB) {
                 //WJRTScraper reports Grand Blanc is closed. Override percentage, set to 100%
                 percent = 100;
-            } else if (mClosingsData.GBOpen) {
+            } else if (mClosingsModel.GBOpen) {
                 //GB is open and the time is during or after school hours. 0% chance.
                 percent = 0;
             }
@@ -334,8 +334,8 @@ public class ResultActivity extends AppCompatActivity {
             GBAdapter gbAdapter = new GBAdapter(
                     GBText,
                     GBSubtext,
-                    mClosingsData.GB,
-                    mClosingsData.GBMessage);
+                    mClosingsModel.GB,
+                    mClosingsModel.GBMessage);
 
             LinearLayoutManager GBManager = new LinearLayoutManager(ResultActivity.this);
             GBManager.setStackFromEnd(true);

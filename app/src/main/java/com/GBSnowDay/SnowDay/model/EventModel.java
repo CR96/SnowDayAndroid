@@ -25,7 +25,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-public class DateResult {
+public class EventModel {
     private ArrayList<String> infoList = new ArrayList<>();
     private boolean todayValid = true;
     private boolean tomorrowValid = true;
@@ -43,7 +43,7 @@ public class DateResult {
      * Make sure the user doesn't try to run the program on the weekend or on specific dates.
      * @param context Application context used to access string resources
      */
-    public DateResult(Context context) {
+    public EventModel(Context context) {
         res = context.getResources();
 
         checkDate();

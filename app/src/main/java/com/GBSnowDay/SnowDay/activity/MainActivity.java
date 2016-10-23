@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.GBSnowDay.SnowDay.model.DateResult;
+import com.GBSnowDay.SnowDay.model.EventModel;
 import com.GBSnowDay.SnowDay.R;
 import com.GBSnowDay.SnowDay.adapter.CustomAdapter;
 import com.crashlytics.android.Crashlytics;
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         lstDays = (Spinner) findViewById(R.id.lstDays);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
-        DateResult dateResult = new DateResult(MainActivity.this);
+        EventModel eventModel = new EventModel(MainActivity.this);
 
-        boolean todayValid = dateResult.getTodayValid();
-        boolean tomorrowValid = dateResult.getTomorrowValid();
+        boolean todayValid = eventModel.getTodayValid();
+        boolean tomorrowValid = eventModel.getTomorrowValid();
 
         if (!todayValid && !tomorrowValid) {
             optToday.setEnabled(false);
@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         lstInfo.setLayoutManager(layoutManager);
         lstInfo.setAdapter(new CustomAdapter(
-                dateResult.getEventPresent(),
-                dateResult.getBobcats(),
-                dateResult.getInfoList()));
+                eventModel.getEventPresent(),
+                eventModel.getBobcats(),
+                eventModel.getInfoList()));
 
         //Listen for optToday or optTomorrow changes
         //Don't allow the calculation to run if "Select a day" is selected

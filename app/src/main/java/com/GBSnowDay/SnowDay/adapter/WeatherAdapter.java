@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.GBSnowDay.SnowDay.R;
-import com.GBSnowDay.SnowDay.model.WeatherData;
+import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.GBSnowDay.SnowDay.dialog.WeatherDialog;
 import com.crashlytics.android.Crashlytics;
 
@@ -33,7 +33,7 @@ limitations under the License.*/
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private Context mContext;
-    private WeatherData mData;
+    private WeatherModel mData;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
@@ -43,8 +43,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         }
     }
 
-    public WeatherAdapter(WeatherData weatherData) {
-        mData = weatherData;
+    public WeatherAdapter(WeatherModel weatherModel) {
+        mData = weatherModel;
     }
 
     @Override

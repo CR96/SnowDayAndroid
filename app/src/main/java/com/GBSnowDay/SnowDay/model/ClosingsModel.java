@@ -16,7 +16,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-public class ClosingsData {
+//TODO: Use getters and setters instead of public fields
+public class ClosingsModel {
     public ArrayList<String> displayedOrgNames = new ArrayList<>();
     public ArrayList<String> displayedOrgStatuses = new ArrayList<>();
 

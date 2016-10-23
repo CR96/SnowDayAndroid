@@ -16,7 +16,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-public class WeatherData {
+//TODO: Use getters and setters instead of public fields
+public class WeatherModel {
     public ArrayList<String> warningTitles = new ArrayList<>();
     public ArrayList<String> warningExpireTimes = new ArrayList<>();
     public ArrayList<String> warningReadableTimes = new ArrayList<>();

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.GBSnowDay.SnowDay.model.ClosingsData;
+import com.GBSnowDay.SnowDay.model.ClosingsModel;
 import com.GBSnowDay.SnowDay.R;
 
 /*Copyright 2014-2016 Corey Rowe
@@ -29,7 +29,7 @@ limitations under the License.*/
 
 public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHolder> {
     private Context mContext;
-    private ClosingsData mData;
+    private ClosingsModel mData;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
@@ -39,8 +39,8 @@ public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHo
         }
     }
 
-    public ClosingsAdapter(ClosingsData closingsData) {
-        mData = closingsData;
+    public ClosingsAdapter(ClosingsModel closingsModel) {
+        mData = closingsModel;
     }
 
     @Override

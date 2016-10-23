@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 
 import com.GBSnowDay.SnowDay.R;
-import com.GBSnowDay.SnowDay.model.WeatherData;
+import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.crashlytics.android.Crashlytics;
 
 import org.joda.time.DateTime;
@@ -33,9 +33,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
+public class WeatherScraper extends AsyncTask<Void, Void, WeatherModel> {
 
-    private WeatherData weatherData;
+    private WeatherModel weatherModel;
 
     private int dayrun;
 
@@ -48,7 +48,7 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
     private Resources res;
 
     public interface AsyncResponse {
-        void processFinish(WeatherData weatherData);
+        void processFinish(WeatherModel weatherModel);
     }
 
     public WeatherScraper(Context context, int i, AsyncResponse delegate) {
@@ -58,8 +58,8 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
     }
 
     @Override
-    protected WeatherData doInBackground(Void...params) {
-        weatherData = new WeatherData();
+    protected WeatherModel doInBackground(Void...params) {
+        weatherModel = new WeatherModel();
 
         try {
             Document weather = Jsoup.connect(
@@ -76,53 +76,53 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
                 for (int i = 0; i < title.size(); i++) {
                     int stringend = title.get(i).text().indexOf("issued");
                     if (stringend != -1) {
-                        weatherData.warningTitles.add(title.get(i).text().substring(0, stringend));
+                        weatherModel.warningTitles.add(title.get(i).text().substring(0, stringend));
                     } else {
-                        weatherData.warningTitles.add(title.get(i).text());
+                        weatherModel.warningTitles.add(title.get(i).text());
                     }
                 }
 
-                if (!weatherData.warningTitles.get(1).contains("no active")) {
+                if (!weatherModel.warningTitles.get(1).contains("no active")) {
                     //Weather warnings are present.
-                    weatherData.weatherWarningsPresent = true;
+                    weatherModel.weatherWarningsPresent = true;
                 }
             }
             if (expiretime != null) {
                 Date date;
                 String readableDate;
                 for (int i = 0; i < expiretime.size(); i++) {
-                    weatherData.warningExpireTimes.add(expiretime.get(i).text());
-                    date = sdfInput.parse(weatherData.warningExpireTimes.get(i));
+                    weatherModel.warningExpireTimes.add(expiretime.get(i).text());
+                    date = sdfInput.parse(weatherModel.warningExpireTimes.get(i));
                     readableDate = sdfOutput.format(date);
-                    weatherData.warningReadableTimes.add("Expires " + readableDate);
+                    weatherModel.warningReadableTimes.add("Expires " + readableDate);
                 }
             }
 
             if (summary != null) {
                 for (int i = 0; i < summary.size(); i++) {
-                    weatherData.warningSummaries.add(summary.get(i).text() + "...");
+                    weatherModel.warningSummaries.add(summary.get(i).text() + "...");
                 }
             }
 
             if (link != null) {
                 for (int i = 0; i < link.size(); i++) {
-                    weatherData.warningLinks.add(link.get(i).attr("href"));
+                    weatherModel.warningLinks.add(link.get(i).attr("href"));
                 }
             }
         }catch (IOException e) {
             //Connectivity issues
-            weatherData.error = res.getString(R.string.WeatherConnectionError);
+            weatherModel.error = res.getString(R.string.WeatherConnectionError);
             Crashlytics.logException(e);
             cancel(true);
         }catch (NullPointerException | IndexOutOfBoundsException | ParseException e) {
             //RSS layout was not recognized.
-            weatherData.error = res.getString(R.string.WeatherParseError);
+            weatherModel.error = res.getString(R.string.WeatherParseError);
             Crashlytics.logException(e);
             cancel(true);
         }finally{
             parseWeather();
         }
-        return weatherData;
+        return weatherModel;
     }
 
     private void parseWeather() {
@@ -185,14 +185,14 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
         DateTime warningDate = null;
         DateTime today = new DateTime();
         DateTime tomorrow;
-        for (int i = 0; i < weatherData.warningTitles.size(); i++) {
-            if (weatherData.warningTitles.get(i).contains(warn)) {
+        for (int i = 0; i < weatherModel.warningTitles.size(); i++) {
+            if (weatherModel.warningTitles.get(i).contains(warn)) {
                 try {
                     warningDate = new DateTime(sdfInput.parse(
-                            weatherData.warningExpireTimes.get(i - 1)));
+                            weatherModel.warningExpireTimes.get(i - 1)));
                 } catch (ParseException e) {
                     //RSS layout was not recognized.
-                    weatherData.error = res.getString(R.string.WeatherParseError);
+                    weatherModel.error = res.getString(R.string.WeatherParseError);
                     Crashlytics.logException(e);
                     cancel(true);
                 }
@@ -200,10 +200,10 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
                 if (warningDate != null) {
                     if ((warningDate.isEqual(today) || warningDate.isAfter(today))
                             && (dayrun == 0)) {
-                        weatherData.weatherpercent = weight;
+                        weatherModel.weatherpercent = weight;
                     } else if ((warningDate.isEqual(tomorrow) || warningDate.isAfter(tomorrow))
                             && (dayrun == 1)) {
-                        weatherData.weatherpercent = weight;
+                        weatherModel.weatherpercent = weight;
                     }
                 }
             }
@@ -211,12 +211,12 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherData> {
     }
 
     @Override
-    protected void onPostExecute(WeatherData weatherData) {
-        delegate.processFinish(weatherData);
+    protected void onPostExecute(WeatherModel weatherModel) {
+        delegate.processFinish(weatherModel);
     }
 
     @Override
-    protected void onCancelled(WeatherData weatherData) {
-        delegate.processFinish(weatherData);
+    protected void onCancelled(WeatherModel weatherModel) {
+        delegate.processFinish(weatherModel);
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
-import com.GBSnowDay.SnowDay.model.ClosingsData;
+import com.GBSnowDay.SnowDay.model.ClosingsModel;
 import com.GBSnowDay.SnowDay.R;
 import com.crashlytics.android.Crashlytics;
 
@@ -31,9 +31,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
+public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsModel> {
 
-    private ClosingsData closingsData;
+    private ClosingsModel closingsModel;
 
     private ArrayList<String> orgNames = new ArrayList<>();
     private ArrayList<String> orgStatuses = new ArrayList<>();
@@ -46,7 +46,7 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
     private Resources res;
 
     public interface AsyncResponse {
-        void processFinish(ClosingsData closingsData);
+        void processFinish(ClosingsModel closingsModel);
     }
 
     public ClosingsScraper(Context context, int i, AsyncResponse delegate) {
@@ -56,8 +56,8 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
     }
 
     @Override
-    protected ClosingsData doInBackground(Void...params) {
-        closingsData = new ClosingsData();
+    protected ClosingsModel doInBackground(Void...params) {
+        closingsModel = new ClosingsModel();
 
         Document schools = null;
         try {
@@ -76,7 +76,7 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
             }
         }catch (IOException e) {
             //Connectivity issues
-            closingsData.error = res.getString(R.string.WJRTConnectionError);
+            closingsModel.error = res.getString(R.string.WJRTConnectionError);
             Crashlytics.logException(e);
             cancel(true);
         }catch (NullPointerException | IndexOutOfBoundsException e) {
@@ -84,14 +84,14 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
             if no schools or institutions are closed. */
             if (schools != null && !schools.text().contains("no closings or delays")) {
                 //Webpage layout was not recognized.
-                closingsData.error = res.getString(R.string.WJRTParseError);
+                closingsModel.error = res.getString(R.string.WJRTParseError);
                 Crashlytics.logException(e);
                 cancel(true);
             }
         }finally{
             parseClosings();
         }
-        return closingsData;
+        return closingsModel;
     }
 
     private void parseClosings() {
@@ -107,27 +107,27 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
         weekdaytomorrow = tomorrow.plusDays(1).dayOfWeek().getAsText();
 
         //Sanity check - make sure Grand Blanc isn't already closed before predicting
-        closingsData.GB = isClosed(
+        closingsModel.GB = isClosed(
                 res.getStringArray(R.array.checks_gb),
                 res.getString(R.string.GB),
                 true,
                 -1);
 
-        if (closingsData.GB) {
-            closingsData.GBText.add(res.getString(R.string.SnowDay));
-            closingsData.GBSubtext.add(null);
+        if (closingsModel.GB) {
+            closingsModel.GBText.add(res.getString(R.string.SnowDay));
+            closingsModel.GBSubtext.add(null);
         } else {
             if (dayrun == 0) {
                 if (today.getHourOfDay() >= 7 && today.getHourOfDay() < 16) {
                     //Time is between 7AM and 4PM. School is already in session.
-                    closingsData.GBText.add(res.getString(R.string.SchoolOpen));
-                    closingsData.GBSubtext.add(null);
-                    closingsData.GBOpen = true;
+                    closingsModel.GBText.add(res.getString(R.string.SchoolOpen));
+                    closingsModel.GBSubtext.add(null);
+                    closingsModel.GBOpen = true;
                 } else if (today.getHourOfDay() >= 16) {
                     //Time is after 4PM. School is already out.
-                    closingsData.GBText.add(res.getString(R.string.Dismissed));
-                    closingsData.GBSubtext.add(null);
-                    closingsData.GBOpen = true;
+                    closingsModel.GBText.add(res.getString(R.string.Dismissed));
+                    closingsModel.GBSubtext.add(null);
+                    closingsModel.GBOpen = true;
                 }
             }
         }
@@ -139,162 +139,162 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
         String[] tier4schools = res.getStringArray(R.array.name_t4);
 
         //Tier 4
-        closingsData.Atherton = isClosed(
+        closingsModel.Atherton = isClosed(
                 res.getStringArray(R.array.checks_atherton),
                 tier4schools[0],
                 false,
                 4);
-        closingsData.Bendle = isClosed(
+        closingsModel.Bendle = isClosed(
                 res.getStringArray(R.array.checks_bendle),
                 tier4schools[1],
                 false,
                 4);
-        closingsData.Bentley = isClosed(
+        closingsModel.Bentley = isClosed(
                 res.getStringArray(R.array.checks_bentley),
                 tier4schools[2],
                 false,
                 4);
-        closingsData.Carman = isClosed(
+        closingsModel.Carman = isClosed(
                 res.getStringArray(R.array.checks_carman),
                 tier4schools[3],
                 false,
                 4);
-        closingsData.Flint = isClosed(
+        closingsModel.Flint = isClosed(
                 res.getStringArray(R.array.checks_flint),
                 tier4schools[4],
                 false,
                 4);
-        closingsData.Goodrich = isClosed(
+        closingsModel.Goodrich = isClosed(
                 res.getStringArray(R.array.checks_goodrich),
                 tier4schools[5],
                 false,
                 4);
 
         //Tier 3
-        closingsData.Beecher = isClosed(
+        closingsModel.Beecher = isClosed(
                 res.getStringArray(R.array.checks_beecher),
                 tier3schools[0],
                 false,
                 3);
-        closingsData.Clio = isClosed(
+        closingsModel.Clio = isClosed(
                 res.getStringArray(R.array.checks_clio),
                 tier3schools[1],
                 false,
                 3);
-        closingsData.Davison = isClosed(
+        closingsModel.Davison = isClosed(
                 res.getStringArray(R.array.checks_davison),
                 tier3schools[2],
                 false,
                 3);
-        closingsData.Fenton = isClosed(
+        closingsModel.Fenton = isClosed(
                 res.getStringArray(R.array.checks_fenton),
                 tier3schools[3],
                 false,
                 3);
-        closingsData.Flushing = isClosed(
+        closingsModel.Flushing = isClosed(
                 res.getStringArray(R.array.checks_flushing),
                 tier3schools[4],
                 false,
                 3);
-        closingsData.Genesee = isClosed(
+        closingsModel.Genesee = isClosed(
                 res.getStringArray(R.array.checks_genesee),
                 tier3schools[5],
                 false,
                 3);
-        closingsData.Kearsley = isClosed(
+        closingsModel.Kearsley = isClosed(
                 res.getStringArray(R.array.checks_kearsley),
                 tier3schools[6],
                 false,
                 3);
-        closingsData.LKFenton = isClosed(
+        closingsModel.LKFenton = isClosed(
                 res.getStringArray(R.array.checks_lkfenton),
                 tier3schools[7],
                 false,
                 3);
-        closingsData.Linden = isClosed(
+        closingsModel.Linden = isClosed(
                 res.getStringArray(R.array.checks_linden),
                 tier3schools[8],
                 false,
                 3);
-        closingsData. Montrose = isClosed(
+        closingsModel. Montrose = isClosed(
                 res.getStringArray(R.array.checks_montrose),
                 tier3schools[9],
                 false,
                 3);
-        closingsData.Morris = isClosed(
+        closingsModel.Morris = isClosed(
                 res.getStringArray(R.array.checks_morris),
                 tier3schools[10],
                 false,
                 3);
-        closingsData.SzCreek = isClosed(
+        closingsModel.SzCreek = isClosed(
                 res.getStringArray(R.array.checks_szcreek),
                 tier3schools[11],
                 false,
                 3);
 
         //Tier 2
-        closingsData.Durand = isClosed(
+        closingsModel.Durand = isClosed(
                 res.getStringArray(R.array.checks_durand),
                 tier2schools[0],
                 false,
                 2);
-        closingsData.Holly = isClosed(
+        closingsModel.Holly = isClosed(
                 res.getStringArray(R.array.checks_holly),
                 tier2schools[1],
                 false,
                 2);
-        closingsData.Lapeer = isClosed(
+        closingsModel.Lapeer = isClosed(
                 res.getStringArray(R.array.checks_lapeer),
                 tier2schools[2],
                 false,
                 2);
-        closingsData.Owosso = isClosed(
+        closingsModel.Owosso = isClosed(
                 res.getStringArray(R.array.checks_owosso),
                 tier2schools[3],
                 false,
                 2);
 
         //Tier 1
-        closingsData.GBAcademy = isClosed(
+        closingsModel.GBAcademy = isClosed(
                 res.getStringArray(R.array.checks_gbacademy),
                 tier1schools[0],
                 false,
                 1);
-        closingsData.GISD = isClosed(
+        closingsModel.GISD = isClosed(
                 res.getStringArray(R.array.checks_gisd),
                 tier1schools[1],
                 false,
                 1);
-        closingsData.HolyFamily = isClosed(
+        closingsModel.HolyFamily = isClosed(
                 res.getStringArray(R.array.checks_holyfamily),
                 tier1schools[2],
                 false,
                 1);
-        closingsData.WPAcademy = isClosed(
+        closingsModel.WPAcademy = isClosed(
                 res.getStringArray(R.array.checks_wpacademy),
                 tier1schools[3],
                 false,
                 1);
 
         //Set the schoolpercent
-        if (closingsData.tier1 > 2) {
+        if (closingsModel.tier1 > 2) {
             //3+ academies are closed. 20% schoolpercent.
-            closingsData.schoolpercent = 20;
+            closingsModel.schoolpercent = 20;
         }
-        if (closingsData.tier2 > 2) {
+        if (closingsModel.tier2 > 2) {
             //3+ schools in nearby counties are closed. 40% schoolpercent.
-            closingsData.schoolpercent = 40;
+            closingsModel.schoolpercent = 40;
         }
-        if (closingsData.tier3 > 2) {
+        if (closingsModel.tier3 > 2) {
             //3+ schools in Genesee County are closed. 60% schoolpercent.
-            closingsData.schoolpercent = 60;
+            closingsModel.schoolpercent = 60;
         }
-        if (closingsData.tier4 > 2) {
+        if (closingsModel.tier4 > 2) {
             //3+ schools near GB are closed. 80% schoolpercent.
-            closingsData.schoolpercent = 80;
-            if (closingsData.Carman) {
+            closingsModel.schoolpercent = 80;
+            if (closingsModel.Carman) {
                 //Carman is closed along with 2+ close schools. 90% schoolpercent.
-                closingsData.schoolpercent = 90;
+                closingsModel.schoolpercent = 90;
             }
         }
     }
@@ -320,12 +320,12 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
                 if (!isFalsePositive(checks, orgNames.get(i))) {
                     schoolFound = true;
                     if (isGrandBlanc) {
-                        closingsData.GBMessage = true;
-                        closingsData.GBText.add(schoolName);
-                        closingsData.GBSubtext.add(orgStatuses.get(i));
+                        closingsModel.GBMessage = true;
+                        closingsModel.GBText.add(schoolName);
+                        closingsModel.GBSubtext.add(orgStatuses.get(i));
                     } else {
-                        closingsData.displayedOrgNames.add(schoolName);
-                        closingsData.displayedOrgStatuses.add(orgStatuses.get(i));
+                        closingsModel.displayedOrgNames.add(schoolName);
+                        closingsModel.displayedOrgStatuses.add(orgStatuses.get(i));
                     }
 
                     if (orgStatuses.get(i).contains("Closed " + weekdaytoday) && dayrun == 0
@@ -337,13 +337,13 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
                         } else {
                             switch (tier) {
                                 case 1:
-                                    closingsData.tier1++;
+                                    closingsModel.tier1++;
                                 case 2:
-                                    closingsData.tier2++;
+                                    closingsModel.tier2++;
                                 case 3:
-                                    closingsData.tier3++;
+                                    closingsModel.tier3++;
                                 case 4:
-                                    closingsData.tier4++;
+                                    closingsModel.tier4++;
                                 default:
                             }
                             result = true;
@@ -356,11 +356,11 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
         }
 
         if (isGrandBlanc && !schoolFound) {
-            closingsData.GBText.add(schoolName);
-            closingsData.GBSubtext.add(res.getString(R.string.Open));
+            closingsModel.GBText.add(schoolName);
+            closingsModel.GBSubtext.add(res.getString(R.string.Open));
         }else if (!schoolFound){
-            closingsData.displayedOrgNames.add(schoolName);
-            closingsData.displayedOrgStatuses.add(res.getString(R.string.Open));
+            closingsModel.displayedOrgNames.add(schoolName);
+            closingsModel.displayedOrgStatuses.add(res.getString(R.string.Open));
         }
 
         return result;
@@ -377,12 +377,12 @@ public class ClosingsScraper extends AsyncTask<Void, Void, ClosingsData> {
     }
 
     @Override
-    protected void onPostExecute(ClosingsData closingsData) {
-        delegate.processFinish(closingsData);
+    protected void onPostExecute(ClosingsModel closingsModel) {
+        delegate.processFinish(closingsModel);
     }
 
     @Override
-    protected void onCancelled(ClosingsData closingsData) {
-        delegate.processFinish(closingsData);
+    protected void onCancelled(ClosingsModel closingsModel) {
+        delegate.processFinish(closingsModel);
     }
 }
