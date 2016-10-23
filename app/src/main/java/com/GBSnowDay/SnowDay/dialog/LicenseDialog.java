@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.dialog;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.AlertDialog;
@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.GBSnowDay.SnowDay.R;
+
 public class LicenseDialog {
 
-    Context context;
+    private Context context;
 
     public LicenseDialog(Context context) {
         this.context = context;

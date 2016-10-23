@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.GBSnowDay.SnowDay.R;
 import com.GBSnowDay.SnowDay.WeatherData;
-import com.GBSnowDay.SnowDay.WeatherDialog;
+import com.GBSnowDay.SnowDay.dialog.WeatherDialog;
 import com.crashlytics.android.Crashlytics;
 
 /*Copyright 2014-2016 Corey Rowe

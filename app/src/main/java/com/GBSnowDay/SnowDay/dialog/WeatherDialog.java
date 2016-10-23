@@ -1,4 +1,4 @@
-package com.GBSnowDay.SnowDay;
+package com.GBSnowDay.SnowDay.dialog;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -12,14 +12,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.GBSnowDay.SnowDay.R;
+
 public class WeatherDialog {
 
-    Context context;
+    private Context context;
 
-    String title;
-    String expires;
-    String summary;
-    String link;
+    private String title;
+    private String expires;
+    private String summary;
+    private String link;
 
     public WeatherDialog(Context c,
                          String t,
