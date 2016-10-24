@@ -244,6 +244,9 @@ public class ResultActivity extends AppCompatActivity {
                     GBText.add(weatherModel.error);
                     GBSubtext.add(getString(R.string.CalculateWithoutWeather));
                 }else{
+                    //Set the weather percent
+                    weatherpercent = weatherModel.weatherpercent;
+
                     //Set up the RecyclerView adapter that displays weather warnings
                     RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
                     WeatherAdapter weatherAdapter = new WeatherAdapter(weatherModel);
