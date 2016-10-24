@@ -191,16 +191,15 @@ public class ResultActivity extends AppCompatActivity {
         closingsScraper = new ClosingsScraper(this, dayrun, new ClosingsScraper.AsyncResponse() {
             @Override
             public void processFinish(ClosingsModel closingsModel) {
+                mClosingsModel = closingsModel;
                 if (closingsScraper.isCancelled()) {
                     //Closings scraper has failed.
-                    closingsFragment.txtClosingsInfo.setText(closingsModel.error);
+                    closingsFragment.txtClosingsInfo.setText(mClosingsModel.error);
                     closingsFragment.txtClosingsInfo.setVisibility(View.VISIBLE);
 
-                    GBText.add(closingsModel.error);
+                    GBText.add(mClosingsModel.error);
                     GBSubtext.add(getString(R.string.CalculateWithoutClosings));
                 } else {
-                    mClosingsModel = closingsModel;
-
                     //Set the school percent
                     schoolpercent = mClosingsModel.schoolpercent;
 
@@ -317,6 +316,9 @@ public class ResultActivity extends AppCompatActivity {
                     && weatherScraper.isCancelled()) {
                 //Both scrapers failed. A percentage cannot be determined.
                 //Don't set the percent.
+                GBText.clear();
+                GBSubtext.clear();
+
                 GBText.add(getString(R.string.CalculateError));
                 GBSubtext.add(getString(R.string.NoConnection));
                 percentFragment.progCalculate.clearAnimation();
