@@ -16,17 +16,80 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-//TODO: Use getters and setters instead of public fields
 public class WeatherModel {
-    public ArrayList<String> warningTitles = new ArrayList<>();
-    public ArrayList<String> warningExpireTimes = new ArrayList<>();
-    public ArrayList<String> warningReadableTimes = new ArrayList<>();
-    public ArrayList<String> warningSummaries = new ArrayList<>();
-    public ArrayList<String> warningLinks = new ArrayList<>();
+    private ArrayList<String> warningTitles = new ArrayList<>();
+    private ArrayList<String> warningExpireTimes = new ArrayList<>();
+    private ArrayList<String> warningReadableTimes = new ArrayList<>();
+    private ArrayList<String> warningSummaries = new ArrayList<>();
+    private ArrayList<String> warningLinks = new ArrayList<>();
 
-    public int weatherPercent;
+    private int weatherPercent;
 
-    public boolean weatherWarningsPresent;
+    private boolean weatherWarningPresent;
 
-    public String error;
+    private String error;
+
+    public ArrayList<String> getWarningTitles() {
+        return warningTitles;
+    }
+
+    public void addWarningTitle(String s) {
+        this.warningTitles.add(s);
+    }
+
+    public ArrayList<String> getWarningExpireTimes() {
+        return warningExpireTimes;
+    }
+
+    public void addWarningExpireTime(String s) {
+        this.warningExpireTimes.add(s);
+    }
+
+    public ArrayList<String> getWarningReadableTimes() {
+        return warningReadableTimes;
+    }
+
+    public void addWarningReadableTime(String s) {
+        this.warningReadableTimes.add(s);
+    }
+
+    public ArrayList<String> getWarningSummaries() {
+        return warningSummaries;
+    }
+
+    public void addWarningSummary(String s) {
+        this.warningSummaries.add(s);
+    }
+
+    public ArrayList<String> getWarningLinks() {
+        return warningLinks;
+    }
+
+    public void addWarningLink(String s) {
+        this.warningLinks.add(s);
+    }
+
+    public int getWeatherPercent() {
+        return weatherPercent;
+    }
+
+    public void setWeatherPercent(int weatherPercent) {
+        this.weatherPercent = weatherPercent;
+    }
+
+    public boolean isWeatherWarningPresent() {
+        return weatherWarningPresent;
+    }
+
+    public void setWeatherWarningPresent(boolean weatherWarningPresent) {
+        this.weatherWarningPresent = weatherWarningPresent;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }

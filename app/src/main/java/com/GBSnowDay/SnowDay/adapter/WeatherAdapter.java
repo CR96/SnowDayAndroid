@@ -67,7 +67,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
         TextView text = (TextView) layout.getChildAt(0);
         TextView subtext = (TextView) layout.getChildAt(1);
-        text.setText(mData.warningTitles.get(position));
+        text.setText(mData.getWarningTitles().get(position));
 
         //Color the weather warning based on severity.
         holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
@@ -79,17 +79,17 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             holder.mCardView.setCardElevation(0);
             subtext.setVisibility(View.GONE);
         }else{
-            if (mData.warningReadableTimes.size() < 1) {
+            if (mData.getWarningReadableTimes().size() < 1) {
                 subtext.setVisibility(View.GONE);
             }else{
-                subtext.setText(mData.warningReadableTimes.get(position - 1));
+                subtext.setText(mData.getWarningReadableTimes().get(position - 1));
             }
 
-            if (mData.warningTitles.get(position).contains("Warning")) {
+            if (mData.getWarningTitles().get(position).contains("Warning")) {
                 holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.red));
-            }else if (mData.warningTitles.get(position).contains("Watch")) {
+            }else if (mData.getWarningTitles().get(position).contains("Watch")) {
                 holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
-            }else if (mData.warningTitles.get(position).contains("Advisory")) {
+            }else if (mData.getWarningTitles().get(position).contains("Advisory")) {
                 holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
             }
         }
@@ -101,13 +101,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             public void onClick(View v) {
                 //Don't show a message for the list header
 
-                if (i > 0 && mData.weatherWarningsPresent) {
+                if (i > 0 && mData.isWeatherWarningPresent()) {
                     try {
                         new WeatherDialog(mContext,
-                                mData.warningTitles.get(i),
-                                mData.warningReadableTimes.get(i - 1),
-                                mData.warningSummaries.get(i - 1),
-                                mData.warningLinks.get(i))
+                                mData.getWarningTitles().get(i),
+                                mData.getWarningReadableTimes().get(i - 1),
+                                mData.getWarningSummaries().get(i - 1),
+                                mData.getWarningLinks().get(i))
                                 .show();
                     } catch (NullPointerException | IndexOutOfBoundsException e) {
                         Toast.makeText(mContext, mContext.getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
@@ -120,6 +120,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mData.warningTitles.size();
+        return mData.getWarningTitles().size();
     }
 }

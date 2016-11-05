@@ -238,14 +238,14 @@ public class ResultActivity extends AppCompatActivity {
             public void processFinish(WeatherModel weatherModel) {
                 if (weatherScraper.isCancelled()) {
                     //Weather scraper has failed.
-                    weatherFragment.txtWeatherInfo.setText(weatherModel.error);
+                    weatherFragment.txtWeatherInfo.setText(weatherModel.getError());
                     weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
 
-                    GBText.add(weatherModel.error);
+                    GBText.add(weatherModel.getError());
                     GBSubtext.add(getString(R.string.CalculateWithoutWeather));
                 }else{
                     //Set the weather percent
-                    weatherPercent = weatherModel.weatherPercent;
+                    weatherPercent = weatherModel.getWeatherPercent();
 
                     //Set up the RecyclerView adapter that displays weather warnings
                     RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
