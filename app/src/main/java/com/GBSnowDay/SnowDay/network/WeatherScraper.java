@@ -200,10 +200,10 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherModel> {
                 if (warningDate != null) {
                     if ((warningDate.isEqual(today) || warningDate.isAfter(today))
                             && (dayrun == 0)) {
-                        weatherModel.weatherpercent = weight;
+                        weatherModel.weatherPercent = weight;
                     } else if ((warningDate.isEqual(tomorrow) || warningDate.isAfter(tomorrow))
                             && (dayrun == 1)) {
-                        weatherModel.weatherpercent = weight;
+                        weatherModel.weatherPercent = weight;
                     }
                 }
             }

@@ -80,8 +80,8 @@ public class ResultActivity extends AppCompatActivity {
     int dayrun;
 
     //Individual components of the calculation
-    int schoolpercent;
-    int weatherpercent;
+    int schoolPercent;
+    int weatherPercent;
     int percent;
 
     @Override
@@ -201,7 +201,7 @@ public class ResultActivity extends AppCompatActivity {
                     GBSubtext.add(getString(R.string.CalculateWithoutClosings));
                 } else {
                     //Set the school percent
-                    schoolpercent = mClosingsModel.schoolpercent;
+                    schoolPercent = mClosingsModel.schoolPercent;
 
                     GBText.addAll(mClosingsModel.GBText);
                     GBSubtext.addAll(mClosingsModel.GBSubtext);
@@ -245,7 +245,7 @@ public class ResultActivity extends AppCompatActivity {
                     GBSubtext.add(getString(R.string.CalculateWithoutWeather));
                 }else{
                     //Set the weather percent
-                    weatherpercent = weatherModel.weatherpercent;
+                    weatherPercent = weatherModel.weatherPercent;
 
                     //Set up the RecyclerView adapter that displays weather warnings
                     RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
@@ -280,10 +280,10 @@ public class ResultActivity extends AppCompatActivity {
 
             //Calculate the total percent.
             //Set the percent to the higher percent.
-            if (weatherpercent > schoolpercent) {
-                percent = weatherpercent;
-            } else if (schoolpercent > weatherpercent) {
-                percent = schoolpercent;
+            if (weatherPercent > schoolPercent) {
+                percent = weatherPercent;
+            } else if (schoolPercent > weatherPercent) {
+                percent = schoolPercent;
             }
 
             //Reduce the percent chance by three for every snow day entered.
