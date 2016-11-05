@@ -51,9 +51,15 @@ public class WeatherScraper extends AsyncTask<Void, Void, WeatherModel> {
         void processFinish(WeatherModel weatherModel);
     }
 
-    public WeatherScraper(Context context, int i, AsyncResponse delegate) {
+    /**
+     * Reads and parses weather warnings from the National Weather Service.
+     * @param context The Context from the calling Activity used to access resources
+     * @param dayrun Whether the calculation is being run for today or tomorrow
+     * @param delegate The interface implementation used to pass the WeatherModel object to the UI thread
+     */
+    public WeatherScraper(Context context, int dayrun, AsyncResponse delegate) {
         res = context.getResources();
-        dayrun = i;
+        this.dayrun = dayrun;
         this.delegate = delegate;
     }
 
