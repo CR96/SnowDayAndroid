@@ -1,7 +1,5 @@
 package com.GBSnowDay.SnowDay.model;
 
-import java.util.ArrayList;
-
 /*Copyright 2014-2016 Corey Rowe
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,79 +15,62 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 
 public class WeatherModel {
-    private ArrayList<String> warningTitles = new ArrayList<>();
-    private ArrayList<String> warningExpireTimes = new ArrayList<>();
-    private ArrayList<String> warningReadableTimes = new ArrayList<>();
-    private ArrayList<String> warningSummaries = new ArrayList<>();
-    private ArrayList<String> warningLinks = new ArrayList<>();
+    private String warningTitle;
+    private String warningExpireTime;
+    private String warningReadableTime;
+    private String warningSummary;
+    private String warningLink;
 
-    private int weatherPercent;
-
-    private boolean weatherWarningPresent;
-
-    private String error;
-
-    public ArrayList<String> getWarningTitles() {
-        return warningTitles;
+    public WeatherModel(String warningTitle) {
+        this.warningTitle = warningTitle;
     }
 
-    public void addWarningTitle(String s) {
-        this.warningTitles.add(s);
+    public WeatherModel(
+            String warningTitle,
+            String warningExpireTime,
+            String warningReadableTime,
+            String warningSummary,
+            String warningLink){
+        this.warningTitle = warningTitle;
+        this.warningExpireTime = warningExpireTime;
+        this.warningReadableTime = warningReadableTime;
+        this.warningSummary = warningSummary;
+        this.warningLink = warningLink;
     }
 
-    public ArrayList<String> getWarningExpireTimes() {
-        return warningExpireTimes;
+    public String getWarningTitle() {
+        return warningTitle;
     }
 
-    public void addWarningExpireTime(String s) {
-        this.warningExpireTimes.add(s);
+    public String getWarningExpireTime() {
+        return warningExpireTime;
     }
 
-    public ArrayList<String> getWarningReadableTimes() {
-        return warningReadableTimes;
+    public void setWarningExpireTime(String warningExpireTime) {
+        this.warningExpireTime = warningExpireTime;
     }
 
-    public void addWarningReadableTime(String s) {
-        this.warningReadableTimes.add(s);
+    public String getWarningReadableTime() {
+        return warningReadableTime;
     }
 
-    public ArrayList<String> getWarningSummaries() {
-        return warningSummaries;
+    public void setWarningReadableTime(String warningReadableTime) {
+        this.warningReadableTime = warningReadableTime;
     }
 
-    public void addWarningSummary(String s) {
-        this.warningSummaries.add(s);
+    public String getWarningSummary() {
+        return warningSummary;
     }
 
-    public ArrayList<String> getWarningLinks() {
-        return warningLinks;
+    public void setWarningSummary(String warningSummary) {
+        this.warningSummary = warningSummary;
     }
 
-    public void addWarningLink(String s) {
-        this.warningLinks.add(s);
+    public String getWarningLink() {
+        return warningLink;
     }
 
-    public int getWeatherPercent() {
-        return weatherPercent;
-    }
-
-    public void setWeatherPercent(int weatherPercent) {
-        this.weatherPercent = weatherPercent;
-    }
-
-    public boolean isWeatherWarningPresent() {
-        return weatherWarningPresent;
-    }
-
-    public void setWeatherWarningPresent(boolean weatherWarningPresent) {
-        this.weatherWarningPresent = weatherWarningPresent;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
+    public void setWarningLink(String warningLink) {
+        this.warningLink = warningLink;
     }
 }

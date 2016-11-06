@@ -235,21 +235,24 @@ public class ResultActivity extends AppCompatActivity {
 
         weatherScraper = new WeatherScraper(this, dayrun, new WeatherScraper.AsyncResponse() {
             @Override
-            public void processFinish(WeatherModel weatherModel) {
+            public void processFinish(List<WeatherModel> weatherModel) {
                 if (weatherScraper.isCancelled()) {
                     //Weather scraper has failed.
-                    weatherFragment.txtWeatherInfo.setText(weatherModel.getError());
+                    weatherFragment.txtWeatherInfo.setText(weatherScraper.getError());
                     weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
 
-                    GBText.add(weatherModel.getError());
+                    GBText.add(weatherScraper.getError());
                     GBSubtext.add(getString(R.string.CalculateWithoutWeather));
                 }else{
                     //Set the weather percent
-                    weatherPercent = weatherModel.getWeatherPercent();
+                    weatherPercent = weatherScraper.getWeatherPercent();
 
                     //Set up the RecyclerView adapter that displays weather warnings
                     RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
-                    WeatherAdapter weatherAdapter = new WeatherAdapter(weatherModel);
+                    WeatherAdapter weatherAdapter = new WeatherAdapter(
+                            weatherModel,
+                            weatherScraper.isWeatherWarningPresent()
+                    );
 
                     weatherFragment.lstWeather.setLayoutManager(WeatherManager);
                     weatherFragment.lstWeather.setAdapter(weatherAdapter);
