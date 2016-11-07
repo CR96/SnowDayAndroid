@@ -235,28 +235,32 @@ public class ResultActivity extends AppCompatActivity {
 
         weatherScraper = new WeatherScraper(this, dayrun, new WeatherScraper.AsyncResponse() {
             @Override
-            public void processFinish(List<WeatherModel> weatherModel) {
-                if (weatherScraper.isCancelled()) {
-                    //Weather scraper has failed.
-                    weatherFragment.txtWeatherInfo.setText(weatherScraper.getError());
-                    weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
+            public void processFinish(
+                    List<WeatherModel> weatherModel,
+                    int weatherPercent,
+                    boolean isWeatherWarningPresent) {
+                //Set the weather percent
+                ResultActivity.this.weatherPercent = weatherPercent;
 
-                    GBText.add(weatherScraper.getError());
-                    GBSubtext.add(getString(R.string.CalculateWithoutWeather));
-                }else{
-                    //Set the weather percent
-                    weatherPercent = weatherScraper.getWeatherPercent();
+                //Set up the RecyclerView adapter that displays weather warnings
+                RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
+                WeatherAdapter weatherAdapter = new WeatherAdapter(
+                        weatherModel,
+                        isWeatherWarningPresent
+                );
 
-                    //Set up the RecyclerView adapter that displays weather warnings
-                    RecyclerView.LayoutManager WeatherManager = new LinearLayoutManager(ResultActivity.this);
-                    WeatherAdapter weatherAdapter = new WeatherAdapter(
-                            weatherModel,
-                            weatherScraper.isWeatherWarningPresent()
-                    );
+                weatherFragment.lstWeather.setLayoutManager(WeatherManager);
+                weatherFragment.lstWeather.setAdapter(weatherAdapter);
+            }
 
-                    weatherFragment.lstWeather.setLayoutManager(WeatherManager);
-                    weatherFragment.lstWeather.setAdapter(weatherAdapter);
-                }
+            @Override
+            public void processFinish(String error) {
+                //Weather scraper has failed.
+                weatherFragment.txtWeatherInfo.setText(error);
+                weatherFragment.txtWeatherInfo.setVisibility(View.VISIBLE);
+
+                GBText.add(error);
+                GBSubtext.add(getString(R.string.CalculateWithoutWeather));
             }
         });
 

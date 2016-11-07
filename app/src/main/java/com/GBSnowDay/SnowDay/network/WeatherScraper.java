@@ -37,6 +37,10 @@ limitations under the License.*/
 
 public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
 
+    /**
+     * This is an array of {@link WeatherModel} objects.
+     * WeatherModel is a custom object containing the information needed to display a single warning.
+     */
     private List<WeatherModel> weatherModels;
 
     private int dayrun;
@@ -45,34 +49,34 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
 
     private String error;
 
+    private AsyncResponse delegate = null;
+
+    // The parsable format of warning expiration times as present in the RSS feed
     private SimpleDateFormat sdfInput = new SimpleDateFormat
             ("yyyy-MM-dd'T'HH:mm", Locale.US);
+
+    // The readable format of warning expiration times as seen by the user
     private SimpleDateFormat sdfOutput = new SimpleDateFormat
             ("MMMM dd 'at' h:mm a", Locale.US);
 
-    private AsyncResponse delegate = null;
     private Resources res;
 
-    public int getWeatherPercent() {
-        return weatherPercent;
-    }
-
-    public boolean isWeatherWarningPresent() {
-        return weatherWarningPresent;
-    }
-
-    public String getError() {
-        return error;
-    }
-
+    // This interface serves as a delegate that passes the array of WeatherModel objects
+    // to the UI thread after the AsyncTask finishes running.
+    // It contains two overloaded processFinish() methods: one that returns if the scraper
+    // succeeds, and one that only returns an error message if it fails.
     public interface AsyncResponse {
-        void processFinish(List<WeatherModel> weatherModel);
+        void processFinish(List<WeatherModel> weatherModel,
+                           int weatherPercent,
+                           boolean isWeatherWarningPresent);
+
+        void processFinish(String error);
     }
 
     /**
-     * Reads and parses weather warnings from the National Weather Service.
+     * Constructs a new WeatherScraper.
      * @param context The Context from the calling Activity used to access resources
-     * @param dayrun Whether the calculation is being run for today or tomorrow
+     * @param dayrun Whether the calculation was run for "today" or "tomorrow" (inputted by user)
      * @param delegate The interface implementation used to pass the array of weather warnings
      */
     public WeatherScraper(Context context, int dayrun, AsyncResponse delegate) {
@@ -81,6 +85,11 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
         this.delegate = delegate;
     }
 
+    /**
+     * Retrieve and parse the RSS feed asynchronously.
+     * @param params void (unused as only a single fixed URL is accessed)
+     * @return the array of {@link WeatherModel} objects
+     */
     @Override
     protected List<WeatherModel> doInBackground(Void...params) {
         weatherModels = new ArrayList<>();
@@ -91,6 +100,7 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
                     .timeout(10000)
                     .get();
 
+            // Various elements present in the RSS feed
             Elements title = weather.select("title");
             Elements summary = weather.select("summary");
             Elements expiretime = weather.select("cap|expires");
@@ -98,6 +108,10 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
 
             if (title != null) {
                 for (int i = 0; i < title.size(); i++) {
+                    // The warning titles in the RSS feed contain the text "issued by NWS at ...".
+                    // This removes that portion of the warning title if present for a cleaner
+                    // appearance in the displayed list. The expiration time is shown separately.
+                    // Example: "Winter Storm Warning" vs. "Winter Storm Warning issued by NWS at ..."
                     int stringend = title.get(i).text().indexOf("issued");
                     if (stringend != -1) {
                         weatherModels.add(new WeatherModel(
@@ -149,6 +163,10 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
                         .setWarningLink(link.get(i).attr("href"));
                 }
             }
+
+            // These method calls check for the presence of specific warnings.
+            // If one is present, weatherPercent is set to the corresponding value.
+            // More severe warnings result in a higher weatherPercent value.
 
             //Significant Weather Advisory
             checkWeatherWarning(res.getString(R.string.SigWeather), 15);
@@ -215,9 +233,9 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
 
     /**Check for the presence of weather warnings.
      * Only the highest weather percent is stored (not cumulative).
-     * Calculation is affected based on when warning expires.
+     * Calculation is affected based on when the warning expires and the day the user selected.
      * @param warn The string identifying the warning to search for
-     * @param weight The value weatherpercent is set to if the warning is found
+     * @param weight The value weatherPercent is set to if the warning is found
      * @throws ParseException if the RSS layout is not recognized
      */
     private void checkWeatherWarning(String warn, int weight) throws ParseException {
@@ -242,13 +260,15 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
         }
     }
 
+    //Scraper succeeded: pass the list of objects to the calling Activity.
     @Override
     protected void onPostExecute(List<WeatherModel> weatherModels) {
-        delegate.processFinish(weatherModels);
+        delegate.processFinish(weatherModels, weatherPercent, weatherWarningPresent);
     }
 
+    //Scraper failed: pass the error message to the calling Activity.
     @Override
-    protected void onCancelled(List<WeatherModel> weatherModels) {
-        delegate.processFinish(weatherModels);
+    protected void onCancelled() {
+        delegate.processFinish(error);
     }
 }
