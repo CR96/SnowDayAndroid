@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.GBSnowDay.SnowDay.model.ClosingsModel;
+import com.GBSnowDay.SnowDay.model.ClosingModel;
 import com.GBSnowDay.SnowDay.R;
+
+import java.util.List;
 
 /*Copyright 2014-2016 Corey Rowe
 
@@ -29,7 +31,7 @@ limitations under the License.*/
 
 public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHolder> {
     private Context mContext;
-    private ClosingsModel mData;
+    private List<ClosingModel> mData;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
@@ -39,8 +41,8 @@ public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHo
         }
     }
 
-    public ClosingsAdapter(ClosingsModel closingsModel) {
-        mData = closingsModel;
+    public ClosingsAdapter(List<ClosingModel> closingModels) {
+        mData = closingModels;
     }
 
     @Override
@@ -65,28 +67,20 @@ public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHo
         TextView txtOrg = (TextView) layout.getChildAt(0);
         TextView txtStatus = (TextView) layout.getChildAt(1);
 
-        txtOrg.setText(mData.displayedOrgNames.get(position));
-        txtStatus.setText(mData.displayedOrgStatuses.get(position));
-        if (position == 0 || position == 7 || position == 20 || position == 25) {
+        txtOrg.setText(mData.get(position).getOrgName());
+        txtStatus.setText(mData.get(position).getOrgStatus());
+        if (mData.get(position).isSectionHeader()) {
             //Make section headers blue.
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
             holder.mCardView.setCardElevation(0);
             holder.mCardView.setContentPadding(16, 32, 0, 0);
             txtStatus.setVisibility(View.GONE);
-        }else if (mData.Atherton && position == 1 || mData.Bendle && position == 2
-                || mData.Bentley && position == 3 || mData.Carman && position == 4
-                || mData.Flint && position == 5 || mData.Goodrich && position == 6
-                || mData.Beecher && position == 8 || mData.Clio && position == 9
-                || mData.Davison && position == 10 || mData.Fenton && position == 11
-                || mData.Flushing && position == 12 || mData.Genesee && position == 13
-                || mData.Kearsley && position == 14 || mData.LKFenton && position == 15
-                || mData.Linden && position == 16 || mData.Montrose && position == 17
-                || mData.Morris && position == 18 || mData.SzCreek && position == 19
-                || mData.Durand && position == 21 || mData.Holly && position == 22
-                || mData.Lapeer && position == 23 || mData.Owosso && position == 24
-                || mData.GBAcademy && position == 26 || mData.GISD && position == 27
-                || mData.HolyFamily && position == 28 || mData.WPAcademy && position == 29) {
+        }else if (mData.get(position).isClosed()) {
             //If the school is closed, make it orange.
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+            holder.mCardView.setCardElevation(16);
+        }else if (mData.get(position).isMessagePresent()) {
+            //If the school has a message, make it orange.
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
             holder.mCardView.setCardElevation(16);
         }else{
@@ -97,6 +91,6 @@ public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mData.displayedOrgNames.size();
+        return mData.size();
     }
 }
