@@ -72,19 +72,21 @@ public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHo
         if (mData.get(position).isSectionHeader()) {
             //Make section headers blue.
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
+            holder.mCardView.setContentPadding(32, 32, 0, 0);
             holder.mCardView.setCardElevation(0);
-            holder.mCardView.setContentPadding(16, 32, 0, 0);
+            txtOrg.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+            txtOrg.setTextSize(20);
             txtStatus.setVisibility(View.GONE);
         }else if (mData.get(position).isClosed()) {
-            //If the school is closed, make it orange.
-            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
+            //If the school is closed, make it red.
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.red));
             holder.mCardView.setCardElevation(16);
         }else if (mData.get(position).isMessagePresent()) {
             //If the school has a message, make it orange.
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
             holder.mCardView.setCardElevation(16);
         }else{
-            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
             holder.mCardView.setCardElevation(0);
         }
     }
