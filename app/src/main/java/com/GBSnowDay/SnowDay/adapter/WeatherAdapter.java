@@ -78,6 +78,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
         if (position == 0) {
             text.setTextSize(14);
+            text.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
             holder.mCardView.setContentPadding(16, 16, 0, 0);
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground));
             holder.mCardView.setCardElevation(0);
@@ -87,6 +88,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
                 subtext.setText(mData.get(position).getWarningReadableTime());
             }else{
                 subtext.setVisibility(View.GONE);
+                holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
+                holder.mCardView.setCardElevation(0);
             }
 
             if (mData.get(position).getWarningTitle().contains("Warning")) {

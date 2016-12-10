@@ -92,7 +92,8 @@ public class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
             //If GB has a message, make card background orange.
             holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.orange));
         }else{
-            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
+            holder.mCardView.setCardElevation(0);
         }
     }
 

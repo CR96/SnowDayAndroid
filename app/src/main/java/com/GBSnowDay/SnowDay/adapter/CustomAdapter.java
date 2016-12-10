@@ -78,7 +78,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.special));
             imageView.setAlpha((float) 0.1);
         }else{
-            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+            holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
+            holder.mCardView.setCardElevation(0);
+            textView.setTextColor(
+                    ContextCompat.getColor(mContext, R.color.colorAccent));
         }
     }
 
