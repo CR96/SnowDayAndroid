@@ -14,9 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:drawableTop="@drawable/ic_error_outline_white"
-        android:drawableTint="@color/colorAccent"
         android:alpha="0.75"
-        android:visibility="gone"/>
+        android:drawableTint="@color/colorAccent"
+        android:drawableTop="@drawable/ic_error_outline_white"
+        android:visibility="gone" />
 
 </RelativeLayout>

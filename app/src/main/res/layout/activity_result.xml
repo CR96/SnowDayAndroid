@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -24,10 +23,10 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/appbar" />
+        android:layout_below="@+id/appbar"
+        android:background="@color/colorBackground"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

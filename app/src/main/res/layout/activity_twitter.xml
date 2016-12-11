@@ -2,27 +2,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView android:id="@id/android:empty"
+    <TextView
+        android:id="@id/android:empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/EmptyTimeline"
+        android:layout_centerVertical="true"
         android:drawableLeft="@drawable/tw__ic_logo_default"
-        android:drawablePadding="4dp"/>
+        android:drawablePadding="4dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/EmptyTimeline" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ListView
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@android:id/list"
             android:divider="@color/tw__light_gray"
             android:dividerHeight="1dp"
-            android:drawSelectorOnTop="false"/>
+            android:drawSelectorOnTop="false" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
 

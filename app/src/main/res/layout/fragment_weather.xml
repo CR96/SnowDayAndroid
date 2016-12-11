@@ -5,39 +5,39 @@
     tools:context="com.GBSnowDay.SnowDay.fragment.WeatherFragment">
 
     <Button
+        android:id="@+id/btnRadar"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/radarshow"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:id="@+id/btnRadar"
-        android:layout_margin="16dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:text="@string/radarshow" />
 
     <TextView
         android:id="@+id/txtWeatherInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:drawableTop="@drawable/ic_error_outline_white"
-        android:drawableTint="@color/colorAccent"
         android:alpha="0.75"
-        android:visibility="gone"/>
+        android:drawableTint="@color/colorAccent"
+        android:drawableTop="@drawable/ic_error_outline_white"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/lstWeather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop ="true"
         android:layout_above="@+id/btnRadar"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/lstWeather" />
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <WebView
+        android:id="@+id/webRadar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/webRadar"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>

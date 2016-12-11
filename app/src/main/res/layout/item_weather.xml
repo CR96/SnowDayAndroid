@@ -10,17 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/txtWarn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtWarn"
             android:textColor="@color/textColorPrimary"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txtWarnTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtWarnTime"
             android:textSize="16sp" />
     </LinearLayout>
 

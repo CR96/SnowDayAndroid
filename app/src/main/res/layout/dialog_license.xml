@@ -8,67 +8,70 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:src="@mipmap/ic_launcher"
+            android:layout_marginBottom="16dp"
             android:contentDescription="@string/app_name"
-            android:layout_marginBottom="16dp" />
+            android:src="@mipmap/ic_launcher" />
+
         <TextView
             android:id="@+id/txtTitle"
-            android:textSize="20sp"
-            android:textColor="@color/textColorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/textColorPrimary"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:requiresFadingEdge="vertical"
         android:fadingEdgeLength="20dp"
+        android:requiresFadingEdge="vertical"
         tools:ignore="UnusedAttribute">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/txtNewTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/textColorPrimary" />
+                android:textColor="@color/textColorPrimary"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtNewText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtLicenseTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:textSize="20sp"
-                android:textColor="@color/textColorPrimary" />
+                android:textColor="@color/textColorPrimary"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtLicenseText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:autoLink="web" />
+                android:autoLink="web"
+                android:textSize="12sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

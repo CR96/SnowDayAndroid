@@ -1,108 +1,111 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="wrap_content" tools:context="com.GBSnowDay.SnowDay.activity.AboutActivity"
-        android:id="@+id/about">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/about"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.GBSnowDay.SnowDay.activity.AboutActivity">
 
     <android.support.v4.widget.Space
-        android:layout_height="match_parent"
+        android:id="@+id/view"
         android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/view" />
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
+        android:id="@+id/imgAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imgAbout"
-        android:layout_gravity="center"
-        android:src="@drawable/icon"
-        android:contentDescription="@string/app_name"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:layout_toLeftOf="@+id/view"
-        android:layout_toStartOf="@+id/view" />
+        android:layout_toStartOf="@+id/view"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
         tools:ignore="RelativeOverlap">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/GBCS"
             android:id="@+id/txtGB"
-            android:layout_gravity="center_horizontal|top"
-            android:gravity="center" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/app_name"
-            android:id="@+id/txtSnowDay"
-            android:layout_gravity="center_horizontal|top"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearance"
-            android:text="@string/dev_name"
-            android:id="@+id/txtDev"
             android:layout_gravity="center_horizontal|top"
             android:gravity="center"
+            android:text="@string/GBCS"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/txtSnowDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txtDev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:gravity="center"
+            android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp" />
+            android:text="@string/dev_name"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:id="@+id/btnTwitter"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/tw__ic_logo_default"
-                android:contentDescription="@string/dev_twitter" />
+                android:contentDescription="@string/dev_twitter"
+                android:src="@drawable/tw__ic_logo_default" />
 
             <ImageButton
                 android:id="@+id/btnEmail"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/ic_action_email"
-                android:contentDescription="@string/dev_email" />
+                android:contentDescription="@string/dev_email"
+                android:src="@drawable/ic_action_email" />
 
             <ImageButton
                 android:id="@+id/btnWeb"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/ic_action_globe"
-                android:contentDescription="@string/dev_site" />
+                android:contentDescription="@string/dev_site"
+                android:src="@drawable/ic_action_globe" />
 
             <ImageButton
                 android:id="@+id/btnGit"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/ic_action_github"
-                android:contentDescription="@string/dev_git" />
+                android:contentDescription="@string/dev_git"
+                android:src="@drawable/ic_action_github" />
         </LinearLayout>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/txtVersion"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 </RelativeLayout>
