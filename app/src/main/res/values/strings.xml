@@ -84,7 +84,6 @@
 
     <string name="NWS">National Weather Service Warnings</string>
 
-    <string name="HazardWeather">Hazardous Weather Outlook</string>
     <string name="SigWeather">Significant Weather Advisory</string>
     <string name="WinterAdvisory">Winter Weather Advisory</string>
     <string name="WinterWatch">Winter Storm Watch</string>

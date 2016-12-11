@@ -394,7 +394,7 @@ public class ClosingsScraper extends AsyncTask<Void, Void, List<ClosingModel>> {
 
         if (isGrandBlanc && !schoolFound) {
             GBText.add(schoolName);
-            GBSubtext.add(res.getString(R.string.Open));
+            GBSubtext.add(res.getString(R.string.NotClosed));
         }else if (!schoolFound){
             closingModels.add(
                     new ClosingModel.ClosingBuilder(schoolName)
