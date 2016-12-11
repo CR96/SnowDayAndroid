@@ -32,7 +32,11 @@
     the License.</string>
 
     <string name="UpdateTitle">What\'s New</string>
-    <string name="Updates">•Fixed a bug caused by ABC 12\'s new closings system\n\n•Fixed an issue with the connection to NWS timing out intermittently for some users\n\nNew in Version 2.0:\n\n•Implemented Material design\n\n•Updated schedule and holidays for 2015–2016 school year\n\n•Added the ability to view detailed information about all weather alerts</string>
+    <string name="Updates">\u0020• Updated closings to work with ABC 12\'s latest changes\n\n
+        • Updated schedule and holidays for the 2016-2017 school year\n\n
+        • Added expiration information to weather alerts\n\n
+        • Added support for Nougat and split screen\n\n
+        • Minor visual adjustments relating to Material design</string>
 
     <string name="Close">Close</string>
 
