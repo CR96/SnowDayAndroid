@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private Spinner lstDays;
     private Button btnCalculate;
 
+    private ArrayList<Integer> daysArray = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,10 +194,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void special() {
-        ArrayList<Integer> daysarray = new ArrayList<>();
-        daysarray.add((int) lstDays.getSelectedItemId());
+        daysArray.add((int) lstDays.getSelectedItemId());
         int[] specialarray = {0, 3, 7, 1, 7, 3, 1, 2, 1};
-        if (daysarray.toString().equals(Arrays.toString(specialarray))) {
+        if (daysArray.toString().equals(Arrays.toString(specialarray))) {
             ArrayList<String> special = new ArrayList<>();
             special.add(0, getString(R.string.special));
             special.add(1, "");

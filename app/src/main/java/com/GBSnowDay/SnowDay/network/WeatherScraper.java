@@ -241,19 +241,18 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
     private void checkWeatherWarning(String warn, int weight) throws ParseException {
         DateTime warningDate = null;
         DateTime today = new DateTime();
-        DateTime tomorrow;
+        DateTime tomorrow = today.plusDays(1).withHourOfDay(0); //Midnight tomorrow
         for (int i = 0; i < weatherModels.size(); i++) {
             if (weatherModels.get(i).getWarningTitle().contains(warn)) {
                 warningDate = new DateTime(sdfInput.parse(
                         weatherModels.get(i).getWarningExpireTime()));
             }
-            tomorrow = today.plusDays(1);
+
             if (warningDate != null) {
-                if ((warningDate.isEqual(today) || warningDate.isAfter(today))
-                        && (dayrun == 0)) {
+                if (dayrun == 0) { // If the weather warning is present, it has an effect today.
                     weatherPercent = weight;
-                } else if ((warningDate.isEqual(tomorrow) || warningDate.isAfter(tomorrow))
-                        && (dayrun == 1)) {
+                } else if ((warningDate.isEqual(tomorrow) || warningDate.isAfter(tomorrow))) {
+                    //If the weather warning expires at or after midnight tomorrow, it has an effect.
                     weatherPercent = weight;
                 }
             }

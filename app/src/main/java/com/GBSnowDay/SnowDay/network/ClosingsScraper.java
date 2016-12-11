@@ -382,8 +382,8 @@ public class ClosingsScraper extends AsyncTask<Void, Void, List<ClosingModel>> {
                                     break;
                                 default:
                             }
+                            closingModels.get(closingModels.size() - 1).setClosed(true);
                         }
-                        closingModels.get(closingModels.size() - 1).setClosed(true);
                         result = true;
                     }
                 }
