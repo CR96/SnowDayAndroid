@@ -21,8 +21,8 @@ import com.GBSnowDay.SnowDay.R;
  */
 public class WeatherFragment extends Fragment {
 
-    WebView webRadar;
-    Button btnRadar;
+    private WebView webRadar;
+    private Button btnRadar;
 
     public RecyclerView lstWeather;
     public TextView txtWeatherInfo;

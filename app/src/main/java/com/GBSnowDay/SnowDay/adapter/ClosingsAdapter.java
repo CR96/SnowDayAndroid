@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.GBSnowDay.SnowDay.model.ClosingModel;
 import com.GBSnowDay.SnowDay.R;
+import com.GBSnowDay.SnowDay.model.ClosingModel;
 
 import java.util.List;
 
@@ -31,10 +31,10 @@ limitations under the License.*/
 
 public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHolder> {
     private Context mContext;
-    private List<ClosingModel> mData;
+    private final List<ClosingModel> mData;
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        CardView mCardView;
+        final CardView mCardView;
         ViewHolder(CardView v) {
             super(v);
             mCardView = v;

@@ -34,17 +34,17 @@ limitations under the License.*/
 
 public class ClosingsScraper extends AsyncTask<Void, Void, List<ClosingModel>> {
 
-    private List<ClosingModel> closingModels = new ArrayList<>();
+    private final List<ClosingModel> closingModels = new ArrayList<>();
 
-    private List<String> orgNames = new ArrayList<>();
-    private List<String> orgStatuses = new ArrayList<>();
+    private final List<String> orgNames = new ArrayList<>();
+    private final List<String> orgStatuses = new ArrayList<>();
 
-    private int dayrun;
+    private final int dayrun;
     private String weekdaytoday;
     private String weekdaytomorrow;
 
-    private List<String> GBText = new ArrayList<>();
-    private List<String> GBSubtext = new ArrayList<>();
+    private final List<String> GBText = new ArrayList<>();
+    private final List<String> GBSubtext = new ArrayList<>();
 
     //Levels of school closings (near vs. far)
     private int tier1 = 0;
@@ -66,7 +66,7 @@ public class ClosingsScraper extends AsyncTask<Void, Void, List<ClosingModel>> {
     private String error;
 
     private AsyncResponse delegate = null;
-    private Resources res;
+    private final Resources res;
 
     public interface AsyncResponse {
         void processFinish(

@@ -26,15 +26,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.GBSnowDay.SnowDay.model.ClosingModel;
 import com.GBSnowDay.SnowDay.R;
-import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.GBSnowDay.SnowDay.adapter.ClosingsAdapter;
 import com.GBSnowDay.SnowDay.adapter.GBAdapter;
 import com.GBSnowDay.SnowDay.adapter.WeatherAdapter;
 import com.GBSnowDay.SnowDay.fragment.ClosingsFragment;
 import com.GBSnowDay.SnowDay.fragment.PercentFragment;
 import com.GBSnowDay.SnowDay.fragment.WeatherFragment;
+import com.GBSnowDay.SnowDay.model.ClosingModel;
+import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.GBSnowDay.SnowDay.network.ClosingsScraper;
 import com.GBSnowDay.SnowDay.network.WeatherScraper;
 import com.GBSnowDay.SnowDay.view.ViewPager;
@@ -60,31 +60,31 @@ public class ResultActivity extends AppCompatActivity {
     limitations under the License.*/
 
     //Declare all views
-    PercentFragment percentFragment = new PercentFragment();
-    ClosingsFragment closingsFragment = new ClosingsFragment();
-    WeatherFragment weatherFragment = new WeatherFragment();
+    private final PercentFragment percentFragment = new PercentFragment();
+    private final ClosingsFragment closingsFragment = new ClosingsFragment();
+    private final WeatherFragment weatherFragment = new WeatherFragment();
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
-    ClosingsScraper closingsScraper;
-    WeatherScraper weatherScraper;
+    private ClosingsScraper closingsScraper;
+    private WeatherScraper weatherScraper;
 
     //Declare lists that will be displayed in RecyclerViews
-    ArrayList<String> GBText = new ArrayList<>();
-    ArrayList<String> GBSubtext = new ArrayList<>();
+    private final ArrayList<String> GBText = new ArrayList<>();
+    private final ArrayList<String> GBSubtext = new ArrayList<>();
 
     private boolean GB;
     private boolean GBMessage;
     private boolean GBOpen;
 
-    int days;
-    int dayrun;
+    private int days;
+    private int dayrun;
 
     //Individual components of the calculation
-    int schoolPercent;
-    int weatherPercent;
-    int percent;
+    private int schoolPercent;
+    private int weatherPercent;
+    private int percent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +179,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void Calculate() {
-        /**
+        /*
          * This application will predict the possibility of a snow day for Grand Blanc Community Schools.
          * Created by Corey Rowe, July 2014 - redesign of original Swing GUI.
          * Factors:
@@ -463,7 +463,7 @@ public class ResultActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    static class ViewPagerAdapter extends FragmentPagerAdapter {
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
 

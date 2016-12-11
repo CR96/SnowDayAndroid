@@ -12,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.GBSnowDay.SnowDay.R;
-import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.GBSnowDay.SnowDay.dialog.WeatherDialog;
+import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.crashlytics.android.Crashlytics;
 
 import java.util.List;
@@ -35,11 +35,11 @@ limitations under the License.*/
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<WeatherModel> mData;
-    private boolean weatherWarningPresent;
+    private final List<WeatherModel> mData;
+    private final boolean weatherWarningPresent;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView mCardView;
+        final CardView mCardView;
         ViewHolder(CardView v) {
             super(v);
             mCardView = v;

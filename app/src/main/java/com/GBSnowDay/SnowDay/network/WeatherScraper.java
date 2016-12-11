@@ -43,7 +43,7 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
      */
     private List<WeatherModel> weatherModels;
 
-    private int dayrun;
+    private final int dayrun;
     private boolean weatherWarningPresent;
     private int weatherPercent;
 
@@ -52,14 +52,14 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
     private AsyncResponse delegate = null;
 
     // The parsable format of warning expiration times as present in the RSS feed
-    private SimpleDateFormat sdfInput = new SimpleDateFormat
+    private final SimpleDateFormat sdfInput = new SimpleDateFormat
             ("yyyy-MM-dd'T'HH:mm", Locale.US);
 
     // The readable format of warning expiration times as seen by the user
-    private SimpleDateFormat sdfOutput = new SimpleDateFormat
+    private final SimpleDateFormat sdfOutput = new SimpleDateFormat
             ("MMMM dd 'at' h:mm a", Locale.US);
 
-    private Resources res;
+    private final Resources res;
 
     // This interface serves as a delegate that passes the array of WeatherModel objects
     // to the UI thread after the AsyncTask finishes running.

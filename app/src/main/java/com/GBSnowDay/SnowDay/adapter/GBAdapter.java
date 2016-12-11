@@ -31,14 +31,14 @@ import java.util.List;
 public class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<String> mData1;
-    private List<String> mData2;
+    private final List<String> mData1;
+    private final List<String> mData2;
 
-    private boolean gb;
-    private boolean gbmessage;
+    private final boolean gb;
+    private final boolean gbmessage;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView mCardView;
+        final CardView mCardView;
         ViewHolder(CardView v) {
             super(v);
             mCardView = v;

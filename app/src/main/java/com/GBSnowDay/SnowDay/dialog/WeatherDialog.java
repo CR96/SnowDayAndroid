@@ -16,12 +16,12 @@ import com.GBSnowDay.SnowDay.R;
 
 public class WeatherDialog {
 
-    private Context context;
+    private final Context context;
 
-    private String title;
-    private String expires;
-    private String summary;
-    private String link;
+    private final String title;
+    private final String expires;
+    private final String summary;
+    private final String link;
 
     public WeatherDialog(Context c,
                          String t,

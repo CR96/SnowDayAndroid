@@ -30,12 +30,12 @@ import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private Context mContext;
-    private boolean eventPresent;
-    private boolean bobcats;
-    private List<String> mData;
+    private final boolean eventPresent;
+    private final boolean bobcats;
+    private final List<String> mData;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView mCardView;
+        final CardView mCardView;
         ViewHolder(CardView v) {
             super(v);
             mCardView = v;

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 
 public class WeatherModel {
-    private String warningTitle;
+    private final String warningTitle;
     private String warningExpireTime;
     private String warningReadableTime;
     private String warningSummary;

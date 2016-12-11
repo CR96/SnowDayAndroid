@@ -26,7 +26,7 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 
 public class EventModel {
-    private ArrayList<String> infoList = new ArrayList<>();
+    private final ArrayList<String> infoList = new ArrayList<>();
     private boolean todayValid = true;
     private boolean tomorrowValid = true;
     private boolean eventPresent;
@@ -34,10 +34,10 @@ public class EventModel {
 
     //Figure out what tomorrow is
     //Saturday = 6, Sunday = 7
-    private DateTime dt = new DateTime();
-    private int weekday = dt.getDayOfWeek();
+    private final DateTime dt = new DateTime();
+    private final int weekday = dt.getDayOfWeek();
 
-    private Resources res;
+    private final Resources res;
 
     /**
      * Make sure the user doesn't try to run the program on the weekend or on specific dates.

@@ -18,10 +18,10 @@ limitations under the License.*/
  * An object containing the status of a single school or organization.
  */
 public class ClosingModel {
-    private String orgName;
-    private String orgStatus;
-    private boolean sectionHeader;
-    private boolean messagePresent;
+    private final String orgName;
+    private final String orgStatus;
+    private final boolean sectionHeader;
+    private final boolean messagePresent;
     private boolean closed;
 
     public String getOrgName() {

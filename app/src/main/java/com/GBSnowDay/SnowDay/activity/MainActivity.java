@@ -13,18 +13,19 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.GBSnowDay.SnowDay.model.EventModel;
 import com.GBSnowDay.SnowDay.R;
 import com.GBSnowDay.SnowDay.adapter.CustomAdapter;
+import com.GBSnowDay.SnowDay.model.EventModel;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
-
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import io.fabric.sdk.android.Fabric;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String TWITTER_SECRET = "";
 
     //Declare all views
-    RadioButton optToday;
-    RadioButton optTomorrow;
-    RecyclerView lstInfo;
-    Spinner lstDays;
-    Button btnCalculate;
+    private RadioButton optToday;
+    private RadioButton optTomorrow;
+    private RecyclerView lstInfo;
+    private Spinner lstDays;
+    private Button btnCalculate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
