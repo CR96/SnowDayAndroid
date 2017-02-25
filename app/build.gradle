@@ -29,6 +29,10 @@ android {
         versionName '2.1'
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
