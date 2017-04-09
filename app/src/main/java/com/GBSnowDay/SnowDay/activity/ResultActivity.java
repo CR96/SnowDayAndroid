@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,6 +54,7 @@ import com.GBSnowDay.SnowDay.model.ClosingModel;
 import com.GBSnowDay.SnowDay.model.WeatherModel;
 import com.GBSnowDay.SnowDay.network.ClosingsScraper;
 import com.GBSnowDay.SnowDay.network.WeatherScraper;
+import com.GBSnowDay.SnowDay.util.CustomTabsUtility;
 import com.GBSnowDay.SnowDay.view.ViewPager;
 
 import java.util.ArrayList;
@@ -135,35 +137,25 @@ public class ResultActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.closings) {
-            //Open URL with closings listed
-            String url = getString(R.string.ClosingsURL);
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            Uri u = Uri.parse(url);
-            Context context = this;
-
             try {
-                //Start the activity
-                i.setData(u);
-                startActivity(i);
-            }catch (ActivityNotFoundException e) {
-                //Raise on activity not found
-                Toast.makeText(context, getString(R.string.NoBrowser), Toast.LENGTH_SHORT).show();
+                // Try to use a custom tab
+                CustomTabsIntent customTabsIntent = CustomTabsUtility.prepareIntent(
+                        this, true);
+                Uri uri = Uri.parse(getString(R.string.ClosingsURL));
+                customTabsIntent.launchUrl(this, uri);
+            } catch (ActivityNotFoundException e) {
+                CustomTabsUtility.launchInBrowser(this, getString(R.string.ClosingsURL));
             }
         }
         if (id == R.id.weather) {
-            //Open URL with warnings listed
-            String url = getString(R.string.WeatherExternalLink);
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            Uri u = Uri.parse(url);
-            Context context = this;
-
             try {
-                //Start the activity
-                i.setData(u);
-                startActivity(i);
-            }catch (ActivityNotFoundException e) {
-                //Raise on activity not found
-                Toast.makeText(context, getString(R.string.NoBrowser), Toast.LENGTH_SHORT).show();
+                // Try to use a custom tab
+                CustomTabsIntent customTabsIntent = CustomTabsUtility.prepareIntent(
+                        this, true);
+                Uri uri = Uri.parse(getString(R.string.WeatherExternalLink));
+                customTabsIntent.launchUrl(this, uri);
+            } catch (ActivityNotFoundException e) {
+                CustomTabsUtility.launchInBrowser(this, getString(R.string.WeatherExternalLink));
             }
         }
         if (id == R.id.action_about) {

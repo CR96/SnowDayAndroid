@@ -17,11 +17,13 @@
 package com.GBSnowDay.SnowDay.activity;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 
 import com.GBSnowDay.SnowDay.R;
 import com.GBSnowDay.SnowDay.dialog.LicenseDialog;
+import com.GBSnowDay.SnowDay.util.CustomTabsUtility;
 
 public class AboutActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
@@ -98,16 +101,30 @@ public class AboutActivity extends AppCompatActivity {
         btnWeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.website)));
-                startActivity(browserIntent);
+                try {
+                    // Try to use a custom tab
+                    CustomTabsIntent customTabsIntent = CustomTabsUtility.prepareIntent(
+                            AboutActivity.this, true);
+                    Uri uri = Uri.parse(getString(R.string.website));
+                    customTabsIntent.launchUrl(AboutActivity.this, uri);
+                } catch (ActivityNotFoundException e) {
+                    CustomTabsUtility.launchInBrowser(AboutActivity.this, getString(R.string.website));
+                }
             }
         });
 
         btnGit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.git)));
-                startActivity(browserIntent);
+                try {
+                    // Try to use a custom tab
+                    CustomTabsIntent customTabsIntent = CustomTabsUtility.prepareIntent(
+                            AboutActivity.this, true);
+                    Uri uri = Uri.parse(getString(R.string.git));
+                    customTabsIntent.launchUrl(AboutActivity.this, uri);
+                } catch (ActivityNotFoundException e) {
+                    CustomTabsUtility.launchInBrowser(AboutActivity.this, getString(R.string.git));
+                }
             }
         });
 

@@ -52,7 +52,6 @@
     <string name="calculate">CALCULATE</string>
 
     <string name="radarshow">Show Radar</string>
-    <string name="radarhide">Hide Radar</string>
 
     <!--Menu-->
     <string name="openclosings">Open ABC 12 Closings</string>
@@ -85,7 +84,7 @@
 
     <!--Weather-->
     <string name="WeatherURL">http://alerts.weather.gov/cap/wwaatmget.php?x=MIZ061&amp;y=0</string>
-
+    <string name="RadarURL">https://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif</string>
     <string name="NWS">National Weather Service Warnings</string>
 
     <string name="SigWeather">Significant Weather Advisory</string>
