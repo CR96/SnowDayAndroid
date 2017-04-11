@@ -32,7 +32,10 @@
     the License.</string>
 
     <string name="UpdateTitle">What\'s New</string>
-    <string name="Updates">\u0020• Updated closings to work with ABC 12\'s latest changes\n\n
+    <string name="Updates">\u0020• Fixed an issue with the radar opening in an external browser\n\n
+        • External links now open in a Chrome Custom Tab\n\n
+        New in version 2.1:\n\n
+        • Updated closings to work with ABC 12\'s latest changes\n\n
         • Updated schedule and holidays for the 2016-2017 school year\n\n
         • Added expiration information to weather alerts\n\n
         • Added support for Nougat and split screen\n\n
