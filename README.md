@@ -1,7 +1,7 @@
 SnowDayAndroid
 ==============
 
-<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Snow Day Calculator logo" width="128px" height="128px"/>
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Grand Blanc Snow Day logo" width="128px" height="128px"/>
 
 Android program that predicts the chance of a snow day for Grand Blanc Community Schools.
 
