@@ -16,7 +16,7 @@
         android:src="@drawable/icon" />
 
     <TextView
-        android:id="@+id/txtGB"
+        android:id="@+id/txtSnowDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -24,17 +24,6 @@
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
         android:paddingTop="32dp"
-        android:text="@string/GBCS"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/txtSnowDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtGB"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal|top"
-        android:gravity="center"
         android:paddingBottom="16dp"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />

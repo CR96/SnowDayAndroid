@@ -37,15 +37,6 @@
         tools:ignore="RelativeOverlap">
 
         <TextView
-            android:id="@+id/txtGB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:gravity="center"
-            android:text="@string/GBCS"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
             android:id="@+id/txtSnowDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
