@@ -17,6 +17,7 @@
 package com.GBSnowDay.SnowDay.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -47,8 +48,9 @@ public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHo
         mData = closingModels;
     }
 
+    @NonNull
     @Override
-    public ClosingsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public ClosingsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                                          int viewType) {
         mContext = parent.getContext();
 
@@ -63,7 +65,7 @@ public class ClosingsAdapter extends RecyclerView.Adapter<ClosingsAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
         TextView txtOrg = (TextView) layout.getChildAt(0);

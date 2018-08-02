@@ -20,7 +20,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -41,7 +40,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.GBSnowDay.SnowDay.R;
 import com.GBSnowDay.SnowDay.adapter.ClosingsAdapter;
@@ -99,13 +97,13 @@ public class ResultActivity extends AppCompatActivity {
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
             viewPager.setPagingEnabled(false);
         }
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = findViewById(R.id.tabs);
         if (viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
 
@@ -394,29 +392,13 @@ public class ResultActivity extends AppCompatActivity {
         tv.setText(String.valueOf(count) + "%");
 
         if (count >= 0 && count <= 20) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red));
-                }
-            });
+            runOnUiThread(() -> percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red)));
         } if (count > 20 && count <= 60) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange));
-                }
-            });
+            runOnUiThread(() -> percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.orange)));
         } if (count > 60 && count <= 80) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green));
-                }
-            });
+            runOnUiThread(() -> percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green)));
         } if (count > 80) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent));
-                }
-            });
+            runOnUiThread(() -> percentFragment.txtPercent.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.colorAccent)));
         }
 
         Animation alpha = AnimationUtils.loadAnimation(ResultActivity.this, R.anim.alpha);

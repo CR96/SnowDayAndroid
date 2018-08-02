@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Declare views
-        optToday = (RadioButton) findViewById(R.id.optToday);
-        optTomorrow = (RadioButton) findViewById(R.id.optTomorrow);
-        lstInfo = (RecyclerView) findViewById(R.id.lstInfo);
-        lstDays = (Spinner) findViewById(R.id.lstDays);
-        btnCalculate = (Button) findViewById(R.id.btnCalculate);
+        optToday = findViewById(R.id.optToday);
+        optTomorrow = findViewById(R.id.optTomorrow);
+        lstInfo = findViewById(R.id.lstInfo);
+        lstDays = findViewById(R.id.lstDays);
+        btnCalculate = findViewById(R.id.btnCalculate);
 
         EventModel eventModel = new EventModel(MainActivity.this);
 
@@ -93,18 +93,14 @@ public class MainActivity extends AppCompatActivity {
 
         //Listen for optToday or optTomorrow changes
         //Don't allow the calculation to run if "Select a day" is selected
-        optToday.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                if (lstDays.getSelectedItemId() != 0) {
-                    btnCalculate.setEnabled(true);
-                }
+        optToday.setOnClickListener(view -> {
+            if (lstDays.getSelectedItemId() != 0) {
+                btnCalculate.setEnabled(true);
             }
         });
-        optTomorrow.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                if (lstDays.getSelectedItemId() != 0) {
-                    btnCalculate.setEnabled(true);
-                }
+        optTomorrow.setOnClickListener(view -> {
+            if (lstDays.getSelectedItemId() != 0) {
+                btnCalculate.setEnabled(true);
             }
         });
 
@@ -131,37 +127,35 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Listen for button click
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                //Date setup
+        btnCalculate.setOnClickListener(view -> {
+            //Date setup
 
-                int dayrun = -1;
+            int dayrun = -1;
 
-                if (optToday.isChecked()) {
-                    //Set dayrun to 0 (Today)
-                    dayrun = 0;
+            if (optToday.isChecked()) {
+                //Set dayrun to 0 (Today)
+                dayrun = 0;
 
-                } else if (optTomorrow.isChecked()) {
-                    //Set dayrun to 1 (Tomorrow)
-                    dayrun = 1;
-                }
-
-                //Have the user input past snow days
-                int days = lstDays.getSelectedItemPosition() - 1;
-
-                if (dayrun == 0) {
-                    Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Today"));
-                }else if (dayrun == 1) {
-                    Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Tomorrow"));
-                }
-
-                //Switch to result activity
-                //Pass values of 'dayrun' and 'days' to new activity
-                Intent result = new Intent(getApplicationContext(), ResultActivity.class);
-                result.putExtra("dayrun", dayrun);
-                result.putExtra("days", days);
-                startActivity(result);
+            } else if (optTomorrow.isChecked()) {
+                //Set dayrun to 1 (Tomorrow)
+                dayrun = 1;
             }
+
+            //Have the user input past snow days
+            int days = lstDays.getSelectedItemPosition() - 1;
+
+            if (dayrun == 0) {
+                Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Today"));
+            }else if (dayrun == 1) {
+                Answers.getInstance().logCustom(new CustomEvent("Ran Calculation: Tomorrow"));
+            }
+
+            //Switch to result activity
+            //Pass values of 'dayrun' and 'days' to new activity
+            Intent result = new Intent(getApplicationContext(), ResultActivity.class);
+            result.putExtra("dayrun", dayrun);
+            result.putExtra("days", days);
+            startActivity(result);
         });
     }
 

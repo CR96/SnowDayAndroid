@@ -18,6 +18,7 @@ package com.GBSnowDay.SnowDay.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -44,20 +45,20 @@ public class ClosingsFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_closings, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Declare views
-        lstClosings = (RecyclerView) view.findViewById(R.id.lstClosings);
+        lstClosings = view.findViewById(R.id.lstClosings);
 
-        txtClosingsInfo = (TextView) view.findViewById(R.id.txtClosingsInfo);
+        txtClosingsInfo = view.findViewById(R.id.txtClosingsInfo);
     }
 
 }

@@ -51,7 +51,7 @@ public class WeatherScraper extends AsyncTask<Void, Void, List<WeatherModel>> {
 
     private String error;
 
-    private AsyncResponse delegate = null;
+    private AsyncResponse delegate;
 
     // The parsable format of warning expiration times as present in the RSS feed
     private final SimpleDateFormat sdfInput = new SimpleDateFormat

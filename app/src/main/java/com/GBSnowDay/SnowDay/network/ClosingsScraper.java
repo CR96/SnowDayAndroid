@@ -67,7 +67,7 @@ public class ClosingsScraper extends AsyncTask<Void, Void, List<ClosingModel>> {
     
     private String error;
 
-    private AsyncResponse delegate = null;
+    private AsyncResponse delegate;
     private final Resources res;
 
     public interface AsyncResponse {

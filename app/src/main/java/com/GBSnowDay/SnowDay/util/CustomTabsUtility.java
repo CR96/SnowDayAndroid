@@ -53,7 +53,7 @@ public class CustomTabsUtility {
         try {
             Intent browserIntent = new Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(context.getString(R.string.RadarURL))
+                    Uri.parse(url)
             );
             context.startActivity(browserIntent);
         } catch (ActivityNotFoundException e) {

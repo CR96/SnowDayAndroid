@@ -17,6 +17,7 @@
 package com.GBSnowDay.SnowDay.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -53,8 +54,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         this.weatherWarningPresent = weatherWarningPresent;
     }
 
+    @NonNull
     @Override
-    public WeatherAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public WeatherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                                         int viewType) {
         mContext = parent.getContext();
 
@@ -69,7 +71,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
         TextView text = (TextView) layout.getChildAt(0);
         TextView subtext = (TextView) layout.getChildAt(1);
@@ -105,23 +107,20 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
         final int i = holder.getAdapterPosition();
 
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Don't show a message for the list header
+        holder.mCardView.setOnClickListener(v -> {
+            //Don't show a message for the list header
 
-                if (i > 0 && weatherWarningPresent) {
-                    try {
-                        new WeatherDialog(mContext,
-                                mData.get(i).getWarningTitle(),
-                                mData.get(i).getWarningReadableTime(),
-                                mData.get(i).getWarningSummary(),
-                                mData.get(i).getWarningLink())
-                                .show();
-                    } catch (NullPointerException | IndexOutOfBoundsException e) {
-                        Toast.makeText(mContext, mContext.getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
-                        Crashlytics.logException(e);
-                    }
+            if (i > 0 && weatherWarningPresent) {
+                try {
+                    new WeatherDialog(mContext,
+                            mData.get(i).getWarningTitle(),
+                            mData.get(i).getWarningReadableTime(),
+                            mData.get(i).getWarningSummary(),
+                            mData.get(i).getWarningLink())
+                            .show();
+                } catch (NullPointerException | IndexOutOfBoundsException e) {
+                    Toast.makeText(mContext, mContext.getString(R.string.WarningParseError), Toast.LENGTH_SHORT).show();
+                    Crashlytics.logException(e);
                 }
             }
         });

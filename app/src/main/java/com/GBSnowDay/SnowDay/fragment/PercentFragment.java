@@ -18,6 +18,7 @@ package com.GBSnowDay.SnowDay.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -43,19 +44,19 @@ public class PercentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_percent, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        txtPercent = (TextView) view.findViewById(R.id.txtPercent);
-        lstGB = (RecyclerView) view.findViewById(R.id.lstGB);
+        txtPercent = view.findViewById(R.id.txtPercent);
+        lstGB = view.findViewById(R.id.lstGB);
 
-        progCalculate = (ImageView) view.findViewById(R.id.progCalculate);
+        progCalculate = view.findViewById(R.id.progCalculate);
 
         Animation fade = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
         progCalculate.startAnimation(fade);
@@ -63,15 +64,15 @@ public class PercentFragment extends Fragment {
         Animation rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
         progCalculate.startAnimation(rotate);
 
-        ImageView sf1 = (ImageView) view.findViewById(R.id.snowflake1);
-        ImageView sf2 = (ImageView) view.findViewById(R.id.snowflake2);
-        ImageView sf3 = (ImageView) view.findViewById(R.id.snowflake3);
-        ImageView sf4 = (ImageView) view.findViewById(R.id.snowflake4);
-        ImageView sf5 = (ImageView) view.findViewById(R.id.snowflake5);
-        ImageView sf6 = (ImageView) view.findViewById(R.id.snowflake6);
-        ImageView sf7 = (ImageView) view.findViewById(R.id.snowflake7);
-        ImageView sf8 = (ImageView) view.findViewById(R.id.snowflake8);
-        ImageView sf9 = (ImageView) view.findViewById(R.id.snowflake9);
+        ImageView sf1 = view.findViewById(R.id.snowflake1);
+        ImageView sf2 = view.findViewById(R.id.snowflake2);
+        ImageView sf3 = view.findViewById(R.id.snowflake3);
+        ImageView sf4 = view.findViewById(R.id.snowflake4);
+        ImageView sf5 = view.findViewById(R.id.snowflake5);
+        ImageView sf6 = view.findViewById(R.id.snowflake6);
+        ImageView sf7 = view.findViewById(R.id.snowflake7);
+        ImageView sf8 = view.findViewById(R.id.snowflake8);
+        ImageView sf9 = view.findViewById(R.id.snowflake9);
 
         /*Snowflake Positions - snowflakes "fall" towards the bottom right corner of the screen in a staggered pattern
          *

@@ -17,6 +17,7 @@
 package com.GBSnowDay.SnowDay.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -54,9 +55,10 @@ public class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
         gbmessage = b2;
     }
 
+    @NonNull
     @Override
-    public GBAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                         int viewType) {
+    public GBAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                   int viewType) {
         mContext = parent.getContext();
 
         View v = LayoutInflater.from(mContext)
@@ -71,7 +73,7 @@ public class GBAdapter extends RecyclerView.Adapter<GBAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LinearLayout layout = (LinearLayout) holder.mCardView.getChildAt(0);
         TextView text = (TextView) layout.getChildAt(0);
         TextView subtext = (TextView) layout.getChildAt(1);
