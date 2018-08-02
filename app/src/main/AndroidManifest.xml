@@ -40,17 +40,6 @@
             android:launchMode="singleTop">
         </activity>
 
-        <activity
-            android:name=".activity.TwitterActivity"
-            android:label="@string/dev_twitter"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activity.AboutActivity"
-            tools:ignore="UnusedAttribute">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.AboutActivity" />
-        </activity>
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="1866747e535fb8c3fc2267e7fcdb9c990db08d9d" />

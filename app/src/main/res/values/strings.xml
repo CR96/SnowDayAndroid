@@ -6,11 +6,10 @@
     <string name="app_name_short">Snow Day</string>
 
     <!--About-->
-    <string name="GBCS">Grand Blanc Community Schools</string>
     <string name="dev_name">Developed by Corey Rowe</string>
 
     <string name="dev_twitter">\@GBSnowDay</string>
-    <string name="twitter_user">GBSnowDay</string>
+    <string name="twitter">https://twitter.com/gbsnowday</string>
 
     <string name="dev_site">Website</string>
     <string name="website">https://gbsnowday.weebly.com</string>

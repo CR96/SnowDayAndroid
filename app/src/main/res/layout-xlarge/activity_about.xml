@@ -60,7 +60,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:contentDescription="@string/dev_twitter"
-            android:src="@drawable/tw__ic_logo_default" />
+            android:src="@drawable/ic_twitter_logo" />
 
         <ImageButton
             android:id="@+id/btnEmail"

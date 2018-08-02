@@ -35,8 +35,6 @@ import com.GBSnowDay.SnowDay.model.EventModel;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
-import com.twitter.sdk.android.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,10 +42,6 @@ import java.util.Arrays;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
-
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "";
-    private static final String TWITTER_SECRET = "";
 
     //Declare all views
     private RadioButton optToday;
@@ -61,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         //Declare views

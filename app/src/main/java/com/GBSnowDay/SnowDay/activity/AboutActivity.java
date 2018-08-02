@@ -84,8 +84,15 @@ public class AboutActivity extends AppCompatActivity {
         btnTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent tw = new Intent(AboutActivity.this, TwitterActivity.class);
-                startActivity(tw);
+                try {
+                    // Try to use a custom tab
+                    CustomTabsIntent customTabsIntent = CustomTabsUtility.prepareIntent(
+                            AboutActivity.this, true);
+                    Uri uri = Uri.parse(getString(R.string.twitter));
+                    customTabsIntent.launchUrl(AboutActivity.this, uri);
+                } catch (ActivityNotFoundException e) {
+                    CustomTabsUtility.launchInBrowser(AboutActivity.this, getString(R.string.twitter));
+                }
             }
         });
 
